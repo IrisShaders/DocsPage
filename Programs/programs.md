@@ -25,7 +25,7 @@ This file outlines the uses of each program in Iris.
 |`shadowcomp`|Preforms post procesing for the shadow map.|`none`|
 |`shadowcomp1`|Preforms post procesing for the shadow map.|`none`|
 ...
-|`shadowcomp15`|Preforms post procesing for the shadow map.|`none`|
+|`shadowcomp99`|Preforms post procesing for the shadow map.|`none`|
 
 ## Prepare
 | **Program Name** |                         **Usage**                         | **Fallback** |
@@ -33,7 +33,7 @@ This file outlines the uses of each program in Iris.
 |`prepare`|Runs after Shadows, and before GBuffers.|`none`|
 |`prepare1`|Runs after Shadows, and before GBuffers.|`none`|
 ...
-|`prepare15`|Runs after Shadows, and before GBuffers.|`none`|
+|`prepare99`|Runs after Shadows, and before GBuffers.|`none`|
 
 ## Gbuffers
 Gbuffer Programs are responsible for rendering most things in the world.
@@ -72,7 +72,7 @@ Gbuffer Programs are responsible for rendering most things in the world.
 |`deferred`|Used for deferd procesing.|`none`|
 |`deferred1`|Used for deferd procesing.|`none`|
 ...
-|`deferred15`|Used for deferd procesing.|`none`|
+|`deferred99`|Used for deferd procesing.|`none`|
 
 ## Composite
 | **Program Name** |                         **Usage**                         | **Fallback** |
