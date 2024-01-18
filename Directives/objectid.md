@@ -12,7 +12,7 @@ Objects can be block, item, or entity.
 
 Note: ids may not go beyond `65535`, as they are of data type short.
 
-Note: Modded blocks are supported.
+Note: Modded blocks are supported with a format of `<prefix>:<object>`, such as `botania:reeds`.
 
 ### Example
 The Objects Belong In Diffrent Files Based On Type:
