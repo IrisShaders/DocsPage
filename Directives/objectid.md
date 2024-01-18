@@ -1,8 +1,8 @@
 # Group Based Object Identification
-### This file outlines the use mc_Entity in identifying objects.
+### This file outlines the use Group Based Object Identification in identifying objects.
 
 ## Setup
-All mc_Entity setup belongs in block.properties or item.properties or entity.properties, based on type.
+All Object Group setup belongs in block.properties or item.properties or entity.properties, based on type.
 ### Syntax
 In the corresponding file:
 ```
@@ -12,7 +12,7 @@ Objects can be block, item, or entity.
 
 Note: ids may not go beyond `65535`, as they are of data type short.
 
-Note: Modded blocks are supported with a format of `<prefix>:<object>`, such as `botania:reeds`.
+Note: Modded blocks are supported with a format of `<prefix>:<object>` such as `botania:reeds`.
 
 ### Example
 The Objects Belong In Diffrent Files Based On Type:
