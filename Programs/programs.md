@@ -40,8 +40,8 @@ Gbuffer Programs are responsible for rendering most things in the world.
 | **Program Name** |                         **Usage**                         | **Fallback** |
 |:----------------:|:-----------------------------------------------------------:|:------------:|
 |`gbuffers_basic`|Renders The Leash And Block Selecting Box Pixels. Is also the lowest fallback.|`none`|
-|`gbuffers_textured`|Renders all textured things. Is used as a fallback and for particles.|`gbuffers_basic`|
-|`gbuffers_textured_lit`|Renders lit particles and the world border. This is also used as a fallback for all objects that can recive light.|`gbuffers_textured`|
+|`gbuffers_textured`|Renders all textured things. Is used as a fallback..|`gbuffers_basic`|
+|`gbuffers_textured_lit`|Renders all particles as a fallback and the world border. This is also used as a fallback for all objects that can recive light.|`gbuffers_textured`|
 |`gbuffers_particles`|Renders all non-translucent particles.|`gbuffers_textured_lit`|
 |`gbuffers_particles_translucent`|Renders translucent particles|`gbuffers_particles`|
 |`gbuffers_skybasic`|Renders the sky, the horizon, the stars, and the void.|`gbuffers_basic`|
@@ -54,7 +54,6 @@ Gbuffer Programs are responsible for rendering most things in the world.
 |`gbuffers_block`|Renders Block Entities|`gbuffers_terrain`|
 |`gbuffers_block_translucent`|Renders transulcent block entities.|`gbuffers_block`|
 |`gbuffers_beaconbeam`|Renders the Beacon Beam|`gbuffers_textured`|
-|`gbuffers_item`|Unused, potentialy rendering unheld items. More info needed.|`gbuffers_textured_lit`|
 |`gbuffers_entities`|Renders Entities|`gbuffers_textured_lit`|
 |`gbuffers_entities_translucent`|Renders Translucent Entities|`gbuffers_entities`|
 |`gbuffers_entities_glowing`|Renders Glowing Entities|`gbuffers_entities`|
