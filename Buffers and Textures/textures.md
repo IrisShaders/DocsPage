@@ -6,14 +6,17 @@ Most textures use a 0-1 coordiante system, with 0 being one side, and 1 being th
 
 ## Custom Textures
 Custom textures are a great way to save data. They can be accesed like any other texture via their uniform:
-```java
+```
 uniform sampler2D <Texture Name>;
 
 // And when you want to get the information
 
 texture2D(<Texture Name>, <Access Coordinates>);
 ```
-Information on adding custom textures can be found in Directives/Shaders/customtextures.md
+
+`<Texture Name>` must match the one added in the directive.
+
+Information on adding custom textures can be found in customtextures.md in the directives folder.
 
 You can have a maximum of either 16 or 32 textures in your pass, this includes the colortex[i] textures.
 ## Clamping
