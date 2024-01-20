@@ -2,7 +2,7 @@
 ### This file outlines the use Group Based Object Identification in identifying objects.
 
 ## Setup
-All Object Group setup belongs in block.properties or item.properties or entity.properties, based on type.
+All Object Group setup belongs in block.properties or item.properties or entity.properties, based on type. These only apply to entity types. For blocks use mc_entity.x in terrain buffers. Documentation can be found from optifine.
 ### Syntax
 In the corresponding file:
 ```
