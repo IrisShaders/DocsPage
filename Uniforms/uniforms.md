@@ -1,4 +1,4 @@
-# Unifrom Information
+# Uniform Information
 This file outlines the uses of each uniform in Iris.
 
 
@@ -27,7 +27,7 @@ This file outlines the uses of each uniform in Iris.
 |`uniform float viewHeight;`|height of viewport|
 |`uniform float aspectRatio;`|viewWidth divided by viewHeight|
 |`uniform float near;`|near clipping plane|
-|`uniform float far;`|far clipping plane|
+|`uniform float far;`|render distance in blocks, 1/4 of cliping plane|
 |`uniform vec3 sunPosition;`|sun pos in eye space|
 |`uniform vec3 moonPosition;`|moon pos in eye space|
 |`uniform vec3 shadowLightPosition;`|shadow light pos (sun or moon) in eye space|
