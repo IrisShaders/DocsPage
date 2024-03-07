@@ -2,7 +2,7 @@
 This file outlines the uses of each uniform in Iris.
 
 
-## Uniforms
+## Normal Uniforms
 | **Name** |                         **Usage**                         |
 |:----------------:|:-----------------------------------------------------------:|
 |`uniform float frameTimeCounter;`|run time in seconds, reset at 3600|
@@ -34,6 +34,11 @@ This file outlines the uses of each uniform in Iris.
 |`uniform vec3 upPosition;`|up direction|
 |`uniform vec3 cameraPosition;`|camera pos in world space|
 |`uniform vec3 previousCameraPosition;`|last frame camera pos in world space|
+|`uniform float wetness;`|rainStrength smoothed by wetnessHalfLife and/or drynessHalfLife|
+|`uniform float eyeAltitude;`|view entity y pos in world space|
+|`uniform ivec2 eyeBrightness;`|x is block, y is sky, light 0-15 = brightness 0-240|
+|`uniform ivec2 eyeBrightnessSmooth;`|eyeBrightness smoothed by eyeBrightnessHalflife|
+|`uniform int isEyeInWater;`|1 in water, 2 in lava, 3 in powderd snow|
 |``||
 |``||
 |``||
@@ -41,8 +46,17 @@ This file outlines the uses of each uniform in Iris.
 |``||
 |``||
 |``||
-|``||
-|``||
-|``||
-|``||
-|``||
+
+## Conversion MAT4s
+| **Name** |                         **Usage**                         |
+|:----------------:|:-----------------------------------------------------------:|
+|`uniform mat4 gbufferModelView;`|modelview matrix after setting up all of the camera transformations|
+|`uniform mat4 gbufferModelViewInverse;`|inverse of gbufferModelView|
+|`uniform mat4 gbufferPreviousModelView;`|last frames gbufferModelView|
+|`uniform mat4 gbufferProjection;`|projection matrix created when gbuffers were generated|
+|`uniform mat4 gbufferProjectionInverse;`|inverse of gbufferProjection|
+|`uniform mat4 gbufferPreviousProjection;`|last frame gbufferProjection|
+|`uniform mat4 shadowProjection;`|projection matrix from when the shadow map was generated|
+|`uniform mat4 shadowProjectionInverse;`|inverse of shadowProjection|
+|`uniform mat4 shadowModelView;`|modelview matrix from when the shadow map was generated|
+|`uniform mat4 shadowModelViewInverse;`|inverse of shadowModelView|
