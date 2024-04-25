@@ -5,6 +5,9 @@ export default defineConfig({
 	integrations: [
 		starlight({
 			title: 'Iris Docs',
+			logo: {
+				src: './src/assets/iris.webp',
+			},
 			customCss: [
 				'./src/styles/root.css',
 			],
@@ -18,7 +21,7 @@ export default defineConfig({
 				},
 				{
 					label: 'Reference',
-					autogenerate: { directory: 'reference' },
+					autogenerate: { directory: 'reference', collapsed: true},
 				},
 			],
 		}),
