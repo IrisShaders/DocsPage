@@ -1,24 +1,19 @@
-# Starlight Starter Kit: Basics
+# Iris Docs
 
 [![Built with Starlight](https://astro.badg.es/v2/built-with-starlight/tiny.svg)](https://starlight.astro.build)
 
 ```
-npm create astro@latest -- --template starlight
+pnpm dev
 ```
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/starlight/tree/main/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/starlight/tree/main/examples/basics)
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fwithastro%2Fstarlight%2Ftree%2Fmain%2Fexamples%2Fbasics&project-name=my-starlight-docs&repository-name=my-starlight-docs)
+## Contributing:
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-## 🚀 Project Structure
-
-Inside of your Astro + Starlight project, you'll see the following folders and files:
+### File Structure
 
 ```
 .
 ├── public/
+│   ├── favicon.svg
 ├── src/
 │   ├── assets/
 │   ├── content/
@@ -30,25 +25,37 @@ Inside of your Astro + Starlight project, you'll see the following folders and f
 └── tsconfig.json
 ```
 
-Starlight looks for `.md` or `.mdx` files in the `src/content/docs/` directory. Each file is exposed as a route based on its file name.
-
 Images can be added to `src/assets/` and embedded in Markdown with a relative link.
 
-Static assets, like favicons, can be placed in the `public/` directory.
+Content belongs in either `/guides`, `/reference`, `/how_to` within docs, and in its relative subcategory.
+Unfinished/Outdated docs are marked with the `Outdated` tag in the warning style.
 
-## 🧞 Commands
+### How to write:
 
-All commands are run from the root of the project, from a terminal:
+Write in your own way, and try to use existing pages or ask before adding new ones. For how to write content, follow the guides on [https://diataxis.fr/](https://diataxis.fr/).
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+### Dictionary:
 
-## 👀 Want to learn more?
+- Please use full terms, no shortening. EX no `complementary -> comp`.
+- Refer to shader packs as `pack` and/ or `packs`.
+- If referring to worlds (`world0` and the like), use this syntax: Overworld(`world0`)
+- Make headings as succinct as possible to help the reader quickly find the content they need
+- Use simple present tense for verbs
 
-Check out [Starlight’s docs](https://starlight.astro.build/), read [the Astro documentation](https://docs.astro.build), or jump into the [Astro Discord server](https://astro.build/chat).
+### Guides:
+Guides walk the user through completing a task (EX creating their first shader). A guide should lead from one outcome to another, and is a multi lesson system of teaching (defined by their folder with multiple pages). They are to be written in a style similar to [tutorials on Diataxis](https://diataxis.fr/tutorials/). Guides are open ended.
+
+A guide should leave the reader feeling comfortable with the topic, and it should leave them in a way that they are able to experiment by themselves.
+
+### How To:
+A how to is a singular short article that walks a user through a small problem in their way (EX transforming shadows to screen space or tonemapping). A how to is made to walk a user through a short section of code and does not need to lead from one outcome to another. It is made to increase/create the understanding on a small section of code, and is rarely open ended. The how to should be written similar to [how to guides on Diataxis](https://diataxis.fr/how-to-guides/).
+
+### Reference:
+A reference is a docs page. It give objective information on a subject, without moving towards individual use cases. These are often short pages, which are written to provide information about syntax surrounding a line or two of code. These need to be written in a succinct way so that the user can quickly find information. Best practices are located at [references in Diataxis](https://diataxis.fr/reference/)
+
+## Translations (i18n)
+Translations are not yet supported, but once the english version is complete we will begin building out the languages.
+
+## Contributors
+- [Iris Docs](https://github.com/IrisShaders/ShaderDoc/tree/master) - Most of the early documentation
+- WhyFencePost / WhyFenceCode - The page and a lot of the data transfer

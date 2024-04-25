@@ -17,11 +17,15 @@ export default defineConfig({
 			sidebar: [
 				{
 					label: 'Guides',
-					autogenerate: { directory: 'guides' },
+					autogenerate: { directory: 'guides', collapsed: true},
 				},
 				{
 					label: 'Reference',
 					autogenerate: { directory: 'reference', collapsed: true},
+				},
+				{
+					label: 'How To',
+					autogenerate: { directory: 'how_to', collapsed: true},
 				},
 			],
 		}),
