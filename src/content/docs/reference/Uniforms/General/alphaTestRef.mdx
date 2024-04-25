@@ -1,0 +1,17 @@
+---
+title: alphaTestRef
+description: alphaTestRef
+sidebar:
+  label: alphaTestRef
+  order: 1
+  badge:
+    text: Outdated
+    variant: caution
+---
+import { Aside } from '@astrojs/starlight/components';
+
+<Aside type="danger">This uniform only works on `1.17` and newer.</Aside>
+
+### `uniform float alphaTestRef;`
+
+Alpha test reference value. The check preformed is `if (color.a < alphaTestRef) discard;`
