@@ -1,0 +1,34 @@
+---
+title: Home
+description: Get started building shaders.
+template: splash
+hero:
+  title: Welcome the to Iris Docs
+  tagline: Get started building shaders!
+  image:
+    file: ../../assets/iris.webp
+  actions:
+    - text: Get Started
+      link: /guides/start/
+      icon: right-arrow
+      variant: primary
+    - text: Read the docs
+      link: /reference/overview/
+      icon: external
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+## Get Started
+
+<CardGrid stagger>
+	<Card title="Update content" icon="pencil">
+		Learn how to make a shader in [the guides](/guides/start/).
+	</Card>
+	<Card title="Add new content" icon="add-document">
+		Help us improve this site on our [github](https://github.com/IrisShaders/ShaderDoc/). 
+	</Card>
+	<Card title="Read the docs" icon="open-book">
+		Learn more in [the Iris Docs](/reference/overview/).
+	</Card>
+</CardGrid>
