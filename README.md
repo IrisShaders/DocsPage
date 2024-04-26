@@ -53,6 +53,8 @@ A how to is a singular short article that walks a user through a small problem i
 ### Reference:
 A reference is a docs page. It give objective information on a subject, without moving towards individual use cases. These are often short pages, which are written to provide information about syntax surrounding a line or two of code. These need to be written in a succinct way so that the user can quickly find information. Best practices are located at [references in Diataxis](https://diataxis.fr/reference/)
 
+For uniform references please look at `alphaTestRef` for formatting. The aside found there can be used for any version specific stuff.
+
 ## Translations (i18n)
 Translations are not yet supported, but once the english version is complete we will begin building out the languages.
 
