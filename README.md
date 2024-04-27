@@ -55,6 +55,26 @@ A reference is a docs page. It give objective information on a subject, without 
 
 For uniform references please look at `alphaTestRef` for formatting. The aside found there can be used for any version specific stuff.
 
+### PR's and Commits
+
+PR's May take a while to be added, as they need to be fully verified, and someone needs to add them when there on. 
+
+#### PR/Commit Format (Please Use it in both your commits on your branch and any pr's, makes our lives easy)
+(type): (area): description
+
+**Type** is one of these:
+
+- `feat` - new feature
+- `fix` - a bug fix
+- `chore` - stuff like dependencies
+- `mod` - modifies data while being neither a `feat` or a `fix`
+- `refactor` - make changes without changing content
+- `revert` - revert to a previous commit
+
+**Area** is the affected area(s), either the docs sub area (Uniforms...), the guides category (Beginner...), or the how to (How To).
+
+**Description** is a detailed description of changes. If multiple were made make a multi line list.
+
 ## Translations (i18n)
 Translations are not yet supported, but once the english version is complete we will begin building out the languages.
 
