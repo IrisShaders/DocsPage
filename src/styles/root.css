@@ -28,15 +28,6 @@
 	--sl-color-black: #ffffff;
 }
 
-.gb-holder {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 120vh;
-	overflow: hidden;
-}
-
 .bg-img {
 	position: absolute;
 	top: 0;
@@ -48,4 +39,5 @@
 	background-repeat: no-repeat;
 	background-size: cover;
 	mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
+	z-index: -1;
 }
