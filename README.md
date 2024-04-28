@@ -5,6 +5,7 @@
 
 To test dev build fork, pull, and run this in the root (needs pnpm):
 ```
+pnpm i
 pnpm dev
 ```
 
