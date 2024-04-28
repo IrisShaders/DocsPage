@@ -5,8 +5,10 @@ sidebar:
   label: eyePosition
   order: 1
   badge:
-    text: Outdated
-    variant: caution
+    text: Iris Only
+    variant: tip
 ---
 
 ### `uniform vec3 eyePosition;`
+
+This value stores the world space position of the player's head model. When in first person view, this is equivalent to `cameraPosition`. However in third person mode the two will differ as the camera and player's head are now in different locations.

@@ -5,8 +5,10 @@ sidebar:
   label: playerBodyVector
   order: 1
   badge:
-    text: Outdated
-    variant: caution
+    text: Iris Only
+    variant: tip
 ---
 
 ### `uniform vec3 playerBodyVector;`
+
+This value is intended to store the world alligned direction the player model's body is facing, although this behavior is currently broken and reads the same value as `playerLookVector`.

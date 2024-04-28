@@ -5,8 +5,10 @@ sidebar:
   label: lightningBoltPosition
   order: 1
   badge:
-    text: Outdated
-    variant: caution
+    text: Iris Only
+    variant: tip
 ---
 
-### `uniform vec4 ;`
+### `uniform vec4 lightningBoltPosition;`
+
+This value reads the position of a lightning bolt currently being rendered. If there are none, `0` is returned. If there is at least one, w is set to `1`. If there are multiple, a random one is chosen.
