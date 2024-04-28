@@ -5,8 +5,10 @@ sidebar:
   label: currentColorSpace
   order: 1
   badge:
-    text: Outdated
-    variant: caution
+    text: Iris Only
+    variant: tip
 ---
 
 ### `uniform int currentColorSpace;`
+
+This value reads the color space used when displaying to the screen, as controlled through the video settings. `0` is sRGB, `1` is DCI_P3, `2` is Display P3, `3` is REC2020, `4` is Adobe RGB.

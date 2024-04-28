@@ -5,8 +5,10 @@ sidebar:
   label: currentTime
   order: 1
   badge:
-    text: Outdated
-    variant: caution
+    text: Iris Only
+    variant: tip
 ---
 
 ### `uniform ivec3 currentTime;`
+
+This value stores the system time reported by the OS in the following format: `ivec3(hour, minute, second)`. The hour value is in 24 hour format, for example 3pm would be stored as `15`.
