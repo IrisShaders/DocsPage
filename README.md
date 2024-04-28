@@ -3,7 +3,7 @@
 [![Built with Starlight](https://astro.badg.es/v2/built-with-starlight/tiny.svg)](https://starlight.astro.build)
 
 
-To test dev build fork, pull, and run this in the root (needs pnpm):
+To test dev build: fork, pull, and run this in the root (needs pnpm):
 ```
 pnpm i
 pnpm dev
