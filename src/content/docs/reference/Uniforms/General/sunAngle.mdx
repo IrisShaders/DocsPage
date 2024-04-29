@@ -4,9 +4,10 @@ description: sunAngle
 sidebar:
   label: sunAngle
   order: 1
-  badge:
-    text: Outdated
-    variant: caution
 ---
 
 ### `uniform float sunAngle;`
+
+This value represents the angle of the sun within the complete day-night cycle. The value ranges from `0` to `1`, where `0` is sunrise, `0.25` is noon, `0.5` is sunset, `0.75` is midnight, etc.
+
+Since the night and day are slightly different lengths, the actual sunrise is at time 23215 and sunset at time 12785 (the times when the sun and moon are exactly equidistant at the horizon).

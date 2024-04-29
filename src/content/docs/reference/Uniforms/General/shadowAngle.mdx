@@ -4,9 +4,8 @@ description: shadowAngle
 sidebar:
   label: shadowAngle
   order: 1
-  badge:
-    text: Outdated
-    variant: caution
 ---
 
 ### `uniform float shadowAngle;`
+
+This value is similar to [`sunAngle`](/reference/uniforms/general/sunangle), except it takes its value from the highest celestial body. During the day, the value is equivalent to [`sunAngle`](/reference/uniforms/general/sunangle), and during the night it ranges from `0.0` for sunset, `0.25` for midnight, and approaches `0.5` as sunrise approaches. Therefore, the value of `shadowAngle` ranges between `0.0` and `0.5`.
