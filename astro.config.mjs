@@ -8,10 +8,10 @@ export default defineConfig({
 		starlight({
 			title: 'Iris Docs',
 			logo: {
-				src: './src/assets/iris.webp',
+				src: '/src/assets/iris.webp',
 			},
 			customCss: [
-				'./src/styles/root.css',
+				'/src/styles/root.css',
 			],
 			social: {
 				github: 'https://github.com/IrisShaders/ShaderDoc/',
