@@ -33,9 +33,9 @@
 	top: 0;
 	left: 0;
 	width: 100%;
-	height: 100%;
-	opacity: 0.3;
-	background: url(https://shadersmods.com/wp-content/uploads/2022/06/sildurs-shaders-mod-2.png);
+	height: 130vh;
+	opacity: 0.4;
+	background: url(../assets/banner.webp);
 	background-repeat: no-repeat;
 	background-size: cover;
 	mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
