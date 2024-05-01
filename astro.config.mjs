@@ -14,6 +14,10 @@ export default defineConfig({
 			],
 			social: {
 				github: 'https://github.com/IrisShaders/ShaderDoc/',
+				discord: 'https://discord.com/invite/jQJnav2jPu',
+			},
+			editLink: {
+				baseUrl: 'https://github.com/IrisShaders/DocsPage/edit/main/',
 			},
 			sidebar: [
 				{
