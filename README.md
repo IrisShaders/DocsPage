@@ -31,7 +31,7 @@ pnpm dev
 Images can be added to `src/assets/` and embedded in Markdown with a relative link.
 
 Content belongs in either `/guides`, `/reference`, `/how_to` within docs, and in its relative subcategory.
-Unfinished/Outdated docs are marked with the `Outdated` tag in the warning style.
+Unfinished/Unfinished docs are marked with the `Unfinished` tag in the warning style.
 
 ### How to write:
 
