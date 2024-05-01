@@ -8,6 +8,8 @@ sidebar:
 
 ### `uniform float playerMood;`
 
-The 'mood' value for the player. When it hits 1.0, a cave noise is played.
+The 'mood' value for the player. This value starts at `0.0`, and gradually increases over time. The rate at which the value increases is higher when the player is in a darker environment and there are less transparent blocks nearby. 
+
+When this value hits `1.0`, a cave noise is played, and it is reset to `0.0`.
 
 Further reading - [Minecraft Wiki](https://minecraft.fandom.com/wiki/Ambience#Mood_algorithm)
