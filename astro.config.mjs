@@ -2,8 +2,7 @@ import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 
 export default defineConfig({
-	site: 'https://irisshaders.github.io',
-  	base: 'docspage',
+	site: 'https://shaders.properties',
 	integrations: [
 		starlight({
 			title: 'Iris Docs',
