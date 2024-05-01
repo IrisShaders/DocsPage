@@ -6,7 +6,7 @@ sidebar:
   order: 1
 ---
 
-Feature flags are a Iris system to query the activation state of certain features. To activate them there are two directives that can be placed in `shader.properties`: `iris.features.required` and `iris.features.optional`. Required will throw and error if your pc or Iris does not support the feature. Optional will create a define that can be used to test the availability of such a feature. Additionally the `IS_IRIS` define can be used to test if your shader is in Iris or optifine, and always exists.
+Feature flags are an Iris system to query the activation state of certain features. To activate them there are two directives that can be placed in `shader.properties`: `iris.features.required` and `iris.features.optional`. `iris.features.required` will throw an error if your device or version of Iris does not support the feature. `iris.features.optional` will create a define that can be used to test the availability of such a feature. Additionally the `IS_IRIS` define can be used to test if your shader is in Iris or optifine, and always exists.
 <br/>
 To use the flags add the following to your `shaders.properties`:
 ```properties
