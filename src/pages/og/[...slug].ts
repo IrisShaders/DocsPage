@@ -1,11 +1,8 @@
 import { getCollection } from 'astro:content'
 import { OGImageRoute } from 'astro-og-canvas'
 
-// Get all entries from the `docs` content collection.
 const entries = await getCollection('docs')
 
-// Map the entry array to an object with the page ID as key and the
-// frontmatter data as value.
 const pages = Object.fromEntries(entries.map(({ data, id }) => [id, { data }]))
 
 export const { getStaticPaths, GET } = OGImageRoute({
