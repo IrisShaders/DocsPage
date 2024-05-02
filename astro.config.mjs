@@ -5,6 +5,10 @@ export default defineConfig({
 	site: 'https://shaders.properties',
 	integrations: [
 		starlight({
+			components: {
+				// Relative path to the custom component.
+				Head: './src/components/Head.astro',
+			},
 			title: 'Iris Docs',
 			logo: {
 				src: '/src/assets/iris.webp',
