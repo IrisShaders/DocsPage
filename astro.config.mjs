@@ -17,7 +17,7 @@ export default defineConfig({
 				'/src/styles/root.css',
 			],
 			social: {
-				github: 'https://github.com/IrisShaders/ShaderDoc/',
+				github: 'https://github.com/IrisShaders/DocsPage/',
 				discord: 'https://discord.com/invite/jQJnav2jPu',
 			},
 			editLink: {
