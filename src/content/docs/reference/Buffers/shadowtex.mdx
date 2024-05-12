@@ -1,0 +1,22 @@
+---
+title: ShadowTex
+description: ShadowTex
+sidebar:
+  label: ShadowTex
+  order: 1
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+### `uniform sampler2D shadowtexN;`
+
+There are two samplers for accessing the shadow depth buffer.
+- `shadowtex0` includes all geometry
+- `shadowtex1` excludes transparent geometry
+
+These buffers are written to by [`shadow`](/reference/programs/shadow) program, which renders the scene from the perspective of the sun or moon.
+
+These buffers only store information in a single channel, the red component. The shadow buffer precision is hardware/driver dependent, however most hardware uses either 24-bit or 32-bit precision. The resolution of the shadow pass can be controlled with the `shadowMapResolution` constant.
+
+#### Legacy Aliases
+The alias `waterShadow` points to the same buffer as `shadowtex0`. If `waterShadow` is present anywhere in the code, then the alias `shadow` will point to the same buffer as `shadowtex1`, otherwise it will point to the buffer `shadowtex0`.
