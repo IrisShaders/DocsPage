@@ -4,9 +4,45 @@ description: Custom Buffers
 sidebar:
   label: Custom Buffers
   order: 2
-  badge:
-    text: Unfinished
-    variant: caution
 ---
 
 import { Aside } from '@astrojs/starlight/components';
+
+### `texture.<stage>.<bufferName> = <path>`
+This directive allows a custom texture to be bound to an existing sampler (such as a [colortex](/reference/buffers/colortex) sampler). This allows the shader to access external textures or specific textures from the resource pack.
+
+Textures can be loaded from the shader pack files by replacing `<path>` with the file path to the texture relative to the `shaders` folder. For example `texture.composite.colortex5 = textures/perlin.png` would load `perlin.png` from the `shaders/textures` folder. `.png` and `.jpg` formats are supported.
+
+Textures can also be loaded from the resource pack by replacing `<path>` with `minecraft:` followed by the path in the resourcepack (or vanilla files) of the texture. For example, `texture.deferred.colortex7 = minecraft:textures/block/dirt.png` will load the dirt texture from the resource pack or vanilla assets.
+
+Finally, dynamic textures can be loaded, such as the lightmap and texture atlases. For example, the lightmap can be loaded with `texture.prepare.colortex2 = minecraft:dynamic/lightmap_1`, and the texture atlas can be loaded with `texture.composite.colortex9 = minecraft:textures/atlas/blocks.png`.
+
+For any resource pack or atlas texture, the normal or specular versions of the textuers (if they exist) can be loaded by appending the `_n` or `_s` suffix respectively. For example, `texture.deferred.colortex2 = minecraft:textures/atlas/blocks_s.png` loads the specular block atlas.
+
+Replace `<stage>` with the stage of programs which the texture will be bound in. During that stage, the [colortex](/reference/buffers/colortex) sampler specified with `<bufferName>` will sample the custom texture rather than the [colortex](/reference/buffers/colortex) buffer. The following options are available for `<stage>`:
+
+| name         | description                                                                                     |
+|--------------|-------------------------------------------------------------------------------------------------|
+| `setup`      | [`setup`](/reference/prorgams/setup) programs, exclusive to Iris                                |
+| `begin`      | [`begin`](/reference/programs/begin) programs, exclusive to Iris                                |
+| `shadowcomp` | [`shadowcomp`](/reference/programs/shadow_comp) programs                                        |
+| `prepare`    | [`prepare`](/reference/programs/prepare) programs                                               |
+| `gbuffers`   |  [`gbuffers`](/reference/programs/gbuffers) and [`shadow`](/reference/programs/shadow) programs |
+| `deferred`   | [`deferred`](/reference/programs/deferred) programs                                             |
+| `composite`  | [`composite`](/reference/programs/composite) and [`final`](/reference/programs/final) programs  |
+
+
+# Raw Textures
+### `texture.<stage>.<bufferName> = <path> <type> <internalFormat> <dimensions> <pixelFormat> <pixelType>`
+Raw textures (i.e. unencoded binary files) can also be loaded using the above syntax.
+- `<type>` can be one of the following: `TEXTURE_1D`, `TEXTURE_2D`, `TEXTURE_3D`, or `TEXTURE_RECTANGLE`.
+- Replace `<internalFormat>` with the [texture format](/reference/buffers/texture_format).
+- Replace `<dimensions>` with the fixed size dimensions of the texture (the number of components depends on the type).
+- Replace `<pixelFormat>` with the pixel format described in the "Pixel Formats" section of the [texture format section](/reference/buffers/texture_format).
+- Replace `<pixelType>` with the pixel type described in the "Pixel Types" section of the [texture format section](/reference/buffers/texture_format).
+
+
+# Iris Enhanced Custom Textures
+### `customTexture.<name> = <path>`
+### `customTexture.<name> = <path> <type> <internalFormat> <dimensions> <pixelFormat> <pixelType>`
+Iris adds support for the `customTexture` directive, which allows the shader dev to use a different sampler instead of overriding an existing sampler. This allows creation of a sampler of (mostly) any name, which replaces `<name>` in the directive and is used in the shader code. Otherwise the syntax of the enhanced custom textures are identical to standard custom textures.

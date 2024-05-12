@@ -1,0 +1,122 @@
+---
+title: Texture Format
+description: Texture Format
+sidebar:
+  label: Texture Format
+  order: 3
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Color attachments, such as [colortex](/reference/buffers/colortex) and [shadowcolor](/reference/buffers/shadowcolor) buffers, store values in a specific format. The default format is `RGBA` (which equates to `RGBA8` on most systems), however a shader pack can specify the format and precision of each color attachment.
+
+The format for any color attachement can be set using the [\<bufferName\>Format](/reference/directives/buffer_format) directive.
+
+The available texture formats and their meanings are described below:
+
+## Normalized
+
+Normalized buffers can store "floating point" values in a fixed range, between 0.0 and 1.0 (inclusive).  The values are not actually stored as floating point internally, but as an integer value. However, the result is converted to a floating point during read/write to a color attachment using a normalized format, so the shader will read/write floating point values to the attachments, however any values outside of the range will be clamped to fit in the range.
+
+| 8-bit | 16-bit | mixed    |
+| ----- | ------ | -------- |
+| R8    | R16    | RGB5_A1  |
+| RG8   | RG16   | RGB10_A2 |
+| RGB8  | RGB16  |          |
+| RGBA8 | RGBA16 |          |
+
+## Signed Normalized
+
+Signed Normalized buffers are identical to normalized buffers, however the range they can represent is expanded to -1 to 1 inclusive, allowing them to store negative values.
+
+| 8-bit       | 16-bit       |
+| ----------- | ------------ |
+| R8_SNORM    | R16_SNORM    |
+| RG8_SNORM   | RG16_SNORM   |
+| RGB8_SNORM  | RGB16_SNORM  |
+| RGBA8_SNORM | RGBA16_SNORM |
+
+## Floating Point
+
+Floating point buffers allow the attachment to store full floating point values. They are only available with larger than default precision due to the increased storage needed for floating point values. However they offer a significantly larger range of values, allowing the storing of HDR values.
+
+| 16-bit  | 32-bit  | mixed          |
+| ------- | ------- | -------------- |
+| R16F    | R32F    | RGB9_E5        |
+| RG16F   | RG32F   | R11F_G11F_B10F |
+| RGB16F  | RGB32F  |                |
+| RGBA16F | RGBA32F |                |
+
+The `RGB9_E5` format uses a 5-bit exponent for all three terms (R, G, and B), where each component has a 9 bit mantissa. This allows significantly more precision than the `R11F_G11F_B10F`, which only has 6 to 5 bits of precision per component, however `R11F_G11F_B10F` has individual exponents for each component. For more information on these format types, see the [OpenGL Wiki](https://www.khronos.org/opengl/wiki/Small_Float_Formats)
+
+## Signed Integer
+
+Signed Integer buffers allow storing signed integers, just like the tin says. These are standard two's complement integers, which means they can store negative values.
+
+| 8-bit  | 16-bit  | 32-bit  |
+| ------ | ------- | ------- |
+| R8I    | R16I    | R32I    |
+| RG8I   | RG16I   | RG32I   |
+| RGB8I  | RGB16I  | RGB32I  |
+| RGBA8I | RGBA16I | RGBA32I |
+
+## Unsigned Integer
+
+Unsigned Integer buffers allow storing of unsigned integers, which will not be interpreted as negative values (although they can be cast to signed integers after being read). As such they do not directly allow the storage of negative integers, but have double the range of their signed cousins in the positive domain.
+
+| 8-bit   | 16-bit   | 32-bit   |
+| ------- | -------- | -------- |
+| R8UI    | R16UI    | R32UI    |
+| RG8UI   | RG16UI   | RG32UI   |
+| RGB8UI  | RGB16UI  | RGB32UI  |
+| RGBA8UI | RGBA16UI | RGBA32UI |
+
+
+## Pixel Formats
+Pixel formats are used to describe the layout of the data in a texture. These are used when defining custom textures and custom images. The following formats are available:
+
+| name   |
+|--------|
+| `RED`  |
+| `RG`   |
+| `RGB`  |
+| `BGR`  |
+| `RGBA` |
+| `BGRA` |
+
+When using integer buffers, append `_INTEGER` to the format:
+
+| name           |
+|----------------|
+| `RED_INTEGER`  |
+| `RG_INTEGER`   |
+| `RGB_INTEGER`  |
+| `BGR_INTEGER`  |
+| `RGBA_INTEGER` |
+| `BGRA_INTEGER` |
+
+## Pixel Types
+Pixel types are used to describe the format/memory representation of each component of the data in a texture. These are used when defining custom textures and images. The following formats are available:
+
+| name                          |
+|-------------------------------|
+| `BYTE`                        |
+| `SHORT`                       |
+| `INT`                         |
+| `HALF_FLOAT`                  |
+| `FLOAT`                       |
+| `UNSIGNED_BYTE`               |
+| `UNSIGNED_BYTE_3_3_2`         |
+| `UNSIGNED_BYTE_2_3_3_REV`     |
+| `UNSIGNED_SHORT`              |
+| `UNSIGNED_SHORT_5_6_5`        |
+| `UNSIGNED_SHORT_5_6_5_REV`    |
+| `UNSIGNED_SHORT_4_4_4_4`      |
+| `UNSIGNED_SHORT_4_4_4_4_REV`  |
+| `UNSIGNED_SHORT_5_5_5_1`      |
+| `UNSIGNED_SHORT_1_5_5_5_REV`  |
+| `UNSIGNED_INT`                |
+| `UNSIGNED_INT_8_8_8_8`        |
+| `UNSIGNED_INT_8_8_8_8_REV`    |
+| `UNSIGNED_INT_10_10_10_2`     |
+| `UNSIGNED_INT_2_10_10_10_REV` |

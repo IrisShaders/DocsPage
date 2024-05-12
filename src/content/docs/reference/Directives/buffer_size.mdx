@@ -1,0 +1,15 @@
+---
+title: Buffer Size
+description: Buffer Size
+sidebar:
+  label: Buffer Size
+  order: 3
+---
+
+### `size.buffer.<bufferName>=<width> <height>`
+
+#### Location: shaders.properties
+
+The resolution of [colortex](/reference/buffers/colortex) buffers can be configured with this directive in `shaders.properties`. Replace `<bufferName>` with the name of the buffer (e.g. `colortex5`), then replace `<width>` and `<height>` with the resolution of the buffer. If the passed dimensions are integer, that will define the resolution of the buffer in pixels. If the dimensions are floating point, it will define the resolution of the buffer relative to the screen resolution. For example, `size.buffer.colortex5=0.75 0.25` will make `colortex5` three quarters the width and one quarter the height of the Minecraft window.
+
+Any buffer whose size is changed cannot be rendered to by a [`gbuffers`](/reference/programs/gbuffers) pass, meaning it can only be rendered to through a [`begin`](/reference/programs/begin), [`prepare`](/reference/programs/prepare), [`deferred`](/reference/programs/deferred), or [`composite`](/reference/programs/composite) program. Additionally, any individual program can only render to buffers with identical sizes. This exception does not apply to image bindings or compute programs.
