@@ -1,0 +1,20 @@
+---
+title: particles.ordering
+description: particles.ordering
+sidebar:
+  label: particles.ordering
+  order: 2
+  badge:
+    text: Iris Only
+    variant: tip
+---
+
+### `particles.ordering=<mixed|after|before>`
+
+#### Location: shaders.properties
+
+This controls how particles will be rendered. There are 3 possible options for this value.
+
+- `mixed`: Opaque particles are rendered before the [deferred](/reference/programs/deferred) pass, and translucent particles are rendered after. This is the default if no [deferred](/reference/programs/deferred) passes are present.
+- `after`: All particles are rendered after the [deferred](/reference/programs/deferred) pass. This is the default if there are any [deferred](/reference/programs/deferred) passes.
+- `before`: All particles are rendered before the [deferred](/reference/programs/deferred) pass.

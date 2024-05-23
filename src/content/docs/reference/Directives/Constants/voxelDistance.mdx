@@ -1,0 +1,18 @@
+---
+title: voxelDistance
+description: voxelDistance
+sidebar:
+  label: voxelDistance
+  order: 3
+  badge:
+    text: Iris Only
+    variant: tip
+---
+
+### `const float voxelDistance = 160.0;`
+
+#### Location: composite, deferred, final, prepare
+
+Setting [`shadow.culling = reversed`](/reference/directives/shadersproperties/shadow_culling) in shaders.properties will create an area around the player where geometry in the shadow pass will not be culled. Outside this area, geometry will be culled as if shadow culling was enabled. This "unculled" distance is controled with `const float voxelDistance`, and the culled distance is controlled as normal with `const float shadowDistance` (and cannot be lower than `voxelDistance`). This feature is intended for packs which utilize both voxelization and a shadow map.
+
+It is also recommended (but not required) to use the feature flag [`REVERSED_CULLING`](/reference/directives/shadersproperties/flags) to avoid compatibility issues with older Iris versions.
