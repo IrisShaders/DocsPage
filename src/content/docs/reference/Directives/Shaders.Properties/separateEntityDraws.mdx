@@ -1,0 +1,16 @@
+---
+title: separateEntityDraws
+description: separateEntityDraws
+sidebar:
+  label: separateEntityDraws
+  order: 2
+  badge:
+    text: Iris Only
+    variant: tip
+---
+
+### `separateEntityDraws=<true|false>`
+
+#### Location: shaders.properties
+
+If `separateEntityDraws` is true in shaders.properties, translucent entities and block entities will wait to be drawn until after the deferred pass, and then will be drawn in the `gbuffers_entities_translucent` and `gbuffers_block_translucent` programs.
