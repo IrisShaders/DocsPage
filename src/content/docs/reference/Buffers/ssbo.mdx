@@ -1,0 +1,57 @@
+---
+title: SSBOs
+description: SSBOs
+sidebar:
+  label: SSBOs
+  order: 3
+  badge:
+    text: Iris Only
+    variant: tip
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+### `bufferObject.<index> = <byteSize>`
+### `bufferObject.<index> = <byteSize> <isRelative> <scaleX> <scaleY>`
+
+Shader Storage Buffer Objects (or SSBO's) are buffers that can store large amounts of data between shader invocations, and even between frames. Unlike images, they allow storing arbitrary data types. For more information about the limits of SSBO's in OpenGL, read the [Khronos Wiki](https://www.khronos.org/opengl/wiki/Shader_Storage_Buffer_Object).
+
+SSBO's can hold a guaranteed maximum of 128MB, and on most drivers can hold as much as the GPU physically alllows. Iris will give an error and fail to load a shader if allocating an SSBO would otherwise use up too much VRAM.
+
+To allocate an SSBO for a shaderpack, put the following in `shaders.properties`, where index can be between 0 and 8:
+
+`bufferObject.<index> = <byteSize> <isRelative> <scaleX> <scaleY>`
+
+To define the SSBO as fixed size, simply exclude the last three options and fill `<byteSize>` with the size of the SSBO.
+
+SSBOs can also be defined as screen-sized (Iris 1.6.6 and later), where their size is relative to the screen dimensions. This is useful for storing data per-pixel. Fill `<isRelative>` with true, `<scaleX>` and `<scaleY>` then define the multipliers for the number of "pixels" in the SSBO relative to each screen dimension (i.e. 1.0 would mean the same dimension as the screen), and `<byteSize>` defines the number of bytes per "pixel". The total size of the SSBO is calculated as `int(viewWidth * scaleX) * int(viewHeight * scaleY) * byteSize`.
+
+To use an SSBO in a shader, you must define it's layout. Here is an example definition of a SSBO, where bufferName can be any name:
+
+**This layout must be the same across all shaders, otherwise the data will get corrupted.**
+
+```glsl
+layout(std430, binding = index) buffer bufferName {
+    vec4 someData; // 16 bytes
+    float someExtraData; // 4 bytes
+};
+
+void main() {
+    someData = vec4(0); // Other shaders will see this
+    gl_FragColor = vec4(someExtraData); // Read from any previous shaders, or the previous frame if it was never overwritten
+}
+```
+
+You can optionally make all the variables of an SSBO local to avoid redefinitions. To do this, declare an accessor for the SSBO, as the following.
+
+```glsl
+layout(std430, binding = index) buffer bufferName {
+    vec4 someData; // 16 bytes
+    float someExtraData; // 4 bytes
+} bufferAccess;
+
+void main() {
+    bufferAccess.someData = vec4(0); // Other shaders will see this
+    gl_FragColor = vec4(bufferAccess.someExtraData); // Read from any previous shaders, or the previous frame if it was never overwritten
+}
+```
