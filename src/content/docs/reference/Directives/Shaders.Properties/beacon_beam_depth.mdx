@@ -1,0 +1,13 @@
+---
+title: beacon.beam.depth
+description: beacon.beam.depth
+sidebar:
+  label: beacon.beam.depth
+  order: 1
+---
+
+### `beacon.beam.depth=<true|false>`
+
+#### Location: shaders.properties
+
+Sets whether beacon beams write to the [depth buffer](/reference/buffers/depthtex). If `true`, the inner beacon beam will be treated like opaque geometry and only write toall depthtex buffers. This only applies to the opaque inner geometry of the beacon beam and not the outer translucent geometry. This setting is `false` by default.
