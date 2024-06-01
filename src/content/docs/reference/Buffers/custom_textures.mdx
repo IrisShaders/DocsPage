@@ -11,7 +11,7 @@ import { Aside } from '@astrojs/starlight/components';
 ### `texture.<stage>.<bufferName> = <path>`
 This directive allows a custom texture to be bound to an existing sampler (such as a [colortex](/reference/buffers/colortex) sampler). This allows the shader to access external textures or specific textures from the resource pack.
 
-Textures can be loaded from the shader pack files by replacing `<path>` with the file path to the texture relative to the `shaders` folder. For example `texture.composite.colortex5 = textures/perlin.png` would load `perlin.png` from the `shaders/textures` folder. `.png` and `.jpg` formats are supported.
+Textures can be loaded from the shader pack files by replacing `<path>` with the file path to the texture relative to the `shaders` folder. For example `texture.composite.colortex5 = textures/perlin.png` would load `perlin.png` from the `shaders/textures` folder. Iris supports only `.png` image format, whereas Optifine supports `.png` and `.jpg` formats.
 
 Textures can also be loaded from the resource pack by replacing `<path>` with `minecraft:` followed by the path in the resourcepack (or vanilla files) of the texture. For example, `texture.deferred.colortex7 = minecraft:textures/block/dirt.png` will load the dirt texture from the resource pack or vanilla assets.
 
