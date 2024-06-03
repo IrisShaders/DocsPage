@@ -1,0 +1,15 @@
+---
+title: shadowDistanceRenderMul
+description: shadowDistanceRenderMul
+sidebar:
+  label: shadowDistanceRenderMul
+  order: 3
+---
+
+### `const float shadowDistanceRenderMul = -1.0;`
+
+#### Location: any glsl file
+
+Sets the culling distance multiplier for the [shadow pass](/reference/programs/shadow).
+
+By default this value is `-1`, which means geometry outside the [`shadowDistance`](/reference/directives/constants/shadowdistance) are not culled. Setting this to a positive value applies culling to geometry outside `shadowDistance * shadowDistanceRenderMul` blocks from the camera. For example, `1.0` culls outside [`shadowDistance`](/reference/directives/constants/shadowdistance), `0.5` culls outside half of [`shadowDistance`](/reference/directives/constants/shadowdistance), and `2.0` culls outside twice [`shadowDistance`](/reference/directives/constants/shadowdistance). `shadowDistanceRenderMul` has no effect on the scale of geometry in the [shadow pass](/reference/programs/shadow).
