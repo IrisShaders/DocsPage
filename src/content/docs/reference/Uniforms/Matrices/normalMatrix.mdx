@@ -4,12 +4,11 @@ description: normalMatrix
 sidebar:
   label: normalMatrix
   order: 1
-  badge:
-    text: Unfinished
-    variant: caution
 ---
 import { Aside } from '@astrojs/starlight/components';
 
 <Aside type="danger">This uniform only works on `1.17` and newer.</Aside>
 
-### `uniform ;`
+### `uniform mat3 normalMatrix;`
+
+Equivalent to `mat3(transpose(modelViewMatrixInverse))`, or `gl_NormalMatrix` in older GLSL versions.

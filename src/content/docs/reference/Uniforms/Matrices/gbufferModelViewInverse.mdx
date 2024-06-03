@@ -4,9 +4,8 @@ description: gbufferModelViewInverse
 sidebar:
   label: gbufferModelViewInverse
   order: 1
-  badge:
-    text: Unfinished
-    variant: caution
 ---
 
-### `uniform ;`
+### `uniform mat4 gbufferModelViewInverse;`
+
+Equal to `inverse(gbufferModelView)`, but calculated on the CPU for improved performance since the `inverse()` function is very slow.

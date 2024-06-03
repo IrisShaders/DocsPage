@@ -4,9 +4,8 @@ description: shadowProjectionInverse
 sidebar:
   label: shadowProjectionInverse
   order: 1
-  badge:
-    text: Unfinished
-    variant: caution
 ---
 
-### `uniform ;`
+### `uniform mat4 shadowProjectionInverse;`
+
+Equal to `inverse(shadowProjection)`, but calculated on the CPU for improved performance since the `inverse()` function is very slow.

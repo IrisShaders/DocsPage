@@ -4,9 +4,8 @@ description: gbufferProjectionInverse
 sidebar:
   label: gbufferProjectionInverse
   order: 1
-  badge:
-    text: Unfinished
-    variant: caution
 ---
 
-### `uniform ;`
+### `uniform mat4 gbufferProjectionInverse;`
+
+Equal to `inverse(gbufferProjection)`, but calculated on the CPU for improved performance since the `inverse()` function is very slow.

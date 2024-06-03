@@ -5,11 +5,13 @@ sidebar:
   label: textureMatrix
   order: 1
   badge:
-    text: Unfinished
-    variant: caution
+    text: 1.17+
+    variant: danger
 ---
 import { Aside } from '@astrojs/starlight/components';
 
 <Aside type="danger">This uniform only works on `1.17` and newer.</Aside>
 
-### `uniform ;`
+### `uniform mat4 textureMatrix;`
+
+Always equal to `mat4(1.0)`.
