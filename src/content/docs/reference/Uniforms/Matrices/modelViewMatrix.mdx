@@ -19,8 +19,8 @@ Transforms coordinates from model/local space to view/eye space.
 Equal to `mat4(1.0)` in [`begin`](/reference/programs/begin), [`prepare`](/reference/programs/prepare), [`deferred`](/reference/programs/deferred), [`composite`](/reference/programs/composite) and [`final`](/reference/programs/final) programs.
 ```glsl
 vec3 model_pos = vaPosition + chunkOffset;
-vec4 view_pos = modelViewMatrix * vec4(modelPos, 1.0);
-vec4 clip_pos = projectionMatrix * viewPos;
+vec4 view_pos = modelViewMatrix * vec4(model_pos, 1.0);
+vec4 clip_pos = projectionMatrix * view_pos;
 
 gl_Position = clip_pos;
 ```

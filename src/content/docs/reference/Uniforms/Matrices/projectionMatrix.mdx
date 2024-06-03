@@ -17,8 +17,8 @@ import { Aside } from '@astrojs/starlight/components';
 Transforms coordinates from view/eye space to clip space.
 ```glsl
 vec3 model_pos = vaPosition + chunkOffset;
-vec4 view_pos = modelViewMatrix * vec4(modelPos, 1.0);
-vec4 clip_pos = projectionMatrix * viewPos;
+vec4 view_pos = modelViewMatrix * vec4(model_pos, 1.0);
+vec4 clip_pos = projectionMatrix * view_pos;
 
 gl_Position = clip_pos;
 ```
