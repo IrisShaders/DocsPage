@@ -1,0 +1,15 @@
+---
+title: shadowDistance
+description: shadowDistance
+sidebar:
+  label: shadowDistance
+  order: 3
+---
+
+### `const float shadowDistance = 160.0;`
+
+#### Location: any glsl file
+
+Sets the radius of the [shadow pass](/reference/programs/shadow) in blocks. The default value is 160 blocks.
+
+By default this does not cull geometry outside that distance, only applying a scaling factor to the shadow projection matrix. However setting [`shadowDistanceRenderMul`](/reference/directives/constants/shadowdistancerendermul) to a positive value will apply culling.
