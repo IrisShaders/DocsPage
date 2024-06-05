@@ -4,9 +4,8 @@ description: shadowModelViewInverse
 sidebar:
   label: shadowModelViewInverse
   order: 1
-  badge:
-    text: Unfinished
-    variant: caution
 ---
 
-### `uniform ;`
+### `uniform mat4 shadowModelViewInverse;`
+
+Equal to `inverse(shadowModelView)`, but calculated on the CPU for improved performance since the `inverse()` function is very slow.

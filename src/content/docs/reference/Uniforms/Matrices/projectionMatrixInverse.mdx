@@ -5,11 +5,13 @@ sidebar:
   label: projectionMatrixInverse
   order: 1
   badge:
-    text: Unfinished
-    variant: caution
+    text: 1.17+
+    variant: danger
 ---
 import { Aside } from '@astrojs/starlight/components';
 
 <Aside type="danger">This uniform only works on `1.17` and newer.</Aside>
 
-### `uniform ;`
+### `uniform mat4 projectionMatrixInverse;`
+
+Equal to `inverse(projectionMatrix)`, but calculated on the CPU for improved performance since the `inverse()` function is very slow.

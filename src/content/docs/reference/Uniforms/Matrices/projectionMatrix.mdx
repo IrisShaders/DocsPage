@@ -5,11 +5,28 @@ sidebar:
   label: projectionMatrix
   order: 1
   badge:
-    text: Unfinished
-    variant: caution
+    text: 1.17+
+    variant: danger
 ---
 import { Aside } from '@astrojs/starlight/components';
 
 <Aside type="danger">This uniform only works on `1.17` and newer.</Aside>
 
-### `uniform ;`
+### `uniform mat4 projectionMatrix;`
+
+Transforms coordinates from view/eye space to clip space.
+```glsl
+vec3 model_pos = vaPosition + chunkOffset;
+vec4 view_pos = modelViewMatrix * vec4(model_pos, 1.0);
+vec4 clip_pos = projectionMatrix * view_pos;
+
+gl_Position = clip_pos;
+```
+Equivalent to `gl_ProjectionMatrix` in the compatibility profile and older GLSL versions.
+```glsl
+vec3 model_pos = gl_Vertex.xyz;
+vec4 view_pos = gl_ModelViewMatrix * vec4(model_pos, 1.0);
+vec4 clip_pos = gl_ProjectionMatrix * view_pos;
+
+gl_Position = clip_pos;
+```
