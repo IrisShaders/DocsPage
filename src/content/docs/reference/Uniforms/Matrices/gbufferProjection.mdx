@@ -4,9 +4,8 @@ description: gbufferProjection
 sidebar:
   label: gbufferProjection
   order: 1
-  badge:
-    text: Unfinished
-    variant: caution
 ---
 
 ### `uniform mat4 gbufferProjection;`
+
+Equal to the [`projectionMatrix`](/reference/uniforms/matrices/projectionMatrix) used by all [gbuffers programs](/reference/programs/gbuffers) except for `gbuffers_hand` and `gbuffers_hand_water`, where the [`projectionMatrix`](/reference/uniforms/matrices/projectionMatrix) multiplies the Z axis by `MC_HAND_DEPTH` to move the hand closer to the camera than the rest of the world.

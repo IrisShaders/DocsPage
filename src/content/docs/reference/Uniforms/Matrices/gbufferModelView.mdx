@@ -4,9 +4,11 @@ description: gbufferModelView
 sidebar:
   label: gbufferModelView
   order: 1
-  badge:
-    text: Unfinished
-    variant: caution
 ---
 
 ### `uniform mat4 gbufferModelView;`
+
+Transforms coordinates from player space to view/eye space.
+```glsl
+vec3 view_pos = mat3(gbufferModelView) * eye_player_pos;
+```

@@ -14,4 +14,11 @@ import { Aside } from '@astrojs/starlight/components';
 
 ### `uniform mat4 textureMatrix;`
 
-Always equal to `mat4(1.0)`.
+Transforms texture coordinates. Used by [`gbuffers_armor_glint`](/reference/programs/gbuffers) to scroll the texture over time.
+```glsl
+vec2 coord = ((textureMatrix * vec4(vaUV0, 0.0, 1.0)).xy;
+```
+Equivalent to `gl_TextureMatrix[0]` in the compatibility profile and older GLSL versions.
+```glsl
+vec2 coord = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;
+```

@@ -22,3 +22,11 @@ vec4 clip_pos = projectionMatrix * view_pos;
 
 gl_Position = clip_pos;
 ```
+Equivalent to `gl_ProjectionMatrix` in the compatibility profile and older GLSL versions.
+```glsl
+vec3 model_pos = gl_Vertex.xyz;
+vec4 view_pos = gl_ModelViewMatrix * vec4(model_pos, 1.0);
+vec4 clip_pos = gl_ProjectionMatrix * view_pos;
+
+gl_Position = clip_pos;
+```
