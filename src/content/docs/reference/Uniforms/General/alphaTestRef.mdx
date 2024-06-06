@@ -12,7 +12,7 @@ import { Aside } from '@astrojs/starlight/components';
 
 ### `uniform float alphaTestRef;`
 
-This value stores the alpha value that Iris recommends you discard pixels bellow. This value is commonly `0.1`, but can change in certain cases (therefore it is recommended to use the uniform over a hardcoded value). The value is also affected by the [`alphaTest`](/reference/directives/shadersproperties/alphatest) directive. It is normally used like this:
+This value stores the alpha value that Iris recommends you discard pixels bellow. This value is commonly `0.1`, but can change in certain cases (therefore it is recommended to use the uniform over a hardcoded value). The value is also affected by the [`alphaTest`](/reference/shadersproperties/alphatest) directive. It is normally used like this:
 ```glsl
 if (albedoOut.a < alphaTestRef) discard;
 ```
