@@ -14,4 +14,4 @@ import { Aside } from '@astrojs/starlight/components';
 
 ### `uniform mat4 projectionMatrixInverse;`
 
-Equal to `inverse(projectionMatrix)`, but calculated on the CPU for improved performance since the `inverse()` function is very slow.
+Equal to `inverse(projectionMatrix)`, but calculated on the CPU to avoid running the expensive `inverse()` function on the GPU.
