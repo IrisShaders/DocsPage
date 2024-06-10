@@ -1,0 +1,64 @@
+---
+title: PBR Standards
+description: How to interpret PBR data provided by texture packs
+---
+
+Texture packs can optionally provide extra data to Iris through the use of normal and specular maps.
+
+**For more information on [normal maps](https://learnopengl.com/Advanced-Lighting/Normal-Mapping) and [specular maps](https://learnopengl.com/Lighting/Lighting-maps), check out [learnopengl.com](https://learnopengl.com).**
+
+## Access
+
+Normal map textures have the same name as the texture they should be attached to, with the `_n` suffix. For example, for a block of cobblestone, the texture is called `cobblestone.png`, and the normal map for cobblestone would be `cobblestone_n.png`. Likewise, specular maps have the suffix `_s`, meaning for cobblestone it would be `cobblestone_s.png`.
+
+These textures are provided in the form of two additional texture atlases.
+- `uniform sampler2D normals`
+- `uniform sampler2D specular`
+
+These texture atlases should be sampled in the same way that `gtexture` is sampled.
+
+## Formats
+There are two standard formats used for encoding PBR data in the normal and specular maps - oldPBR (also known as seusPBR) and labPBR.
+
+### LabPBR
+LabPBR is the preferred format for encoding PBR data, specified by [shaderLABS](https://shaderlabs.org/). For specifics on the standard, visit the [wiki page](https://shaderlabs.org/wiki/LabPBR_Material_Standard).
+
+### oldPBR (seusPBR)
+
+**Note:** Most modern resource packs do not use oldPBR.
+
+oldPBR is not a standard format, so much as a general convention that was followed by shader developers prior to the specification of labPBR. It is also known as seusPBR due to the fact that Sonic Ether's Unbelievable Shaders (a popular series of shaderpacks) do not support labPBR, and thus an oldPBR compatible pack is needed to use with them.
+
+- The *normal* is encoded in the `rgb` components of the **normal map**.
+- The *height* is encoded in the `a` component of the **normal map**.
+- The *smoothness* is encoded in the `r` component of the **specular map**.
+- The *metallness* is encoded in the `g` component of the **specular map**.
+- The *emissiveness* is encoded in the `b` component of the **specular map**.
+
+## Checking the format
+A texture pack can optionally declare that it is LabPBR compliant (and the version of the format it uses) in `texture.properties` by adding something like the following
+
+
+If labPBR is declared at all, the following preprocessor define will be declared
+```
+// texture.properties
+format=lab-pbr
+```
+```
+// this will be defined
+MC_TEXTURE_FORMAT_LAB_PBR
+```
+
+Additionally, if a version is specified, a further define will be declared. **For example, with version 1.3:**
+```
+// texture.properties
+format=lab-pbr/1.3
+```
+```
+// this will be defined
+MC_TEXTURE_FORMAT_LAB_PBR
+MC_TEXTURE_FORMAT_LAB_PBR_1_3
+```
+
+**Note:** At the time of writing, the only supported LabPBR version is 1.3. **Specifying other versions in a texture pack may cause errors.**
+
