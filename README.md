@@ -84,5 +84,5 @@ Translations are not yet supported, but once the english version is complete we 
 ## Contributors
 - [Iris Docs](https://github.com/IrisShaders/ShaderDoc/tree/master) - Most of the early documentation
 - WhyFencePost / WhyFenceCode - The page and a lot of the data transfer
-- NinjaMike - Many uniforms including Iris exclusive uniforms
+- NinjaMike - Many uniforms including Iris exclusive uniforms, constants, shaders.properties, programs
 - jbritain - Some uniforms, other miscellaneous things
