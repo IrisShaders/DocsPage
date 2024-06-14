@@ -1,12 +1,16 @@
 ---
-title: Deferred
+title: deferred
 description: Deferred Programs
 sidebar:
-  label: Deferred
+  label: deferred
   order: 7
-  badge:
-    text: Unfinished
-    variant: caution
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+**Required stages**: vertex (.vsh), fragment (.fsh)  
+**Optional stages**: geometry (.gsh), compute (.csh)  
+**Output Buffers**: [colortex](/reference/buffers/colortex)  
+**Valid suffixes**: N/A, 1-99
+
+-------------------------------------------------
+
+A composite pass which runs after (most) opaque [gbuffers](/reference/programs/gbuffers) programs but before (most) translucent [gbuffers](/reference/programs/gbuffers) programs. Like other composite programs, it renders a single fullscreen quad over the resolution of the buffer(s) it writes to.
