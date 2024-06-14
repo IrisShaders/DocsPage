@@ -8,4 +8,4 @@ sidebar:
 
 ### `uniform mat4 gbufferModelViewInverse;`
 
-Equal to `inverse(gbufferModelView)`, but calculated on the CPU for improved performance since the `inverse()` function is very slow.
+Equal to [`inverse(gbufferModelView)`](/reference/uniforms/matrices/gbuffermodelview), but calculated on the CPU to avoid running the expensive `inverse()` function on the GPU.

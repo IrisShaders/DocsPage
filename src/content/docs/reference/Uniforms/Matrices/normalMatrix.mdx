@@ -14,7 +14,7 @@ import { Aside } from '@astrojs/starlight/components';
 
 ### `uniform mat3 normalMatrix;`
 
-Equivalent to `mat3(transpose(modelViewMatrixInverse))`, or `gl_NormalMatrix` in the compatibility profile and older GLSL versions.
+Equivalent to [`mat3(transpose(modelViewMatrixInverse))`](/reference/uniforms/matrices/modelviewmatrixinverse), or `gl_NormalMatrix` in the compatibility profile and older GLSL versions.
 ```glsl
 vec3 normal = normalMatrix * vaNormal;
 ```
