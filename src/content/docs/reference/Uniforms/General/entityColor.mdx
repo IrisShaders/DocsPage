@@ -4,9 +4,12 @@ description: entityColor
 sidebar:
   label: entityColor
   order: 1
-  badge:
-    text: Unfinished
-    variant: caution
 ---
 
 ### `uniform vec4 entityColor;`
+
+The entity tint color. The `rgb` components store the color, and the `a` component stores the blend factor. The entity color should be applied as follows:
+
+```glsl
+color.rgb = mix(color.rgb, entityColor.rgb, entityColor.a);
+```
