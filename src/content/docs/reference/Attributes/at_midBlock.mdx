@@ -1,0 +1,21 @@
+---
+title: at_midBlock
+description: at_midBlock
+sidebar:
+  label: at_midBlock
+  order: 1
+---
+
+### `in vec3 at_midBlock;`
+
+**Valid Programs**: terrain (*gbuffers_terrain*, *gbuffers_water*, *shadow*)
+
+---
+
+The world/player space offset from the vertex's position to the center of the block in 1/64th block units. For example, the center position would be calculated like this:
+
+```glsl
+vec3 centerPosition = position + at_midBlock/64.0;
+```
+
+This attribute is only available for terrain.

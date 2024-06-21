@@ -1,0 +1,23 @@
+---
+title: vaColor
+description: vaColor
+sidebar:
+  label: vaColor
+  order: 1
+  badge:
+    text: 1.17+
+    variant: danger
+---
+import { Aside } from '@astrojs/starlight/components';
+
+<Aside type="danger">This attribute only works with the "core profile" in Minecraft `1.17` and newer. It is recommended to use the "compatibility profile" with Iris for better support. </Aside>
+
+### `in vec4 vaColor;`
+
+**Valid Programs**: all gbuffers/shadow
+
+---
+
+The vertex color attribute, equivalent to `gl_Color` from the compatibility profile.
+
+The color attribute is often used to apply tints to colored blocks such as leaves, grass, water, etc. It also contains the [vanilla ao](/reference/constants/ambientocclusionlevel) and if enabled the [old lighting](/reference/shadersproperties/oldlighting). Enabling [`separateAo`](/reference/shadersproperties/separateao) will remove the vanilla ao from the rgb components of the color and put the ao in the alpha component.
