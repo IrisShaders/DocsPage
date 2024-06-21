@@ -4,9 +4,8 @@ description: entityId
 sidebar:
   label: entityId
   order: 1
-  badge:
-    text: Unfinished
-    variant: caution
 ---
 
 ### `uniform int entityId;`
+
+This uniform stores the id(`entity.properties`) of the current entity. Value is `0` if no `entity.properties` is present. Value `65535` if `entity.properties` is present and the entity is not in the file.

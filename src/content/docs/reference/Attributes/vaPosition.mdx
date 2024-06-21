@@ -1,0 +1,23 @@
+---
+title: vaPosition
+description: vaPosition
+sidebar:
+  label: vaPosition
+  order: 1
+  badge:
+    text: 1.17+
+    variant: danger
+---
+import { Aside } from '@astrojs/starlight/components';
+
+<Aside type="danger">This attribute only works with the "core profile" in Minecraft `1.17` and newer. It is recommended to use the "compatibility profile" with Iris for better support. </Aside>
+
+### `in vec4 vaPosition;`
+
+**Valid Programs**: all gbuffers/shadow
+
+---
+
+The vertex position attribute, equivalent to `gl_Vertex` from the compatibility profile.
+
+The vertex position from `vaPosition` is in model space (which varies for different geometry). It can be converted to view space using [`modelViewMatrix`](/reference/uniforms/matrices/modelviewmatrix) (or `gl_ModelViewMatrix` in the compatibility profile).
