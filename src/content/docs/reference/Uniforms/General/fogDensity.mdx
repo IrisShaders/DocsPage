@@ -8,4 +8,4 @@ sidebar:
 
 ### `uniform float fogDensity;`
 
-This uniform stores the value of the suggested density of fog based on depth of the current fragment. This value is `0` when there shall be no fog, and is `1` when there should be full fog and no other visibility. This value interpolates between the two based on depth.
+This uniform stores the relative fog density used for vanilla fog, based on the current biome, weather, water/lava/packed snow, etc. The value ranges from `0.0` (lowest density) to `1.0` (highest density).
