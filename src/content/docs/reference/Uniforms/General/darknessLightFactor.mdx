@@ -4,12 +4,8 @@ description: darknessLightFactor
 sidebar:
   label: darknessLightFactor
   order: 1
-  badge:
-    text: Unfinished
-    variant: caution
 ---
-import { Aside } from '@astrojs/starlight/components';
-
-<Aside type="danger">This uniform only works on `1.17` and newer.</Aside>
 
 ### `uniform float darknessLightFactor;`
+
+The darkness status effect creates a pulsating dimming effect in the game lighting. This uniform stores the current strength of the dimming effect. The value is `0.0` is the minimum dimming, `1.0` when the effect is the maximum dimming, and is interpolated between those values during transitions.

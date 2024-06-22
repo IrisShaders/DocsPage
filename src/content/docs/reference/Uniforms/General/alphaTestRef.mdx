@@ -4,9 +4,6 @@ description: alphaTestRef
 sidebar:
   label: alphaTestRef
   order: 1
-  badge:
-    text: 1.17+
-    variant: danger
 ---
 import { Aside } from '@astrojs/starlight/components';
 
@@ -16,3 +13,5 @@ This value stores the alpha value that Iris recommends you discard pixels bellow
 ```glsl
 if (albedoOut.a < alphaTestRef) discard;
 ```
+
+<Aside type="note">This uniform is designed to work with the modern syntax for fragment shader outputs (`out`). When Using the legacy syntax (`gl_FragData`) this uniform is not necessary as the alpha test will be performed automatically.</Aside>

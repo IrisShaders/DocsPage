@@ -4,12 +4,8 @@ description: darknessFactor
 sidebar:
   label: darknessFactor
   order: 1
-  badge:
-    text: Unfinished
-    variant: caution
 ---
-import { Aside } from '@astrojs/starlight/components';
-
-<Aside type="danger">This uniform only works on `1.17` and newer.</Aside>
 
 ### `uniform float darknessFactor;`
+
+This uniform stores the strength of the darkness effect. The value is `0.0` when the effect is not present, `1.0` when the effect is active, and is interpolated between those values during transitions.

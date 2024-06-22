@@ -4,9 +4,14 @@ description: fogMode
 sidebar:
   label: fogMode
   order: 1
-  badge:
-    text: Unfinished
-    variant: caution
 ---
 
 ### `uniform int fogMode;`
+
+This uniform stores the fog type used for vanilla fog, based on the current biome, weather, water/lava/packed snow, etc. This is the function used to determine the strength of fog based on distance.
+
+The value stored in each component is one of the following hardcoded integer values (see [LWJGL docs](https://javadoc.lwjgl.org/constant-values.html#org.lwjgl.opengl.GL11.GL_EXP)):
+
+- `GL_EXP`: 2048
+- `GL_EXP2` : 2049
+- `GL_LINEAR`: 9729
