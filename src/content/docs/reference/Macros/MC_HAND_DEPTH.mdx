@@ -10,7 +10,7 @@ sidebar:
 
 The clip space depth multiplier applied to geometry in [`gbuffers_hand`](/reference/programs/gbuffers) and [`gbuffers_hand_water`](/reference/programs/gbuffers).
 
-The multiplier is applied in clip space automatically at the end of the program. When working backwards from the depth buffer, the multiplier should be applied in NDC space rather than screen space to produce the correct result, for example:
+The multiplier is applied in clip space automatically through the [projection matrix](/reference/uniforms/matrices/projectionMatrix]. When working backwards from the depth buffer, the multiplier should be applied in NDC space rather than screen space to produce the correct result, for example:
 
 ```glsl
 float screenDepth = texture(depthtex0, texcoord).r;
