@@ -19,6 +19,6 @@ By default, all [colortex](/reference/buffers/colortex) buffers are cleared to 0
 
 Currently the only option for setting clear color is with a vec4 value. If the buffer stores less than four components, the leftmost components will be used and the rest discarded. For integer buffers, the bits of the float value will be intepreted as a 32-bit integer (not converted, but directly intepreted bitwise) and used as the clear color. For 16 and 8 bit buffers, any value outside the range will be clamped to the maximum or minimum value depending if it's beyond the positive or negative bound.
 
-All four components of the vec4() must be specified, as in 'const vec4 colortex1ClearColor = vec4(0.,0.,0.,0.);'.
+All four components of the vec4() must be specified, as in `const vec4 colortex1ClearColor = vec4(0.,0.,0.,0.);`.
 
 This directive only needs to be defined once in the shader pack, and can be defined in (mostly) any shader file.
