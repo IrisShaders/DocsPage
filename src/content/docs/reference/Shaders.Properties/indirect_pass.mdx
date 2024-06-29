@@ -9,13 +9,14 @@ sidebar:
     variant: tip
 ---
 
-#### `indirect.pass = <bufferObjectNumber> <offsetInBuffer>`
+#### `indirect.<pass> = <bufferObjectNumber> <offsetInBuffer>`
 
 #### Location: shaders.properties
 
 Allows you to dispatch a compute shader with the work group amount specified from a [SSBO](/reference/buffers/ssbo).
 
 To use this, replace:
+- `<pass>` with the name of the compute shader pass (e.g. `composite`, `deferred1`, `prepare8`)
 - `<bufferObjectNumber>` with the "index" of the SSBO
 - `<offsetInBuffer>` with the offset to the work group count in bytes
 
