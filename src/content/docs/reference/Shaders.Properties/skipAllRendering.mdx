@@ -1,0 +1,18 @@
+---
+title: skipAllRendering
+description: skipAllRendering
+sidebar:
+  label: skipAllRendering
+  order: 2
+  badge:
+    text: Iris Only
+    variant: tip
+---
+
+### `skipAllRendering=<true|false>`
+
+#### Location: shaders.properties
+
+Disables most of the [gbuffers](/reference/programs/gbuffers) pass, including terrain, entities, and block entities. Does not disable post processing shaders or shadows.
+
+This option is intended for path tracing packs which do not utilize the [gbuffers](/reference/programs/gbuffers) pass and wish to avoid that geometry being sent to the screen.
