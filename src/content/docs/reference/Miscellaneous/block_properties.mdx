@@ -1,0 +1,37 @@
+---
+title: block.properties
+description: block.properties
+sidebar:
+  label: block.properties
+  order: 1
+---
+
+The `block.properties` file (located in the `shaders` folder) lets you assign IDs to specific blocks/block entities by their Minecraft ID. These IDs can be read through [`mc_Entity`](/reference/attributes/mc_entity) and [`blockEntityId`](/reference/uniforms/general/blockentityid) respectively in [gbuffers](/reference/programs/gbuffers) and [shadow](/reference/programs/shadow) shaders. The `block.properties` file should be placed in the `shaders` folder.
+
+Blocks and block entities can be assigned to an ID in this file, with the following syntax:
+```
+block.<ID> = [<namespace>:]<block_id>[:<NBT_tag>=<value>]
+
+# for example
+block.5 = stone minecraft:oak_trapdoor:open=true
+```
+
+The optional namespace allows support for modded blocks/block entities. Multiple blocks/block entities can be assigned to a single ID, however a single block/block entity can only be assigned to a single ID. IDs are stored internally as 16-bit signed integers, and can store values between `-32768` and `32767`.
+
+NBT's can optionally be specified with the `<NBT_tag>=<value>` format. They can be used to specify specific states for some blocks, for example redstone which is on/off, orientation for slabs/stairs, etc. For more info on NBT's, see the [Minecraft Wiki](https://minecraft.wiki/w/NBT_format).
+
+### Data Pack Tags
+
+Iris 1.7 adds support for data pack tags, which allow assigning groups of block based on attributes of the block. For more info on tags, see the [Minecraft Wiki](https://minecraft.wiki/w/Tag#Java_Edition_2).
+
+To specify a tag, use the following syntax `%<tag>` instead of the old block ID syntax. Use the [`IRIS_TAG_SUPPORT`](/reference/macros/iris_tag_support) macro in block.properties to detect if the current version of Iris supports tags:
+```
+#ifdef IRIS_TAG_SUPPORT
+  block.<ID> = %[<namespace>:]<tag>
+#endif
+
+# for example
+#ifdef IRIS_TAG_SUPPORT
+  block.9 = %minecraft:leaves %logs
+#endif
+```
