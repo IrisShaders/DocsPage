@@ -18,6 +18,6 @@ The first three components store the world/player space offset from the vertex's
 vec3 centerPosition = position + at_midBlock.xyz/64.0;
 ```
 
-In Iris 1.7 and newer, the last component stores the light level of the current block (without the influence of nearby light sources). This can be used to tell if a block is emissive.
+In Iris 1.7 and newer, the last component stores the light level of the current block (without the influence of nearby light sources). This can be used to tell if a block is emissive. It's recommended to use this together with [`BLOCK_EMISSION_ATTRIBUTE`](/reference/shadersproperties/flags).
 
 This attribute is only available for terrain.
