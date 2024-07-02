@@ -14,7 +14,7 @@ import { Aside } from '@astrojs/starlight/components';
 ### `bufferObject.<index> = <byteSize>`
 ### `bufferObject.<index> = <byteSize> <isRelative> <scaleX> <scaleY>`
 
-Shader Storage Buffer Objects (or SSBO's) are buffers that can store large amounts of data between shader invocations, and even between frames. Unlike images, they allow storing arbitrary data types. For more information about the limits of SSBO's in OpenGL, read the [Khronos Wiki](https://www.khronos.org/opengl/wiki/Shader_Storage_Buffer_Object).
+Shader Storage Buffer Objects (or SSBO's) are buffers that can store large amounts of data between shader invocations, and even between frames. Unlike images, they allow storing arbitrary data types. For more information about the limits of SSBO's in OpenGL, read the [Khronos Wiki](https://www.khronos.org/opengl/wiki/Shader_Storage_Buffer_Object). Using SSBOs with Iris requires the [`SSBO`](/reference/shadersproperties/flags) feature flag.
 
 SSBO's can hold a guaranteed maximum of 128MB, and on most drivers can hold as much as the GPU physically alllows. Iris will give an error and fail to load a shader if allocating an SSBO would otherwise use up too much VRAM.
 
