@@ -1,0 +1,32 @@
+---
+title: dimension.properties
+description: dimension.properties
+sidebar:
+  label: dimension.properties
+  order: 1
+  badge:
+    text: Iris Only
+    variant: tip
+---
+
+The `dimension.properties` file (located in the `shaders` folder) controls which shader files are loaded based on the dimension the player is in.
+
+## The Legacy Way: worldN
+Optifine defines a standard for dimensions based on the legacy dimension number. Within the `shaders` folder, shaders in `world0` are loaded in the overworld (or modded dimensions), `world-1` in the nether, and `world1` in the end. If any `worldN` folder are present, then shaders will **only** be loaded from `worldN` folders (no shaders will be loaded from the base `shaders` folder).
+
+## The Iris Way: dimension.properties
+Iris adds the `dimension.properties` file, which defines which folder is used for each dimension. The syntax is like this:
+```
+dimension.<folder_name> = [<namespace>:]<dimension_name> ...
+
+# for example
+dimension.netherShaders = minecraft:the_nether
+dimension.supportsShadows = minecraft:the_overworld minecraft:the_end *
+```
+
+Replace:
+- `<folder_name>` with the folder name containing the shaders files (located in the `shaders` folder). The folder name can be anything.
+- `<namespace>` optionally with `minecraft` a mod to specify namespace.
+- `<dimension_name>` with the dimension ID as defined in Minecraft. `*` can also be used as a wildcard (any dimensions not already defined).
+
+Any dimensions which are not specified (if a wildcard `*` is not used) will use the shader files located directly in the `shaders` folder.
