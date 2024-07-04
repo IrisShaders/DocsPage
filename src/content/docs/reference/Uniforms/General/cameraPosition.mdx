@@ -8,4 +8,8 @@ sidebar:
 
 ### `uniform vec3 cameraPosition;`
 
-This uniform stores the position of the camera in world space. For more information on spaces, visit this [how to article](/how_to/spaces) on the different spaces.
+This uniform stores the position of the camera in world space.
+
+This is similar to the in game coordinates, except for precision reasons the value is wrapped after a large number of blocks. In modern Iris, the value will reset every `30000` blocks when walking, or if the player has teleported more than `1000` blocks. Optifine resets every `1000024` blocks.
+
+For more information on spaces, visit this [how to article](/how_to/spaces) on the different spaces.

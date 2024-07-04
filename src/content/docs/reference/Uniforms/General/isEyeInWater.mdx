@@ -8,4 +8,11 @@ sidebar:
 
 ### `uniform int isEyeInWater;`
 
-This uniform outputs the current substance that the camera is in. Possible values are `0`, `1`, `2`, and `3`. The value `0` denotes the camera being in none of the recognized substances. The value `1` denotes the camera being submerged in water. The value `2` means that the camera is in lava. The value `3` means that the camera is currently in powdered snow.
+This uniform outputs the current substance that the camera is in. Possible values are:
+
+| value | state         |
+| ----- | ------------- |
+| `0`   | none/other    |
+| `1`   | water         |
+| `2`   | lava          |
+| `3`   | powdered snow |

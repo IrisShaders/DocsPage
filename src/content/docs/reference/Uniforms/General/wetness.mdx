@@ -8,7 +8,4 @@ sidebar:
 
 ### `uniform float wetness;`
 
-This uniform outputs the current strength of rain and is non-zero when there is currently a rain storm (e.g. weather set rain). The value ranges between `0` to `1` where `0` means no rain and `1` means rain storm, the value is interpolated between those values during transitions in weather.
-The transition is significantly slower, and can be controlled with [`wetnessHalfLife`](/reference/constants/wetnesshalflife).
-
-See also - [`rainStrength`](/reference/uniforms/general/rainstrength)
+This uniform is equivalent to [`rainStrength`](/reference/uniforms/general/rainstrength), except the transition time is controlled with [`wetnessHalfLife`](/reference/constants/wetnesshalflife). The default transition time is also significantly slower.
