@@ -35,3 +35,26 @@ To specify a tag, use the following syntax `%<tag>` instead of the old block ID 
   block.9 = %minecraft:leaves %logs
 #endif
 ```
+
+### Render Layers
+
+Using render layers, you can change which [gbuffers program](/reference/programs/gbuffers) specific blocks render in. For example, this would allow a normally translucent block to be rendered as cutout or solid. This is accomplished by changing the program the block is rendered to according to the following table:
+
+| layer                     | program                   |
+| ------------------------- | ------------------------- |
+| `solid`                   | `gbuffers_terrain_solid`  |
+| `cutout` / `cutout_mipped`| `gbuffers_terrain_cutout` |
+| `translucent`             | `gbuffers_water`          |
+
+> Note: there is no difference between `cutout` and `cutout_mipped` in Iris.
+
+The following lines can be placed in `block.properties` to change the render layer of any list of `<blocks>` (defined in the same was as blockIDs):
+
+```
+layer.solid=<blocks>
+layer.cutout=<blocks>
+layer.cutout_mipped=<blocks>
+layer.translucent=<blocks>
+```
+
+> **WARNING:** The render layer does not affect in-game culling, so making opaque geometry translucent might introduce holes in the world.
