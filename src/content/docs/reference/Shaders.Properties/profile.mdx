@@ -1,0 +1,34 @@
+---
+title: profile
+description: profile
+sidebar:
+  label: profile
+  order: 2
+---
+
+The `profile` directive allows defining of profiles, which are preconfigured sets of user options selectable through a `<profile>` button in the "Shader Pack Settings" screen. For more info on shader options, see [shaders.properties](/reference/shadersproperties/overview#shader-options).
+
+
+
+Options can be added to the "Shader Pack Settings" screen by adding them to the `screen` list as follows:  
+```
+profile.<name> = <list_of_options>
+```
+
+`<name>` should be replaced with the name of the profile, and `<list_of_options>` can be replaced with a space separated list of any of the following:
+| format                          | description                                                                      |
+| ------------------------------- | -------------------------------------------------------------------------------- |
+| `OPTION:value` `OPTION=value`   | set the value of `OPTION` to `value`                                             |
+| `OPTION`                        | set boolean option `OPTION` "on"                                                 |
+| `!OPTION`                       | set boolean option `OPTION` "off"                                                |
+| `profile.PROFILE_NAME`          | include all options from profile `PROFILE_NAME`                                  |
+| `!program.PROGRAM_NAME`         | disable program `PROGRAM_NAME`, may include dimension (e.g. `world1/composite5`) |
+
+
+#### Example
+Here's a free example
+```
+profile.LOW  = !SSAO ShadowType=1 SSR:false !program.composite2
+profile.MED  = SSAO  ShadowType=2 SSR:false !program.composite2
+profile.HIGH = SSAO  ShadowType=3 SSR:true
+```

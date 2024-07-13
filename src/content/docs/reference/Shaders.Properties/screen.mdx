@@ -1,0 +1,51 @@
+---
+title: screen
+description: screen
+sidebar:
+  label: screen
+  order: 2
+---
+
+The `screen` directive controls which shader options are displayed in the "Shader Pack Settings" screen and how they are displayed. For more info on shader options, see [shaders.properties](/reference/shadersproperties/overview#shader-options)
+
+Options can be added to the "Shader Pack Settings" screen by adding them to the `screen` list as follows:  
+```
+screen = <list_of_options>
+```
+
+`<list_of_options>` can be replaced with a space separated list of any of the following:
+| format      | description                                                                              |
+| ----------- | ---------------------------------------------------------------------------------------- |
+| `OPTION`    | a shader option named OPTION                                                             |
+| `[SCREEN]`  | a link to a sub-screen named SCREEN                                                      |
+| `<profile>` | a button that changes the current [shader profile](/reference/shadersproperties/profile) |
+| `<empty>`   | an empty spot, i.e. a spacer                                                             |
+| `*`         | any remaining shader options not already in a screen                                     |
+
+
+
+### Sub-Screens
+A sub-screen (a menu within the "Shader Pack Settings" menu) can be created as follows:
+```
+screen = [screen_name] ...
+screen.<screen_name> = <list_of_options>
+```
+
+### Columns
+By default the shader options will be displayed in two columns, unless there are too many to fit on screen then three columns are used. Alternatively, column counts can be specified per screen/sub-screen as follows:
+```
+screen.columns = <number_of_columns>
+screen.<screen_name>.columns = <number_of_columns>
+```
+
+
+### Example
+Here's a nice example to hopefully clear things up (*I hope you like ice cream*):
+```
+screen = <empty> <profile> <empty> [SHADOWS] [LIGHTING] iScreem uScreem weAllScreen forIceCreen *
+screen.SHADOWS = shadowMapResolution shadowFilter
+screen.LIGHTING = SSAO SSR
+
+screen.columns = 3
+screen.SHADOWS.columns = 2
+```
