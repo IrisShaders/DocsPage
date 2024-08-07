@@ -11,8 +11,8 @@ sidebar:
 ### Option Labels
 Option labels replace a shader option's name in the shader options screen. They can be specified with `option.<option_name> = <label>` in a lang file. Replace `<option_name>` with the options name as defined in shaders.properties, and `<label>` with the label to be displayed in the shader options screen. For example:
 ```properties
-value.TAA = Temporal Anti-aliasing
-value.SSBO = Ambient Occlusion
+option.TAA = Temporal Anti-aliasing
+option.SSBO = Ambient Occlusion
 ```
 
 ### Value Labels
@@ -33,11 +33,11 @@ suffix.Shadow_Type = )
 ### Option Tooltips
 Option tooltips are shown in a tooltip when the user hovers over the shader option. They can be specified with `option.<option_name>.comment = <comment>` in a lang file. Replace `<option_name>` with the options name as defined in shaders.properties, and `<comment>` with the tooltip comment to be displayed in the shader options screen. For example:
 ```properties
-value.TAA.comment = Smooths jagged edges
-value.SSBO.comment = Adds shadows in the corners of objects
+option.TAA.comment = Smooths jagged edges
+option.SSBO.comment = Adds shadows in the corners of objects
 ```
 
-A tooltip can be added to the profile button with the with `profile.comment = <comment>` in a lang file. Replace `<comment>` with the tooltip comment to be displayed in the shader options screen. For example:
+A tooltip can be added to the profile button with the with `profile.comment = <comment>` in a `.lang` file. Replace `<comment>` with the tooltip comment to be displayed in the shader options screen. For example:
 ```properties
 profile.comment = Potato - runs on anything. Low - better than potato. Medium - quality/performance balance. High - good quality, expensive. Ultra - for the ballers.
 ```
