@@ -43,7 +43,7 @@ The lightmap alone is not enough to light the block. It somehow has to be conver
 
 ## How Shaders Work
 
-To understand how shaders work, let's understand how the shader pipeline works. The majority of shader programs used are 'fullscreen passes'. These are passes which run for every pixel on the screen. These are the simplest form of a shader program, and are very useful for post processing effects, or anything which doesn't require information about what's not on screen.
+To understand how shaders work, let's understand how the shader pipeline works. One of the types of programs you will work with a lot are 'fullscreen passes'. These are passes which run for every pixel on the screen. These are the simplest form of a shader program, and are very useful for post processing effects, or anything which doesn't require information about what's not on screen.
 
 Iris and Optifine also provide you with what are known as 'gbuffers' passes. There are different gbuffers passes for different things, here are a few examples:
 - `gbuffers_terrain` - all solid terrain
