@@ -1,6 +1,6 @@
 ---
 title: Simple Post Effects
-description: Write a basic post processing effect in the `final` pass.
+description: Write a basic post processing effect in the `composite` pass.
 sidebar:
   label: Simple Post Effects
   order: 2
@@ -80,7 +80,7 @@ This transforms the position of the vertex from model space to clip space. The `
 texcoord = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;
 ```
 
-This gives us the 'texture coordinate' of the current vertex. This is more commonly known as the 'UV', and it is used so that the fragment shader knows where on the screen it is. You do not need to understand how it works at this stage.
+This gives us the 'texture coordinate' of the current vertex. This is more commonly known as the 'UV', and it is used so that the fragment shader knows where on the screen it is. You do not need to understand how it works at this stage. These texture coordinates range from (0, 0) at the bottom left of the texture to (1, 1) at the top right.
 
 
 Let's open `composite.fsh`. This is the *fragment shader*  It runs for every pixel on the screen.
@@ -151,9 +151,9 @@ This reads the value in `colortex0` at position `texcoord` and stores it in `col
 ## Making it monochrome
 To make a color monochrome, we need to operate only on the r, g, and b components of the color. We can access and modify these these with `color.rgb`.
 
-To actually do the operation, we can take a bit of a shortcut, and set every component to the dot product with a 3d vector of `1/3`. This vector can be represented as `vec3(1.0/3.0)`.
+To actually do the operation, we can take a bit of a shortcut, and set every component to the dot product with a 3d vector of `1/3`. This vector can be represented as `vec3(1.0/3.0)`. This operation is mathematically equivalent to taking one third of each component and adding them together.
 
-So, after we get the value of `color`, we can do
+So, after we get the value of `color`, we can do:
 ```glsl
 color.rgb = vec3(dot(color.rgb, vec3(1.0/3.0)));
 ```
@@ -161,3 +161,7 @@ color.rgb = vec3(dot(color.rgb, vec3(1.0/3.0)));
 Your screen should now look like this!
 
 ![](/src/assets/first_shader_guide/1/monochrome.png)
+
+:::tip[Next steps]
+See if you can make the screen red, or green. Using `texcoord`, can you make one half green and the other half red?
+:::
