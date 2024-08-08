@@ -1,0 +1,163 @@
+---
+title: Simple Post Effects
+description: Write a basic post processing effect in the `final` pass.
+sidebar:
+  label: Simple Post Effects
+  order: 2
+---
+
+## Setting up the file structure
+Minecraft shaders require a specific structure of files in the right places to load code. While it's important to understand this structure, to save time, we will be working with the Base 330 pack from shaderLABs. Download it from [here](https://github.com/shaderLABS/Base-330), and extract it into your `shaderpacks` folder. You should have the following structure.
+
+```
+.
+└── .minecraft/
+    └── shaderpacks/
+        └── Base-330-main/
+            ├── LICENSE
+            ├── readme.md
+            └── shaders/
+                └── ...
+```
+
+In this stage of the tutorial, we are going to make the screen monochrome, so let's rename the `Base-330-main` folder to `monochrome`, or another name of your choosing.
+
+You can also delete the `LICENSE` and `readme.md` files, as we don't need those.
+
+:::caution[Note]
+It is always important to respect the license associated with code when you use it anywhere. In this case, the base pack is licensed under [The Unlicense](https://choosealicense.com/licenses/unlicense/), meaning you can do what you want with it, however other shaders may use more restrictive licenses for their code.
+:::
+
+When you select the shader in the shader selection screen, you should not see any errors in the logs.
+
+## The `composite` pass
+For this shader, we will be using the first `composite` pass. This is a full screen pass which runs just after all gbuffers programs have rendered.
+
+First, let's open `composite.vsh`. This is the *vertex shader* for the `composite` program. Since `composite` is a fullscreen pass, this actually just renders a singular quad to the screen which exactly covers it. This means that your fullscreen passes are technically actually running on 3D geometry!
+
+```glsl
+#version 330 compatibility
+
+out vec2 texcoord;
+
+void main() {
+	gl_Position = ftransform();
+	texcoord = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;
+}
+```
+
+Let's analyse this.
+
+```glsl
+#version 330 compatibility
+```
+
+This tells the shader what version of GLSL to use, as covered earlier.
+
+```glsl
+out vec2 texcoord;
+```
+
+This is a variable declaration, but a special one. The `out` keyword means that the value will be passed to the fragment shader. The fragment shader can then have a corresponding `in` declaration which allows it to recieve this value. 
+
+:::note[Note]
+Values passed from vertex shaders to fragment shaders are interpolated! This means that if one vertex has a value of 0, and another has a value of 1, then a pixel halfway between these two vertices will have a value of 0.5. This can be prevented by adding the `flat` keyword the `in` and `out` declarations.
+:::
+
+```glsl
+void main() {
+```
+
+The `main` function is the code that is run when the shader is invoked, just like in languages like C.
+
+```glsl
+gl_Position = ftransform();
+```
+
+This transforms the position of the vertex from model space to clip space. The `ftransform` function is actually deprecated but Iris patches it to the relevant modern code. We will revisit this later.
+
+```glsl
+texcoord = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;
+```
+
+This gives us the 'texture coordinate' of the current vertex. This is more commonly known as the 'UV', and it is used so that the fragment shader knows where on the screen it is. You do not need to understand how it works at this stage.
+
+
+Let's open `composite.fsh`. This is the *fragment shader*  It runs for every pixel on the screen.
+
+Right now the code looks like this
+
+```glsl
+#version 330 compatibility
+
+uniform sampler2D colortex0;
+
+in vec2 texcoord;
+
+/* DRAWBUFFERS:0 */
+layout(location = 0) out vec4 color;
+
+void main() {
+	color = texture(colortex0, texcoord);
+}
+```
+
+Let's analyse this as well a bit.
+
+
+```glsl
+uniform sampler2D colortex0
+```
+
+This allows the shader to read from `colortex0`. Iris provides you with a number of `colortex` buffers you can read and write to. Each buffer is a texture with the same resolution as your screen. For more information on the `colortex` buffers, see the [docs](/reference/buffers/colortex/).
+
+```glsl
+in vec2 texcoord
+```
+
+This is where we recieve the `texcoord` passed `out` in the vertex shader. This tells us what pixel to sample in `colortex0`.
+
+```glsl
+/* DRAWBUFFERS:0 */
+```
+
+This is a comment that the Iris patcher reads. It tells the shader to write back to `colortex0`. For more info, see [the docs](/reference/constants/drawbuffers/).
+
+```glsl
+layout(location = 0) out vec4 color;
+```
+
+This initialises a variable `color` which at the end of the shader will be written to `colortex0`.
+
+:::caution[Warning]
+It is important to note that `location = 0` is not because we are writing to `colortex0`, but because the first element in the `DRAWBUFFERS` directive is at index 0. For example, if we had `/* DRAWBUFFERS:53 */`, then we would have
+```glsl
+layout(location = 0) out vec4 someData; // writes to colortex5
+layout(location = 1) out vec4 someMoreData; // writes to colortex3
+```
+:::
+
+
+:::note[Note]
+Iris implements by default something known as 'buffer flipping'. This means that the texture you write to is not actually the same one you read from. This is because different instances of the shader might run at different times and if mulnotele of them try to access the same pixel, the output could be different depending on which one gets to it first. For more information, see [the docs](/reference/shadersproperties/buffer_flip/)
+:::
+
+```glsl
+color = texture(colortex0, texcoord);
+```
+
+This reads the value in `colortex0` at position `texcoord` and stores it in `color`. For more info see [the OpenGL docs](https://registry.khronos.org/OpenGL-Refpages/gl4/html/texture.xhtml).
+
+## Making it monochrome
+To make a color monochrome, we need to operate only on the r, g, and b components of the color. We can access and modify these these with `color.rgb`.
+
+To actually do the operation, we can take a bit of a shortcut, and set every component to the dot product with a 3d vector of `1/3`. This vector can be represented as `vec3(1.0/3.0)`.
+
+So, after we get the value of `color`, we can do
+```glsl
+color.rgb = vec3(dot(color.rgb, vec3(1.0/3.0)));
+```
+
+Your screen should now look like this!
+
+![](/src/assets/first_shader_guide/1/monochrome.png)
