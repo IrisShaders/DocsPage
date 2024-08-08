@@ -53,6 +53,6 @@ Iris and Optifine also provide you with what are known as 'gbuffers' passes. The
 
 These passes run for every vertex of every item rendered onscreen. This allows us to get information about blocks and entities, and store them in textures for later use in fullscreen passes.
 
-The final type of pass is the shadow pass, which runs before all other passes. This pass renders all terrain from the perspective of the sun to a few buffers we can access later, known as the 'shadow maps'. The main shadow map stores how far away the closest thing it can see is. From this, we can check if something is further from the sun than the closest thing it can see, and if it is, it must be in shadow. We will cover this later on in the tutorial.
+The final type of pass is the shadow pass, which runs before all other passes. This pass renders all terrain from the perspective of the sun/moon to a few buffers we can access later, known as the 'shadow maps'. The main shadow map stores how far away the closest thing it can see is. From this, we can check if something is further from the sun than the closest thing it can see, and if it is, it must be in shadow. We will cover this later on in the tutorial.
 
 For a full list of programs and what they do, see the [Iris Docs](https://shaders.properties/reference/programs/overview/).
