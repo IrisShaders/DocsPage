@@ -20,7 +20,8 @@ You will need:
 - A willingness to learn. Shaders are hard, and you can't just pick them up overnight. Do not expect to complete this tutorial and become the next Sonic Ether.
 - An instance of Minecraft with Iris, Optifine, or Oculus installed. Since this tutorial is in the Iris documentation, it is assumed you are using Iris.
 
-It is recommended that you use a Minecraft launcher which supports viewing the logs in realtime. One such choice is [Prism Launcher](https://prismlauncher.org/).
+It's helpful to be able to see your game logs as the game is running. In the vanilla Minecraft launcher, you can do this by enabling 'keep the Launcher open while games are running' and 'Open output log when Minecraft: Java Edition starts" in the settings.
+If you do not use the vanilla launcher, but your launcher does not support viewing logs in realtime, a popular choice is [Prism Launcher](https://prismlauncher.org/).
 In Iris, it is also useful to enable debug mode. You can do this by pressing <kbd>Ctrl</kbd>+<kbd>D</kbd> in the shader selection screen.
 
 
@@ -32,7 +33,7 @@ For the next part it is important to note that since most of the game's developm
 
 ## Rendering the blocks
 
-Now with that out of the way, we can focus on how Minecraft actually does it's rendering. Minecraft is a voxel game, and therefore it does not follow the normal style of rendering that is present in most games.First of all, Minecraft has to render a large amount of blocks, which could be different types of blocks. Rendering each block as it's own draw call is a really bad idea for performance. Instancing could work, but it has it's own limitations, besides not being present in ancient version of OpenGL at all. Instead, what Minecraft does it it batches vertices into chunks, so that each chunk becomes it's own draw call. To texture each block, Minecraft uses a texture atlas.
+Now with that out of the way, we can focus on how Minecraft actually does it's rendering. Minecraft is a voxel game, and therefore it does not follow the normal style of rendering that is present in most games. First of all, Minecraft has to render a large amount of blocks, which could be different types of blocks. Rendering each block as it's own draw call is a really bad idea for performance. Instancing could work, but it has it's own limitations, besides not being present in ancient version of OpenGL at all. Instead, what Minecraft does it it batches vertices into chunks, so that each chunk becomes it's own draw call. To texture each block, Minecraft uses a texture atlas.
 
 Lighting in Minecraft is a bit different from how it is done in other games. Minecraft needs to support an arbitrary number of light sources, with the features of old OpenGL versions, and have decent performance on slow hardware like Intel iGPUs. There also needs to be occlusion detection for the lights, that is, a light behind a wall cannot light up what is in front of the the wall. Doing this the “normal” way would require storing all lights in a texture and having a texture atlas of shadow maps for each light. This doesn't support area lighting, so lighting from blocks like glowstone up close will look bad, and this would be insanely costly. Imagine how slow rendering the nether would be, since each lava block in the nether needs to be processed. Minecraft needs a different approach from this.
 
@@ -42,7 +43,7 @@ The lightmap alone is not enough to light the block. It somehow has to be conver
 
 ## How Shaders Work
 
-To understand how shaders work, let's understand how the shader pipeline works. The majority of shader programs used are 'fullscreen passes'. These are passes which run for every pixel on the screen. These are the simplest form of a shader program, and are very useful for post processing effects, or anything which doesn't require information about what's not on screen.
+To understand how shaders work, let's understand how the shader pipeline works. One of the types of programs you will work with a lot are 'fullscreen passes'. These are passes which run for every pixel on the screen. These are the simplest form of a shader program, and are very useful for post processing effects, or anything which doesn't require information about what's not on screen.
 
 Iris and Optifine also provide you with what are known as 'gbuffers' passes. There are different gbuffers passes for different things, here are a few examples:
 - `gbuffers_terrain` - all solid terrain
@@ -52,6 +53,6 @@ Iris and Optifine also provide you with what are known as 'gbuffers' passes. The
 
 These passes run for every vertex of every item rendered onscreen. This allows us to get information about blocks and entities, and store them in textures for later use in fullscreen passes.
 
-The final type of pass is the shadow pass, which runs before all other passes. This pass renders all terrain from the perspective of the sun to a few buffers we can access later, known as the 'shadow maps'. The main shadow map stores how far away the closest thing it can see is. From this, we can check if something is further from the sun than the closest thing it can see, and if it is, it must be in shadow. We will cover this later on in the tutorial.
+The final type of pass is the shadow pass, which runs before all other passes. This pass renders all terrain from the perspective of the sun/moon to a few buffers we can access later, known as the 'shadow maps'. The main shadow map stores how far away the closest thing it can see is. From this, we can check if something is further from the sun than the closest thing it can see, and if it is, it must be in shadow. We will cover this later on in the tutorial.
 
 For a full list of programs and what they do, see the [Iris Docs](https://shaders.properties/reference/programs/overview/).
