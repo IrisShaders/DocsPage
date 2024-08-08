@@ -149,7 +149,7 @@ Finally, in main, let's write this data to the textures, so we can access it in 
 
 ```glsl
 lightmapData = vec4(lmcoord, 0.0, 1.0);
-encodedNormal = vec4(normal * 0.5f + 0.5f, 1.0);
+encodedNormal = vec4(normal * 0.5 + 0.5, 1.0);
 ```
 
 There are a couple of things here to note. First of all, we *always set the alpha to 1*. This is to ensure that the data always gets written, because if the alpha is 0, Iris may decide that it shouldn't be written anyway. This is because of alpha blending. See [LearnOpenGL's page on blending](https://learnopengl.com/Advanced-OpenGL/Blending) for more info.
