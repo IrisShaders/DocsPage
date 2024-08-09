@@ -61,8 +61,8 @@ In Iris, compute shaders can be used in compute only pass, or included in compos
 Local size is defined as follows: `layout (local_size_x = <size_x>, local_size_y = <size_x>, local_size_y = <size_z>) in;`.
 
 Work group count can be defined one of three ways:
-1. **Fixed size**: a const in shader file `const ivec3 workGroups = ivec3(<groups_x>, <groups_y>, <groups_z>);`
-2. **Screen size**: calculate work groups as a multiplier of screen resolution, a const in shader file `const vec2 workGroupsRender = vec2(<x_mult>, <y_mult>);`
+1. **Fixed size**: a const in shader file [`const ivec3 workGroups`](/reference/constants/workgroups)
+2. **Screen size**: calculate work groups as a multiplier of screen resolution, a const in shader file [`const vec2 workGroupsRender`](/reference/constants/workgroupsrender)
 3. **Indirect**: specify work groups in an SSBO through [`indirect.pass`](/reference/shadersproperties/indirect_pass)
 
 If no work group count is provided, the default value of one work group per pixel will be used (`const vec2 workGroupsRender = vec2(1.0, 1.0);`).
