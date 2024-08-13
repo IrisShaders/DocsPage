@@ -13,11 +13,11 @@ This directive allows a custom texture to be bound to an existing sampler (such 
 
 Textures can be loaded from the shader pack files by replacing `<path>` with the file path to the texture relative to the `shaders` folder. For example `texture.composite.colortex5 = textures/perlin.png` would load `perlin.png` from the `shaders/textures` folder. Iris supports only `.png` image format, whereas Optifine supports `.png` and `.jpg` formats.
 
-Textures can also be loaded from the resource pack by replacing `<path>` with `minecraft:` followed by the path in the resourcepack (or vanilla files) of the texture. For example, `texture.deferred.colortex7 = minecraft:textures/block/dirt.png` will load the dirt texture from the resource pack or vanilla assets.
+Textures can also be loaded from the resource pack by replacing `<path>` with `minecraft:` followed by the path in the resource pack (or vanilla files) of the texture. For example, `texture.deferred.colortex7 = minecraft:textures/block/dirt.png` will load the dirt texture from the resource pack or vanilla assets.
 
 Finally, dynamic textures can be loaded, such as the lightmap and texture atlases. For example, the lightmap can be loaded with `texture.prepare.colortex2 = minecraft:dynamic/lightmap_1`, and the texture atlas can be loaded with `texture.composite.colortex9 = minecraft:textures/atlas/blocks.png`.
 
-For any resource pack or atlas texture, the normal or specular versions of the textuers (if they exist) can be loaded by appending the `_n` or `_s` suffix respectively. For example, `texture.deferred.colortex2 = minecraft:textures/atlas/blocks_s.png` loads the specular block atlas.
+For any resource pack or atlas texture, the normal or specular versions of the textures (if they exist) can be loaded by appending the `_n` or `_s` suffix respectively. For example, `texture.deferred.colortex2 = minecraft:textures/atlas/blocks_s.png` loads the specular block atlas.
 
 Replace `<stage>` with the stage of programs which the texture will be bound in. During that stage, the [colortex](/reference/buffers/colortex) sampler specified with `<bufferName>` will sample the custom texture rather than the [colortex](/reference/buffers/colortex) buffer. The following options are available for `<stage>`:
 
@@ -46,3 +46,22 @@ Raw textures (i.e. unencoded binary files) can also be loaded using the above sy
 ### `customTexture.<name> = <path>`
 ### `customTexture.<name> = <path> <type> <internalFormat> <dimensions> <pixelFormat> <pixelType>`
 Iris adds support for the `customTexture` directive, which allows the shader dev to use a different sampler instead of overriding an existing sampler. This allows creation of a sampler of (mostly) any name, which replaces `<name>` in the directive and is used in the shader code. Otherwise the syntax of the enhanced custom textures are identical to standard custom textures.
+
+
+# .mcmeta File
+Hardware bilinear filtering and wrapping/clamping behavior can be controlled with a `.mcmeta` file with the same filename as the texture with `.mcmeta` appended (for example `perlinNoise.png.mcmeta`). The mcmeta file should be located in the same folder as the texture itself. The syntax is as follows:
+
+```json
+{
+  "texture":
+  {
+    "blur": <true|false>,
+    "clamp": <true|false>
+  }
+}
+```
+
+- `blur` controls texture filtering, `true` is bilinear, `false` is nearest neighbor
+- `clamp` controls edge behavior, `true` clamps at the edges, `false` wraps at the edges
+
+By default, image files will use nearest neighbor and wrapping, and raw textures will use bilinear filtering and clamping. Shader provided mcmeta files cannot be used for resource pack / atlas textures.
