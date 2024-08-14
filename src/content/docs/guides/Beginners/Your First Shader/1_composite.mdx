@@ -33,7 +33,7 @@ When you select the shader in the shader selection screen, you should not see an
 ## The `composite` pass
 For this shader, we will be using the first `composite` pass. This is a full screen pass which runs just after all gbuffers programs have rendered.
 
-First, let's open `composite.vsh`. This is the *vertex shader* for the `composite` program. Since `composite` is a fullscreen pass, this actually just renders a singular quad to the screen which exactly covers it. This means that your fullscreen passes are technically actually running on 3D geometry!
+First, let's open `composite.vsh`. This is the *vertex shader* for the `composite` program. Since `composite` is a fullscreen pass, this actually just renders a singular quad (a rectangular polygon) to the screen which exactly covers it. This means that your fullscreen passes are technically actually running on 3D geometry!
 
 ```glsl
 #version 330 compatibility

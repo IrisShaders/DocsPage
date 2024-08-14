@@ -72,7 +72,7 @@ Before we move onto the fragment shader, there's one more value we'll want to us
 out vec3 normal;
 ```
 
-So how do we get this normal? Well, OpenGL provides it to us with `gl_Normal`. This is in model space, though, and for simplicity, we want it in *player space*. This means that the direction is relative to the position of the player, instead of the orientation of the model. In `main`, let's add some code for that. The justification for transforming to world space will be explained later on.
+So how do we get this normal? Well, OpenGL provides it to us with `gl_Normal`. This is in *model space*, though, and for simplicity, we want it in *player space*. This means that the direction is relative to the position of the player, instead of the orientation of the model. In `main`, let's add some code for that. The justification for transforming to world space will be explained later on.
 
 ```glsl
 normal = gl_NormalMatrix * gl_Normal; // this gives us the normal in view space
