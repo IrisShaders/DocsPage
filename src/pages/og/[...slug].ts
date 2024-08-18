@@ -10,8 +10,8 @@ export const { getStaticPaths, GET } = OGImageRoute({
   param: 'slug',
   getImageOptions: (_path, page: (typeof pages)[number]) => {
     return {
-      title: "Iris Shader Docs",
-      description: page.data.title,
+      title: page.data.title,
+      description: page.data.description,
       backgroundImage: `linear-gradient(rgba(24, 24, 27, 0.4), rgba(24, 24, 27, 0.4)), url('/assets/banner.png')`,
       bgGradient: [[24, 24, 27]],
       border: { color: [76, 108, 178], width: 20 },
