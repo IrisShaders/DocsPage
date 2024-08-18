@@ -1,6 +1,6 @@
 ---
 title: shadow.enabled
-description: shadow.enabled
+description: Enables or disables the shadow pass.
 sidebar:
   label: shadow.enabled
   order: 4
@@ -13,4 +13,4 @@ sidebar:
 
 #### Location: shaders.properties
 
-Normally Optifine/Iris will check if the shadow buffers are bound and used to determine when to enable/disable the shadow pass. Iris offers an additional explicit control for enabling/disabling the pass. Thic can be useful for voxelization which doesn't write to a [shadowtex](/reference/buffers/shadowtex)/[shadowcolor](/reference/buffers/shadowcolor) buffer (for example SSBOs or custom images).
+Normally Optifine/Iris will check if the shadow buffers are bound and used to determine when to enable/disable the shadow pass. Iris offers an additional explicit control for enabling/disabling the pass. This can be useful for voxelization which doesn't write to a [shadowtex](/reference/buffers/shadowtex)/[shadowcolor](/reference/buffers/shadowcolor) buffer (for example SSBOs or custom images).
