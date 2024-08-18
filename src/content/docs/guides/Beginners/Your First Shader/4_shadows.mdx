@@ -1,0 +1,138 @@
+---
+title: Shadows
+description: Implement basic diffuse shading in a composite pass
+sidebar:
+  label: Shadows
+  order: 4
+---
+
+In this section we will implement basic shadow mapping which allows us to check if a pixel has a shadow cast on it.
+
+## The `shadow` Pass
+The first thing we need to do is create two new files: `shadow.vsh` and `shadow.fsh`. They should be in the `shaders` folder, just like your other shader programs.
+
+These compose the 'shadow pass', which runs before the gbuffers passes. It renders the scene from the perspective of the sun (or moon), storing depth and colour information which we can use for shadow mapping. 
+
+The shadow programs can actually be pretty much copies of your `gbuffers_terrain` programs. They will function the same, however less info needs to be passed through, so if you want, you can delete the extra `in` and `out` declarations we aren't using. The only ones we need are `texcoord` and `glcolor`.
+
+```glsl
+// shadow.vsh
+
+#version 330 compatibility
+
+out vec2 texcoord;
+out vec4 glcolor;
+
+void main() {
+	texcoord = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;
+	glcolor = gl_Color;
+  gl_Position = ftransform();
+}
+```
+```glsl
+// shadow.fsh
+#version 330 compatibility
+
+uniform sampler2D gtexture;
+
+in vec2 texcoord;
+in vec4 glcolor;
+
+layout(location = 0) out vec4 color;
+
+void main() {
+	color = texture(gtexture, texcoord) * glcolor;
+}
+```
+
+:::caution[Warning]
+Notice that there is no `DRAWBUFFERS` declaration in the fragment shader. This is because the buffers you write to from the shadow pass are predetermined, and you cannot write to `colortex` buffers from it. By writing to location 0, we are writing to `shadowcolor0`. By default we can write to `shadowcolor0` and `shadowcolor1`.
+:::
+
+This is actually all we need to get Iris rendering a shadow map. Let's now go back to our `composite` pass.
+
+## Reading the Shadow Map
+The shadow map is accessable as `shadowtex0`, so let's add this as a `sampler2D`.
+
+```glsl
+uniform sampler2D shadowtex0;
+```
+
+First, to make sure things are working properly, let's render the shadow map to the screen.
+
+```glsl
+color.rgb = texture(shadowtex0, texcoord).rgb;
+```
+
+You should see something like this:
+![](/src/assets/first_shader_guide/4/shadowmap.png)
+
+This may not make much sense to look at, but this shows how far away the nearest thing the sun can see is. 
+
+:::note[Note]
+You might be able to see parts of your terrain disappearing from the shadow map as the camera angle changes. This is because of something called culling, where Iris determines which bits of terrain can't cast shadows anywhere we can see, and therefore does not render them. This saves on performance without any visual difference.
+:::
+
+## Getting the Position in Shadow Space
+To check if a pixel is shadowed, we need to know where in the shadow map it is. We can do this by transforming the position of the pixel into *shadow space*. We will need the following transformation matrices:
+
+```glsl
+uniform mat4 gbufferProjectionInverse;
+uniform mat4 gbufferModelViewInverse;
+uniform mat4 shadowModelView;
+uniform mat4 shadowProjection;
+
+```
+
+To do this, we first need to determine the position of the pixel at all. We can do this using the screen texture coordinate, as well as the depth.
+
+**TODO: SPACE CONVERSION EXPLANATION / TUTORIAL**
+
+To do these space conversions, we will make use of a function, `projectAndDivide`. This function applies a projection matrix and then divides by the `w` component, skipping straight to clip space. **Place this function definition outside and before `main`.**
+
+```glsl
+vec3 projectAndDivide(mat4 projectionMatrix, vec3 position){
+  vec4 homPos = projectionMatrix * vec4(position, 1.0);
+  return homPos.xyz / homPos.w;
+}
+```
+
+Then, for our space conversion:
+
+```glsl
+vec3 NDCPos = vec3(texcoord.xy, depth) * 2.0 - 1.0;
+vec3 viewPos = projectAndDivide(gbufferProjectionInverse, NDCPos);
+vec3 feetPlayerPos = (gbufferModelViewInverse * vec4(viewPos, 1.0)).xyz;
+vec3 shadowViewPos = (shadowModelView * vec4(feetPlayerPos, 1.0)).xyz;
+vec3 shadowNDCPos = projectAndDivide(shadowProjection, shadowViewPos);
+vec3 shadowScreenPos = shadowNDCPos * 0.5 + 0.5;
+```
+
+We can then sample the shadow map at `shadowScreenPos`.
+
+## Sampling the Shadow Map
+So, the shadow map contains the depth of the nearest thing to the light source in that direction. Therefore, if something is further away from the sun, it must be in shadow. What we do is compare the depth in the shadow map at our shadow position's xy component to the z component of our shadow position. If the z component is less than the depth, it must be in sunlight. We can do this comparison with the `step` function. Let's say we have `step(a, b)`. It returns 1.0 if `b` is more than `a`. With that in mind, we can declare:
+
+```glsl
+float shadow = step(shadowScreenPos.z, texture(shadowtex0, shadowScreenPos.xy).r);
+```
+
+We can then replace our multiplication by `lightmap.g` with one by `shadow`.
+
+```glsl
+vec3 sunlight = sunlightColor * dot(normal, worldLightVector) * shadow;
+```
+
+You should now see something like this:
+
+![](/src/assets/first_shader_guide/4/acne.png)
+
+Now, while you can tell that things are casting shadows, a lot of surfaces seem to be in shadow when they shouldn't be, with weird patterns. This is due to something called 'shadow acne', and it occurs when something ends up casting a shadow on itself due to the lack of precision in the shadow map. We can fix this by adding something known as 'shadow bias' where we offset surfaces slightly towards the sun to prevent them casting shadows on themselves:
+
+```glsl
+float shadow = step(shadowScreenPos.z - 0.001, texture(shadowtex0, shadowScreenPos.xy).r);
+```
+
+Your shadows should now look a lot more reasonable.
+
+![](/src/assets/first_shader_guide/4/basicshadows.png)
