@@ -14,7 +14,7 @@ import { Aside } from '@astrojs/starlight/components';
 
 ### `uniform mat4 textureMatrix;`
 
-Transforms texture coordinates. Used by [`gbuffers_armor_glint`](/reference/programs/gbuffers) to scroll the texture over time.
+Transforms texture coordinates. Mainly used in [`gbuffers_armor_glint`](/reference/programs/gbuffers) to scroll the texture over time, but may be applied to other geometry as well (especially by mods). It is therefore strongly recommended to use this matrix in all [gbuffers-style](/reference/programs/overview/#program-order) programs utilizing [`vaUV0`](/reference/attributes/vauv0/).
 ```glsl
 vec2 coord = (textureMatrix * vec4(vaUV0, 0.0, 1.0)).xy;
 ```
