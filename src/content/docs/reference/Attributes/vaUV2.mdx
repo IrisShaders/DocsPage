@@ -20,8 +20,13 @@ import { Aside } from '@astrojs/starlight/components';
 
 The light value attribute, equivalent to `gl_MultiTexCoord1` or `gl_MultiTexCoord2` from the compatibility profile.
 
-`vaUV2` stores the block light level in the x component, and the sky light level in the y component. However, the exact range of values stored is indeterminate (though it is current 0-240). Therefore it is recommended to use the following matrix (or `gl_TextureMatrix[1]` in the compatibility profile).
+`vaUV2` stores the block light level in the x component, and the sky light level in the y component. However, the exact range of values stored is indeterminate (though it is currently 0-240). Therefore it is recommended to use the following matrix (or `gl_TextureMatrix[1]` in the compatibility profile).
 
 ```glsl
 const mat4 TEXTURE_MATRIX_2 = mat4(vec4(0.00390625, 0.0, 0.0, 0.0), vec4(0.0, 0.00390625, 0.0, 0.0), vec4(0.0, 0.0, 0.00390625, 0.0), vec4(0.03125, 0.03125, 0.03125, 1.0));
+
+vec2 lm_coord = (TEXTURE_MATRIX_2 * vec4(vaUV2, 0.0, 1.0)).xy;
+```
+```glsl
+vec2 lm_coord = (gl_TextureMatrix[1] * gl_MultiTexCoord1).xy;
 ```

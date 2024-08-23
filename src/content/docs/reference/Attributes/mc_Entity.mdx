@@ -12,8 +12,10 @@ sidebar:
 
 ---
 
-The `x` component stores block ID which was assigned to the current block in the [`block.properties`](/reference/miscellaneous/block_properties) file. If an ID for the current block is not defined, a value of `-1` (newer Iris versions) or `0` (older Iris versions, Optifine) is sent.
+The `x` component stores the block ID which was assigned to the current block in [`block.properties`](/reference/miscellaneous/block_properties). If an ID for the current block is not defined, a value of `-1` (newer Iris versions) or `0` (older Iris versions, Optifine) is sent.
 
 > ***Note***: newer Iris versions use a signed short, meaning they can store IDs from `-32768` to `32767`. Older Iris versions and Optifine do not support negative values.
 
 The `y` component stores the "render type", which is `1` for fluids (water, lava, etc) and `-1` for all other blocks.
+
+This attribute is only available for terrain. For other types of geometry, see [`entityid`](/reference/uniforms/general/entityid) and [`blockentityid`](/reference/uniforms/general/blockentityid)

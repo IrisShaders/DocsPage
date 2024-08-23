@@ -12,8 +12,13 @@ sidebar:
 
 ---
 
-The tangent vector in model space. The x,y,z components store the tangent, and the w component stores the handedness of normal/tangent. The handedness should be used to invert the bitangent in cases where a texture is mirrored and the cross product of the normal and tangent vectors would produce an inverted bitangent vector. For example:
+The tangent vector in model space. The `xyz` components store the tangent, and the `w` component stores the handedness of normal/tangent. The handedness should be used to invert the bitangent in cases where a texture is mirrored and the cross product of the normal and tangent vectors would produce an inverted bitangent vector. For example:
+```glsl
+vec3 normal = normalMatrix * vaNormal;
+vec3 tangent = normalMatrix * at_tangent.xyz;
 
+vec3 bitangent = cross(tangent, normal) * at_tangent.w;
+```
 ```glsl
 vec3 normal = gl_NormalMatrix * gl_Normal;
 vec3 tangent = gl_NormalMatrix * at_tangent.xyz;
