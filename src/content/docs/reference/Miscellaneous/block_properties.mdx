@@ -16,7 +16,7 @@ block.<ID> = [<namespace>:]<block_id>[:<NBT_tag>=<value>]
 block.5 = stone minecraft:oak_trapdoor:open=true
 ```
 
-The optional namespace allows support for modded blocks/block entities. Multiple blocks/block entities can be assigned to a single ID, however a single block/block entity can only be assigned to a single ID. IDs are stored internally as 16-bit signed integers, and can store values between `-32768` and `32767`.
+The optional namespace allows support for modded blocks/block entities. Multiple blocks/block entities can be assigned to a single ID, however a single block/block entity can only be assigned to a single ID. Since Iris 1.3, IDs are stored internally as 16-bit signed integers, and can store values between `-32768` and `32767`. Prior to Iris 1.3 they were unsigned 16-bit, while Optifine has always used signed 16-bit.
 
 NBT's can optionally be specified with the `<NBT_tag>=<value>` format. They can be used to specify specific states for some blocks, for example redstone which is on/off, orientation for slabs/stairs, etc. For more info on NBT's, see the [Minecraft Wiki](https://minecraft.wiki/w/NBT_format).
 
