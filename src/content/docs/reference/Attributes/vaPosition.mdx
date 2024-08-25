@@ -21,8 +21,16 @@ import { Aside } from '@astrojs/starlight/components';
 The vertex position attribute. For terrain this is relative to the chunk and you must add [`chunkOffset`](/reference/uniforms/general/chunkoffset) as shown below:
 ```glsl
 vec3 model_pos = vaPosition + chunkOffset;
+vec4 view_pos = modelViewMatrix * vec4(model_pos, 1.0);
+vec4 clip_pos = projectionMatrix * view_pos;
+
+gl_Position = clip_pos;
 ```
-
 For all other geometry, `vaPosition` directly stores the model space position. In either case, the model space position is equivalent to `gl_Vertex.xyz` from the compatibility profile.
+```glsl
+vec3 model_pos = gl_Vertex.xyz;
+vec4 view_pos = gl_ModelViewMatrix * vec4(model_pos, 1.0);
+vec4 clip_pos = gl_ProjectionMatrix * view_pos;
 
-The model space position can be converted to view space using [`modelViewMatrix`](/reference/uniforms/matrices/modelviewmatrix) (or `gl_ModelViewMatrix` in the compatibility profile).
+gl_Position = clip_pos;
+```
