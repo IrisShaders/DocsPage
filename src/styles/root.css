@@ -1,3 +1,9 @@
+* Global page formatting. */
+:root {
+	--sl-content-width: 85rem;
+	--sl-sidebar-width: 28rem;
+}
+
 /* Dark mode colors. */
 :root {
 	--sl-color-accent-low: #1c2339;
