@@ -12,95 +12,31 @@ sidebar:
 Uniforms are variables which store values that are the same for all invocations of a particular shader.
 
 
-## Rendering
+## Camera/Player
 | Uniform                                                                                | Type  | Value Range    | Description |
 | -------------------------------------------------------------------------------------- | ----- | -------------- | ----------- |
-| [alphaTestRef](/reference/uniforms/general/alphatestref)                               | float | [0,1]          | Cutout alpha discard threshold |
-| [chunkOffset](/reference/uniforms/general/chunkoffset)                                 | vec3  |                | Chunk offset for terrain model space position |
-| [entityColor](/reference/uniforms/general/entitycolor)                                 | vec4  | [0,1]          | Entity tint color |
-| [blendFunc](/reference/uniforms/general/blendfunc)                                     | ivec4 |                | Alpha blending function multipliers: (srcRGB, dstRGB, srcA, dstA) |
-| [atlasSize](/reference/uniforms/general/atlassize)                                     | ivec2 | [0,-]          | Size of the texture atlas, `0` if not bound |
-| [renderStage](/reference/uniforms/general/renderstage)                                 | int   |                | "Render stage" of the current geometry |
-
-## Camera
-| Uniform                                                                                | Type  | Value Range    | Description |
-| -------------------------------------------------------------------------------------- | ----- | -------------- | ----------- |
-| [near](/reference/uniforms/general/near)                                               | float |                | Near clipping plane distance |
-| [far](/reference/uniforms/general/far)                                                 | float |                | Current render distance in blocks |
 | [cameraPosition](/reference/uniforms/general/cameraposition)                           | vec3  |                | Position of the camera in world space |
 | [eyeAltitude](/reference/uniforms/general/eyealtitude)                                 | float |                | Y coordinate of the player in blocks |
-| [cameraPositionFract](/reference/uniforms/general/camerapositionfract)                 | vec3  | [0,1]          | Fractional component of the camera position in world space |
+| [cameraPositionFract](/reference/uniforms/general/camerapositionfract)                 | vec3  | [0,1)          | Fractional component of the camera position in world space |
 | [cameraPositionInt](/reference/uniforms/general/camerapositionint)                     | ivec3 |                | Integer component of the camera position in world space |
 | [previousCameraPosition](/reference/uniforms/general/previouscameraposition)           | vec3  |                | Value of `cameraPosition` from the previous frame |
-| [previousCameraPositionFract](/reference/uniforms/general/previouscamerapositionfract) | vec3  | [0,1]          | Value of `cameraPositionFract` from the previous frame |
+| [previousCameraPositionFract](/reference/uniforms/general/previouscamerapositionfract) | vec3  | [0,1)          | Value of `cameraPositionFract` from the previous frame |
 | [previousCameraPositionInt](/reference/uniforms/general/previouscamerapositionint)     | ivec3 |                | Value of `cameraPositionInt` from the previous frame |
 | [eyePosition](/reference/uniforms/general/eyeposition)                                 | vec3  |                | World space position of the player's head model |
 | [relativeEyePosition](/reference/uniforms/general/relativeeyeposition)                 | vec3  |                | World space offset from the player head to the camera |
 | [playerBodyVector](/reference/uniforms/general/playerbodyvector)                       | vec3  | [0,1]          | World aligned direction of player model's body |
 | [playerLookVector](/reference/uniforms/general/playerlookvector)                       | vec3  | [0,1]          | World aligned direction of player model's head |
 | [upPosition](/reference/uniforms/general/upposition)                                   | vec3  | [0,100]        | Upwards direction in view space, length of 100 |
+| [isEyeInWater](/reference/uniforms/general/iseyeinwater)                               | int   | 0,1,2,3        | Fluid that the camera is currently in |
+| [firstPersonCamera](/reference/uniforms/general/firstpersoncamera)                     | bool  | true/false     | Whether the player is in first person mode |
+| [hideGUI](/reference/uniforms/general/hidegui)                                         | bool  | true/false     | Whether the player's GUI is hidden |
+| [isRightHanded](/reference/uniforms/general/isrighthanded)                             | bool  | true/false     | Whether the player's main hand is set to right hand |
+| [isSpectator](/reference/uniforms/general/isspectator)                                 | bool  | true/false     | Whether the player is currently in spectator mode |
 | [centerDepthSmooth](/reference/uniforms/general/centerdepthsmooth)                     | float | [0,1]          | Depth buffer value at the center of the screen, smoothed over time |
 | [eyeBrightness](/reference/uniforms/general/eyebrightness)                             | ivec2 | [0-240]        | Light value at the player's location: (block, sky) |
 | [eyeBrightnessSmooth](/reference/uniforms/general/eyebrightnesssmooth)                 | ivec2 | [0-240]        | `eyeBrightness` smoothed over time by `eyeBrightnessHalfLife`|
-| [isEyeInWater](/reference/uniforms/general/iseyeinwater)                               | int   | 0,1,2,3        | Fluid that the camera is currently in |
-| [firstPersonCamera](/reference/uniforms/general/firstpersoncamera)                     | bool  | true/false     | Whether the player is in first person mode |
 
-## Screen/System
-| Uniform                                                                                | Type  | Value Range    | Description |
-| -------------------------------------------------------------------------------------- | ----- | -------------- | ----------- |
-| [viewHeight](/reference/uniforms/general/viewheight)                                   | float | [1,-]          | Height of the game window in pixels |
-| [viewWidth](/reference/uniforms/general/viewwidth)                                     | float | [1,-]          | Width of the game window in pixels |
-| [aspectRatio](/reference/uniforms/general/aspectratio)                                 | float | (0,inf)        | Aspect ratio of the game window |
-| [frameCounter](/reference/uniforms/general/framecounter)                               | int   | [0,720719]     | Number of frames since start of program |
-| [frameTime](/reference/uniforms/general/frametime)                                     | float |                | Frame time of the previous frame in seconds |
-| [frameTimeCounter](/reference/uniforms/general/frametimecounter)                       | float | [0,3600)       | Running time of the game in seconds |
-| [screenBrightness](/reference/uniforms/general/screenbrightness)                       | float | [0,1]          | Screen brightness from video settings |
-| [currentColorSpace](/reference/uniforms/general/currentcolorspace)                     | int   | 0,1,2,3,4      | Display color space, controlled through video settings |
-| [currentDate](/reference/uniforms/general/currentdate)                                 | ivec3 |                | System date: (year, month, day) |
-| [currentTime](/reference/uniforms/general/currenttime)                                 | ivec3 |                | System time: (hour, minute, second) |
-| [currentYearTime](/reference/uniforms/general/currentyeartime)                         | ivec2 |                | Time since beginning of the year and until the end of the year |
-
-## Time/Weather
-| Uniform                                                                                | Type  | Value Range    | Description |
-| -------------------------------------------------------------------------------------- | ----- | -------------- | ----------- |
-| [sunPosition](/reference/uniforms/general/sunposition)                                 | vec3  | [0,100]        | Position of the sun in view space, length of 100 |
-| [moonPosition](/reference/uniforms/general/moonposition)                               | vec3  | [0,100]        | Position of the moon in view space, length of 100 |
-| [shadowLightPosition](/reference/uniforms/general/shadowlightposition)                 | vec3  | [0,100]        | Position of shadow source in view space, length of 100 |
-| [sunAngle](/reference/uniforms/general/sunangle)                                       | float | [0,1]          | Angle of the sun within the complete day-night cycle |
-| [shadowAngle](/reference/uniforms/general/shadowangle)                                 | float | [0,0.5]        | Angle of shadow source (whichever is higher in the sky) |
-| [moonPhase](/reference/uniforms/general/moonphase)                                     | int   | [0,7]          | Current moon phase |
-| [rainStrength](/reference/uniforms/general/rainstrength)                               | float | [0,1]          | Current strength of rain |
-| [wetness](/reference/uniforms/general/wetness)                                         | float | [0,1]          | `rainStrength` but smoothed over time with `wetnessHalfLife` |
-| [thunderStrength](/reference/uniforms/general/thunderstrength)                         | float | [0,1]          | Current strength of thunderstorm |
-| [lightningBoltPosition](/reference/uniforms/general/lightningboltposition)             | vec4  |                | Position of a lightning bolt being rendered, or `vec4(0.0)` |
-| [worldTime](/reference/uniforms/general/worldtime)                                     | int   | [0,23999]      | Current in-game time |
-| [worldDay](/reference/uniforms/general/worldday)                                       | int   |                | Number of in-game days passed |
-
-## Fog
-| Uniform                                                                                | Type  | Value Range    | Description |
-| -------------------------------------------------------------------------------------- | ----- | -------------- | ----------- |
-| [fogColor](/reference/uniforms/general/fogcolor)                                       | vec3  | [0,1]          | Horizon fog color |
-| [skyColor](/reference/uniforms/general/skycolor)                                       | vec3  | [0,1]          | Upper sky color |
-| [fogDensity](/reference/uniforms/general/fogdensity)                                   | float | [0,1]          | Relative fog density |
-| [fogStart](/reference/uniforms/general/fogstart)                                       | float |                | Starting fog distance in blocks |
-| [fogEnd](/reference/uniforms/general/fogend)                                           | float |                | Ending fog distance in blocks |
-| [fogMode](/reference/uniforms/general/fogmode)                                         | int   |                | Fog type used for vanilla fog |
-| [fogShape](/reference/uniforms/general/fogshape)                                       | int   | 0,1            | Fog shape used for vanilla fog |
-
-## ID
-| Uniform                                                                                | Type  | Value Range    | Description |
-| -------------------------------------------------------------------------------------- | ----- | -------------- | ----------- |
-| [entityId](/reference/uniforms/general/entityid)                                       | int   | [0,65535]      | ID of the currently rendering entity (gbuffers_entities) |
-| [blockEntityId](/reference/uniforms/general/blockentityid)                             | int   | [-32768,32767] | ID of the currently rendering block entity (gbuffers_block) |
-| [currentRenderedItemId](/reference/uniforms/general/currentrendereditemid)             | int   | [0,65535]      | Item ID of currently rendering item/armor/trim |
-| [currentSelectedBlockId](/reference/uniforms/general/currentselectedblockid)           | int   | [-32768,32767] | Block ID of block selected by the player |
-| [currentSelectedBlockPos](/reference/uniforms/general/currentselectedblockpos)         | vec3  |                | Player space position of the center of the block selected by the player |
-| [heldItemId](/reference/uniforms/general/helditemid)                                   | int   | [0,65535]      | Item ID of the item in the player's hand |
-| [heldItemId2](/reference/uniforms/general/helditemid2)                                 | int   | [0,65535]      | Item ID of the item in the player's offhand |
-| [heldBlockLightValue](/reference/uniforms/general/heldblocklightvalue)                 | int   | [0,15]         | Light value of the item held in the player's hand |
-| [heldBlockLightValue2](/reference/uniforms/general/heldblocklightvalue2)               | int   | [0,15]         | Light value of the item held in the player's offhand |
-
-## Status Effect
+## Player Status
 | Uniform                                                                                | Type  | Value Range    | Description |
 | -------------------------------------------------------------------------------------- | ----- | -------------- | ----------- |
 | [blindness](/reference/uniforms/general/blindness)                                     | float | [0,1]          | Blindness effect multiplier |
@@ -109,13 +45,6 @@ Uniforms are variables which store values that are the same for all invocations 
 | [nightVision](/reference/uniforms/general/nightvision)                                 | float | [0,1]          | Night vision effect multiplier |
 | [playerMood](/reference/uniforms/general/playermood)                                   | float | [0,1]          | Player mood value |
 | [constantMood](/reference/uniforms/general/constantmood)                               | float | [0,1]          | `playerMood` but it doesn't reset at `1.0` |
-| [hideGUI](/reference/uniforms/general/hidegui)                                         | bool  | true/false     | Whether the player's GUI is hidden |
-| [isRightHanded](/reference/uniforms/general/isrighthanded)                             | bool  | true/false     | Whether the player's main hand is set to right hand |
-| [isSpectator](/reference/uniforms/general/isspectator)                                 | bool  | true/false     | Whether the player is currently in spectator mode |
-
-## Player Status
-| Uniform                                                                                | Type  | Value Range    | Description |
-| -------------------------------------------------------------------------------------- | ----- | -------------- | ----------- |
 | [currentPlayerAir](/reference/uniforms/general/currentplayerair)                       | float | [0,1]          | Normalized air the player has remaining |
 | [maxPlayerAir](/reference/uniforms/general/maxplayerair)                               | float |                | Maximum player air when underwater |
 | [currentPlayerArmor](/reference/uniforms/general/currentplayerarmor)                   | float | [0,1]          | Normalized armor player has equipped |
@@ -131,21 +60,84 @@ Uniforms are variables which store values that are the same for all invocations 
 | [is_sneaking](/reference/uniforms/general/is_sneaking)                                 | bool  | true/false     | Whether the player is currently sneaking |
 | [is_sprinting](/reference/uniforms/general/is_sprinting)                               | bool  | true/false     | Whether the player is currently sprinting |
 
-## Biome
+## Screen/System
+| Uniform                                                                                | Type  | Value Range    | Description |
+| -------------------------------------------------------------------------------------- | ----- | -------------- | ----------- |
+| [viewHeight](/reference/uniforms/general/viewheight)                                   | float | [1,∞)          | Height of the game window in pixels |
+| [viewWidth](/reference/uniforms/general/viewwidth)                                     | float | [1,∞)          | Width of the game window in pixels |
+| [aspectRatio](/reference/uniforms/general/aspectratio)                                 | float | (0,∞)          | Aspect ratio of the game window |
+| [screenBrightness](/reference/uniforms/general/screenbrightness)                       | float | [0,1]          | Screen brightness from video settings |
+| [frameCounter](/reference/uniforms/general/framecounter)                               | int   | [0,720719]     | Number of frames since start of program |
+| [frameTime](/reference/uniforms/general/frametime)                                     | float | (0,∞)          | Frame time of the previous frame in seconds |
+| [frameTimeCounter](/reference/uniforms/general/frametimecounter)                       | float | [0,3600)       | Running time of the game in seconds |
+| [currentColorSpace](/reference/uniforms/general/currentcolorspace)                     | int   | 0,1,2,3,4      | Display color space, controlled through video settings |
+| [currentDate](/reference/uniforms/general/currentdate)                                 | ivec3 |                | System date: (year, month, day) |
+| [currentTime](/reference/uniforms/general/currenttime)                                 | ivec3 |                | System time: (hour, minute, second) |
+| [currentYearTime](/reference/uniforms/general/currentyeartime)                         | ivec2 |                | Time since beginning of the year and until the end of the year |
+
+## World/Weather
+| Uniform                                                                                | Type  | Value Range    | Description |
+| -------------------------------------------------------------------------------------- | ----- | -------------- | ----------- |
+| [sunPosition](/reference/uniforms/general/sunposition)                                 | vec3  | [0,100]        | Position of the sun in view space, length of 100 |
+| [moonPosition](/reference/uniforms/general/moonposition)                               | vec3  | [0,100]        | Position of the moon in view space, length of 100 |
+| [shadowLightPosition](/reference/uniforms/general/shadowlightposition)                 | vec3  | [0,100]        | Position of shadow source in view space, length of 100 |
+| [sunAngle](/reference/uniforms/general/sunangle)                                       | float | [0,1]          | Angle of the sun within the complete day-night cycle |
+| [shadowAngle](/reference/uniforms/general/shadowangle)                                 | float | [0,0.5]        | Angle of shadow source (whichever is higher in the sky) |
+| [moonPhase](/reference/uniforms/general/moonphase)                                     | int   | [0,7]          | Current moon phase |
+| [rainStrength](/reference/uniforms/general/rainstrength)                               | float | [0,1]          | Current strength of rain |
+| [wetness](/reference/uniforms/general/wetness)                                         | float | [0,1]          | `rainStrength` but smoothed over time with `wetnessHalfLife` |
+| [thunderStrength](/reference/uniforms/general/thunderstrength)                         | float | [0,1]          | Current strength of thunderstorm |
+| [lightningBoltPosition](/reference/uniforms/general/lightningboltposition)             | vec4  |                | Position of a lightning bolt being rendered, or `vec4(0.0)` |
+| [worldTime](/reference/uniforms/general/worldtime)                                     | int   | [0,23999]      | Current in-game time |
+| [worldDay](/reference/uniforms/general/worldday)                                       | int   |                | Number of in-game days passed |
+
+## ID
+| Uniform                                                                                | Type  | Value Range    | Description |
+| -------------------------------------------------------------------------------------- | ----- | -------------- | ----------- |
+| [entityId](/reference/uniforms/general/entityid)                                       | int   | [0,65535]      | ID of the currently rendering entity (gbuffers_entities) |
+| [blockEntityId](/reference/uniforms/general/blockentityid)                             | int   | [-32768,32767] | ID of the currently rendering block entity (gbuffers_block) |
+| [currentRenderedItemId](/reference/uniforms/general/currentrendereditemid)             | int   | [0,65535]      | Item ID of currently rendering item/armor/trim |
+| [currentSelectedBlockId](/reference/uniforms/general/currentselectedblockid)           | int   | [-32768,32767] | Block ID of block selected by the player |
+| [currentSelectedBlockPos](/reference/uniforms/general/currentselectedblockpos)         | vec3  |                | Player space position of the center of the block selected by the player |
+| [heldItemId](/reference/uniforms/general/helditemid)                                   | int   | [0,65535]      | Item ID of the item in the player's hand |
+| [heldItemId2](/reference/uniforms/general/helditemid2)                                 | int   | [0,65535]      | Item ID of the item in the player's offhand |
+| [heldBlockLightValue](/reference/uniforms/general/heldblocklightvalue)                 | int   | [0,15]         | Light value of the item held in the player's hand |
+| [heldBlockLightValue2](/reference/uniforms/general/heldblocklightvalue2)               | int   | [0,15]         | Light value of the item held in the player's offhand |
+
+## Biome/Dimension
 | Uniform                                                                                | Type  | Value Range    | Description |
 | -------------------------------------------------------------------------------------- | ----- | -------------- | ----------- |
 | [biome](/reference/uniforms/general/biome)                                             | int   |                | Biome currently occupied by the player |
 | [biome_category](/reference/uniforms/general/biome_category)                           | int   |                | Category of the biome currently occupied by the player |
 | [ambientLight](/reference/uniforms/general/ambientlight)                               | float | [0,1]          | Ambient light property of the current dimension |
-| [bedrockLevel](/reference/uniforms/general/bedrocklevel)                               | int   |                | Y coordinate of the bedrock floor in the current dimension |
+| [bedrockLevel](/reference/uniforms/general/bedrocklevel)                               | int   | [-2032,2016]   | Y coordinate of the bedrock floor in the current dimension |
 | [biome_precipitation](/reference/uniforms/general/biome_precipitation)                 | int   | 0,1,2          | Type of precipitation in the current biome |
 | [cloudHeight](/reference/uniforms/general/cloudheight)                                 | float |                | Y coordinate of the vanilla cloud plane |
 | [hasCeiling](/reference/uniforms/general/hasceiling)                                   | bool  | true/false     | Whether the current dimension has a ceiling |
 | [hasSkylight](/reference/uniforms/general/hasskylight)                                 | bool  | true/false     | Whether the current dimension has sky lighting |
-| [heightLimit](/reference/uniforms/general/heightlimit)                                 | int   |                | Distance from maximum to minimum block heights in current dimension |
+| [heightLimit](/reference/uniforms/general/heightlimit)                                 | int   | [16,4064]      | Distance from maximum to minimum block heights in current dimension |
 | [logicalHeightLimit](/reference/uniforms/general/logicalheightlimit)                   | int   |                | Logical height of the current dimension |
 | [rainfall](/reference/uniforms/general/rainfall)                                       | float | [0,1]          | Rainfall property of the current biome |
 | [temperature](/reference/uniforms/general/temperature)                                 | float |                | Temperature property of the current biome |
+
+## Rendering
+| Uniform                                                                                | Type  | Value Range    | Description |
+| -------------------------------------------------------------------------------------- | ----- | -------------- | ----------- |
+| [near](/reference/uniforms/general/near)                                               | float | 0.05           | Near clipping plane distance |
+| [far](/reference/uniforms/general/far)                                                 | float | (0,-)          | Current render distance in blocks |
+| [alphaTestRef](/reference/uniforms/general/alphatestref)                               | float | [0,1]          | Cutout alpha discard threshold |
+| [chunkOffset](/reference/uniforms/general/chunkoffset)                                 | vec3  |                | Chunk offset for terrain model space position |
+| [entityColor](/reference/uniforms/general/entitycolor)                                 | vec4  | [0,1]          | Entity tint color |
+| [blendFunc](/reference/uniforms/general/blendfunc)                                     | ivec4 |                | Alpha blending function multipliers: (srcRGB, dstRGB, srcA, dstA) |
+| [atlasSize](/reference/uniforms/general/atlassize)                                     | ivec2 | [0,-)          | Size of the texture atlas, `0` if not bound |
+| [renderStage](/reference/uniforms/general/renderstage)                                 | int   |                | "Render stage" of the current geometry |
+| [fogColor](/reference/uniforms/general/fogcolor)                                       | vec3  | [0,1]          | Horizon fog color |
+| [skyColor](/reference/uniforms/general/skycolor)                                       | vec3  | [0,1]          | Upper sky color |
+| [fogDensity](/reference/uniforms/general/fogdensity)                                   | float | [0,1]          | Relative fog density |
+| [fogStart](/reference/uniforms/general/fogstart)                                       | float | (0,-)          | Starting fog distance in blocks |
+| [fogEnd](/reference/uniforms/general/fogend)                                           | float | (0,-)          | Ending fog distance in blocks |
+| [fogMode](/reference/uniforms/general/fogmode)                                         | int   | 2048, 2049, 2048 | Fog type used for vanilla fog |
+| [fogShape](/reference/uniforms/general/fogshape)                                       | int   | 0,1            | Fog shape used for vanilla fog |
 
 ## Matrices
 | Uniform                                                                                | Type  | Value Range    | Description |
@@ -168,12 +160,23 @@ Uniforms are variables which store values that are the same for all invocations 
 | [textureMatrix](/reference/uniforms/matrices/texturematrix)                            | mat4  |                | Transforms texture coordinates before sampling |
 
 
+
+
+
+
+
+
+
+
+
+
+
 ## Overall List
 | Uniform                                                                                | Type  | Value Range    | Description |
 | -------------------------------------------------------------------------------------- | ----- | -------------- | ----------- |
 | [alphaTestRef](/reference/uniforms/general/alphatestref)                               | float | [0,1]          | Cutout discard threshold |
 | [ambientLight](/reference/uniforms/general/ambientlight)                               | float | [0,1]          | Ambient light property of the current dimension |
-| [aspectRatio](/reference/uniforms/general/aspectratio)                                 | float | (0,inf)        | Aspect ratio of the game window |
+| [aspectRatio](/reference/uniforms/general/aspectratio)                                 | float | (0,∞)        | Aspect ratio of the game window |
 | [atlasSize](/reference/uniforms/general/atlassize)                                     | ivec2 | [0,-]          | Size of the texture atlas, `0` if not bound |
 | [bedrockLevel](/reference/uniforms/general/bedrocklevel)                               | int   |                | Y coordinate of the bedrock floor in the current dimension |
 | [biome_category](/reference/uniforms/general/biome_category)                           | int   |                | Category of the biome currently occupied by the player |
