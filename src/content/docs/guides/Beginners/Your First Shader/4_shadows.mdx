@@ -91,7 +91,7 @@ To do this, we first need to determine the position of the pixel at all. We can 
 
 **TODO: SPACE CONVERSION EXPLANATION / TUTORIAL**
 
-To do these space conversions, we will make use of a function, `projectAndDivide`. This function applies a projection matrix and then divides by the `w` component, skipping straight to clip space. **Place this function definition outside and before `main`.**
+To do these space conversions, we will make use of a function, `projectAndDivide`. This function applies a projection matrix and then divides by the `w` component, skipping straight to clip space. **Place this function definition outside and before `main` but after the declaration of `texcoord`.**
 
 ```glsl
 vec3 projectAndDivide(mat4 projectionMatrix, vec3 position){
@@ -185,6 +185,8 @@ We can then add
 ```
 to our `shadow.vsh`. *This should be included before the `main` function, as you cannot define functions within a function. I put mine just before my `out` declarations.
 
+**We should also move our declaration of `shadowmapresolution` to `distort.glsl`.** This way, we can access this variable anywhere we are sampling the shadow map.
+
 :::caution[Note]
 Preprocessor directives *do not have a semicolon on the end*.
 :::
@@ -253,7 +255,7 @@ If you look at something like stained glass, you'll see that it casts a solid sh
 
 With these three shadow maps, we can work out how much shadow is being cast by something, and even what color that shadow should be!
 
-Let's go back to `composite.fsh` and make a new function called `getShadow`. It should take in a `shadowScreenPos` which is of course a `vec3`. The logic we will use is as follows:
+Let's go back to `composite.fsh` and make a new function called `getShadow`. It should take in a `shadowScreenPos` which is of course a `vec3`. As The logic we will use is as follows:
 
 ```glsl
 
@@ -288,3 +290,139 @@ vec3 shadow = getShadow(shadowScreenPos);
 ![](/src/assets/first_shader_guide/4/transparentshadows.png)
 
 and we now get nice colored shadows!
+
+## Softer Shadows
+The final piece of the puzzle is those nasty jagged edges on our shadows. This is called *aliasing*, and is another artifact of the limited resolution on our shadow map. If you look at real shadows, you'll also notice that they don't tend to have clean, sharp edges. Instead, they seem to have a slightly softer edge. This area at the edge of the shadow is known as the *penumbra*.
+
+![](/src/assets/first_shader_guide/4/penumbra.png)
+[Image Source: Wikipedia](https://commons.wikimedia.org/w/index.php?curid=3675853)
+
+What this means is that we can blur our shadows slightly, and not only will it remove the aliasing, it will also make them more physically plausible.
+
+The first thing we are going to do is add the following to `distort.glsl`, just after we set the resolution.
+```glsl
+// distort.glsl
+const bool shadowtex0Nearest = true;
+const bool shadowtex1Nearest = true;
+const bool shadowcolor0Nearest = true;
+```
+
+This will remove the curved edges on the shadows, making them even more jagged, but it's necessary for us to be able to correctly blur them, and also resolves some artifacts on transparent shadows you may have noticed.
+
+![](/src/assets/first_shader_guide/4/jaggedshadows.png)
+
+To blur our shadows, we are going to be using something known as *percentage closer filtering*. To do this, we take multiple shadow samples within an area around the position and average them. To do this, we will be using a loop. Within this loop, we will generate an offset from the shadow position, apply it in clip space, and then convert to screen space before our shadow samples. 
+
+First, we should define how many samples we are going to take, and how far we should offset our samples. We can do this with a preprocessor directive which we can later make configurable in the settings menu.
+
+```glsl
+#define SHADOW_QUALITY 2
+#define SHADOW_SOFTNESS 1
+```
+:::note[Note]
+`#define` is another preprocessor directive, except instead of replacing itself with the contents of a file, it replaces all uses of it with the value. For example, if we `#define THING 2.0`, then `float something = thing;` will compile to `float something = 2.0`.
+:::
+
+Let's define another function `getSoftShadow` in `composite.fsh`. This function will call `getShadow` so it must be placed after it.
+
+**TODO: explain this more maybe**
+
+```glsl
+vec3 getSoftShadow(vec4 shadowClipPos){
+	const float range = SHADOW_SOFTNESS / 2; // how far away from the original position we take our samples from
+	const float increment = range / SHADOW_QUALITY; // distance between each sample
+
+	vec3 shadowAccum = vec3(0.0); // sum of all shadow samples
+	int samples = 0;
+
+	for(float x = -range; x <= range; x += increment){
+		for (float y = -range; y <= range; y+= increment){
+			vec2 offset = vec2(x, y) / shadowMapResolution;
+			vec4 offsetShadowClipPos = shadowClipPos + vec4(offset, 0.0, 0.0); // add offset
+			offsetShadowClipPos.z -= 0.001; // apply bias
+			offsetShadowClipPos.xyz = distortShadowClipPos(offsetShadowClipPos.xyz); // apply distortion
+			vec3 shadowNDCPos = offsetShadowClipPos.xyz / offsetShadowClipPos.w; // convert to NDC space
+			vec3 shadowScreenPos = shadowNDCPos * 0.5 + 0.5; // convert to screen space
+			shadowAccum += getShadow(shadowScreenPos); // take shadow sample
+			samples++;
+		}
+	}
+
+	return shadowAccum / float(samples); // divide sum by count, getting average shadow
+}
+```
+
+We can then remove some of our conversion code and replace our call to `getShadow` with a call to `softShadow`.
+
+```glsl
+//composite.fsh
+
+[...]
+vec4 shadowClipPos = shadowProjection * vec4(shadowViewPos, 1.0);
+
+// note how subsequent conversion code has been moved to the getSoftShadow function
+
+vec3 shadow = getSoftShadow(shadowClipPos);
+[...]
+```
+
+![](/src/assets/first_shader_guide/4/softshadows.png)
+
+Our shadows now have soft edges, and the aliasing artifacts are no longer visible. However, they still look a little bit pixelated. This is for two reasons. The first one is that we are using a box kernel, which means that we are sampling evenly within a square box. Ideally, a circular kernel would be used, however implementing this is left as an exercise to the reader. The second, more important reason is that we are sampling the exact same points for every pixel on screen. We can resolve this issue by randomly rotating the area we sample within for each frame. We can get a random rotation using another texture, [`noisetex`](/reference/buffers/noisetex/). Let's write `noisetex` to the screen. I'm once again leaving this up to you to do, because we've written a fair few textures to the screen at this point. Like every other texture, `noisetex` is declared with a `uniform sampler2D noisetex;`.
+
+![](/src/assets/first_shader_guide/4/lownoise.png)
+
+You'll see the pixels in `noisetex` are pretty chunky. This is because it has a resolution of 64x64, and is being stretched to fit the screen. We could just increase the resolution, but to ensure we're getting a unique value for every pixel, we'll instead use a function called `texelFetch`. `texelFetch` takes in an exact pixel coordinate in a texture and returns the value there without doing any filtering. We will need to convert our `texcoord` to a pixel coordinate within the range (0-64). We can do this using another couple of uniforms, [`viewWidth`](/reference/uniforms/general/viewwidth/) and [`viewHeight`](/reference/uniforms/general/viewheight/) (both `float`s). We will also make use of the type `ivec2` which is like a `vec2` except it can store only integer values. Let's make another new function called `getNoise`. It will take in a vec2 texcoord and return a vec4, the lookup value from `noisetex`. We're going to access it in `getSoftShadow` so it should be placed before this function.
+
+```glsl
+vec4 getNoise(vec2 coord){
+	ivec2 screenCoord = ivec2(coord * vec2(viewWidth, viewHeight)); // exact pixel coordinate onscreen
+	ivec2 noiseCoord = screenCoord % 64; // wrap to range of noiseTextureResolution
+	return texelFetch(noisetex, noiseCoord, 0);
+}
+```
+
+:::note[Note]
+`64` is the default resolution of `noisetex`. Since this value can be configured with [`noiseTextureResolution`](/reference/constants/noisetextureresolution/), if you ever change this value, you should replace the use of `64` with the uniform.
+:::
+
+![](/src/assets/first_shader_guide/4/highnoise.png)
+
+While the image clearly repeats, we now have unique values per pixel for the noise. We can then modify our `softShadow` function to take this into account.
+
+```glsl
+vec3 getSoftShadow(vec4 shadowClipPos){
+	const float range = SHADOW_SOFTNESS / 2; // how far away from the original position we take our samples from
+	const float increment = range / SHADOW_QUALITY; // distance between each sample
+
+	float noise = getNoise(texcoord).r;
+
+	float theta = noise * radians(360.0); // random angle using noise value
+	float cosTheta = cos(theta);
+	float sinTheta = sin(theta);
+
+	mat2 rotation = mat2(cosTheta, -sinTheta, sinTheta, cosTheta); // matrix to rotate the offset around the original position by the angle
+
+	vec3 shadowAccum = vec3(0.0); // sum of all shadow samples
+	int samples = 0;
+
+	for(float x = -range; x <= range; x += increment){
+		for (float y = -range; y <= range; y+= increment){
+			vec2 offset = rotation * vec2(x, y) / shadowMapResolution;
+			vec4 offsetShadowClipPos = shadowClipPos + vec4(offset, 0.0, 0.0); // add offset
+			offsetShadowClipPos.z -= 0.001; // apply bias
+			offsetShadowClipPos.xyz = distortShadowClipPos(offsetShadowClipPos.xyz); // apply distortion
+			vec3 shadowNDCPos = offsetShadowClipPos.xyz / offsetShadowClipPos.w; // convert to NDC space
+			vec3 shadowScreenPos = shadowNDCPos * 0.5 + 0.5; // convert to screen space
+			shadowAccum += getShadow(shadowScreenPos); // take shadow sample
+			samples++;
+		}
+	}
+
+	return shadowAccum / float(samples); // divide sum by count, getting average shadow
+}
+```
+
+![](/src/assets/first_shader_guide/4/softershadows.png)
+
+Our shadows no longer have any visible pixels!
