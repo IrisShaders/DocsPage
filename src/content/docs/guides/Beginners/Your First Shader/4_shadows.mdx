@@ -104,6 +104,7 @@ vec3 NDCPos = vec3(texcoord.xy, depth) * 2.0 - 1.0;
 vec3 viewPos = projectAndDivide(gbufferProjectionInverse, NDCPos);
 vec3 feetPlayerPos = (gbufferModelViewInverse * vec4(viewPos, 1.0)).xyz;
 vec3 shadowViewPos = (shadowModelView * vec4(feetPlayerPos, 1.0)).xyz;
+vec4 shadowClipPos = shadowProjection * vec4(shadowViewPos, 1.0);
 vec3 shadowNDCPos = projectAndDivide(shadowProjection, shadowViewPos);
 vec3 shadowScreenPos = shadowNDCPos * 0.5 + 0.5;
 ```
@@ -111,7 +112,7 @@ vec3 shadowScreenPos = shadowNDCPos * 0.5 + 0.5;
 We can then sample the shadow map at `shadowScreenPos`.
 
 ## Sampling the Shadow Map
-So, the shadow map contains the depth of the nearest thing to the light source in that direction. Therefore, if something is further away from the sun, it must be in shadow. What we do is compare the depth in the shadow map at our shadow position's xy component to the z component of our shadow position. If the z component is less than the depth, it must be in sunlight. We can do this comparison with the `step` function. Let's say we have `step(a, b)`. It returns 1.0 if `b` is more than `a`. With that in mind, we can declare:
+So, the shadow map contains the depth of the nearest thing to the light source in that direction. Therefore, if something is further away from the sun, it must be in shadow. What we do is compare the depth in the shadow map at our shadow position's xy component to the z component of our shadow position. If the z component is not greater than the depth, it must be in sunlight. We can do this comparison with the `step` function. Let's say we have `step(a, b)`. It returns 1.0 if `b` is more than `a`. With that in mind, we can declare:
 
 ```glsl
 float shadow = step(shadowScreenPos.z, texture(shadowtex0, shadowScreenPos.xy).r);
@@ -130,9 +131,112 @@ You should now see something like this:
 Now, while you can tell that things are casting shadows, a lot of surfaces seem to be in shadow when they shouldn't be, with weird patterns. This is due to something called 'shadow acne', and it occurs when something ends up casting a shadow on itself due to the lack of precision in the shadow map. We can fix this by adding something known as 'shadow bias' where we offset surfaces slightly towards the sun to prevent them casting shadows on themselves:
 
 ```glsl
-float shadow = step(shadowScreenPos.z - 0.001, texture(shadowtex0, shadowScreenPos.xy).r);
+[...]
+vec4 shadowClipPos = shadowProjection * vec4(shadowViewPos, 1.0);
+shadowClipPos.z -= 0.001;
+vec3 shadowNDCPos = projectAndDivide(shadowProjection, shadowViewPos);
+[...]
 ```
 
 Your shadows should now look a lot more reasonable.
 
 ![](/src/assets/first_shader_guide/4/basicshadows.png)
+
+## Making Shadows Sharper
+At the moment, our shadows are extremely blocky. This is due to the limited resolution of the shadow map. We can improve things somewhat by increasing this, using the [`shadowMapResolution`](/reference/constant/shadowmapresolution) const. This constant can be defined anywhere, but just because it's a nice place to put it, we'll go back to `shadow.fsh`. Let's add the following. It should be outside the `main` function - I put mine just before my `layout` qualifier declaration.
+
+```glsl
+const int shadowMapResolution = 2048;
+```
+
+This makes things a little bit sharper, but they still don't look great.
+
+![](/src/assets/first_shader_guide/4/sharpershadows.png)
+
+The easy solution here would be to just increase the shadow map resolution to some very big number like 8192 (it is convention to use a power of two for your shadow map size), but this will start taking up an awful lot of video memory, causing a performance impact. Instead, we can make use of something known as 'shadow distortion'. The idea is that since stuff that is closer to us is what we can see most clearly, we want to dedicate more of the shadow map resolution to this stuff, and less of it to things that are further away.
+
+:::note[Note]
+Shadow distortion as we are applying it is quite an old technique, and does not work as well as other, more modern methods for optimising use of shadow maps like [Cascaded Shadow Maps](https://learnopengl.com/Guest-Articles/2021/CSM). However, due to the limitations of the Optifine/Iris pipeline, it's quite hard to do anything more advanced, so this is what we are sticking with.
+:::
+
+## Shadow Distortion
+
+For our shadow distortion, we want to scale things such that stuff that's closer to the player gets stretched towards the edges, squashing the stuff that's already at the edges. We are going to do this operation in *shadow clip space*. Let's make a new function which takes in a position in shadow screen space, distorts it, and returns it. We want to access this function within both `shadow.vsh` and `composite.fsh`, so we are going to make use of a GLSL feature called `#include`. This lets us include code from one file inside multiple other files.
+
+:::note[Note]
+`#include` is a *preprocessor directive*. This means it runs when your code is compiled. When the GLSL compiler finds this directive, it replaces it with the contents of the specified file.
+:::
+
+Let's make a new file called `distort.glsl`. We'll put it in a folder called `lib` for the sake of organisation.
+```glsl
+shaders
+  lib
+    distort.glsl
+  composite.fsh
+  ...
+```
+
+We can then add 
+```glsl
+#include /lib/distort.glsl
+```
+to our `shadow.vsh`. *This should be included before the `main` function, as you cannot define functions within a function. I put mine just before my `out` declarations.
+
+:::caution[Note]
+Preprocessor directives *do not have a semicolon on the end*.
+:::
+
+Within `distort.glsl`, let's write a function `distortShadowClipPos`. This function is the one we described earlier.
+
+So, how do we actually distort the position? Well, in shadow clip space, all positions are between `-1.0` and `1.0`. Now, as the distance from the position to the origin (where the player is) increases, we want to make that distance even greater by pushing it closer to the edge. What we can do is *divide the position by the distance to the origin*.
+
+```glsl
+///lib/distort.glsl
+
+vec3 distortShadowClipPos(vec3 shadowClipPos){
+  float distortionFactor = length(shadowClipPos.xy); // distance from the player in shadow clip space
+  distortionFactor += 0.1; // very small distances can cause issues so we add this to slightly reduce the distortion
+
+  shadowClipPos.xy /= distortionFactor;
+  return shadowClipPos;
+}
+```
+
+:::caution[Note]
+We do not apply distortion to the `z` component as the origin of shadow clip space is the sun, not the player. On the `x` and `y` axes, things line up fine anyway, but on the `z` axis, they do not.
+:::
+
+We now need to apply that distortion. Back in `shadow.vsh`, `gl_Position` is in clip space, so we can simply apply it to the `xyz` component.
+
+```glsl
+//shadow.vsh
+
+void main(){
+  [...]
+  gl_Position = ftransform();
+	gl_Position.xyz = distortShadowClipPos(gl_Position.xyz);
+}
+```
+
+At this point, let's write the shadow map to the screen again to check what it looks like now. We did this earlier on, so I'll not give you the code again.
+
+![](/src/assets/first_shader_guide/4/distortedshadowmap.png)
+
+As expected, stuff in the middle of the shadow map has been expanded to take up more space!
+
+To apply this distortion when sampling the shadow map, we will `#include /lib/distort.glsl` in `composite.fsh`, and then apply the distortion to our shadow clip position *after the bias*.
+
+```glsl
+// composite.fsh
+
+[...]
+vec4 shadowClipPos = shadowProjection * vec4(shadowViewPos, 1.0);
+shadowClipPos.z -= 0.001; // bias
+shadowClipPos.xyz = distortShadowClipPos(shadowClipPos.xyz); // distortion
+vec3 shadowNDCPos = shadowClipPos.xyz / shadowClipPos.w;
+[...]
+```
+
+Our shadows now look nice and sharp near the player!
+
+![](/src/assets/first_shader_guide/4/distortedshadows.png)

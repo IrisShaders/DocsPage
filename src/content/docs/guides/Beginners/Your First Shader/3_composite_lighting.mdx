@@ -101,13 +101,17 @@ We store the normal in world space because by default, `colortex` buffers are 8 
 
 Once we have this vector, we can take the dot product of this and the normal, and multiply the sunlight by it. We will also multiply by the sky lightmap, as stuff which is not lit by the sky should not be lit by the sun either (we will replace this with shadows in the next section). This would look something like this:
 
+:::note[Note]
+The dot product should be clamped between 0 and 1 because we cannot have negative sunlight.
+:::
+
 ```glsl
 vec3 lightVector = normalize(shadowLightPosition);
 vec3 worldLightVector = mat3(gbufferModelViewInverse) * lightVector;
 
 [...]
 
-vec3 sunlight = sunlightColor * dot(worldLightVector, normal) * lightmap.g;
+vec3 sunlight = sunlightColor * clamp(dot(worldLightVector, normal), 0.0, 1.0) * lightmap.g;
 ```
 
 With that change, your lighting should seem a bit more realistic.
