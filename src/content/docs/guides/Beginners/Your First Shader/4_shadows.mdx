@@ -2,8 +2,8 @@
 title: Shadows
 description: Implement basic diffuse shading in a composite pass
 sidebar:
-  label: Shadows
-  order: 4
+	label: Shadows
+	order: 4
 ---
 
 In this section we will implement basic shadow mapping which allows us to check if a pixel has a shadow cast on it.
@@ -26,7 +26,7 @@ out vec4 glcolor;
 void main() {
 	texcoord = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;
 	glcolor = gl_Color;
-  gl_Position = ftransform();
+	gl_Position = ftransform();
 }
 ```
 ```glsl
@@ -42,9 +42,9 @@ layout(location = 0) out vec4 color;
 
 void main() {
 	color = texture(gtexture, texcoord) * glcolor;
-  if(color.a < 0.1){
-    discard;
-  }
+	if(color.a < 0.1){
+		discard;
+	}
 }
 ```
 
@@ -95,8 +95,8 @@ To do these space conversions, we will make use of a function, `projectAndDivide
 
 ```glsl
 vec3 projectAndDivide(mat4 projectionMatrix, vec3 position){
-  vec4 homPos = projectionMatrix * vec4(position, 1.0);
-  return homPos.xyz / homPos.w;
+	vec4 homPos = projectionMatrix * vec4(position, 1.0);
+	return homPos.xyz / homPos.w;
 }
 ```
 
@@ -173,10 +173,10 @@ For our shadow distortion, we want to scale things such that stuff that's closer
 Let's make a new file called `distort.glsl`. We'll put it in a folder called `lib` for the sake of organisation.
 ```glsl
 shaders
-  lib
-    distort.glsl
-  composite.fsh
-  ...
+	lib
+		distort.glsl
+	composite.fsh
+	...
 ```
 
 We can then add 
@@ -199,11 +199,11 @@ So, how do we actually distort the position? Well, in shadow clip space, all pos
 ///lib/distort.glsl
 
 vec3 distortShadowClipPos(vec3 shadowClipPos){
-  float distortionFactor = length(shadowClipPos.xy); // distance from the player in shadow clip space
-  distortionFactor += 0.1; // very small distances can cause issues so we add this to slightly reduce the distortion
+	float distortionFactor = length(shadowClipPos.xy); // distance from the player in shadow clip space
+	distortionFactor += 0.1; // very small distances can cause issues so we add this to slightly reduce the distortion
 
-  shadowClipPos.xy /= distortionFactor;
-  return shadowClipPos;
+	shadowClipPos.xy /= distortionFactor;
+	return shadowClipPos;
 }
 ```
 
@@ -217,8 +217,8 @@ We now need to apply that distortion. Back in `shadow.vsh`, `gl_Position` is in 
 //shadow.vsh
 
 void main(){
-  [...]
-  gl_Position = ftransform();
+	[...]
+	gl_Position = ftransform();
 	gl_Position.xyz = distortShadowClipPos(gl_Position.xyz);
 }
 ```

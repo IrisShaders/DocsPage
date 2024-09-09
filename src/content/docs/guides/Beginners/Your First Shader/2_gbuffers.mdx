@@ -2,8 +2,8 @@
 title: The Gbuffers
 description: Understand how the code in the gbuffers passes works.
 sidebar:
-  label: The Gbuffers
-  order: 2
+	label: The Gbuffers
+	order: 2
 ---
 
 In this next section, we will start with a fresh copy of the base 330 pack, instead of using the monochrome version we made in the previous step. You could also just remove the line you added to `composite.fsh`.
@@ -13,13 +13,13 @@ For the purposes of this tutorial, we will only be covering the shading of terra
 ```
 .
 └── .minecraft/
-    └── shaderpacks/
-        └── gbuffers-tutorial/
-            └── shaders/
-                ├── composite.fsh
-                ├── composite.vsh
-                ├── gbuffers_terrain.fsh
-                └── gbuffers_terrain.vsh
+		└── shaderpacks/
+				└── gbuffers-tutorial/
+						└── shaders/
+								├── composite.fsh
+								├── composite.vsh
+								├── gbuffers_terrain.fsh
+								└── gbuffers_terrain.vsh
 ```
 
 :::note[Info]
@@ -127,7 +127,7 @@ As you can see, `main` contains the following code (with comments added here for
 color = texture(gtexture, texcoord) * glcolor; // biome tint
 color *= texture(lightmap, lmcoord); // lightmap lighting [REMOVE ME!]
 if (color.a < 0.1) { // alpha test
-  discard; // don't bother writing
+	discard; // don't bother writing
 }
 ```
 

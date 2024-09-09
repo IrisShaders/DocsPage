@@ -2,8 +2,8 @@
 title: Simple Post Effects
 description: Write a basic post processing effect in the `composite` pass.
 sidebar:
-  label: Simple Post Effects
-  order: 2
+	label: Simple Post Effects
+	order: 2
 ---
 
 ## Setting up the file structure
@@ -12,12 +12,12 @@ Minecraft shaders require a specific structure of files in the right places to l
 ```
 .
 └── .minecraft/
-    └── shaderpacks/
-        └── Base-330-main/
-            ├── LICENSE
-            ├── readme.md
-            └── shaders/
-                └── ...
+		└── shaderpacks/
+				└── Base-330-main/
+						├── LICENSE
+						├── readme.md
+						└── shaders/
+								└── ...
 ```
 
 In this stage of the tutorial, we are going to make the screen monochrome using the `composite` pass, so let's rename the `Base-330-main` folder to `composite-tutorial`, or another name of your choosing.
@@ -83,7 +83,7 @@ texcoord = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;
 This gives us the 'texture coordinate' of the current vertex. This is more commonly known as the 'UV', and it is used so that the fragment shader knows where on the screen it is. You do not need to understand how it works at this stage. These texture coordinates range from (0, 0) at the bottom left of the texture to (1, 1) at the top right.
 
 
-Let's open `composite.fsh`. This is the *fragment shader*  It runs for every pixel on the screen.
+Let's open `composite.fsh`. This is the *fragment shader*	It runs for every pixel on the screen.
 
 Right now the code looks like this
 

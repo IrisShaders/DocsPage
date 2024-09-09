@@ -2,8 +2,8 @@
 title: Lighting in Composites
 description: Implement basic diffuse shading in a composite pass
 sidebar:
-  label: Lighting in Composites
-  order: 3
+	label: Lighting in Composites
+	order: 3
 ---
 
 In this section we will implement basic diffuse shading in the composite pass.
@@ -126,7 +126,7 @@ To access the depth buffer, we use `uniform sampler2D depthtex0`. In between the
 ```glsl
 float depth = texture(depthtex0, texcoord).r;
 if(depth == 1.0){
-  return;
+	return;
 }
 ```
 
