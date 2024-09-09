@@ -42,6 +42,9 @@ layout(location = 0) out vec4 color;
 
 void main() {
 	color = texture(gtexture, texcoord) * glcolor;
+  if(color.a < 0.1){
+    discard;
+  }
 }
 ```
 
@@ -240,3 +243,48 @@ vec3 shadowNDCPos = shadowClipPos.xyz / shadowClipPos.w;
 Our shadows now look nice and sharp near the player!
 
 ![](/src/assets/first_shader_guide/4/distortedshadows.png)
+
+## Transparent Shadows
+If you look at something like stained glass, you'll see that it casts a solid shadow. This doesn't really make sense, since (it being partially translucent) it should be letting some light through. Handily, there are a couple of extra shadowmaps we can access to help us with this.
+
+- `shadowtex0` contains everything that casts a shadow
+- `shadowtex1` contains *only things which are fully opaque* and cast a shadow
+- `shadowcolor0` contains the color (including how transparent it is) of things which cast a shadow.
+
+With these three shadow maps, we can work out how much shadow is being cast by something, and even what color that shadow should be!
+
+Let's go back to `composite.fsh` and make a new function called `getShadow`. It should take in a `shadowScreenPos` which is of course a `vec3`. The logic we will use is as follows:
+
+```glsl
+
+vec3 getShadow(vec3 shadowScreenPos){
+	float transparentShadow = step(shadowScreenPos.z, texture(shadowtex0, shadowScreenPos.xy).r);
+
+	if(transparentShadow == 1.0){ // no shadow at all
+		return vec3(1.0);
+	}
+
+	float opaqueShadow = step(shadowScreenPos.z, texture(shadowtex1, shadowScreenPos.xy).r);
+
+	if(opaqueShadow == 0.0){ // opaque shadow so don't sample transparent shadow colour
+		return vec3(0.0);
+	}
+
+	vec4 shadowColor = texture(shadowcolor0, shadowScreenPos.xy);
+
+	return shadowColor.rgb * (1.0 - shadowColor.a); // the transparency of the caster is stored in shadowcolor0's alpha component
+}
+```
+
+We can then replace our original
+```glsl
+float shadow = step(shadowScreenPos.z, texture(shadowtex0, shadowScreenPos.xy).r);
+```
+with
+```
+vec3 shadow = getShadow(shadowScreenPos);
+```
+
+![](/src/assets/first_shader_guide/4/transparentshadows.png)
+
+and we now get nice colored shadows!
