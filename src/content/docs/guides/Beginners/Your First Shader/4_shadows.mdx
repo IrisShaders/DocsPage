@@ -336,7 +336,7 @@ vec3 getSoftShadow(vec4 shadowClipPos){
 
 	for(float x = -range; x <= range; x += increment){
 		for (float y = -range; y <= range; y+= increment){
-			vec2 offset = vec2(x, y) / shadowMapResolution;
+			vec2 offset = vec2(x, y) / shadowMapResolution; // we divide by the resolution so our offset is in terms of pixels
 			vec4 offsetShadowClipPos = shadowClipPos + vec4(offset, 0.0, 0.0); // add offset
 			offsetShadowClipPos.z -= 0.001; // apply bias
 			offsetShadowClipPos.xyz = distortShadowClipPos(offsetShadowClipPos.xyz); // apply distortion
@@ -407,7 +407,7 @@ vec3 getSoftShadow(vec4 shadowClipPos){
 
 	for(float x = -range; x <= range; x += increment){
 		for (float y = -range; y <= range; y+= increment){
-			vec2 offset = rotation * vec2(x, y) / shadowMapResolution;
+			vec2 offset = rotation * vec2(x, y) / shadowMapResolution; // offset in the rotated direction by the specified amount. We divide by the resolution so our offset is in terms of pixels
 			vec4 offsetShadowClipPos = shadowClipPos + vec4(offset, 0.0, 0.0); // add offset
 			offsetShadowClipPos.z -= 0.001; // apply bias
 			offsetShadowClipPos.xyz = distortShadowClipPos(offsetShadowClipPos.xyz); // apply distortion
