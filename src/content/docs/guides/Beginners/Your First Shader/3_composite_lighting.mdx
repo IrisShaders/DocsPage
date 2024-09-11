@@ -58,9 +58,9 @@ Yep, that looks pretty *normal*. You'll notice that the sky is black here. This 
 ## Lighting
 To apply lighting to our colour, we want to multiply it by the colour of the light hitting it. Of course, with multiple light sources, there are multiple types of light hitting it. For our shader, we will have the following types of light
 - Ambient (some constant factor, so you can see in caves)
-- Skylight (blue in the day, uses the lightmap)
+- Skylight (blue in the day, uses the lightmap). This is our *indirect lighting*.
 - Blocklight (some warm colour that matches torches, uses the lightmap)
-- Sun/Moonlight (yellow for the sun, white for the moon)
+- Sun/Moonlight (yellow for the sun, white for the moon). This is our *direct lighting*.
 
 So, to apply our lighting, we would then do something like `color.rgb *= ambient + skylight + blocklight + sunlight`.
 

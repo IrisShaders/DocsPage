@@ -87,9 +87,7 @@ uniform mat4 shadowProjection;
 
 ```
 
-To do this, we first need to determine the position of the pixel at all. We can do this using the screen texture coordinate, as well as the depth.
-
-**TODO: SPACE CONVERSION EXPLANATION / TUTORIAL**
+To do this, we first need to determine the position of the pixel at all. We can do this using the screen texture coordinate, as well as the depth. For more information on these space conversions, see [Coordinate Spaces](/how_to/coordinate-spaces).
 
 To do these space conversions, we will make use of a function, `projectAndDivide`. This function applies a projection matrix and then divides by the `w` component, skipping clip space. **Place this function definition outside and before `main` but after the declaration of `texcoord`.**
 
