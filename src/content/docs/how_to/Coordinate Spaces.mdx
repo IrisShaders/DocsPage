@@ -1,0 +1,42 @@
+---
+title: Coordinate Spaces
+description: Model space, clip space, and everything in-between
+sidebar:
+  label: Coordinate Spaces
+  order: 1
+---
+
+At the start of a shader program, the vertex position is provided in the form of `gl_Vertex` (or `VAPosition`). This position is in *model space*. By the time it reaches the fragment shader, the position is in *screen space*. Between these two are a number of other coordinate spaces.
+
+**This page does not cover clip space, NDC space, or screen space, as these are applicable to all 3D graphics, not just Minecraft.** It is recommended that you also read the [LearnOpenGL article on coordinate systems](https://learnopengl.com/Getting-started/Coordinate-Systems) to gain a good understanding of these other spaces. The [shaderLABS Wiki](https://shaderlabs.org/wiki/Coordinate_Spaces) also has an explanation of different types of transformations, as well as an interactive visualiser of the different spaces.
+
+## Space Conversion Cheatsheet
+This page is designed to be read in tandem with this cheatsheet, which shows every space and how to convert between them.
+![](/src/assets/coordinate_spaces/spaces.webp)
+**Source: [shaderLABS Wiki](https://shaderlabs.org/wiki/Coordinate_Spaces)**
+
+## Spaces
+
+### Model Space
+Model space is the vertex position relative only to other vertices in the mesh. In the case of terrain, each chunk is its own mesh, and so in model space, coordinates are relative to the chunk. There's not much you would do in model space. This is also sometimes known as 'local space'.
+
+If using the core profile (and as such using `VAPosition` instead of `gl_Vertex`), the model space position is equal to `VAPosition + chunkOffset` for terrain.
+
+### View Space
+View space is the vertex position relative to the camera. This is also sometimes known as 'eye space' (not to be confused with 'eye player space').
+
+### Player Space
+Player space is the vertex position relative to the *camera* (not the player). The difference between view and player space is that whilst view space directions change based on the camera angle, player space directions are constant, aligned to the axes of Minecraft's coordinates. For example, a vector `0.0, 1.0, 0.0` is along the Y axis and as such would be along Minecraft's actual Y axis.
+
+To get a position which is relative to the actual player, you can add `cameraPosition` and then subtract `eyePosition`.
+
+#### Feet and Eye Player Space
+The names of these spaces are misleading, as 'feet player space' is not in any way related to the player's feet. The difference between the two is that in feet player space, the origin remains locked to the player's head position, whereas in eye player space, effects like view bobbing are accounted for, meaning that the origin is locked to the camera. This is why the two can be interchanged with the addition and subtraction of `gbufferModelViewInverse[3]` - this fourth component of the matrix accounts for the translation from the player's head to the camera.
+
+It is also worth noting that in third person mode, view bobbing is disabled, and as such, eye and feet player space are *usually* identical.
+
+### World Space
+World space is the vertex position in Minecraft's actual coordinate system. It is directionally equivalent to player space, as it is simply the result of offsetting a feet player space position by the camera position.
+
+## Shadow Space
+'Shadow Space' can refer to a number of different coordinate spaces, all of which are relative to the sun/moon position instead of the camera. The matrices used to get between the shadow versions of each coordinate space are used in the [shadow pass](/reference/programs/shadow), where the scene is rendered from the perspective of the sun/moon. When sampling the shadow map, positions can be transformed into player space, and from there back into shadow screen space.

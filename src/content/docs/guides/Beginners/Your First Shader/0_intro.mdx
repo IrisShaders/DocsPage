@@ -1,0 +1,58 @@
+---
+title: An Introduction to Shaders
+description: Get started creating your first shader
+sidebar:
+  label: An Introduction to Shaders
+  order: 1
+---
+
+## Foreward
+This tutorial is based on one written by [saada2006](https://saada2006.github.io/minecraft-shader-tutorials/). This newer tutorial has been necessitated by the fact that since the tutorial was written, the general state of development on Minecraft shaders has advanced somewhat, and other developers have identified several areas where this can be improved.
+
+## Prerequisites
+:::caution[Warning]
+**This tutorial is designed for people who already know how to code. If you do not know how to code, you will likely struggle with this tutorial.** A general understanding of how computer graphics work is useful but not necessary. For this reason, at times, you may not be shown all of the code. This is to ensure you are reading enough to understand what you are doing. All of the necessary information is provided for you to achieve the intended end result.
+:::
+
+You will need:
+- A suitable text editor for modifying shader code. One popular choice is [Visual Studio Code](https://code.visualstudio.com/), but any program which can edit text files is sufficient. A simpler but popular editor is [Notepad++](https://notepad-plus-plus.org/).
+- A computer capable of running OpenGL 3.3. If your computer was manufactured in the last 15 years it likely supports OpenGL 3.3. Note that whilst OpenGL works on MacOS, it is deprecated, and some things may not work correctly.
+- A willingness to learn. Shaders are hard, and you can't just pick them up overnight. Do not expect to complete this tutorial and become the next Sonic Ether.
+- An instance of Minecraft with Iris, Optifine, or Oculus installed. Since this tutorial is in the Iris documentation, it is assumed you are using Iris.
+
+It's helpful to be able to see your game logs as the game is running. In the vanilla Minecraft launcher, you can do this by enabling 'keep the Launcher open while games are running' and 'Open output log when Minecraft: Java Edition starts" in the settings.
+If you do not use the vanilla launcher, but your launcher does not support viewing logs in realtime, a popular choice is [Prism Launcher](https://prismlauncher.org/).
+In Iris, it is also useful to enable debug mode. You can do this by pressing <kbd>Ctrl</kbd>+<kbd>D</kbd> in the shader selection screen.
+
+
+## OpenGL and GLSL
+
+Old versions of Minecraft used an ancient version of OpenGL - OpenGL 2.0. Most older shader packs, for this reason, were written using GLSL version 120. However, since Minecraft 1.17, Minecraft was updated to use version 3.2, which targets version 150. However, shader loader mods like Iris and Optifine allow the use of any version of OpenGL/GLSL the user's hardware supports. Since OpenGL 3.3 requires 'DX10 Class' hardware, any computer released in the last decade should support it, so this is what we will be using. OpenGL 3.3 uses GLSL version 330.
+
+For the next part it is important to note that since most of the game's development was done on OpenGL 2.0, the rendering pipeline the game uses does not take advantage of modern hardware features.
+
+## Rendering the blocks
+
+Now with that out of the way, we can focus on how Minecraft actually does it's rendering. Minecraft is a voxel game, and therefore it does not follow the normal style of rendering that is present in most games. First of all, Minecraft has to render a large amount of blocks, which could be different types of blocks. Rendering each block as it's own draw call is a really bad idea for performance. What Minecraft does is batch vertices into chunks, so that each chunk becomes it's own draw call. To texture each block, Minecraft uses a texture atlas.
+
+Lighting in Minecraft is a bit different from how it is done in other games. Minecraft needs to support an arbitrary number of light sources, with the features of old OpenGL versions, and have decent performance on slow hardware like iGPUs or the GT 710. There also needs to be occlusion detection for the lights, that is, a light behind a wall cannot light up what is in front of the the wall. Doing this the “normal” way would require storing all lights in a texture and having a texture atlas of shadow maps for each light. This doesn't support area lighting, so lighting from blocks like glowstone up close will look bad, and this would be insanely costly. Imagine how slow rendering the nether would be, since each lava block in the nether needs to be processed. Minecraft needs a different approach from this.
+
+Some of you who play Minecraft will know that each block has a lighting level, which comes from both torches and how exposed a block is to the sky. Minecraft reuses this information for lighting the blocks. Each vertex has a `vec2` attribute known as the “lightmap coordinates”. The x value represents lighting from blocks like torches and glowstone, while the y value represents how much the vertex is exposed to the sky. These values in older versions of Minecraft are from 0 to 15, but in newer versions it can be up to the 200s.
+
+The lightmap alone is not enough to light the block. It somehow has to be converted to a lighting color which then has to be multiplied by the block color to obtain the final color that gets displayed on your screen. Minecraft by default uses the light map coordinates (after doing math to move them to the [0, 1] range) as texture coordinates to look up a lighting color value from a lightmap texture in the fragment shader. The lighting color value gets multiplied by the block color and then displayed on your screen. See the [Optifine documentation on this](https://github.com/sp614x/optifine/blob/15ef31064323d7e1c5959ab8f9e8a260f0750124/OptiFineDoc/doc/shaders.txt#L263) for more details. We won't be using the light map coordinates to look up from the lightmap texture, instead using this coordinate to calculate a light level.
+
+## How Shaders Work
+
+To understand how shaders work, let's understand how the shader pipeline works. One of the types of programs you will work with a lot are 'fullscreen passes'. These are passes which run for every pixel on the screen. These are the simplest form of a shader program, and are very useful for post processing effects, or anything which doesn't require information about what's not on screen.
+
+Iris and Optifine also provide you with what are known as 'gbuffers' passes. There are different gbuffers passes for different things, here are a few examples:
+- `gbuffers_terrain` - all solid terrain
+- `gbuffers_water` - all translucent terrain
+- `gbuffers_textured` - particles
+- `gbuffers_entities` - entities
+
+These passes run for every vertex of every item rendered onscreen. This allows us to get information about blocks and entities, and store them in textures for later use in fullscreen passes.
+
+The final type of pass is the shadow pass, which runs before all other passes. This pass renders all terrain from the perspective of the sun/moon to a few buffers we can access later, known as the 'shadow maps'. The main shadow map stores how far away the closest thing it can see is. From this, we can check if something is further from the sun than the closest thing it can see, and if it is, it must be in shadow. We will cover this later on in the tutorial.
+
+For a full list of programs and what they do, see the [Iris Docs](https://shaders.properties/reference/programs/overview/).
