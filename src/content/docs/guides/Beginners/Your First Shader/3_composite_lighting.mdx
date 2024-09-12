@@ -49,14 +49,14 @@ Next, let's verify everything is being decoded correctly.
 ```glsl
 color.rgb = vec3(lightmap, 0.0);
 ```
-![](/src/assets/first_shader_guide/lightmap.webp)
+![](./assets/lightmap.webp)
 
 You can see that where there is skylight, only the green component is set. However, where there is blocklight (by the torch), the color is yellow. Since red and green make yellow in RGB, we know that blocklight is stored in the red component and sunlight is stored in the green component.
 
 ```glsl
 color.rgb = normal;
 ```
-![](/src/assets/first_shader_guide/normals.webp)
+![](./assets/normals.webp)
 Yep, that looks pretty *normal*. You'll notice that the sky is black here. This is because the `gbuffers_terrain` program does not run for the sky, so no data is stored for these pixels. We will resolve this later on.
 
 ## Lighting
@@ -90,7 +90,7 @@ color.rgb *= blocklight + skylight + ambient + sunlight;
 ```
 
 Things should look something like this:
-![](/src/assets/first_shader_guide/lighting1.webp)
+![](./assets/lighting1.webp)
 
 ## Sunlight
 Now, what about that sunlight? Well, if something is facing directly towards the sun, then we want it to be fully sunlit. On the other hand, if something is facing away from the sun, we want there to be no sunlight. So, we need a function that returns 1.0 if two vectors are facing in the same direction, and 0.0 if they are facing away from each other. Happily, we can use a dot product for this.
@@ -120,7 +120,7 @@ vec3 sunlight = sunlightColor * clamp(dot(worldLightVector, normal), 0.0, 1.0) *
 
 With that change, your lighting should seem a bit more realistic.
 
-![](/src/assets/first_shader_guide/lighting2.webp)
+![](./assets/lighting2.webp)
 
 ## Fixing the sky
 At this point, it may appear as if your Minecraft world is currently undergoing an apocalypse. This is because we are also applying lighting to the sky, despite the fact we do not have normal or lightmap data for it. So, how do we tell if a pixel is the sky or not? Well, we have access to something called the depth buffer, which tells you how far away a pixel is. If the pixel is at the maximum view distance, the depth buffer will store 1.0.
@@ -139,4 +139,4 @@ The depth is not stored in a linear format. This means that while a pixel that i
 :::
 
 Having done that, your Minecraft world should hopefully have been saved from the apocalypse.
-![](/src/assets/first_shader_guide/fixedsky.webp)
+![](./assets/fixedsky.webp)

@@ -73,7 +73,7 @@ color.rgb = mix(color.rgb, fogColor, length(viewPos)/far);
 This works because we are still using the vanilla sky. If you go on to add a custom sky, you will likely want to choose your own fog color.
 :::
 
-![](/src/assets/first_shader_guide/linearfog.webp)
+![](./assets/linearfog.webp)
 
 And our terrain now nicely blends into the horizon.
 
@@ -87,7 +87,7 @@ This use of an exponential function for the falloff is based on a real physical 
 
 We can visualise this by plotting `f` against `distance` on a graph.
 
-![](/src/assets/first_shader_guide/foggraph.webp)
+![](./assets/foggraph.webp)
 
 As you can see, the function curves nicely to make the fog seem further away.
 
@@ -109,6 +109,6 @@ color.rgb = mix(color.rgb, fogColor, clamp(fogFactor, 0.0, 1.0));
 Note that we clamp the value of `fogFactor` between `0` and `1`. This is because the behaviour of `mix` is undefined if it is outside this range. Since the render distance in blocks is along three axes, blocks can be more than this distance away along the diagonals, so in some cases, `distance` could be more than `1`.
 :::
 
-![](/src/assets/first_shader_guide/exponentialfog.webp)
+![](./assets/exponentialfog.webp)
 
 And now our fog feels a lot more natural!

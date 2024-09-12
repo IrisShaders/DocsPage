@@ -72,7 +72,7 @@ color.rgb = texture(shadowtex0, texcoord).rgb;
 ```
 
 You should see something like this:
-![](/src/assets/first_shader_guide/shadowmap.webp)
+![](./assets/shadowmap.webp)
 
 This may not make much sense to look at, but this shows how far away the nearest thing the sun can see is. 
 
@@ -131,7 +131,7 @@ vec3 sunlight = sunlightColor * dot(normal, worldLightVector) * shadow;
 
 You should now see something like this:
 
-![](/src/assets/first_shader_guide/acne.webp)
+![](./assets/acne.webp)
 
 Now, while you can tell that things are casting shadows, a lot of surfaces seem to be in shadow when they shouldn't be, with weird patterns. This is due to something called 'shadow acne', and it occurs when something ends up casting a shadow on itself due to the lack of precision in the shadow map. We can fix this by adding something known as 'shadow bias' where we offset surfaces slightly towards the sun to prevent them casting shadows on themselves:
 
@@ -145,7 +145,7 @@ vec3 shadowNDCPos = projectAndDivide(shadowProjection, shadowViewPos);
 
 Your shadows should now look a lot more reasonable.
 
-![](/src/assets/first_shader_guide/basicshadows.webp)
+![](./assets/basicshadows.webp)
 
 ## Making Shadows Sharper
 At the moment, our shadows are extremely blocky. This is due to the limited resolution of the shadow map. We can improve things somewhat by increasing this, using the [`shadowMapResolution`](/reference/constant/shadowmapresolution) const. This constant can be defined anywhere, but just because it's a nice place to put it, we'll go back to `shadow.fsh`. Let's add the following. It should be outside the `main` function - I put mine just before my `layout` qualifier declaration.
@@ -156,7 +156,7 @@ const int shadowMapResolution = 2048;
 
 This makes things a little bit sharper, but they still don't look great.
 
-![](/src/assets/first_shader_guide/sharpershadows.webp)
+![](./assets/sharpershadows.webp)
 
 The easy solution here would be to just increase the shadow map resolution to some very big number like 8192 (it is convention to use a power of two for your shadow map size), but this will start taking up an awful lot of video memory, causing a performance impact. Instead, we can make use of something known as 'shadow distortion'. The idea is that since stuff that is closer to us is what we can see most clearly, we want to dedicate more of the shadow map resolution to this stuff, and less of it to things that are further away.
 
@@ -229,7 +229,7 @@ void main(){
 
 At this point, let's write the shadow map to the screen again to check what it looks like now. We did this earlier on, so I'll not give you the code again.
 
-![](/src/assets/first_shader_guide/distortedshadowmap.webp)
+![](./assets/distortedshadowmap.webp)
 
 As expected, stuff in the middle of the shadow map has been expanded to take up more space!
 
@@ -248,7 +248,7 @@ vec3 shadowNDCPos = shadowClipPos.xyz / shadowClipPos.w;
 
 Our shadows now look nice and sharp near the player!
 
-![](/src/assets/first_shader_guide/distortedshadows.webp)
+![](./assets/distortedshadows.webp)
 
 ## Transparent Shadows
 If you look at something like stained glass, you'll see that it casts a solid shadow. This doesn't really make sense, since (it being partially translucent) it should be letting some light through. Handily, there are a couple of extra shadowmaps we can access to help us with this.
@@ -293,14 +293,14 @@ with
 vec3 shadow = getShadow(shadowScreenPos);
 ```
 
-![](/src/assets/first_shader_guide/transparentshadows.webp)
+![](./assets/transparentshadows.webp)
 
 and we now get nice colored shadows!
 
 ## Softer Shadows
 The final piece of the puzzle is those nasty jagged edges on our shadows. This is called *aliasing*, and is another artifact of the limited resolution on our shadow map. If you look at real shadows, you'll also notice that they don't tend to have clean, sharp edges. Instead, they seem to have a slightly softer edge. This area at the edge of the shadow is known as the *penumbra*.
 
-![](/src/assets/first_shader_guide/penumbra.webp)
+![](./assets/penumbra.webp)
 [Image Source: Wikipedia](https://commons.wikimedia.org/w/index.php?curid=3675853)
 
 What this means is that we can blur our shadows slightly, and not only will it remove the aliasing, it will also make them more physically plausible.
@@ -315,7 +315,7 @@ const bool shadowcolor0Nearest = true;
 
 This will remove the curved edges on the shadows, making them even more jagged, but it's necessary for us to be able to correctly blur them, and also resolves some artifacts on transparent shadows you may have noticed.
 
-![](/src/assets/first_shader_guide/jaggedshadows.webp)
+![](./assets/jaggedshadows.webp)
 
 To blur our shadows, we are going to be using something known as *percentage closer filtering*. To do this, we take multiple shadow samples within an area around the position and average them. To do this, we will be using a loop. Within this loop, we will generate an offset from the shadow position, apply it in clip space, and then convert to screen space before our shadow samples. 
 
@@ -374,11 +374,11 @@ vec3 shadow = getSoftShadow(shadowClipPos);
 [...]
 ```
 
-![](/src/assets/first_shader_guide/softshadows.webp)
+![](./assets/softshadows.webp)
 
 Our shadows now have soft edges, and the aliasing artifacts are no longer visible. However, they still look a little bit pixelated. This is for two reasons. The first one is that we are using a box kernel, which means that we are sampling evenly within a square box. Ideally, a circular kernel would be used, however implementing this is left as an exercise to the reader. The second, more important reason is that we are sampling the exact same points for every pixel on screen. We can resolve this issue by randomly rotating the area we sample within for each frame. We can get a random rotation using another texture, [`noisetex`](/reference/buffers/noisetex/). Let's write `noisetex` to the screen. I'm once again leaving this up to you to do, because we've written a fair few textures to the screen at this point. Like every other texture, `noisetex` is declared with a `uniform sampler2D noisetex;`.
 
-![](/src/assets/first_shader_guide/lownoise.webp)
+![](./assets/lownoise.webp)
 
 You'll see the pixels in `noisetex` are pretty chunky. This is because it has a resolution of 64x64, and is being stretched to fit the screen. We could just increase the resolution, but to ensure we're getting a unique value for every pixel, we'll instead use a function called `texelFetch`. `texelFetch` takes in an exact pixel coordinate in a texture and returns the value there without doing any filtering. We will need to convert our `texcoord` to a pixel coordinate within the range (0-64). We can do this using another couple of uniforms, [`viewWidth`](/reference/uniforms/general/viewwidth/) and [`viewHeight`](/reference/uniforms/general/viewheight/) (both `float`s). We will also make use of the type `ivec2` which is like a `vec2` except it can store only integer values. Let's make another new function called `getNoise`. It will take in a vec2 texcoord and return a vec4, the lookup value from `noisetex`. We're going to access it in `getSoftShadow` so it should be placed before this function.
 
@@ -394,7 +394,7 @@ vec4 getNoise(vec2 coord){
 `64` is the default resolution of `noisetex`. Since this value can be configured with [`noiseTextureResolution`](/reference/constants/noisetextureresolution/), if you ever change this value, you should replace the use of `64` with the uniform.
 :::
 
-![](/src/assets/first_shader_guide/highnoise.webp)
+![](./assets/highnoise.webp)
 
 While the image clearly repeats, we now have unique values per pixel for the noise. We can then modify our `softShadow` function to take this into account.
 
@@ -431,6 +431,6 @@ vec3 getSoftShadow(vec4 shadowClipPos){
 }
 ```
 
-![](/src/assets/first_shader_guide/softershadows.webp)
+![](./assets/softershadows.webp)
 
 Our shadows no longer have any visible pixels!
