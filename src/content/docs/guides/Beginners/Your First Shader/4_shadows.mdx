@@ -11,7 +11,7 @@ In this section we will implement basic shadow mapping which allows us to check 
 ## The `shadow` Pass
 The first thing we need to do is create two new files: `shadow.vsh` and `shadow.fsh`. They should be in the `shaders` folder, just like your other shader programs.
 
-These compose the 'shadow pass', which runs before the gbuffers passes. It renders the scene from the perspective of the sun (or moon), storing depth and colour information which we can use for shadow mapping. 
+These compose the 'shadow pass', which runs before the gbuffers passes. It renders the scene from the perspective of the sun (or moon), storing depth and color information which we can use for shadow mapping. 
 
 The shadow programs can actually be pretty much copies of your `gbuffers_terrain` programs. They will function the same, however less info needs to be passed through, so if you want, you can delete the extra `in` and `out` declarations we aren't using. The only ones we need are `texcoord` and `glcolor`.
 
@@ -156,13 +156,13 @@ This makes things a little bit sharper, but they still don't look great.
 
 The easy solution here would be to just increase the shadow map resolution to some very big number like 8192 (it is convention to use a power of two for your shadow map size), but this will start taking up an awful lot of video memory, causing a performance impact. Instead, we can make use of something known as 'shadow distortion'. The idea is that since stuff that is closer to us is what we can see most clearly, we want to dedicate more of the shadow map resolution to this stuff, and less of it to things that are further away.
 
+## Shadow Distortion
+
 :::note[Note]
 Shadow distortion as we are applying it is quite an old technique, and does not work as well as other, more modern methods for optimising use of shadow maps like [Cascaded Shadow Maps](https://learnopengl.com/Guest-Articles/2021/CSM). For example, it tends to create large blobs of shadow on the centre of triangles, because GPUs can't draw curved triangles. However, due to the limitations of the Optifine/Iris pipeline, it's quite hard to do anything more advanced, so this is what we are sticking with.
 :::
 
-## Shadow Distortion
-
-For our shadow distortion, we want to scale things such that stuff that's closer to the player gets stretched towards the edges, squashing the stuff that's already at the edges. We are going to do this operation in *shadow clip space*. Let's make a new function which takes in a position in shadow screen space, distorts it, and returns it. We want to access this function within both `shadow.vsh` and `composite.fsh`, so we are going to make use of a GLSL feature called `#include`. This lets us include code from one file inside multiple other files.
+For our shadow distortion, we want to scale things to make stuff closer to the player occupy more space in the shadow map, squashing the stuff that's further away towards the edges. We are going to do this operation in *shadow clip space*. Let's make a new function which takes in a position in shadow screen space, distorts it, and returns it. We want to access this function within both `shadow.vsh` and `composite.fsh`, so we are going to make use of a GLSL feature called `#include`. This lets us include code from one file inside multiple other files.
 
 :::note[Note]
 `#include` is a *preprocessor directive*. This means it runs when your code is compiled. When the GLSL compiler finds this directive, it replaces it with the contents of the specified file.
@@ -170,11 +170,12 @@ For our shadow distortion, we want to scale things such that stuff that's closer
 
 Let's make a new file called `distort.glsl`. We'll put it in a folder called `lib` for the sake of organisation.
 ```glsl
-shaders
-	lib
-		distort.glsl
-	composite.fsh
-	...
+.
+└── shaders/
+    ├── lib/
+    │   └── distort.glsl
+    ├── composite.fsh
+    └── ...
 ```
 
 We can then add 
@@ -185,7 +186,7 @@ to our `shadow.vsh`. *This should be included before the `main` function, as you
 
 **We should also move our declaration of `shadowmapresolution` to `distort.glsl`.** This way, we can access this variable anywhere we are sampling the shadow map.
 
-:::caution[Note]
+:::caution[Warning]
 Preprocessor directives *do not have a semicolon on the end*.
 :::
 
@@ -194,7 +195,7 @@ Within `distort.glsl`, let's write a function `distortShadowClipPos`. This funct
 So, how do we actually distort the position? Well, in shadow clip space, all positions are between `-1.0` and `1.0`. Now, as the distance from the position to the origin (where the player is) increases, we want to make that distance even greater by pushing it closer to the edge. What we can do is *divide the position by the distance to the origin*.
 
 ```glsl
-///lib/distort.glsl
+// /lib/distort.glsl
 
 vec3 distortShadowClipPos(vec3 shadowClipPos){
 	float distortionFactor = length(shadowClipPos.xy); // distance from the player in shadow clip space
@@ -206,7 +207,7 @@ vec3 distortShadowClipPos(vec3 shadowClipPos){
 }
 ```
 
-:::caution[Note]
+:::caution[Warning]
 We do not apply distortion to the `z` component as the origin of shadow clip space is the sun, not the player. On the `x` and `y` axes, things line up fine anyway, but on the `z` axis, they do not. Instead, we just half the `z` component, which essentially doubles the range on this axis, at the cost of precision. This is because when the sun gets low in the sky, the normal range of 255 blocks becomes noticeable.
 :::
 
@@ -249,7 +250,7 @@ Our shadows now look nice and sharp near the player!
 If you look at something like stained glass, you'll see that it casts a solid shadow. This doesn't really make sense, since (it being partially translucent) it should be letting some light through. Handily, there are a couple of extra shadowmaps we can access to help us with this.
 
 - `shadowtex0` contains everything that casts a shadow
-- `shadowtex1` contains *only things which are fully opaque* and cast a shadow
+- `shadowtex1` contains only things which are *fully opaque* and cast a shadow
 - `shadowcolor0` contains the color (including how transparent it is) of things which cast a shadow.
 
 With these three shadow maps, we can work out how much shadow is being cast by something, and even what color that shadow should be!
@@ -261,13 +262,15 @@ Let's go back to `composite.fsh` and make a new function called `getShadow`. It 
 vec3 getShadow(vec3 shadowScreenPos){
 	float transparentShadow = step(shadowScreenPos.z, texture(shadowtex0, shadowScreenPos.xy).r);
 
+	// note that a value of 1.0 means 100% of sunlight is getting through, not that there is 100% shadowing
+
 	if(transparentShadow == 1.0){ // no shadow at all
 		return vec3(1.0);
 	}
 
 	float opaqueShadow = step(shadowScreenPos.z, texture(shadowtex1, shadowScreenPos.xy).r);
 
-	if(opaqueShadow == 0.0){ // opaque shadow so don't sample transparent shadow colour
+	if(opaqueShadow == 0.0){ // opaque shadow so don't sample transparent shadow color
 		return vec3(0.0);
 	}
 
@@ -323,6 +326,10 @@ First, we should define how many samples we are going to take, and how far we sh
 :::
 
 Let's define another function `getSoftShadow` in `composite.fsh`. This function will call `getShadow` so it must be placed after it.
+
+:::caution[Warning]
+This is a pretty big function that's simply provided here. You should make sure you understand what each line does using the comments before you copy paste it into your codebase.
+:::
 
 ```glsl
 vec3 getSoftShadow(vec4 shadowClipPos){

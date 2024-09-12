@@ -24,7 +24,7 @@ In this stage of the tutorial, we are going to make the screen monochrome using 
 
 You can also delete the `LICENSE` and `readme.md` files, as we don't need those.
 
-:::caution[Note]
+:::caution[Warning]
 It is always important to respect the license associated with code when you use it anywhere. In this case, the base pack is licensed under [The Unlicense](https://choosealicense.com/licenses/unlicense/), meaning you can do what you want with it, however other shaders may use more restrictive licenses for their code.
 :::
 
@@ -33,7 +33,7 @@ When you select the shader in the shader selection screen, you should not see an
 ## The `composite` pass
 For this shader, we will be using the first `composite` pass. This is a full screen pass which runs just after all gbuffers programs have rendered.
 
-First, let's open `composite.vsh`. This is the *vertex shader* for the `composite` program. Since `composite` is a fullscreen pass, this actually just renders a singular quad (a rectangular polygon) to the screen which exactly covers it. This means that your fullscreen passes are technically actually running on 3D geometry!
+First, let's open `composite.vsh`. This is the *vertex shader* for the `composite` program. Since `composite` is a fullscreen pass, this actually just renders a singular quad (a rectangular polygon) to the screen which exactly covers it. This means that your fullscreen passes are technically actually running on 3D geometry! Specifically, the vertex shader will run four times, one for each corner of this quad.
 
 ```glsl
 #version 330 compatibility
@@ -74,13 +74,13 @@ The `main` function is the code that is run when the shader is invoked, just lik
 gl_Position = ftransform();
 ```
 
-This transforms the position of the vertex from model space to clip space. The `ftransform` function is actually deprecated but Iris patches it to the relevant modern code. We will revisit this later.
+This transforms the position of the vertex from model space to clip space. The `ftransform` function is actually deprecated but Iris patches it to the relevant modern code. For more information, see the howto on (coordinate spaces)[/how_to/coordinate-spaces].
 
 ```glsl
 texcoord = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;
 ```
 
-This gives us the 'texture coordinate' of the current vertex. This is more commonly known as the 'UV', and it is used so that the fragment shader knows where on the screen it is. You do not need to understand how it works at this stage. These texture coordinates range from (0, 0) at the bottom left of the texture to (1, 1) at the top right.
+This gives us the 'texture coordinate' of the current vertex. This is more commonly known as the 'UV', and it is used so that the fragment shader knows where on the screen it is. These texture coordinates range from (0, 0) at the bottom left of the texture to (1, 1) at the top right.
 
 
 Let's open `composite.fsh`. This is the *fragment shader*	It runs for every pixel on the screen.
@@ -109,13 +109,13 @@ Let's analyse this as well a bit.
 uniform sampler2D colortex0
 ```
 
-This allows the shader to read from `colortex0`. Iris provides you with a number of `colortex` buffers you can read and write to. Each buffer is a texture with the same resolution as your screen. For more information on the `colortex` buffers, see the [docs](/reference/buffers/colortex/).
+This allows the shader to read from `colortex0`. Iris provides you with a number of `colortex` buffers you can read and write to. Each buffer is a texture with the same resolution as your screen. For more information on the `colortex` buffers, see the [docs](/reference/buffers/colortex/). `colortex0` usually contains the main scene, and we can use the other 15 for whatever we want.
 
 ```glsl
 in vec2 texcoord
 ```
 
-This is where we recieve the `texcoord` passed `out` in the vertex shader. This tells us what pixel to sample in `colortex0`.
+This is where we recieve the `texcoord` passed `out` in the vertex shader. This tells us what pixel to sample from `colortex0`.
 
 ```glsl
 /* DRAWBUFFERS:0 */

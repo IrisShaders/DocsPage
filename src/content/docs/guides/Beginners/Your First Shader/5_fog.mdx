@@ -57,13 +57,17 @@ It's good practice to try to minimise duplicate code as much as possible. To org
 
 What we want is for something which is nearly out of render distance to have lots of fog, and something which is close to the player not to have any fog at all. To do this, we can divide the distance from the player by a uniform `float`, [`far`](/reference/uniforms/general/far). The name of this variable is misleading, as what it gives us is the player's render distance, in blocks.
 
-Of course, we also need to have a fog colour to blend with, and for this, we'll use another uniform, a `vec3` [`fogColor`](/reference/uniforms/general/fogcolor).
+Of course, we also need to have a fog color to blend with, and for this, we'll use another uniform, a `vec3` [`fogColor`](/reference/uniforms/general/fogcolor).
 
 We can then simply do
 
 ```glsl
 color.rgb = mix(color.rgb, fogColor, length(viewPos)/far);
 ```
+
+:::note[Note]
+This works because we are still using the vanilla sky. If you go on to add a custom sky, you will likely want to choose your own fog color.
+:::
 
 ![](/src/assets/first_shader_guide/linearfog.webp)
 
