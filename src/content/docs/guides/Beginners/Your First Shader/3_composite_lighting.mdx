@@ -31,7 +31,7 @@ color.rgb = pow(color.rgb, vec3(1.0/2.2));
 Voila! Your colors are back to normal.
 
 ## Decoding Data
-Let's read back in the lightmap and normal data we stored in `colortex1` and `colortex2` in the previous tutorial. First, we need to be able to sample the textures.
+Returning to `composite.fsh`, let's read back in the lightmap and normal data we stored in `colortex1` and `colortex2` in the previous tutorial. First, we need to be able to sample the textures.
 ```glsl
 uniform sampler2D colortex1;
 uniform sampler2D colortex2;
