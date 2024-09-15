@@ -139,7 +139,7 @@ Now, while you can tell that things are casting shadows, a lot of surfaces seem 
 [...]
 vec4 shadowClipPos = shadowProjection * vec4(shadowViewPos, 1.0);
 shadowClipPos.z -= 0.001;
-vec3 shadowNDCPos = projectAndDivide(shadowProjection, shadowViewPos);
+vec3 shadowNDCPos = shadowClipPos.xyz / shadowClipPos.w;
 [...]
 ```
 
