@@ -1,5 +1,6 @@
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
+import starlightImageZoom from 'starlight-image-zoom'
 
 export default defineConfig({
 	site: 'https://shaders.properties',
@@ -37,6 +38,7 @@ export default defineConfig({
 					autogenerate: { directory: 'how_to', collapsed: true},
 				},
 			],
+			plugins: [starlightImageZoom()]
 		}),
 	],
 });
