@@ -1,7 +1,7 @@
 /* Global page formatting. */
 :root {
 	--sl-content-width: 85rem;
-	--sl-sidebar-width: 28rem;
+	--sl-sidebar-width: 20rem;
 }
 
 /* Dark mode colors. */
