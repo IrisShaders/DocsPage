@@ -3,8 +3,9 @@ title: Screen and System Uniforms
 description: Uniforms related to screen and system.
 sidebar:
   label: Screen/System
-  order: 1
+  order: 3
 ---
+import { Badge } from '@astrojs/starlight/components';
 
 
 ## viewHeight
@@ -70,7 +71,7 @@ This value stores the running time of the game in seconds. This value resets aft
 ----------------
 
 
-## currentColorSpace
+## currentColorSpace <Badge text="Iris Exclusive" variant="tip" size="medium" />
 ```glsl
 uniform int currentColorSpace;
 ```
@@ -79,7 +80,7 @@ This value reads the color space used when displaying to the screen, as controll
 ----------------
 
 
-## currentDate
+## currentDate <Badge text="Iris Exclusive" variant="tip" size="medium" />
 ```glsl
 uniform ivec3 currentDate;
 ```
@@ -88,7 +89,7 @@ This value stores the system date reported by the OS in the following format: `i
 ----------------
 
 
-## currentTime
+## currentTime <Badge text="Iris Exclusive" variant="tip" size="medium" />
 ```glsl
 uniform ivec3 currentTime;
 ```
@@ -97,7 +98,7 @@ This value stores the system time reported by the OS in the following format: `i
 ----------------
 
 
-## currentYearTime
+## currentYearTime <Badge text="Iris Exclusive" variant="tip" size="medium" />
 ```glsl
 uniform ivec2 currentYearTime;
 ```

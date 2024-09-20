@@ -3,8 +3,9 @@ title: Player Status Uniforms
 description: Uniforms related to player status, settings, and status effects.
 sidebar:
   label: Player Status
-  order: 1
+  order: 2
 ---
+import { Badge } from '@astrojs/starlight/components';
 
 
 ## isEyeInWater
@@ -23,7 +24,7 @@ This uniform outputs the current substance that the camera is in. Possible value
 ----------------
 
 
-## isSpectator
+## isSpectator <Badge text="Iris Exclusive" variant="tip" size="medium" />
 ```glsl
 uniform bool isSpectator;
 ```
@@ -32,7 +33,7 @@ This value is `true` when the player is in spectator mode and false otherwise.
 ----------------
 
 
-## isRightHanded
+## isRightHanded <Badge text="Iris Exclusive" variant="tip" size="medium" />
 ```glsl
 uniform bool isRightHanded;
 ```
@@ -86,7 +87,7 @@ This uniform stores the player's mood value. This value increments when the play
 ----------------
 
 
-## constantMood
+## constantMood <Badge text="Iris Exclusive" variant="tip" size="medium" />
 ```glsl
 uniform float constantMood;
 ```
@@ -96,7 +97,7 @@ Equivalent to [`playerMood`](/reference/uniforms/status#playermood) except when 
 ----------------
 
 
-## currentPlayerAir
+## currentPlayerAir <Badge text="Iris Exclusive" variant="tip" size="medium" />
 ```
 uniform float currentPlayerAir;
 ```
@@ -105,7 +106,7 @@ This value stores the relative player air when underwater ranging from `0` to `1
 ----------------
 
 
-## maxPlayerAir
+## maxPlayerAir <Badge text="Iris Exclusive" variant="tip" size="medium" />
 ```glsl
 uniform float maxPlayerAir;
 ```
@@ -114,7 +115,7 @@ This value stores the maximum player air when underwater. This is the internal v
 ----------------
 
 
-## currentPlayerArmour
+## currentPlayerArmour <Badge text="Iris Exclusive" variant="tip" size="medium" />
 ```glsl
 uniform float currentPlayerArmour;
 ```
@@ -123,7 +124,7 @@ This value stores the relative player armor value ranging from `0` to `1`. That 
 ----------------
 
 
-## maxPlayerArmour
+## maxPlayerArmour <Badge text="Iris Exclusive" variant="tip" size="medium" />
 ```glsl
 uniform float maxPlayerArmour;
 ```
@@ -132,7 +133,7 @@ This value stores the maximum player armor value. This is the internal value use
 ----------------
 
 
-## currentPlayerHealth
+## currentPlayerHealth <Badge text="Iris Exclusive" variant="tip" size="medium" />
 ```glsl
 uniform float currentPlayerHealth;
 ```
@@ -141,7 +142,7 @@ This value stores the relative player health ranging from `0` to `1`. That means
 ----------------
 
 
-## maxPlayerHealth
+## maxPlayerHealth <Badge text="Iris Exclusive" variant="tip" size="medium" />
 ```glsl
 uniform float maxPlayerHealth;
 ```
@@ -150,7 +151,7 @@ This value stores the maximum player health value, which is twice the number of 
 ----------------
 
 
-## currentPlayerHunger
+## currentPlayerHunger <Badge text="Iris Exclusive" variant="tip" size="medium" />
 ```glsl
 uniform float currentPlayerHunger;
 ```
@@ -159,7 +160,7 @@ This value stores the relative player hunger ranging from `0` to `1`. That means
 ----------------
 
 
-## maxPlayerHunger
+## maxPlayerHunger <Badge text="Iris Exclusive" variant="tip" size="medium" />
 ```glsl
 uniform float maxPlayerHunger;
 ```
@@ -168,56 +169,68 @@ This value stores the maximum player hunger value, which is twice the number of 
 ----------------
 
 
-## is_burning
+## is_burning <Badge text="Optifine Custom Uniforms / Iris" variant="caution" size="medium" />
 ```glsl
 uniform bool is_burning;
 ```
 This value is `true` when the player is on fire and `false` otherwise.
 
+In Optifine, this value is only available to [custom uniforms](/reference/shadersproperties/custom_uniforms), in Iris it is also accessible as a normal uniform.
+
 ----------------
 
 
-## is_hurt
+## is_hurt <Badge text="Optifine Custom Uniforms / Iris" variant="caution" size="medium" />
 ```glsl
 uniform bool is_hurt;
 ```
 This value is `true` when the player is being hurt and for a brief second afterwards and `false` otherwise.
 
+In Optifine, this value is only available to [custom uniforms](/reference/shadersproperties/custom_uniforms), in Iris it is also accessible as a normal uniform.
+
 ----------------
 
 
-## is_invisible
+## is_invisible <Badge text="Optifine Custom Uniforms / Iris" variant="caution" size="medium" />
 ```glsl
 uniform bool is_invisible;
 ```
 This value is `true` when the player is invisible (either by being in spectator mode or by using invisibility potions), `false` otherwise.
 
+In Optifine, this value is only available to [custom uniforms](/reference/shadersproperties/custom_uniforms), in Iris it is also accessible as a normal uniform.
+
 ----------------
 
 
-## is_on_ground
+## is_on_ground <Badge text="Optifine Custom Uniforms / Iris" variant="caution" size="medium" />
 ```glsl
 uniform bool is_on_ground;
 ```
 This value is `true` any time the player is touching the ground and not flying, and `false` otherwise (such as when flying, falling, swimming and not touching the bottom, etc).
 
+In Optifine, this value is only available to [custom uniforms](/reference/shadersproperties/custom_uniforms), in Iris it is also accessible as a normal uniform.
+
 ----------------
 
 
-## is_sneaking
+## is_sneaking <Badge text="Optifine Custom Uniforms / Iris" variant="caution" size="medium" />
 ```glsl
 uniform bool is_sneaking;
 ```
 This value is `true` when the player is sneaking and `false` otherwise.
 
+In Optifine, this value is only available to [custom uniforms](/reference/shadersproperties/custom_uniforms), in Iris it is also accessible as a normal uniform.
+
 ----------------
 
 
-## is_sprinting
+## is_sprinting <Badge text="Optifine Custom Uniforms / Iris" variant="caution" size="medium" />
 ```glsl
 uniform bool is_sprinting;
 ```
 This value is `true` when the player is sprinting and `false` otherwise.
+
+In Optifine, this value is only available to [custom uniforms](/reference/shadersproperties/custom_uniforms), in Iris it is also accessible as a normal uniform.
 
 ----------------
 

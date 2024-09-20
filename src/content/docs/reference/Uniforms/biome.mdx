@@ -3,11 +3,12 @@ title: Biome and Dimension Uniforms
 description: Uniforms related to biomes and dimensions.
 sidebar:
   label: Biome/Dimension
-  order: 1
+  order: 6
 ---
+import { Badge } from '@astrojs/starlight/components';
 
 
-## biome
+## biome <Badge text="Optifine Custom Uniforms / Iris" variant="caution" size="medium" />
 ```glsl
 uniform int biome;
 ```
@@ -15,10 +16,12 @@ This uniform identifies the biome currently occupied by the player. It's value c
 
 This uniform functions similarly to the value available for custom unfiroms in Optifine, however Iris additionally provides them as standard uniforms.
 
+In Optifine, this value is only available to [custom uniforms](/reference/shadersproperties/custom_uniforms), in Iris it is also accessible as a normal uniform.
+
 ----------------
 
 
-## biome_category
+## biome_category <Badge text="Optifine Custom Uniforms / Iris" variant="caution" size="medium" />
 ```glsl
 uniform int biome_category;
 ```
@@ -30,10 +33,47 @@ This uniform identifies the biome category currently occupied by the player. It'
 
  This uniform functions similarly to the value available for custom unfiroms in Optifine, however Iris additionally provides them as standard uniforms.
 
+In Optifine, this value is only available to [custom uniforms](/reference/shadersproperties/custom_uniforms), in Iris it is also accessible as a normal uniform.
+
 ----------------
 
 
-## ambientLight
+## biome_precipitation <Badge text="Optifine Custom Uniforms / Iris" variant="caution" size="medium" />
+```glsl
+uniform int biome_precipitation;
+```
+This uniform identifies what type of precipitation occurs in this biome: `0` is no precipitation, `1` is rain, `2` is snow. The following defines can also be used: `PPT_NONE`, `PPT_RAIN`, `PPT_SNOW`.  For more information on biomes, see the [Minecraft Wiki](https://minecraft.wiki/w/Biome).
+
+This uniform functions similarly to the value available for custom unfiroms in Optifine, however Iris additionally provides them as standard uniforms.
+
+In Optifine, this value is only available to [custom uniforms](/reference/shadersproperties/custom_uniforms), in Iris it is also accessible as a normal uniform.
+
+----------------
+
+
+## rainfall <Badge text="Optifine Custom Uniforms / Iris" variant="caution" size="medium" />
+```glsl
+uniform float rainfall;
+```
+This value stores the rainfall property of the current biome as defined by Minecraft internally, and ranges from `0` to `1`. This value does not depend on the current weather, but is a property of the biome. For more information on biomes, see the [Minecraft Wiki](https://minecraft.wiki/w/Biome).
+
+In Optifine, this value is only available to [custom uniforms](/reference/shadersproperties/custom_uniforms), in Iris it is also accessible as a normal uniform.
+
+----------------
+
+
+## temperature <Badge text="Optifine Custom Uniforms / Iris" variant="caution" size="medium" />
+```glsl
+uniform float temperature;
+```
+This value stores the temperature property of the current biome as defined by Minecraft internally. In vanilla Minecraft this will range in value from `-0.7` to `2.0`, however mods may have values outside that range. For more information on biomes, see the [Minecraft Wiki](https://minecraft.wiki/w/Biome).
+
+In Optifine, this value is only available to [custom uniforms](/reference/shadersproperties/custom_uniforms), in Iris it is also accessible as a normal uniform.
+
+----------------
+
+
+## ambientLight <Badge text="Iris Exclusive" variant="tip" size="medium" />
 ```glsl
 uniform float ambientLight;
 ```
@@ -42,7 +82,7 @@ This value stores the ambient light property of the current dimension. This roug
 ----------------
 
 
-## bedrockLevel
+## bedrockLevel <Badge text="Iris Exclusive" variant="tip" size="medium" />
 ```glsl
 uniform int bedrockLevel;
 ```
@@ -51,19 +91,8 @@ This value stores the height (y coordinate) of the bedrock floor in the current 
 ----------------
 
 
-## biome_precipitation
-```glsl
-uniform int biome_precipitation;
-```
-This uniform identifies what type of precipitation occurs in this biome: `0` is no precipitation, `1` is rain, `2` is snow. The following defines can also be used: `PPT_NONE`, `PPT_RAIN`, `PPT_SNOW`.  For more information on biomes, see the [Minecraft Wiki](https://minecraft.wiki/w/Biome).
 
-This uniform functions similarly to the value available for custom unfiroms in Optifine, however Iris additionally provides them as standard uniforms.
-
-
-----------------
-
-
-## cloudHeight
+## cloudHeight <Badge text="Iris Exclusive" variant="tip" size="medium" />
 ```glsl
 uniform float cloudHeight;
 ```
@@ -72,7 +101,7 @@ This uniform stores the height (y coordinate) of vanilla clouds in blocks based 
 ----------------
 
 
-## hasCeiling
+## hasCeiling <Badge text="Iris Exclusive" variant="tip" size="medium" />
 ```glsl
 uniform bool hasCeiling;
 ```
@@ -81,7 +110,7 @@ This value is `true` if the current dimension has a ceiling acording to its dime
 ----------------
 
 
-## hasSkylight
+## hasSkylight <Badge text="Iris Exclusive" variant="tip" size="medium" />
 ```glsl
 uniform bool hasSkylight;
 ```
@@ -90,7 +119,7 @@ This value is `true` if the current dimension has a sky and sky lighting, and `f
 ----------------
 
 
-## heightLimit
+## heightLimit <Badge text="Iris Exclusive" variant="tip" size="medium" />
 ```glsl
 uniform int heightLimit;
 ```
@@ -99,29 +128,11 @@ This value stores the difference in height (y coordinate) between the lowest blo
 ----------------
 
 
-## logicalHeightLimit
+## logicalHeightLimit <Badge text="Iris Exclusive" variant="tip" size="medium" />
 ```glsl
 uniform int logicalHeightLimit;
 ```
 This value stores the logical height of the current dimension, which refers to the maximum height to which chorus fruits can grow and that nether portals can bring players within the dimension. More information can be found in the [Minecraft Wiki](https://minecraft.wiki/w/Dimension_type) under "logical_height".
-
-----------------
-
-
-## rainfall
-```glsl
-uniform float rainfall;
-```
-This value stores the rainfall property of the current biome as defined by Minecraft internally, and ranges from `0` to `1`. This value does not depend on the current weather, but is a property of the biome. For more information on biomes, see the [Minecraft Wiki](https://minecraft.wiki/w/Biome).
-
-----------------
-
-
-## temperature
-```glsl
-uniform float temperature;
-```
-This value stores the temperature property of the current biome as defined by Minecraft internally. In vanilla Minecraft this will range in value from `-0.7` to `2.0`, however mods may have values outside that range. For more information on biomes, see the [Minecraft Wiki](https://minecraft.wiki/w/Biome).
 
 ----------------
 

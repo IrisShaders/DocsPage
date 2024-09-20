@@ -5,284 +5,155 @@ sidebar:
   label: Overview
   order: 0
 ---
+import { Badge } from '@astrojs/starlight/components';
 
 Uniforms are values sent from the CPU, and as such they cannot change from one shader invocation to the next within a render call. Most uniforms provided by Iris are constant across the entire frame, some values change between different geometry (such as [`renderstage`](/reference/uniforms/general/renderstage)).
 
 
 ## Camera/Player
-| Uniform                                                                                | Type  | Value Range    | Description |
-| -------------------------------------------------------------------------------------- | ----- | -------------- | ----------- |
-| [cameraPosition](/reference/uniforms/general/cameraposition)                           | vec3  |                | Position of the camera in world space |
-| [eyeAltitude](/reference/uniforms/general/eyealtitude)                                 | float |                | Y coordinate of the player in blocks |
-| [cameraPositionFract](/reference/uniforms/general/camerapositionfract)                 | vec3  | [0,1)          | Fractional component of the camera position in world space |
-| [cameraPositionInt](/reference/uniforms/general/camerapositionint)                     | ivec3 |                | Integer component of the camera position in world space |
-| [previousCameraPosition](/reference/uniforms/general/previouscameraposition)           | vec3  |                | Value of `cameraPosition` from the previous frame |
-| [previousCameraPositionFract](/reference/uniforms/general/previouscamerapositionfract) | vec3  | [0,1)          | Value of `cameraPositionFract` from the previous frame |
-| [previousCameraPositionInt](/reference/uniforms/general/previouscamerapositionint)     | ivec3 |                | Value of `cameraPositionInt` from the previous frame |
-| [eyePosition](/reference/uniforms/general/eyeposition)                                 | vec3  |                | World space position of the player's head model |
-| [relativeEyePosition](/reference/uniforms/general/relativeeyeposition)                 | vec3  |                | World space offset from the player head to the camera |
-| [playerBodyVector](/reference/uniforms/general/playerbodyvector)                       | vec3  | [0,1]          | World aligned direction of player model's body |
-| [playerLookVector](/reference/uniforms/general/playerlookvector)                       | vec3  | [0,1]          | World aligned direction of player model's head |
-| [upPosition](/reference/uniforms/general/upposition)                                   | vec3  | [0,100]        | Upwards direction in view space, length of 100 |
-| [centerDepthSmooth](/reference/uniforms/general/centerdepthsmooth)                     | float | [0,1]          | Depth buffer value at the center of the screen, smoothed over time |
-| [firstPersonCamera](/reference/uniforms/general/firstpersoncamera)                     | bool  | `true`/`false` | Whether the player camera is in first person mode |
+| Uniform                                                                               | Type  | Value Range    | Description                                                        | Tag                                           |
+| ------------------------------------------------------------------------------------- | ----- | -------------- | ------------------------------------------------------------------ | --------------------------------------------- |
+| [cameraPosition](/reference/uniforms/camera#cameraposition)                           | vec3  |                | Position of the camera in world space                              |                                               |
+| [eyeAltitude](/reference/uniforms/camera#eyealtitude)                                 | float |                | Y coordinate of the player in blocks                               |                                               |
+| [cameraPositionFract](/reference/uniforms/camera#camerapositionfract)                 | vec3  | [0,1)          | Fractional component of the camera position in world space         | <Badge text="Iris Exclusive" variant="tip" /> |
+| [cameraPositionInt](/reference/uniforms/camera#camerapositionint)                     | ivec3 |                | Integer component of the camera position in world space            | <Badge text="Iris Exclusive" variant="tip" /> |
+| [previousCameraPosition](/reference/uniforms/camera#previouscameraposition)           | vec3  |                | Value of `cameraPosition` from the previous frame                  | <Badge text="Iris Exclusive" variant="tip" /> |
+| [previousCameraPositionFract](/reference/uniforms/camera#previouscamerapositionfract) | vec3  | [0,1)          | Value of `cameraPositionFract` from the previous frame             | <Badge text="Iris Exclusive" variant="tip" /> |
+| [previousCameraPositionInt](/reference/uniforms/camera#previouscamerapositionint)     | ivec3 |                | Value of `cameraPositionInt` from the previous frame               | <Badge text="Iris Exclusive" variant="tip" /> |
+| [eyePosition](/reference/uniforms/camera#eyeposition)                                 | vec3  |                | World space position of the player's head model                    | <Badge text="Iris Exclusive" variant="tip" /> |
+| [relativeEyePosition](/reference/uniforms/camera#relativeeyeposition)                 | vec3  |                | World space offset from the player head to the camera              | <Badge text="Iris Exclusive" variant="tip" /> |
+| [playerBodyVector](/reference/uniforms/camera#playerbodyvector)                       | vec3  | [0,1]          | World aligned direction of player model's body                     | <Badge text="Iris Exclusive" variant="tip" /> |
+| [playerLookVector](/reference/uniforms/camera#playerlookvector)                       | vec3  | [0,1]          | World aligned direction of player model's head                     | <Badge text="Iris Exclusive" variant="tip" /> |
+| [upPosition](/reference/uniforms/camera#upposition)                                   | vec3  | [0,100]        | Upwards direction in view space, length of 100                     |                                               |
+| [centerDepthSmooth](/reference/uniforms/camera#centerdepthsmooth)                     | float | [0,1]          | Depth buffer value at the center of the screen, smoothed over time |                                               |
+| [firstPersonCamera](/reference/uniforms/camera#firstpersoncamera)                     | bool  | `true`/`false` | Whether the player camera is in first person mode                  | <Badge text="Iris Exclusive" variant="tip" /> |
 
 ## Player Status
-| Uniform                                                                                | Type  | Value Range     | Description |
-| -------------------------------------------------------------------------------------- | ----- | --------------- | ----------- |
-| [isEyeInWater](/reference/uniforms/general/iseyeinwater)                               | int   | `0`,`1`,`2`,`3` | Fluid that the camera is currently in |
-| [isSpectator](/reference/uniforms/general/isspectator)                                 | bool  | `true`/`false`  | Whether the player is currently in spectator mode |
-| [isRightHanded](/reference/uniforms/general/isrighthanded)                             | bool  | `true`/`false`  | Whether the player's main hand is set to right hand |
-| [blindness](/reference/uniforms/general/blindness)                                     | float | [0,1]           | Blindness effect multiplier |
-| [darknessFactor](/reference/uniforms/general/darknessfactor)                           | float | [0,1]           | Strength of the darkness effect |
-| [darknessLightFactor](/reference/uniforms/general/darknesslightfactor)                 | float | [0,1]           | Strength of the dimming effect from the darkness status effect |
-| [nightVision](/reference/uniforms/general/nightvision)                                 | float | [0,1]           | Night vision effect multiplier |
-| [playerMood](/reference/uniforms/general/playermood)                                   | float | [0,1]           | Player mood value |
-| [constantMood](/reference/uniforms/general/constantmood)                               | float | [0,1]           | `playerMood` but it doesn't reset at `1.0` |
-| [currentPlayerAir](/reference/uniforms/general/currentplayerair)                       | float | [0,1]           | Normalized air the player has remaining |
-| [maxPlayerAir](/reference/uniforms/general/maxplayerair)                               | float |                 | Maximum player air when underwater |
-| [currentPlayerArmor](/reference/uniforms/general/currentplayerarmor)                   | float | [0,1]           | Normalized armor player has equipped |
-| [maxPlayerArmor](/reference/uniforms/general/maxplayerarmor)                           | float |                 | Maximum player armor value |
-| [currentPlayerHealth](/reference/uniforms/general/currentplayerhealth)                 | float | [0,1]           | Normalized health the player has remaining |
-| [maxPlayerHealth](/reference/uniforms/general/maxplayerhealth)                         | float |                 | Maximum player health value |
-| [currentPlayerHunger](/reference/uniforms/general/currentplayerhunger)                 | float | [0,1]           | Normalized hunger level of player |
-| [maxPlayerHunger](/reference/uniforms/general/maxplayerhunger)                         | float |                 | Maximum player hunger value |
-| [is_burning](/reference/uniforms/general/is_burning)                                   | bool  | `true`/`false`  | Whether the player is currently on fire |
-| [is_hurt](/reference/uniforms/general/is_hurt)                                         | bool  | `true`/`false`  | Whether the player is currently taking damage |
-| [is_invisible](/reference/uniforms/general/is_invisible)                               | bool  | `true`/`false`  | Whether the player is invisible |
-| [is_on_ground](/reference/uniforms/general/is_on_ground)                               | bool  | `true`/`false`  | Whether the player is currently touching the ground |
-| [is_sneaking](/reference/uniforms/general/is_sneaking)                                 | bool  | `true`/`false`  | Whether the player is currently sneaking |
-| [is_sprinting](/reference/uniforms/general/is_sprinting)                               | bool  | `true`/`false`  | Whether the player is currently sprinting |
-| [hideGUI](/reference/uniforms/general/hidegui)                                         | bool  | `true`/`false`  | Whether the player's GUI is hidden |
+| Uniform                                                               | Type  | Value Range    | Description                                                    | Tag                                                   |
+| --------------------------------------------------------------------- | ----- | -------------- | -------------------------------------------------------------- | ----------------------------------------------------- |
+| [isEyeInWater](/reference/uniforms/status#iseyeinwater)               | int   | `0`,`1`,`2`,`3 | Fluid that the camera is currently in                          |                                                       |
+| [isSpectator](/reference/uniforms/status#isspectator)                 | bool  | `true`/`false` | Whether the player is currently in spectator mode              | <Badge text="Iris Exclusive" variant="tip" />         |
+| [isRightHanded](/reference/uniforms/status#isrighthanded)             | bool  | `true`/`false` | Whether the player's main hand is set to right hand            | <Badge text="Iris Exclusive" variant="tip" />         |
+| [blindness](/reference/uniforms/status#blindness)                     | float | [0,1]          | Blindness effect multiplier                                    |                                                       |
+| [darknessFactor](/reference/uniforms/status#darknessfactor)           | float | [0,1]          | Strength of the darkness effect                                |                                                       |
+| [darknessLightFactor](/reference/uniforms/status#darknesslightfactor) | float | [0,1]          | Strength of the dimming effect from the darkness status effect |                                                       |
+| [nightVision](/reference/uniforms/status#nightvision)                 | float | [0,1]          | Night vision effect multiplier                                 |                                                       |
+| [playerMood](/reference/uniforms/status#playermood)                   | float | [0,1]          | Player mood value                                              |                                                       |
+| [constantMood](/reference/uniforms/status#constantmood)               | float | [0,1]          | `playerMood` but it doesn't reset at `1.0`                     | <Badge text="Iris Exclusive" variant="tip" />         |
+| [currentPlayerAir](/reference/uniforms/status#currentplayerair)       | float | [0,1]          | Normalized air the player has remaining                        | <Badge text="Iris Exclusive" variant="tip" />         |
+| [maxPlayerAir](/reference/uniforms/status#maxplayerair)               | float |                | Maximum player air when underwater                             | <Badge text="Iris Exclusive" variant="tip" />         |
+| [currentPlayerArmor](/reference/uniforms/status#currentplayerarmor)   | float | [0,1]          | Normalized armor player has equipped                           | <Badge text="Iris Exclusive" variant="tip" />         |
+| [maxPlayerArmor](/reference/uniforms/status#maxplayerarmor)           | float |                | Maximum player armor value                                     | <Badge text="Iris Exclusive" variant="tip" />         |
+| [currentPlayerHealth](/reference/uniforms/status#currentplayerhealth) | float | [0,1]          | Normalized health the player has remaining                     | <Badge text="Iris Exclusive" variant="tip" />         |
+| [maxPlayerHealth](/reference/uniforms/status#maxplayerhealth)         | float |                | Maximum player health value                                    | <Badge text="Iris Exclusive" variant="tip" />         |
+| [currentPlayerHunger](/reference/uniforms/status#currentplayerhunger) | float | [0,1]          | Normalized hunger level of player                              | <Badge text="Iris Exclusive" variant="tip" />         |
+| [maxPlayerHunger](/reference/uniforms/status#maxplayerhunger)         | float |                | Maximum player hunger value                                    | <Badge text="Iris Exclusive" variant="tip" />         |
+| [is_burning](/reference/uniforms/status#is_burning)                   | bool  | `true`/`false` | Whether the player is currently on fire                        | <Badge text="Optifine CU / Iris" variant="caution" /> |
+| [is_hurt](/reference/uniforms/status#is_hurt)                         | bool  | `true`/`false` | Whether the player is currently taking damage                  | <Badge text="Optifine CU / Iris" variant="caution" /> |
+| [is_invisible](/reference/uniforms/status#is_invisible)               | bool  | `true`/`false` | Whether the player is invisible                                | <Badge text="Optifine CU / Iris" variant="caution" /> |
+| [is_on_ground](/reference/uniforms/status#is_on_ground)               | bool  | `true`/`false` | Whether the player is currently touching the ground            | <Badge text="Optifine CU / Iris" variant="caution" /> |
+| [is_sneaking](/reference/uniforms/status#is_sneaking)                 | bool  | `true`/`false` | Whether the player is currently sneaking                       | <Badge text="Optifine CU / Iris" variant="caution" /> |
+| [is_sprinting](/reference/uniforms/status#is_sprinting)               | bool  | `true`/`false` | Whether the player is currently sprinting                      | <Badge text="Optifine CU / Iris" variant="caution" /> |
+| [hideGUI](/reference/uniforms/status#hidegui)                         | bool  | `true`/`false` | Whether the player's GUI is hidden                             |                                                       |
 
 ## Screen/System
-| Uniform                                                                                | Type  | Value Range         | Description |
-| -------------------------------------------------------------------------------------- | ----- | ------------------- | ----------- |
-| [viewHeight](/reference/uniforms/general/viewheight)                                   | float | [1,∞)               | Height of the game window in pixels |
-| [viewWidth](/reference/uniforms/general/viewwidth)                                     | float | [1,∞)               | Width of the game window in pixels |
-| [aspectRatio](/reference/uniforms/general/aspectratio)                                 | float | (0,∞)               | Aspect ratio of the game window |
-| [screenBrightness](/reference/uniforms/general/screenbrightness)                       | float | [0,1]               | Screen brightness from video settings |
-| [frameCounter](/reference/uniforms/general/framecounter)                               | int   | [0,720719]          | Number of frames since start of program |
-| [frameTime](/reference/uniforms/general/frametime)                                     | float | (0,∞)               | Frame time of the previous frame in seconds |
-| [frameTimeCounter](/reference/uniforms/general/frametimecounter)                       | float | [0,3600)            | Running time of the game in seconds |
-| [currentColorSpace](/reference/uniforms/general/currentcolorspace)                     | int   | `0`,`1`,`2`,`3`,`4` | Display color space, controlled through video settings |
-| [currentDate](/reference/uniforms/general/currentdate)                                 | ivec3 |                     | System date: (year, month, day) |
-| [currentTime](/reference/uniforms/general/currenttime)                                 | ivec3 |                     | System time: (hour, minute, second) |
-| [currentYearTime](/reference/uniforms/general/currentyeartime)                         | ivec2 |                     | Time since beginning of the year and until the end of the year |
+| Uniform                                                           | Type  | Value Range         | Description                                                    | Tag                                           |
+| ----------------------------------------------------------------- | ----- | ------------------- | -------------------------------------------------------------- | --------------------------------------------- |
+| [viewHeight](/reference/uniforms/system#viewheight)               | float | [1,∞)               | Height of the game window in pixels                            |                                               |
+| [viewWidth](/reference/uniforms/system#viewwidth)                 | float | [1,∞)               | Width of the game window in pixels                             |                                               |
+| [aspectRatio](/reference/uniforms/system#aspectratio)             | float | (0,∞)               | Aspect ratio of the game window                                |                                               |
+| [screenBrightness](/reference/uniforms/system#screenbrightness)   | float | [0,1]               | Screen brightness from video settings                          |                                               |
+| [frameCounter](/reference/uniforms/system#framecounter)           | int   | [0,720719]          | Number of frames since start of program                        |                                               |
+| [frameTime](/reference/uniforms/system#frametime)                 | float | (0,∞)               | Frame time of the previous frame in seconds                    |                                               |
+| [frameTimeCounter](/reference/uniforms/system#frametimecounter)   | float | [0,3600)            | Running time of the game in seconds                            |                                               |
+| [currentColorSpace](/reference/uniforms/system#currentcolorspace) | int   | `0`,`1`,`2`,`3`,`4` | Display color space, controlled through video settings         | <Badge text="Iris Exclusive" variant="tip" /> |
+| [currentDate](/reference/uniforms/system#currentdate)             | ivec3 |                     | System date: (year, month, day)                                | <Badge text="Iris Exclusive" variant="tip" /> |
+| [currentTime](/reference/uniforms/system#currenttime)             | ivec3 |                     | System time: (hour, minute, second)                            | <Badge text="Iris Exclusive" variant="tip" /> |
+| [currentYearTime](/reference/uniforms/system#currentyeartime)     | ivec2 |                     | Time since beginning of the year and until the end of the year | <Badge text="Iris Exclusive" variant="tip" /> |
 
 ## ID
-| Uniform                                                                                | Type  | Value Range    | Description |
-| -------------------------------------------------------------------------------------- | ----- | -------------- | ----------- |
-| [entityId](/reference/uniforms/general/entityid)                                       | int   | [0,65535]      | ID of the currently rendering entity (gbuffers_entities) |
-| [blockEntityId](/reference/uniforms/general/blockentityid)                             | int   | [-32768,32767] | ID of the currently rendering block entity (gbuffers_block) |
-| [currentRenderedItemId](/reference/uniforms/general/currentrendereditemid)             | int   | [0,65535]      | Item ID of currently rendering item/armor/trim |
-| [currentSelectedBlockId](/reference/uniforms/general/currentselectedblockid)           | int   | [-32768,32767] | Block ID of block selected by the player |
-| [currentSelectedBlockPos](/reference/uniforms/general/currentselectedblockpos)         | vec3  |                | Player space position of the center of the block selected by the player |
-| [heldItemId](/reference/uniforms/general/helditemid)                                   | int   | [0,65535]      | Item ID of the item in the player's hand |
-| [heldItemId2](/reference/uniforms/general/helditemid2)                                 | int   | [0,65535]      | Item ID of the item in the player's offhand |
-| [heldBlockLightValue](/reference/uniforms/general/heldblocklightvalue)                 | int   | [0,15]         | Light value of the item held in the player's hand |
-| [heldBlockLightValue2](/reference/uniforms/general/heldblocklightvalue2)               | int   | [0,15]         | Light value of the item held in the player's offhand |
+| Uniform                                                                   | Type  | Value Range    | Description                                                             | Tag                                           |
+| ------------------------------------------------------------------------- | ----- | -------------- | ----------------------------------------------------------------------- | --------------------------------------------- |
+| [entityId](/reference/uniforms/id#entityid)                               | int   | [0,65535]      | ID of the currently rendering entity (gbuffers_entities)                |                                               |
+| [blockEntityId](/reference/uniforms/id#blockentityid)                     | int   | [-32768,32767] | ID of the currently rendering block entity (gbuffers_block)             |                                               |
+| [currentRenderedItemId](/reference/uniforms/id#currentrendereditemid)     | int   | [0,65535]      | Item ID of currently rendering item/armor/trim                          | <Badge text="Iris Exclusive" variant="tip" /> |
+| [currentSelectedBlockId](/reference/uniforms/id#currentselectedblockid)   | int   | [-32768,32767] | Block ID of block selected by the player                                | <Badge text="Iris Exclusive" variant="tip" /> |
+| [currentSelectedBlockPos](/reference/uniforms/id#currentselectedblockpos) | vec3  |                | Player space position of the center of the block selected by the player | <Badge text="Iris Exclusive" variant="tip" /> |
+| [heldItemId](/reference/uniforms/id#helditemid)                           | int   | [0,65535]      | Item ID of the item in the player's hand                                |                                               |
+| [heldItemId2](/reference/uniforms/id#helditemid2)                         | int   | [0,65535]      | Item ID of the item in the player's offhand                             |                                               |
+| [heldBlockLightValue](/reference/uniforms/id#heldblocklightvalue)         | int   | [0,15]         | Light value of the item held in the player's hand                       |                                               |
+| [heldBlockLightValue2](/reference/uniforms/id#heldblocklightvalue2)       | int   | [0,15]         | Light value of the item held in the player's offhand                    |                                               |
 
 ## World/Weather
-| Uniform                                                                                | Type  | Value Range | Description |
-| -------------------------------------------------------------------------------------- | ----- | ----------- | ----------- |
-| [sunPosition](/reference/uniforms/general/sunposition)                                 | vec3  | [0,100]     | Position of the sun in view space, length of 100 |
-| [moonPosition](/reference/uniforms/general/moonposition)                               | vec3  | [0,100]     | Position of the moon in view space, length of 100 |
-| [shadowLightPosition](/reference/uniforms/general/shadowlightposition)                 | vec3  | [0,100]     | Position of shadow source in view space, length of 100 |
-| [sunAngle](/reference/uniforms/general/sunangle)                                       | float | [0,1]       | Angle of the sun within the complete day-night cycle |
-| [shadowAngle](/reference/uniforms/general/shadowangle)                                 | float | [0,0.5]     | Angle of shadow source (whichever is higher in the sky) |
-| [moonPhase](/reference/uniforms/general/moonphase)                                     | int   | [0,7]       | Current moon phase |
-| [rainStrength](/reference/uniforms/general/rainstrength)                               | float | [0,1]       | Current strength of rain |
-| [wetness](/reference/uniforms/general/wetness)                                         | float | [0,1]       | `rainStrength` but smoothed over time with `wetnessHalfLife` |
-| [thunderStrength](/reference/uniforms/general/thunderstrength)                         | float | [0,1]       | Current strength of thunderstorm |
-| [lightningBoltPosition](/reference/uniforms/general/lightningboltposition)             | vec4  |             | Position of a lightning bolt being rendered, or `vec4(0.0)` |
-| [worldTime](/reference/uniforms/general/worldtime)                                     | int   | [0,23999]   | Current in-game time |
-| [worldDay](/reference/uniforms/general/worldday)                                       | int   |             | Number of in-game days passed |
-| [eyeBrightness](/reference/uniforms/general/eyebrightness)                             | ivec2 | [0-240]     | Light value at the player's location: (block, sky) |
-| [eyeBrightnessSmooth](/reference/uniforms/general/eyebrightnesssmooth)                 | ivec2 | [0-240]     | `eyeBrightness` smoothed over time by `eyeBrightnessHalfLife`|
+| Uniform                                                                  | Type  | Value Range | Description                                                   | Tag                                           |
+| ------------------------------------------------------------------------ | ----- | ----------- | ------------------------------------------------------------- | --------------------------------------------- |
+| [sunPosition](/reference/uniforms/world#sunposition)                     | vec3  | [0,100]     | Position of the sun in view space, length of 100              |                                               |
+| [moonPosition](/reference/uniforms/world#moonposition)                   | vec3  | [0,100]     | Position of the moon in view space, length of 100             |                                               |
+| [shadowLightPosition](/reference/uniforms/world#shadowlightposition)     | vec3  | [0,100]     | Position of shadow source in view space, length of 100        |                                               |
+| [sunAngle](/reference/uniforms/world#sunangle)                           | float | [0,1]       | Angle of the sun within the complete day-night cycle          |                                               |
+| [shadowAngle](/reference/uniforms/world#shadowangle)                     | float | [0,0.5]     | Angle of shadow source (whichever is higher in the sky)       |                                               |
+| [moonPhase](/reference/uniforms/world#moonphase)                         | int   | [0,7]       | Current moon phase                                            |                                               |
+| [rainStrength](/reference/uniforms/world#rainstrength)                   | float | [0,1]       | Current strength of rain                                      |                                               |
+| [wetness](/reference/uniforms/world#wetness)                             | float | [0,1]       | `rainStrength` but smoothed over time with `wetnessHalfLife`  |                                               |
+| [thunderStrength](/reference/uniforms/world#thunderstrength)             | float | [0,1]       | Current strength of thunderstorm                              | <Badge text="Iris Exclusive" variant="tip" /> |
+| [lightningBoltPosition](/reference/uniforms/world#lightningboltposition) | vec4  |             | Position of a lightning bolt being rendered, or `vec4(0.0)`   | <Badge text="Iris Exclusive" variant="tip" /> |
+| [worldTime](/reference/uniforms/world#worldtime)                         | int   | [0,23999]   | Current in-game time                                          |                                               |
+| [worldDay](/reference/uniforms/world#worldday)                           | int   |             | Number of in-game days passed                                 |                                               |
+| [eyeBrightness](/reference/uniforms/world#eyebrightness)                 | ivec2 | [0-240]     | Light value at the player's location: (block, sky)            |                                               |
+| [eyeBrightnessSmooth](/reference/uniforms/world#eyebrightnesssmooth)     | ivec2 | [0-240]     | `eyeBrightness` smoothed over time by `eyeBrightnessHalfLife` |                                               |
 
 ## Biome/Dimension
-| Uniform                                                                                | Type  | Value Range    | Description |
-| -------------------------------------------------------------------------------------- | ----- | -------------- | ----------- |
-| [biome](/reference/uniforms/general/biome)                                             | int   |                | Biome currently occupied by the player |
-| [biome_category](/reference/uniforms/general/biome_category)                           | int   |                | Category of the biome currently occupied by the player |
-| [ambientLight](/reference/uniforms/general/ambientlight)                               | float | [0,1]          | Ambient light property of the current dimension |
-| [bedrockLevel](/reference/uniforms/general/bedrocklevel)                               | int   | [-2032,2016]   | Y coordinate of the bedrock floor in the current dimension |
-| [biome_precipitation](/reference/uniforms/general/biome_precipitation)                 | int   | `0`,`1`,`2`    | Type of precipitation in the current biome |
-| [cloudHeight](/reference/uniforms/general/cloudheight)                                 | float |                | Y coordinate of the vanilla cloud plane |
-| [hasCeiling](/reference/uniforms/general/hasceiling)                                   | bool  | `true`/`false` | Whether the current dimension has a ceiling |
-| [hasSkylight](/reference/uniforms/general/hasskylight)                                 | bool  | `true`/`false` | Whether the current dimension has sky lighting |
-| [heightLimit](/reference/uniforms/general/heightlimit)                                 | int   | [16,4064]      | Distance from maximum to minimum block heights in current dimension |
-| [logicalHeightLimit](/reference/uniforms/general/logicalheightlimit)                   | int   |                | Logical height of the current dimension |
-| [rainfall](/reference/uniforms/general/rainfall)                                       | float | [0,1]          | Rainfall property of the current biome |
-| [temperature](/reference/uniforms/general/temperature)                                 | float |                | Temperature property of the current biome |
+| Uniform                                                              | Type  | Value Range    | Description                                                         | Supported Versions                                    |
+| -------------------------------------------------------------------- | ----- | -------------- | ------------------------------------------------------------------- | ----------------------------------------------------- |
+| [biome](/reference/uniforms/biome#biome)                             | int   |                | Biome currently occupied by the player                              | <Badge text="Optifine CU / Iris" variant="caution" /> |
+| [biome_category](/reference/uniforms/biome#biome_category)           | int   |                | Category of the biome currently occupied by the player              | <Badge text="Optifine CU / Iris" variant="caution" /> |
+| [biome_precipitation](/reference/uniforms/biome#biome_precipitation) | int   | `0`,`1`,`2`    | Type of precipitation in the current biome                          | <Badge text="Optifine CU / Iris" variant="caution" /> |
+| [rainfall](/reference/uniforms/biome#rainfall)                       | float | [0,1]          | Rainfall property of the current biome                              | <Badge text="Optifine CU / Iris" variant="caution" /> |
+| [temperature](/reference/uniforms/biome#temperature)                 | float |                | Temperature property of the current biome                           | <Badge text="Optifine CU / Iris" variant="caution" /> |
+| [ambientLight](/reference/uniforms/biome#ambientlight)               | float | [0,1]          | Ambient light property of the current dimension                     | <Badge text="Iris Exclusive" variant="tip" />         |
+| [bedrockLevel](/reference/uniforms/biome#bedrocklevel)               | int   | [-2032,2016]   | Y coordinate of the bedrock floor in the current dimension          | <Badge text="Iris Exclusive" variant="tip" />         |
+| [cloudHeight](/reference/uniforms/biome#cloudheight)                 | float |                | Y coordinate of the vanilla cloud plane                             | <Badge text="Iris Exclusive" variant="tip" />         |
+| [hasCeiling](/reference/uniforms/biome#hasceiling)                   | bool  | `true`/`false` | Whether the current dimension has a ceiling                         | <Badge text="Iris Exclusive" variant="tip" />         |
+| [hasSkylight](/reference/uniforms/biome#hasskylight)                 | bool  | `true`/`false` | Whether the current dimension has sky lighting                      | <Badge text="Iris Exclusive" variant="tip" />         |
+| [heightLimit](/reference/uniforms/biome#heightlimit)                 | int   | [16,4064]      | Distance from maximum to minimum block heights in current dimension | <Badge text="Iris Exclusive" variant="tip" />         |
+| [logicalHeightLimit](/reference/uniforms/biome#logicalheightlimit)   | int   |                | Logical height of the current dimension                             | <Badge text="Iris Exclusive" variant="tip" />         |
 
 ## Rendering
-| Uniform                                                                                | Type  | Value Range            | Description |
-| -------------------------------------------------------------------------------------- | ----- | ---------------------- | ----------- |
-| [near](/reference/uniforms/general/near)                                               | float | `0.05`                 | Near clipping plane distance |
-| [far](/reference/uniforms/general/far)                                                 | float | (0,-)                  | Current render distance in blocks |
-| [alphaTestRef](/reference/uniforms/general/alphatestref)                               | float | [0,1]                  | Cutout alpha discard threshold |
-| [chunkOffset](/reference/uniforms/general/chunkoffset)                                 | vec3  |                        | Chunk offset for terrain model space position |
-| [entityColor](/reference/uniforms/general/entitycolor)                                 | vec4  | [0,1]                  | Entity tint color |
-| [blendFunc](/reference/uniforms/general/blendfunc)                                     | ivec4 |                        | Alpha blending function multipliers: (srcRGB, dstRGB, srcA, dstA) |
-| [atlasSize](/reference/uniforms/general/atlassize)                                     | ivec2 | [0,-)                  | Size of the texture atlas, `0` if not bound |
-| [renderStage](/reference/uniforms/general/renderstage)                                 | int   |                        | "Render stage" of the current geometry |
-| [fogColor](/reference/uniforms/general/fogcolor)                                       | vec3  | [0,1]                  | Horizon fog color |
-| [skyColor](/reference/uniforms/general/skycolor)                                       | vec3  | [0,1]                  | Upper sky color |
-| [fogDensity](/reference/uniforms/general/fogdensity)                                   | float | [0,1]                  | Relative fog density |
-| [fogStart](/reference/uniforms/general/fogstart)                                       | float | (0,-)                  | Starting fog distance in blocks |
-| [fogEnd](/reference/uniforms/general/fogend)                                           | float | (0,-)                  | Ending fog distance in blocks |
-| [fogMode](/reference/uniforms/general/fogmode)                                         | int   | `2048`, `2049`, `2048` | Fog type used for vanilla fog |
-| [fogShape](/reference/uniforms/general/fogshape)                                       | int   | 0,1                    | Fog shape used for vanilla fog |
+| Uniform                                                    | Type  | Value Range            | Description                                                       | Supported Versions |
+| ---------------------------------------------------------- | ----- | ---------------------- | ----------------------------------------------------------------- | ------------------ |
+| [near](/reference/uniforms/rendering#near)                 | float | `0.05`                 | Near clipping plane distance                                      |                    |
+| [far](/reference/uniforms/rendering#far)                   | float | (0,-)                  | Current render distance in blocks                                 |                    |
+| [alphaTestRef](/reference/uniforms/rendering#alphatestref) | float | [0,1]                  | Cutout alpha discard threshold                                    |                    |
+| [chunkOffset](/reference/uniforms/rendering#chunkoffset)   | vec3  |                        | Chunk offset for terrain model space position                     |                    |
+| [entityColor](/reference/uniforms/rendering#entitycolor)   | vec4  | [0,1]                  | Entity tint color                                                 |                    |
+| [blendFunc](/reference/uniforms/rendering#blendfunc)       | ivec4 |                        | Alpha blending function multipliers: (srcRGB, dstRGB, srcA, dstA) |                    |
+| [atlasSize](/reference/uniforms/rendering#atlassize)       | ivec2 | [0,-)                  | Size of the texture atlas, `0` if not bound                       |                    |
+| [renderStage](/reference/uniforms/rendering#renderstage)   | int   |                        | "Render stage" of the current geometry                            |                    |
+| [fogColor](/reference/uniforms/rendering#fogcolor)         | vec3  | [0,1]                  | Horizon fog color                                                 |                    |
+| [skyColor](/reference/uniforms/rendering#skycolor)         | vec3  | [0,1]                  | Upper sky color                                                   |                    |
+| [fogDensity](/reference/uniforms/rendering#fogdensity)     | float | [0,1]                  | Relative fog density                                              |                    |
+| [fogStart](/reference/uniforms/rendering#fogstart)         | float | (0,-)                  | Starting fog distance in blocks                                   |                    |
+| [fogEnd](/reference/uniforms/rendering#fogend)             | float | (0,-)                  | Ending fog distance in blocks                                     |                    |
+| [fogMode](/reference/uniforms/rendering#fogmode)           | int   | `2048`, `2049`, `2048` | Fog type used for vanilla fog                                     |                    |
+| [fogShape](/reference/uniforms/rendering#fogshape)         | int   | 0,1                    | Fog shape used for vanilla fog                                    |                    |
 
 ## Matrices
-| Uniform                                                                                | Type  | Value Range | Description |
-| -------------------------------------------------------------------------------------- | ----- | ----------- | ----------- |
-| [gbufferModelView](/reference/uniforms/matrices/gbuffermodelview)                      | mat4  |             | Player space to view space in general |
-| [gbufferModelViewInverse](/reference/uniforms/matrices/gbuffermodelviewinverse)        | mat4  |             | Converts from view space to player space in general |
-| [gbufferProjection](/reference/uniforms/matrices/gbufferprojection)                    | mat4  |             | Converts from view space to clip space in general |
-| [gbufferProjectionInverse](/reference/uniforms/matrices/gbufferprojectioninverse)      | mat4  |             | Converts from clip/screen to view space in general|
-| [shadowModelView](/reference/uniforms/matrices/shadowmodelview)                        | mat4  |             | Converts from player space to shadow view space in general |
-| [shadowModelViewInverse](/reference/uniforms/matrices/shadowmodelviewinverse)          | mat4  |             | Converts from shadow view space to player space in general |
-| [shadowProjection](/reference/uniforms/matrices/shadowprojection)                      | mat4  |             | Converts from shadow view space to shadow clip space in general |
-| [shadowProjectionInverse](/reference/uniforms/matrices/shadowprojectioninverse)        | mat4  |             | Converts from shadow clip/screen space to shadow view space in general |
-| [gbufferPreviousModelView](/reference/uniforms/matrices/gbufferpreviousmodelview)      | mat4  |             | Value of `gbufferModelView` from the previous frame |
-| [gbufferPreviousProjection](/reference/uniforms/matrices/gbufferpreviousprojection)    | mat4  |             | Value of `gbufferProjection` from the previous frame |
-| [modelViewMatrix](/reference/uniforms/matrices/modelviewmatrix)                        | mat4  |             | Converts from model space to view space in general |
-| [modelViewMatrixInverse](/reference/uniforms/matrices/modelviewmatrixinverse)          | mat4  |             | Converts from view space to model space for current geometry |
-| [projectionMatrix](/reference/uniforms/matrices/projectionmatrix)                      | mat4  |             | Converts from view space to clip space for current geometry |
-| [projectionMatrixInverse](/reference/uniforms/matrices/projectionmatrixinverse)        | mat4  |             | Converts from clip/screen space to view space for current geometry |
-| [normalMatrix](/reference/uniforms/matrices/normalmatrix)                              | mat3  |             | Converts normals from model space to view space for current geometry |
-| [textureMatrix](/reference/uniforms/matrices/texturematrix)                            | mat4  |             | Transforms texture coordinates before sampling |
+| Uniform                                                                             | Type  | Value Range | Description                                                            | Supported Versions |
+| ----------------------------------------------------------------------------------- | ----- | ----------- | ---------------------------------------------------------------------- | ------------------ |
+| [gbufferModelView](/reference/uniforms/matrices#gbuffermodelview)                   | mat4  |             | Player space to view space in general                                  |                    |
+| [gbufferModelViewInverse](/reference/uniforms/matrices#gbuffermodelviewinverse)     | mat4  |             | Converts from view space to player space in general                    |                    |
+| [gbufferProjection](/reference/uniforms/matrices#gbufferprojection)                 | mat4  |             | Converts from view space to clip space in general                      |                    |
+| [gbufferProjectionInverse](/reference/uniforms/matrices#gbufferprojectioninverse)   | mat4  |             | Converts from clip/screen to view space in general                     |                    |
+| [shadowModelView](/reference/uniforms/matrices#shadowmodelview)                     | mat4  |             | Converts from player space to shadow view space in general             |                    |
+| [shadowModelViewInverse](/reference/uniforms/matrices#shadowmodelviewinverse)       | mat4  |             | Converts from shadow view space to player space in general             |                    |
+| [shadowProjection](/reference/uniforms/matrices#shadowprojection)                   | mat4  |             | Converts from shadow view space to shadow clip space in general        |                    |
+| [shadowProjectionInverse](/reference/uniforms/matrices#shadowprojectioninverse)     | mat4  |             | Converts from shadow clip/screen space to shadow view space in general |                    |
+| [gbufferPreviousModelView](/reference/uniforms/matrices#gbufferpreviousmodelview)   | mat4  |             | Value of `gbufferModelView` from the previous frame                    |                    |
+| [gbufferPreviousProjection](/reference/uniforms/matrices#gbufferpreviousprojection) | mat4  |             | Value of `gbufferProjection` from the previous frame                   |                    |
+| [modelViewMatrix](/reference/uniforms/matrices#modelviewmatrix)                     | mat4  |             | Converts from model space to view space in general                     |                    |
+| [modelViewMatrixInverse](/reference/uniforms/matrices#modelviewmatrixinverse)       | mat4  |             | Converts from view space to model space for current geometry           |                    |
+| [projectionMatrix](/reference/uniforms/matrices#projectionmatrix)                   | mat4  |             | Converts from view space to clip space for current geometry            |                    |
+| [projectionMatrixInverse](/reference/uniforms/matrices#projectionmatrixinverse)     | mat4  |             | Converts from clip/screen space to view space for current geometry     |                    |
+| [normalMatrix](/reference/uniforms/matrices#normalmatrix)                           | mat3  |             | Converts normals from model space to view space for current geometry   |                    |
+| [textureMatrix](/reference/uniforms/matrices#texturematrix)                         | mat4  |             | Transforms texture coordinates before sampling                         |                    |
 
-
-
-
-
-
-
-
-
-
-
-
-
-## Overall List
-| Uniform                                                                                | Type  | Value Range    | Description |
-| -------------------------------------------------------------------------------------- | ----- | -------------- | ----------- |
-| [alphaTestRef](/reference/uniforms/general/alphatestref)                               | float | [0,1]          | Cutout discard threshold |
-| [ambientLight](/reference/uniforms/general/ambientlight)                               | float | [0,1]          | Ambient light property of the current dimension |
-| [aspectRatio](/reference/uniforms/general/aspectratio)                                 | float | (0,∞)        | Aspect ratio of the game window |
-| [atlasSize](/reference/uniforms/general/atlassize)                                     | ivec2 | [0,-]          | Size of the texture atlas, `0` if not bound |
-| [bedrockLevel](/reference/uniforms/general/bedrocklevel)                               | int   |                | Y coordinate of the bedrock floor in the current dimension |
-| [biome_category](/reference/uniforms/general/biome_category)                           | int   |                | Category of the biome currently occupied by the player |
-| [biome](/reference/uniforms/general/biome)                                             | int   |                | Biome currently occupied by the player |
-| [biome_precipitation](/reference/uniforms/general/biome_precipitation)                 | int   | 0,1,2          | Type of precipitation in the current biome |
-| [blendFunc](/reference/uniforms/general/blendfunc)                                     | ivec4 |                | Alpha blending function multipliers: (srcRGB, dstRGB, srcA, dstA) |
-| [blindness](/reference/uniforms/general/blindness)                                     | float | [0,1]          | Blindness effect multiplier |
-| [blockEntityId](/reference/uniforms/general/blockentityid)                             | int   | [-32768,32767] | ID of the currently rendering block entity |
-| [cameraPositionFract](/reference/uniforms/general/camerapositionfract)                 | vec3  | [0,1]          | Fractional component of the camera position in world space |
-| [cameraPositionInt](/reference/uniforms/general/camerapositionint)                     | ivec3 |                | Integer component of the camera position in world space |
-| [cameraPosition](/reference/uniforms/general/cameraposition)                           | vec3  |                | Position of the camera in world space |
-| [centerDepthSmooth](/reference/uniforms/general/centerdepthsmooth)                     | float | [0,1]          | Depth buffer value at the center of the screen, smoothed over time |
-| [chunkOffset](/reference/uniforms/general/chunkoffset)                                 | vec3  |                | Chunk offset for terrain model space position |
-| [cloudHeight](/reference/uniforms/general/cloudheight)                                 | float |                | Y coordinate of the vanilla cloud plane |
-| [constantMood](/reference/uniforms/general/constantmood)                               | float | [0,1]          | `playerMood` but it doesn't reset at `1.0` |
-| [currentColorSpace](/reference/uniforms/general/currentcolorspace)                     | int   | 0,1,2,3,4      | Display color space, controlled through video settings |
-| [currentDate](/reference/uniforms/general/currentdate)                                 | ivec3 |                | System date: (year, month, day) |
-| [currentPlayerAir](/reference/uniforms/general/currentplayerair)                       | float | [0,1]          | Normalized air the player has remaining |
-| [currentPlayerArmor](/reference/uniforms/general/currentplayerarmor)                   | float | [0,1]          | Normalized armor player has equipped |
-| [currentPlayerHealth](/reference/uniforms/general/currentplayerhealth)                 | float | [0,1]          | Normalized health the player has remaining |
-| [currentPlayerHunger](/reference/uniforms/general/currentplayerhunger)                 | float | [0,1]          | Normalized hunger level of player |
-| [currentRenderedItemId](/reference/uniforms/general/currentrendereditemid)             | int   | [0,65535]      | Item ID of currently rendering item/armor/trim |
-| [currentSelectedBlockId](/reference/uniforms/general/currentselectedblockid)           | int   | [-32768,32767] | Block ID of block selected by the player |
-| [currentSelectedBlockPos](/reference/uniforms/general/currentselectedblockpos)         | vec3  |                | Player space position of the center of the block selected by the player |
-| [currentTime](/reference/uniforms/general/currenttime)                                 | ivec3 |                | System time: (hour, minute, second) |
-| [currentYearTime](/reference/uniforms/general/currentyeartime)                         | ivec2 |                | Time since beginning of the year and until the end of the year |
-| [darknessFactor](/reference/uniforms/general/darknessfactor)                           | float | [0,1]          | Strength of the darkness effect |
-| [darknessLightFactor](/reference/uniforms/general/darknesslightfactor)                 | float | [0,1]          | Strength of the dimming effect from the darkness status effect |
-| [entityColor](/reference/uniforms/general/entitycolor)                                 | vec4  | [0,1]          | Entity tint color |
-| [entityId](/reference/uniforms/general/entityid)                                       | int   | [0,65535]      | ID of the currently rendering entity |
-| [eyeAltitude](/reference/uniforms/general/eyealtitude)                                 | float |                | Y coordinate of the player in blocks |
-| [eyeBrightness](/reference/uniforms/general/eyebrightness)                             | ivec2 | [0-240]        | Light value at the player's location: (block, sky) |
-| [eyeBrightnessSmooth](/reference/uniforms/general/eyebrightnesssmooth)                 | ivec2 | [0-240]        | `eyeBrightness` smoothed over time |
-| [eyePosition](/reference/uniforms/general/eyeposition)                                 | vec3  |                | World space position of the player's head model |
-| [far](/reference/uniforms/general/far)                                                 | float |                | Current render distance in blocks |
-| [firstPersonCamera](/reference/uniforms/general/firstpersoncamera)                     | bool  | `true`/`false`     | Whether the player is in first person mode |
-| [fogColor](/reference/uniforms/general/fogcolor)                                       | vec3  | [0,1]          | Horizon fog color |
-| [fogDensity](/reference/uniforms/general/fogdensity)                                   | float | [0,1]          | Relative fog density |
-| [fogEnd](/reference/uniforms/general/fogend)                                           | float |                | Ending fog distance in blocks |
-| [fogMode](/reference/uniforms/general/fogmode)                                         | int   |                | Fog type used for vanilla fog |
-| [fogShape](/reference/uniforms/general/fogshape)                                       | int   | 0,1            | Fog shape used for vanilla fog |
-| [fogStart](/reference/uniforms/general/fogstart)                                       | float |                | Starting fog distance in blocks |
-| [frameCounter](/reference/uniforms/general/framecounter)                               | int   | [0,720719]     | Number of frames since start of program |
-| [frameTimeCounter](/reference/uniforms/general/frametimecounter)                       | float | [0,3600)       | Running time of the game in seconds |
-| [frameTime](/reference/uniforms/general/frametime)                                     | float |                | Frame time of the previous frame in seconds |
-| [hasCeiling](/reference/uniforms/general/hasceiling)                                   | bool  | `true`/`false`     | Whether the current dimension has a ceiling |
-| [hasSkylight](/reference/uniforms/general/hasskylight)                                 | bool  | `true`/`false`     | Whether the current dimension has sky lighting |
-| [heightLimit](/reference/uniforms/general/heightlimit)                                 | int   |                | Distance from maximum to minimum block heights in current dimension |
-| [heldBlockLightValue](/reference/uniforms/general/heldblocklightvalue)                 | int   | [0,15]         | Light strength of the item held in the player's hand |
-| [heldBlockLightValue2](/reference/uniforms/general/heldblocklightvalue2)               | int   | [0,15]         | Light strength of the item held in the player's offhand |
-| [heldItemId](/reference/uniforms/general/helditemid)                                   | int   | [0,65535]      | Item ID of the item in the player's hand |
-| [heldItemId2](/reference/uniforms/general/helditemid2)                                 | int   | [0,65535]      | Item ID of the item in the player's offhand |
-| [hideGUI](/reference/uniforms/general/hidegui)                                         | bool  | `true`/`false`     | Whether the player's GUI is hidden |
-| [is_burning](/reference/uniforms/general/is_burning)                                   | bool  | `true`/`false`     | Whether the player is currently on fire |
-| [isEyeInWater](/reference/uniforms/general/iseyeinwater)                               | int   | 0,1,2,3        | Fluid that the camera is currently in |
-| [is_hurt](/reference/uniforms/general/is_hurt)                                         | bool  | `true`/`false`     | Whether the player is currently taking damage |
-| [is_invisible](/reference/uniforms/general/is_invisible)                               | bool  | `true`/`false`     | Whether the player is invisible |
-| [is_on_ground](/reference/uniforms/general/is_on_ground)                               | bool  | `true`/`false`     | Whether the player is currently touching the ground |
-| [isRightHanded](/reference/uniforms/general/isrighthanded)                             | bool  | `true`/`false`     | Whether the player's main hand is set to right hand |
-| [is_sneaking](/reference/uniforms/general/is_sneaking)                                 | bool  | `true`/`false`     | Whether the player is currently sneaking |
-| [isSpectator](/reference/uniforms/general/isspectator)                                 | bool  | `true`/`false`     | Whether the player is currently in spectator mode |
-| [is_sprinting](/reference/uniforms/general/is_sprinting)                               | bool  | `true`/`false`     | Whether the player is currently sprinting |
-| [lightningBoltPosition](/reference/uniforms/general/lightningboltposition)             | vec4  |                | Position of a lightning bolt being rendered, or `vec4(0.0)` |
-| [logicalHeightLimit](/reference/uniforms/general/logicalheightlimit)                   | int   |                | Logical height of the current dimension |
-| [maxPlayerAir](/reference/uniforms/general/maxplayerair)                               | float |                | Maximum player air when underwater |
-| [maxPlayerArmor](/reference/uniforms/general/maxplayerarmor)                           | float |                | Maximum player armor value |
-| [maxPlayerHealth](/reference/uniforms/general/maxplayerhealth)                         | float |                | Maximum player health value |
-| [maxPlayerHunger](/reference/uniforms/general/maxplayerhunger)                         | float |                | Maximum player hunger value |
-| [moonPhase](/reference/uniforms/general/moonphase)                                     | int   | [0,7]          | Current moon phase |
-| [moonPosition](/reference/uniforms/general/moonposition)                               | vec3  | [0,100]        | Position of the moon in view space, length of 100 |
-| [near](/reference/uniforms/general/near)                                               | float |                | Near clipping plane distance |
-| [nightVision](/reference/uniforms/general/nightvision)                                 | float | [0,1]          | Night vision effect multiplier |
-| [playerBodyVector](/reference/uniforms/general/playerbodyvector)                       | vec3  | [0,1]          | World aligned direction of player model's body |
-| [playerLookVector](/reference/uniforms/general/playerlookvector)                       | vec3  | [0,1]          | World aligned direction of player model's head |
-| [playerMood](/reference/uniforms/general/playermood)                                   | float | [0,1]          | Player mood value |
-| [previousCameraPositionFract](/reference/uniforms/general/previouscamerapositionfract) | vec3  | [0,1]          | Value of `cameraPositionFract` from the previous frame |
-| [previousCameraPositionInt](/reference/uniforms/general/previouscamerapositionint)     | ivec3 |                | Value of `cameraPositionInt` from the previous frame |
-| [previousCameraPosition](/reference/uniforms/general/previouscameraposition)           | vec3  |                | Value of `cameraPosition` from the previous frame |
-| [rainfall](/reference/uniforms/general/rainfall)                                       | float | [0,1]          | Rainfall property of the current biome |
-| [rainStrength](/reference/uniforms/general/rainstrength)                               | float | [0,1]          | Current strength of rain |
-| [relativeEyePosition](/reference/uniforms/general/relativeeyeposition)                 | vec3  |                | World space offset from the player head to the camera |
-| [renderStage](/reference/uniforms/general/renderstage)                                 | int   |                | "Render stage" of the current geometry |
-| [screenBrightness](/reference/uniforms/general/screenbrightness)                       | float | [0,1]          | Screen brightness from video settings |
-| [shadowAngle](/reference/uniforms/general/shadowangle)                                 | float | [0,0.5]        | Angle of shadow source (whichever is higher in the sky) |
-| [shadowLightPosition](/reference/uniforms/general/shadowlightposition)                 | vec3  | [0,100]        | Position of shadow source in view space, length of 100 |
-| [skyColor](/reference/uniforms/general/skycolor)                                       | vec3  | [0,1]          | Upper sky color |
-| [sunAngle](/reference/uniforms/general/sunangle)                                       | float | [0,1]          | Angle of the sun within the complete day-night cycle |
-| [sunPosition](/reference/uniforms/general/sunposition)                                 | vec3  | [0,100]        | Position of the sun in view space, length of 100 |
-| [temperature](/reference/uniforms/general/temperature)                                 | float |                | Temperature property of the current biome |
-| [thunderStrength](/reference/uniforms/general/thunderstrength)                         | float | [0,1]          | Current strength of thunderstorm |
-| [upPosition](/reference/uniforms/general/upposition)                                   | vec3  | [0,100]        | Upwards direction in view space, length of 100 |
-| [viewHeight](/reference/uniforms/general/viewheight)                                   | float |                | Height of the game window in pixels |
-| [viewWidth](/reference/uniforms/general/viewwidth)                                     | float |                | Width of the game window in pixels |
-| [wetness](/reference/uniforms/general/wetness)                                         | float | [0,1]          | `rainStrength` but smoothed over time with `wetnessHalfLife` |
-| [worldDay](/reference/uniforms/general/worldday)                                       | int   |                | Number of in-game days passed |
-| [worldTime](/reference/uniforms/general/worldtime)                                     | int   | [0,23999]      | Current in-game time |
-| [gbufferModelView](/reference/uniforms/matrices/gbuffermodelview)                      | mat4  |                | Player space to view space in general |
-| [gbufferModelViewInverse](/reference/uniforms/matrices/gbuffermodelviewinverse)        | mat4  |                | Converts from view space to player space in general |
-| [gbufferPreviousModelView](/reference/uniforms/matrices/gbufferpreviousmodelview)      | mat4  |                | Value of `gbufferModelView` from the previous frame |
-| [gbufferPreviousProjection](/reference/uniforms/matrices/gbufferpreviousprojection)    | mat4  |                | Value of `gbufferProjection` from the previous frame |
-| [gbufferProjection](/reference/uniforms/matrices/gbufferprojection)                    | mat4  |                | Converts from view space to clip space in general |
-| [gbufferProjectionInverse](/reference/uniforms/matrices/gbufferprojectioninverse)      | mat4  |                | Converts from clip/screen to view space in general|
-| [modelViewMatrix](/reference/uniforms/matrices/modelviewmatrix)                        | mat4  |                | Converts from model space to view space in general |
-| [modelViewMatrixInverse](/reference/uniforms/matrices/modelviewmatrixinverse)          | mat4  |                | Converts from view space to model space for current geometry |
-| [normalMatrix](/reference/uniforms/matrices/normalmatrix)                              | mat3  |                | Converts normals from model space to view space for current geometry |
-| [projectionMatrix](/reference/uniforms/matrices/projectionmatrix)                      | mat4  |                | Converts from view space to clip space for current geometry |
-| [projectionMatrixInverse](/reference/uniforms/matrices/projectionmatrixinverse)        | mat4  |                | Converts from clip/screen space to view space for current geometry |
-| [shadowModelView](/reference/uniforms/matrices/shadowmodelview)                        | mat4  |                | Converts from player space to shadow view space in general |
-| [shadowModelViewInverse](/reference/uniforms/matrices/shadowmodelviewinverse)          | mat4  |                | Converts from shadow view space to player space in general |
-| [shadowProjection](/reference/uniforms/matrices/shadowprojection)                      | mat4  |                | Converts from shadow view space to shadow clip space in general |
-| [shadowProjectionInverse](/reference/uniforms/matrices/shadowprojectioninverse)        | mat4  |                | Converts from shadow clip/screen space to shadow view space in general |
-| [textureMatrix](/reference/uniforms/matrices/texturematrix)                            | mat4  |                | Transforms texture coordinates before sampling |

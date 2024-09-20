@@ -3,8 +3,10 @@ title: World and Weather Uniforms
 description: Uniforms related to the world status and weather.
 sidebar:
   label: World/Weather
-  order: 1
+  order: 5
 ---
+import { Badge } from '@astrojs/starlight/components';
+
 
 
 ## sunPosition
@@ -81,7 +83,7 @@ This uniform is equivalent to [`rainStrength`](/reference/uniforms/general/rains
 ----------------
 
 
-## thunderStrength
+## thunderStrength <Badge text="Iris Exclusive" variant="tip" size="medium" />
 ```glsl
 uniform float thunderStrength;
 ```
@@ -90,7 +92,7 @@ This value is equivalent to [`rainStrength`](/reference/uniforms/general/rainstr
 ----------------
 
 
-## lightningBoltPosition
+## lightningBoltPosition <Badge text="Iris Exclusive" variant="tip" size="medium" />
 ```glsl
 uniform vec4 lightningBoltPosition;
 ```

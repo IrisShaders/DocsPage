@@ -3,8 +3,9 @@ title: ID uniforms Uniforms
 description: Uniforms related to the block/entity/item IDs and their light values.
 sidebar:
   label: ID
-  order: 1
+  order: 4
 ---
+import { Badge } from '@astrojs/starlight/components';
 
 
 ## entityId
@@ -25,7 +26,7 @@ This uniform stores the id (from [`block.properties`](/reference/miscellaneous/b
 ----------------
 
 
-## currentRenderedItemId
+## currentRenderedItemId <Badge text="Iris Exclusive" variant="tip" size="medium" />
 ```glsl
 uniform int currentRenderedItemId;
 ```
@@ -40,7 +41,7 @@ There are some new ID's that can be detected alongside items and armor:
 ----------------
 
 
-## currentSelectedBlockId
+## currentSelectedBlockId <Badge text="Iris Exclusive" variant="tip" size="medium" />
 ```glsl
 uniform int currentSelectedBlockId;
 ```
@@ -49,7 +50,7 @@ This uniform stores the id (from [`block.properties`](/reference/miscellaneous/b
 ----------------
 
 
-## currentSelectedBlockPos
+## currentSelectedBlockPos <Badge text="Iris Exclusive" variant="tip" size="medium" />
 ```glsl
 uniform vec3 currentSelectedBlockId;
 ```
