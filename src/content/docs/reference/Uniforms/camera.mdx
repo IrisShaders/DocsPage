@@ -3,13 +3,12 @@ title: Camera and Player Model Uniforms
 description: Uniforms related to the camera and player model.
 sidebar:
   label: Camera/Player
-  order: 1
+  order: 2
 ---
 import { Badge } from '@astrojs/starlight/components';
 
 
 ## cameraPosition
-**Supported Versions:** All Optifine/Iris
 ```glsl
 uniform vec3 cameraPosition;
 ```
@@ -23,7 +22,6 @@ For more information on spaces, visit this [how to article](/how_to/spaces) on t
 
 
 ## eyeAltitude
-**Supported Versions:** All Optifine/Iris
 ```glsl
 uniform float eyeAltitude;
 ```
@@ -42,7 +40,6 @@ This uniform stores the fractional component (`0` to `1`) of the position of the
 
 
 ## cameraPositionInt <Badge text="Iris Exclusive" variant="tip" size="medium" />
-**Supported Versions:** Iris Only
 ```glsl
 uniform ivec3 cameraPositionInt;
 ```
@@ -52,7 +49,6 @@ This uniform stores the integer component (truncated value) of the position of t
 
 
 ## previousCameraPosition
-**Supported Versions:** All Optifine/Iris
 ```glsl
 uniform vec3 previousCameraPosition;
 ```
@@ -62,7 +58,6 @@ This value is the [`cameraPosition`](/reference/uniforms/camera#cameraposition) 
 
 
 ## previousCameraPositionFract <Badge text="Iris Exclusive" variant="tip" size="medium" />
-**Supported Versions:** Iris Only
 ```glsl
 uniform vec3 previousCameraPositionFract;
 ```
@@ -72,7 +67,6 @@ This value is the [`cameraPositionFract`](/reference/uniforms/camera#cameraposit
 
 
 ## previousCameraPositionInt <Badge text="Iris Exclusive" variant="tip" size="medium" />
-**Supported Versions:** Iris Only
 ```glsl
 uniform ivec3 previousCameraPositionInt;
 ```
@@ -82,7 +76,6 @@ This value is the [`cameraPositionInt`](/reference/uniforms/camera#camerapositio
 
 
 ## eyePosition <Badge text="Iris Exclusive" variant="tip" size="medium" />
-**Supported Versions:** Iris Only
 ```glsl
 uniform vec3 eyePosition;
 ```
@@ -92,7 +85,6 @@ This value stores the world space position of the player's head model. When in f
 
 
 ## relativeEyePosition <Badge text="Iris Exclusive" variant="tip" size="medium" />
-**Supported Versions:** Iris Only
 ```glsl
 uniform vec3 relativeEyePosition;
 ```
@@ -102,7 +94,6 @@ This value stores the world space offset from the player model's head position t
 
 
 ## playerBodyVector <Badge text="Iris Exclusive" variant="tip" size="medium" />
-**Supported Versions:** Iris Only
 ```glsl
 uniform vec3 playerBodyVector;
 ```
@@ -112,7 +103,6 @@ This value is intended to store the world aligned direction the player model's b
 
 
 ## playerLookVector <Badge text="Iris Exclusive" variant="tip" size="medium" />
-**Supported Versions:** Iris Only
 ```glsl
 uniform vec3 playerLookVector;
 ```
@@ -122,7 +112,6 @@ This value stores the world aligned direction the player model's head is facing.
 
 
 ## upPosition
-**Supported Versions:** All Optifine/Iris
 ```glsl
 uniform vec3 upPosition;
 ```
@@ -132,7 +121,6 @@ This uniform stores the vector pointing upwards (in the world) in [view space](/
 
 
 ## centerDepthSmooth
-**Supported Versions:** All Optifine/Iris
 ```glsl
 uniform float centerDepthSmooth;
 ```
@@ -142,7 +130,6 @@ This uniform stores the value in the depth buffer `depthtex0` at the center of t
 
 
 ## firstPersonCamera
-**Supported Versions:** Iris Only
 ```glsl
 uniform bool firstPersonCamera;
 ```
