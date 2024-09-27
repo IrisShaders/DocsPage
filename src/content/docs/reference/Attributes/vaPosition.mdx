@@ -18,7 +18,7 @@ import { Aside } from '@astrojs/starlight/components';
 
 ---
 
-The vertex position attribute. For terrain this is relative to the chunk and you must add [`chunkOffset`](/reference/uniforms/general/chunkoffset) as shown below:
+The vertex position attribute. For terrain this is relative to the chunk and you must add [`chunkOffset`](/reference/uniforms/rendering#chunkoffset) as shown below:
 ```glsl
 vec3 model_pos = vaPosition + chunkOffset;
 vec4 view_pos = modelViewMatrix * vec4(model_pos, 1.0);

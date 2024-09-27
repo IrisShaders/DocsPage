@@ -6,7 +6,7 @@ sidebar:
   order: 1
 ---
 
-The `block.properties` file (located in the `shaders` folder) lets you assign IDs to specific blocks/block entities by their Minecraft ID. These IDs can be read through [`mc_Entity`](/reference/attributes/mc_entity) and [`blockEntityId`](/reference/uniforms/general/blockentityid) respectively in [gbuffers](/reference/programs/gbuffers) and [shadow](/reference/programs/shadow) shaders. The `block.properties` file should be placed in the `shaders` folder.
+The `block.properties` file (located in the `shaders` folder) lets you assign IDs to specific blocks/block entities by their Minecraft ID. These IDs can be read through [`mc_Entity`](/reference/attributes/mc_entity) and [`blockEntityId`](/reference/uniforms/id#blockentityid) respectively in [gbuffers](/reference/programs/gbuffers) and [shadow](/reference/programs/shadow) shaders. The `block.properties` file should be placed in the `shaders` folder.
 
 Blocks and block entities can be assigned to an ID in this file, with the following syntax:
 ```

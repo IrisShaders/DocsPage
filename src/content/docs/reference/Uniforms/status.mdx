@@ -101,7 +101,7 @@ Equivalent to [`playerMood`](/reference/uniforms/status#playermood) except when 
 ```
 uniform float currentPlayerAir;
 ```
-This value stores the relative player air when underwater ranging from `0` to `1`. That means when the player is at full air, this value is `1`, and when they are out of air (e.g. drowning) the value is `0`. To absolute air of the player, multiply this value by the uniform [`maxPlayerAir`](/reference/uniforms/status#maxplayerair).
+This value stores the relative player air when underwater ranging from `0` to `1`. That means when the player is at full air, this value is `1`, and when they are out of air (e.g. drowning) the value is `0`. The value is `-1` in creative and spectator modes. To absolute air of the player, multiply this value by the uniform [`maxPlayerAir`](/reference/uniforms/status#maxplayerair).
 
 ----------------
 
@@ -110,25 +110,25 @@ This value stores the relative player air when underwater ranging from `0` to `1
 ```glsl
 uniform float maxPlayerAir;
 ```
-This value stores the maximum player air when underwater. This is the internal value used by Minecraft, not the number of bubbles in the user interface. This value is `0` in modes without player air, such as creative and spectator modes. In a default survival world this value is `300`.
+This value stores the maximum player air when underwater. This is the internal value used by Minecraft, not the number of bubbles in the user interface. This value is `-1` in creative and spectator modes. In a default survival world this value is `300`.
 
 ----------------
 
 
-## currentPlayerArmour <Badge text="Iris Exclusive" variant="tip" size="medium" />
+## currentPlayerArmor <Badge text="Iris Exclusive" variant="tip" size="medium" />
 ```glsl
-uniform float currentPlayerArmour;
+uniform float currentPlayerArmor;
 ```
-This value stores the relative player armor value ranging from `0` to `1`. That means when the player wearing armor that completely fills the armor bar this value is `1`, and when they are not wearing any armor the value is `0`. To absolute armor value of the player, multiply this value by the uniform [`maxPlayerArmor`](/reference/uniforms/status#maxplayerarmour).
+This value stores the relative player armor value ranging from `0` to `1`. That means when the player wearing armor that completely fills the armor bar this value is `1`, and when they are not wearing any armor the value is `0`. The value is `-1` in creative and spectator modes. To absolute armor value of the player, multiply this value by the uniform [`maxPlayerArmor`](/reference/uniforms/status#maxplayerarmor).
 
 ----------------
 
 
-## maxPlayerArmour <Badge text="Iris Exclusive" variant="tip" size="medium" />
+## maxPlayerArmor <Badge text="Iris Exclusive" variant="tip" size="medium" />
 ```glsl
-uniform float maxPlayerArmour;
+uniform float maxPlayerArmor;
 ```
-This value stores the maximum player armor value. This is the internal value used by Minecraft, not the number of armor icons in the user interface. In a default world this value is `50` unless changed by mods.
+This value stores the maximum player armor value. This is the internal value used by Minecraft, not the number of armor icons in the user interface. In a default world this value is `50` unless changed by mods. Modes without hunger (such as creative and spectator modes) will still indicate the same maximum armor value.
 
 ----------------
 
@@ -137,7 +137,7 @@ This value stores the maximum player armor value. This is the internal value use
 ```glsl
 uniform float currentPlayerHealth;
 ```
-This value stores the relative player health ranging from `0` to `1`. That means when the player is at full health, this value is `1`, and when they die this values reaches `0`. To absolute health of the player, multiply this value by the uniform [`maxPlayerHealth`](/reference/uniforms/status#maxplayerhealth).
+This value stores the relative player health ranging from `0` to `1`. That means when the player is at full health, this value is `1`, and when they die this values reaches `0`. The value is `-1` in creative and spectator modes. To absolute health of the player, multiply this value by the uniform [`maxPlayerHealth`](/reference/uniforms/status#maxplayerhealth).
 
 ----------------
 
@@ -146,7 +146,7 @@ This value stores the relative player health ranging from `0` to `1`. That means
 ```glsl
 uniform float maxPlayerHealth;
 ```
-This value stores the maximum player health value, which is twice the number of maximum hearts (one value for each half-heart).  This value is `0` in modes without player health, such as creative and spectator modes. In a default survival world this value is `20` unless changed by mods or effects like potions or golden apples.
+This value stores the maximum player health value, which is twice the number of maximum hearts (one value for each half-heart). The value is `-1` in creative and spectator modes. In a default survival world this value is `20` unless changed by mods or effects like [Health Boost](https://minecraft.wiki/w/Health_Boost), in which case the maximum value can be up to `1024`. This value is not affected by the [Absorption](https://minecraft.wiki/w/Absorption) effect, such as with golden apples.
 
 ----------------
 
@@ -155,7 +155,7 @@ This value stores the maximum player health value, which is twice the number of 
 ```glsl
 uniform float currentPlayerHunger;
 ```
-This value stores the relative player hunger ranging from `0` to `1`. That means when the player is at full hunger, this value is `1`, and when they are at empty hunger the value is `0`. To absolute hunger of the player, multiply this value by the uniform [`maxPlayerHunger`](/reference/uniforms/status#maxplayerhunger).
+This value stores the relative player hunger ranging from `0` to `1`. That means when the player is at full hunger, this value is `1`, and when they are at empty hunger the value is `0`. The value is `-1` in creative and spectator modes. To absolute hunger of the player, multiply this value by the uniform [`maxPlayerHunger`](/reference/uniforms/status#maxplayerhunger).
 
 ----------------
 

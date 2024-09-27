@@ -10,7 +10,7 @@ sidebar:
 
 #### Location: shaders.properties
 
-This directive is used to control the alpha test for cutout programs. For the compatibility profile the alpha test is applied automatically when using `gl_FragData` or `gl_FragColor`. For the newer syntax, only the reference value is passed through [`alphaTestRef`](/reference/uniforms/general/alphatestref) and the function must be implemented by the shader.
+This directive is used to control the alpha test for cutout programs. For the compatibility profile the alpha test is applied automatically when using `gl_FragData` or `gl_FragColor`. For the newer syntax, only the reference value is passed through [`alphaTestRef`](/reference/uniforms/rendering#alphatestref) and the function must be implemented by the shader.
 
 Replace:
 - `<program>` with a gbuffers program name, including the dimension folder if relevant (e.g. `world0/composite2`). This does not work with Iris custom dimensions however.
