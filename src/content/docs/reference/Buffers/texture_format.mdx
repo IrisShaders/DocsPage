@@ -8,115 +8,159 @@ sidebar:
 
 import { Aside } from '@astrojs/starlight/components';
 
-Color attachments, such as [colortex](/reference/buffers/colortex) and [shadowcolor](/reference/buffers/shadowcolor) buffers, store values in a specific format. The default format is `RGBA` (which equates to `RGBA8` on most systems), however a shader pack can specify the format and precision of each color attachment.
+Color attachments such as [colortex](/reference/buffers/colortex) and [shadowcolor](/reference/buffers/shadowcolor) buffers, as well as [images](/reference/buffers/custom_images/) and [textures](/reference/buffers/custom_textures/), store values in a specific format.
 
-The format for any color attachement can be set using the [\<bufferName\>Format](/reference/constants/buffer_format) directive.
+The default format for color attachments is `RGBA` (which equates to `RGBA8` on most systems). However, a shader pack can specify the format using the [\<bufferName\>Format](/reference/constants/buffer_format) directive.
 
-The available texture formats and their meanings are described below:
+The available texture formats and their meanings are described below.
+
+> Formats only marked as supported by textures *may* also be supported by Renderbuffers, depending on implementation.
 
 ## Normalized
 
-Normalized buffers can store "floating point" values in a fixed range, between 0.0 and 1.0 (inclusive).  The values are not actually stored as floating point internally, but as an integer value. However, the result is converted to a floating point during read/write to a color attachment using a normalized format, so the shader will read/write floating point values to the attachments, however any values outside of the range will be clamped to fit in the range.
+Normalized buffers store "floating point" values in a fixed range. The values are stored as integers internally, which are converted to/from floating point numbers during read/write. Any values outside the range are clamped to fit in the range.
 
-| 8-bit | 16-bit | mixed    |
-| ----- | ------ | -------- |
-| R8    | R16    | RGB5_A1  |
-| RG8   | RG16   | RGB10_A2 |
-| RGB8  | RGB16  |          |
-| RGBA8 | RGBA16 |          |
+Detailed explanation: [OpenGL Wiki - Normalized Integer](https://www.khronos.org/opengl/wiki/Normalized_Integer)
 
-## Signed Normalized
+### Unsigned Normalized Formats
 
-Signed Normalized buffers are identical to normalized buffers, however the range they can represent is expanded to -1 to 1 inclusive, allowing them to store negative values.
+Unsigned normalized buffers support values from 0.0 to 1.0 (inclusive).
 
-| 8-bit       | 16-bit       |
-| ----------- | ------------ |
-| R8_SNORM    | R16_SNORM    |
-| RG8_SNORM   | RG16_SNORM   |
-| RGB8_SNORM  | RGB16_SNORM  |
-| RGBA8_SNORM | RGBA16_SNORM |
+| Texture/Renderbuffer/Image Format | Bit Depth  | Pixel Format | Pixel Type                    | Precision     |
+| --------------------------------- | ---------- | ------------ | ----------------------------- | ------------- |
+| `RGBA16`                          | 4×16       | `RGBA`       | `UNSIGNED_SHORT`              | 1/65536       |
+| `RGBA8`                           | 4×8        | `RGBA`       | `UNSIGNED_BYTE`               | 1/256         |
+| `RG16`                            | 2×16       | `RG`         | `UNSIGNED_SHORT`              | 1/65536       |
+| `RG8`                             | 2×8        | `RG`         | `UNSIGNED_BYTE`               | 1/256         |
+| `R16`                             | 16         | `RED`        | `UNSIGNED_SHORT`              | 1/65536       |
+| `R8`                              | 8          | `RED`        | `UNSIGNED_BYTE`               | 1/256         |
+| `RGB10_A2`                        | 10/10/10/2 | `RGBA`       | `UNSIGNED_INT_2_10_10_10_REV` | 1/1024 \| 1/4 |
+
+| Texture/Renderbuffer Format | Bit Depth | Requires    | Precision   |
+| --------------------------- | --------- | ----------- | ----------- |
+| `GL_RGB5_A1`                | 5/5/5/1   | OpenGL 4.2+ | 1/32 \| 1/2 |
+
+| Texture Format | Bit Depth | Precision |
+| -------------- | --------- | --------- |
+| `RGB16`        | 3×16      | 1/65536   |
+| `RGB8`         | 3×8       | 1/256     |
+
+### Signed Normalized Formats
+
+Signed normalized buffers support values from -1.0 to 1.0 (inclusive).
+
+| Texture/Renderbuffer/Image Format | Bit Depth | Pixel Format | Pixel Type | Precision |
+| --------------------------------- | --------- |------------- | ---------- | --------- |
+| `RGBA16_SNORM`                    | 4×16      | `RGBA`       | `SHORT`    | 1/32768   |
+| `RGBA8_SNORM`                     | 4×8       | `RGBA`       | `BYTE`     | 1/128     |
+| `RG16_SNORM`                      | 2×16      | `RG`         | `SHORT`    | 1/32768   |
+| `RG8_SNORM`                       | 2×8       | `RG`         | `BYTE`     | 1/128     |
+| `R16_SNORM`                       | 16        | `RED`        | `SHORT`    | 1/32768   |
+| `R8_SNORM`                        | 8         | `RED`        | `BYTE`     | 1/128     |
+
+| Texture Format | Bit Depth | Precision |
+| -------------- | --------- | --------- |
+| `RGB16_SNORM`  | 3×16      | 1/32768   |
+| `RGB8_SNORM`   | 3×8       | 1/128     |
 
 ## Floating Point
 
-Floating point buffers allow the attachment to store full floating point values. They are only available with larger than default precision due to the increased storage needed for floating point values. However they offer a significantly larger range of values, allowing the storing of HDR values.
+Floating point buffers allow the attachment to store true floating point values. They are only available with larger than default precision due to the increased storage needed for floating point values. However, they offer a significantly larger range of values, allowing the storing of HDR values.
 
-| 16-bit  | 32-bit  | mixed          |
-| ------- | ------- | -------------- |
-| R16F    | R32F    | RGB9_E5        |
-| RG16F   | RG32F   | R11F_G11F_B10F |
-| RGB16F  | RGB32F  |                |
-| RGBA16F | RGBA32F |                |
+Detailed explanation: [OpenGL Wiki - Small Float Formats](https://www.khronos.org/opengl/wiki/Small_Float_Formats)
 
-The `RGB9_E5` format uses a 5-bit exponent for all three terms (R, G, and B), where each component has a 9 bit mantissa. This allows significantly more precision than the `R11F_G11F_B10F`, which only has 6 to 5 bits of precision per component, however `R11F_G11F_B10F` has individual exponents for each component. For more information on these format types, see the [OpenGL Wiki](https://www.khronos.org/opengl/wiki/Small_Float_Formats)
+### Floating Point Formats
 
-## Signed Integer
+| Texture/Renderbuffer/Image Format | Bit Depth | Pixel Format | Pixel Type   |
+| --------------------------------- | --------- | ------------ | ------------ |
+| `RGBA32F`                         | 4×32      | `RGBA`       | `FLOAT`      |
+| `RGBA16F`                         | 4×16      | `RGBA`       | `HALF_FLOAT` |
+| `RG32F`                           | 2×32      | `RG`         | `FLOAT`      |
+| `RG16F`                           | 2×16      | `RG`         | `HALF_FLOAT` |
+| `R32F`                            | 32        | `RED`        | `FLOAT`      |
+| `R16F`                            | 16        | `RED`        | `HALF_FLOAT` |
 
-Signed Integer buffers allow storing signed integers, just like the tin says. These are standard two's complement integers, which means they can store negative values.
+| Texture/Renderbuffer Format | Bit Depth | Pixel Format |
+| --------------------------- | --------- | ------------ |
+| `R11F_G11F_B10F`            | 11/11/10  | `RGB`        |
 
-| 8-bit  | 16-bit  | 32-bit  |
-| ------ | ------- | ------- |
-| R8I    | R16I    | R32I    |
-| RG8I   | RG16I   | RG32I   |
-| RGB8I  | RGB16I  | RGB32I  |
-| RGBA8I | RGBA16I | RGBA32I |
+| Texture Format | Bit Depth                                                                  |
+| -------------- | -------------------------------------------------------------------------- |
+| `RGB32F`       | 3×32                                                                       |
+| `RGB16F`       | 3×16                                                                       |
+| `RGB9_E5`      | [Special](https://www.khronos.org/opengl/wiki/Small_Float_Formats#RGB9_E5) |
 
-## Unsigned Integer
+The `RGB9_E5` format uses a 5-bit exponent for all three terms (R, G, and B), where each component has a 9 bit mantissa. This allows for significantly more precision than `R11F_G11F_B10F`, which only has 6 to 5 bits of precision per component. However, `R11F_G11F_B10F` has individual exponents for each component.
 
-Unsigned Integer buffers allow storing of unsigned integers, which will not be interpreted as negative values (although they can be cast to signed integers after being read). As such they do not directly allow the storage of negative integers, but have double the range of their signed cousins in the positive domain.
+## Integral
 
-| 8-bit   | 16-bit   | 32-bit   |
-| ------- | -------- | -------- |
-| R8UI    | R16UI    | R32UI    |
-| RG8UI   | RG16UI   | RG32UI   |
-| RGB8UI  | RGB16UI  | RGB32UI  |
-| RGBA8UI | RGBA16UI | RGBA32UI |
+| Bit Depth | Signed Min  | Signed Max | Unsigned Max |
+| --------- | ----------- | ---------- | ------------ |
+| 32        | -2147483648 | 2147483647 | 4294967295   |
+| 16        | -32768      | 32767      | 65535        |
+| 8         | -128        | 127        | 255          |
 
+### Signed Integral Formats
 
-## Pixel Formats
-Pixel formats are used to describe the layout of the data in a texture. These are used when defining custom textures and custom images. The following formats are available:
+Signed integral buffers store signed integers, just like the tin says. These are standard two's complement integers, which means they can store negative values.
 
-| name   |
-|--------|
-| `RED`  |
-| `RG`   |
-| `RGB`  |
-| `BGR`  |
-| `RGBA` |
-| `BGRA` |
+| Texture/Renderbuffer/Image Format | Bit Depth | Pixel Format   | Pixel Type |
+| --------------------------------- | --------- | -------------- | ---------- |
+| `RGBA32I`                         | 4×32      | `RGBA_INTEGER` | `INT`      |
+| `RGBA16I`                         | 4×16      | `RGBA_INTEGER` | `SHORT`    |
+| `RGBA8I`                          | 4×8       | `RGBA_INTEGER` | `BYTE`     |
+| `RG32I`                           | 2×32      | `RG_INTEGER`   | `INT`      |
+| `RG16I`                           | 2×16      | `RG_INTEGER`   | `SHORT`    |
+| `RG8I`                            | 2×8       | `RG_INTEGER`   | `BYTE`     |
+| `R32I`                            | 32        | `RED_INTEGER`  | `INT`      |
+| `R16I`                            | 16        | `RED_INTEGER`  | `SHORT`    |
+| `R8I`                             | 8         | `RED_INTEGER`  | `BYTE`     |
 
-When using integer buffers, append `_INTEGER` to the format:
+| Texture Format | Bit Depth |
+| -------------- | --------- |
+| `RGB32I`       | 3×32      |
+| `RGB16I`       | 3×16      |
+| `RGB8I`        | 3×8       |
 
-| name           |
-|----------------|
-| `RED_INTEGER`  |
-| `RG_INTEGER`   |
-| `RGB_INTEGER`  |
-| `BGR_INTEGER`  |
-| `RGBA_INTEGER` |
-| `BGRA_INTEGER` |
+### Unsigned Integral Formats
 
-## Pixel Types
-Pixel types are used to describe the format/memory representation of each component of the data in a texture. These are used when defining custom textures and images. The following formats are available:
+Unsigned integral buffers store unsigned integers, which will not be interpreted as negative values (although they can be cast to signed integers after being read). As such they do not directly allow the storage of negative integers, but have double the range of their signed cousins in the positive domain.
 
-| name                          |
-|-------------------------------|
-| `BYTE`                        |
-| `SHORT`                       |
-| `INT`                         |
-| `HALF_FLOAT`                  |
-| `FLOAT`                       |
-| `UNSIGNED_BYTE`               |
-| `UNSIGNED_BYTE_3_3_2`         |
-| `UNSIGNED_BYTE_2_3_3_REV`     |
-| `UNSIGNED_SHORT`              |
-| `UNSIGNED_SHORT_5_6_5`        |
-| `UNSIGNED_SHORT_5_6_5_REV`    |
-| `UNSIGNED_SHORT_4_4_4_4`      |
-| `UNSIGNED_SHORT_4_4_4_4_REV`  |
-| `UNSIGNED_SHORT_5_5_5_1`      |
-| `UNSIGNED_SHORT_1_5_5_5_REV`  |
-| `UNSIGNED_INT`                |
-| `UNSIGNED_INT_8_8_8_8`        |
-| `UNSIGNED_INT_8_8_8_8_REV`    |
-| `UNSIGNED_INT_10_10_10_2`     |
-| `UNSIGNED_INT_2_10_10_10_REV` |
+| Texture/Renderbuffer/Image Format | Bit Depth | Pixel Format   | Pixel Type       |
+| --------------------------------- | --------- | -------------- | ---------------- |
+| `RGBA32UI`                        | 4×32      | `RGBA_INTEGER` | `UNSIGNED_INT`   |
+| `RGBA16UI`                        | 4×16      | `RGBA_INTEGER` | `UNSIGNED_SHORT` |
+| `RGBA8UI`                         | 4×8       | `RGBA_INTEGER` | `UNSIGNED_BYTE`  |
+| `RG32UI`                          | 2×32      | `RG_INTEGER`   | `UNSIGNED_INT`   |
+| `RG16UI`                          | 2×16      | `RG_INTEGER`   | `UNSIGNED_SHORT` |
+| `RG8UI`                           | 2×8       | `RG_INTEGER`   | `UNSIGNED_BYTE`  |
+| `R32UI`                           | 32        | `RED_INTEGER`  | `UNSIGNED_INT`   |
+| `R16UI`                           | 16        | `RED_INTEGER`  | `UNSIGNED_SHORT` |
+| `R8UI`                            | 8         | `RED_INTEGER`  | `UNSIGNED_BYTE`  |
+
+| Texture Format | Bit Depth |
+| -------------- | --------- |
+| `RGB32UI`      | 3×32      |
+| `RGB16UI`      | 3×16      |
+| `RGB8UI`       | 3×8       |
+
+## Additional Pixel Types
+
+The shader loader supports some additional pixel types not directly associated with supported image formats. See the [OpenGL Wiki](https://www.khronos.org/opengl/wiki/Pixel_Transfer#Pixel_type) for more information about these.
+
+| Pixel Type                   |
+| ---------------------------- |
+| `UNSIGNED_BYTE_3_3_2`        |
+| `UNSIGNED_BYTE_2_3_3_REV`    |
+| `UNSIGNED_SHORT_5_6_5`       |
+| `UNSIGNED_SHORT_5_6_5_REV`   |
+| `UNSIGNED_SHORT_4_4_4_4`     |
+| `UNSIGNED_SHORT_4_4_4_4_REV` |
+| `UNSIGNED_SHORT_5_5_5_1`     |
+| `UNSIGNED_SHORT_1_5_5_5_REV` |
+| `UNSIGNED_INT_8_8_8_8`       |
+| `UNSIGNED_INT_8_8_8_8_REV`   |
+| `UNSIGNED_INT_10_10_10_2`    |
+
+## Further Reading
+* [OpenGL Wiki - Image Format](https://www.khronos.org/opengl/wiki/Image_Format)
