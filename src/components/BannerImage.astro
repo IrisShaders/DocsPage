@@ -1,18 +1,16 @@
 ---
 import fs from 'fs';
-import path from 'path';
 
 import type { Props } from '@astrojs/starlight/props';
 
 const imageFiles = fs.readdirSync("./public/banners");
-
 ---
 
-<div class="bg-img">a</div>
+<div id="banner-img">a</div>
 
 <script define:vars={{imageFiles}}>
   document.addEventListener('DOMContentLoaded', () => {
-    const bannerImage = document.querySelectorAll("div.bg-img")[0];
+    const bannerImage = document.querySelector("#banner-img");
     const randomIndex = Math.floor(Math.random() * imageFiles.length);
     const randomImage = `/banners/${imageFiles[randomIndex]}`;
     

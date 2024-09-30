@@ -32,7 +32,7 @@
 	--background-image-opacity: 1.0;
 }
 
-.bg-img {
+#banner-img {
 	position: absolute;
 	top: 0;
 	left: 0;
