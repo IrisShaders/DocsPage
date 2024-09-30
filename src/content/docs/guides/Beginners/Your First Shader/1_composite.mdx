@@ -62,7 +62,7 @@ This tells the shader what version of GLSL to use, as covered earlier.
 out vec2 texcoord;
 ```
 
-This is a variable declaration, but a special one. The `out` keyword means that the value will be passed to the fragment shader. The fragment shader can then have a corresponding `in` declaration which allows it to recieve this value. 
+This is a variable declaration, but a special one. The `out` keyword means that the value will be passed to the fragment shader. The fragment shader can then have a corresponding `in` declaration which allows it to recieve this value. **This is commonly referred to as a 'varying'.**
 
 :::note[Note]
 Values passed from vertex shaders to fragment shaders are interpolated! This means that if one vertex has a value of 0, and another has a value of 1, then a pixel halfway between these two vertices will have a value of 0.5. This can be prevented by adding the `flat` keyword the `in` and `out` declarations.
@@ -78,7 +78,7 @@ The `main` function is the code that is run when the shader is invoked, just lik
 gl_Position = ftransform();
 ```
 
-This transforms the position of the vertex from model space to clip space. The `ftransform` function is actually deprecated but Iris patches it to the relevant modern code. For more information, see the howto on (coordinate spaces)[/how_to/coordinate_spaces].
+This transforms the position of the vertex from model space to clip space. The `ftransform` function is actually deprecated but Iris patches it to the relevant modern code. For more information, see the howto on [coordinate spaces](/how_to/coordinate_spaces).
 
 ```glsl
 texcoord = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;
@@ -131,7 +131,7 @@ This is a comment that the Iris patcher reads. It tells the shader to write back
 layout(location = 0) out vec4 color;
 ```
 
-This initialises a variable `color` which at the end of the shader will be written to `colortex0`.
+This declares a variable `color` which at the end of the shader will be written to `colortex0`.
 
 :::caution[Warning]
 It is important to note that `location = 0` is not because we are writing to `colortex0`, but because the first element in the `DRAWBUFFERS` directive is at index 0. For example, if we had `/* DRAWBUFFERS:53 */`, then we would have
@@ -156,6 +156,10 @@ This reads the value in `colortex0` at position `texcoord` and stores it in `col
 To make a color monochrome, we need to operate only on the r, g, and b components of the color. We can access and modify these these with `color.rgb`.
 
 To actually do the operation, we can take a bit of a shortcut, and set every component to the dot product with a 3d vector of `1/3`. This vector can be represented as `vec3(1.0/3.0)`. This operation is mathematically equivalent to taking one third of each component and adding them together.
+
+:::tip[What's a dot product?]
+If you don't know what a dot product is, you're probably new to linear algebra as well. We recommend studying up on it (or at least learning about unfamiliar concepts throughout the chapters on your own) as from this point on everything you do will be in relation to it somehow. A great place to get started is [3Blue1Brown's series of tutorials](https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab).
+:::
 
 So, after we get the value of `color`, we can do:
 ```glsl
