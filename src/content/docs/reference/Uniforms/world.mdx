@@ -7,6 +7,7 @@ sidebar:
 ---
 import { Badge } from '@astrojs/starlight/components';
 
+These uniforms store information about the world, including world time and day, sun/moon, and weather related values.
 
 
 ## sunPosition
@@ -120,23 +121,3 @@ This value stores the world day, which is the amount of in-game days that have p
 
 
 ----------------
-
-
-## eyeBrightness
-```glsl
-uniform ivec2 eyeBrightness;
-```
-The lightmap value at the player's location. The `x` component stores the block light and the `y` component stores the sky light. The value is stored in the range [0-240].
-
-----------------
-
-
-## eyeBrightnessSmooth
-```glsl
-uniform ivec2 eyeBrightnessSmooth;
-```
-This uniform stores the value of [`eyeBrightness`](/reference/uniforms/world#eyebrightness), smoothed over time. The speed of the smoothing can be controlled with [`eyeBrightnessHalflife`](/reference/constants/eyebrightnesshalflife).
-
-----------------
-
-

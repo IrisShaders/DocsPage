@@ -7,6 +7,8 @@ sidebar:
 ---
 import { Aside } from '@astrojs/starlight/components';
 
+These uniforms store information related to rendering, such as near/far planes, chunk offsets, fog parameters, and more.
+
 
 ## near
 ```glsl
@@ -73,7 +75,7 @@ color.rgb = mix(color.rgb, entityColor.rgb, entityColor.a);
 ```glsl
 uniform ivec4 blendFunc;
 ```
-The alpha blending function multipliers for the current program, as described in [`blend.<program>`](/reference/shadersproperties/blend). The components of the vector store the following:
+The alpha blending function multipliers for the current program, as described in [`blend.<program>`](/reference/shadersproperties/rendering#blend). The components of the vector store the following:
 
 - `x`: source RGB
 - `y`: destination RGB
