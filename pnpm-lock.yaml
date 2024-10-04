@@ -1,4 +1,5 @@
 lockfileVersion: '9.0'
+lockfileVersion: '9.0'
 
 settings:
   autoInstallPeers: true
@@ -33,9 +34,11 @@ importers:
 packages:
 
   '@ampproject/remapping@2.3.0':
+  '@ampproject/remapping@2.3.0':
     resolution: {integrity: sha512-30iZtAPgz+LTIYoeivqYo853f02jBYSd5uGnGpkFV0M3xOt9aN73erkgYAmZU43x4VfqcnLxW9Kpg3R5LC4YYw==}
     engines: {node: '>=6.0.0'}
 
+  '@astrojs/check@0.5.10':
   '@astrojs/check@0.5.10':
     resolution: {integrity: sha512-vliHXM9cu/viGeKiksUM4mXfO816ohWtawTl2ADPgTsd4nUMjFiyAl7xFZhF34yy4hq4qf7jvK1F2PlR3b5I5w==}
     hasBin: true
@@ -51,6 +54,7 @@ packages:
   '@astrojs/internal-helpers@0.4.1':
     resolution: {integrity: sha512-bMf9jFihO8YP940uD70SI/RDzIhUHJAolWVcO1v5PUivxGKvfLZTLTVVxEYzGYyPsA3ivdLNqMnL5VgmQySa+g==}
 
+  '@astrojs/language-server@2.8.4':
   '@astrojs/language-server@2.8.4':
     resolution: {integrity: sha512-sJH5vGTBkhgA8+hdhzX78UUp4cFz4Mt7xkEkevD188OS5bDMkaue6hK+dtXWM47mnrXFveXA2u38K7S+5+IRjA==}
     hasBin: true
@@ -3119,28 +3123,35 @@ snapshots:
       '@types/babel__traverse': 7.20.5
 
   '@types/babel__generator@7.6.8':
+  '@types/babel__generator@7.6.8':
     dependencies:
       '@babel/types': 7.25.6
 
+  '@types/babel__template@7.4.4':
   '@types/babel__template@7.4.4':
     dependencies:
       '@babel/parser': 7.24.5
       '@babel/types': 7.25.6
 
   '@types/babel__traverse@7.20.5':
+  '@types/babel__traverse@7.20.5':
     dependencies:
       '@babel/types': 7.25.6
 
   '@types/cookie@0.6.0': {}
+  '@types/cookie@0.6.0': {}
 
+  '@types/debug@4.1.12':
   '@types/debug@4.1.12':
     dependencies:
       '@types/ms': 0.7.34
 
   '@types/estree-jsx@1.0.5':
+  '@types/estree-jsx@1.0.5':
     dependencies:
       '@types/estree': 1.0.5
 
+  '@types/estree@1.0.5': {}
   '@types/estree@1.0.5': {}
 
   '@types/hast@3.0.4':
@@ -3156,7 +3167,9 @@ snapshots:
       '@types/unist': 3.0.2
 
   '@types/mdx@2.0.13': {}
+  '@types/mdx@2.0.13': {}
 
+  '@types/ms@0.7.34': {}
   '@types/ms@0.7.34': {}
 
   '@types/nlcst@2.0.3':
@@ -3170,11 +3183,15 @@ snapshots:
       '@types/node': 17.0.45
 
   '@types/unist@2.0.10': {}
+  '@types/unist@2.0.10': {}
 
+  '@types/unist@3.0.2': {}
   '@types/unist@3.0.2': {}
 
   '@ungap/structured-clone@1.2.0': {}
+  '@ungap/structured-clone@1.2.0': {}
 
+  '@volar/kit@2.1.6(typescript@5.4.5)':
   '@volar/kit@2.1.6(typescript@5.4.5)':
     dependencies:
       '@volar/language-service': 2.1.6
@@ -3185,9 +3202,11 @@ snapshots:
       vscode-uri: 3.0.8
 
   '@volar/language-core@2.1.6':
+  '@volar/language-core@2.1.6':
     dependencies:
       '@volar/source-map': 2.1.6
 
+  '@volar/language-server@2.1.6':
   '@volar/language-server@2.1.6':
     dependencies:
       '@volar/language-core': 2.1.6
@@ -3203,6 +3222,7 @@ snapshots:
       vscode-uri: 3.0.8
 
   '@volar/language-service@2.1.6':
+  '@volar/language-service@2.1.6':
     dependencies:
       '@volar/language-core': 2.1.6
       vscode-languageserver-protocol: 3.17.5
@@ -3210,19 +3230,23 @@ snapshots:
       vscode-uri: 3.0.8
 
   '@volar/snapshot-document@2.1.6':
+  '@volar/snapshot-document@2.1.6':
     dependencies:
       vscode-languageserver-protocol: 3.17.5
       vscode-languageserver-textdocument: 1.0.11
 
   '@volar/source-map@2.1.6':
+  '@volar/source-map@2.1.6':
     dependencies:
       muggle-string: 0.4.1
 
+  '@volar/typescript@2.1.6':
   '@volar/typescript@2.1.6':
     dependencies:
       '@volar/language-core': 2.1.6
       path-browserify: 1.0.1
 
+  '@vscode/emmet-helper@2.9.3':
   '@vscode/emmet-helper@2.9.3':
     dependencies:
       emmet: 2.4.7
@@ -3232,9 +3256,12 @@ snapshots:
       vscode-uri: 2.1.2
 
   '@vscode/l10n@0.0.16': {}
+  '@vscode/l10n@0.0.16': {}
 
   '@vscode/l10n@0.0.18': {}
+  '@vscode/l10n@0.0.18': {}
 
+  '@webgpu/types@0.1.21': {}
   '@webgpu/types@0.1.21': {}
 
   acorn-jsx@5.3.2(acorn@8.12.1):
@@ -3248,38 +3275,50 @@ snapshots:
       string-width: 4.2.3
 
   ansi-regex@5.0.1: {}
+  ansi-regex@5.0.1: {}
 
   ansi-regex@6.0.1: {}
+  ansi-regex@6.0.1: {}
 
+  ansi-styles@3.2.1:
   ansi-styles@3.2.1:
     dependencies:
       color-convert: 1.9.3
 
   ansi-styles@4.3.0:
+  ansi-styles@4.3.0:
     dependencies:
       color-convert: 2.0.1
 
   ansi-styles@6.2.1: {}
+  ansi-styles@6.2.1: {}
 
+  anymatch@3.1.3:
   anymatch@3.1.3:
     dependencies:
       normalize-path: 3.0.0
       picomatch: 2.3.1
 
   arg@5.0.2: {}
+  arg@5.0.2: {}
 
+  argparse@1.0.10:
   argparse@1.0.10:
     dependencies:
       sprintf-js: 1.0.3
 
   argparse@2.0.1: {}
+  argparse@2.0.1: {}
 
+  aria-query@5.3.0:
   aria-query@5.3.0:
     dependencies:
       dequal: 2.0.3
 
   array-iterate@2.0.1: {}
+  array-iterate@2.0.1: {}
 
+  astring@1.8.6: {}
   astring@1.8.6: {}
 
   astro-expressive-code@0.35.6(astro@4.15.8(@types/node@17.0.45)(rollup@4.17.2)(typescript@5.4.5)):
@@ -3386,6 +3425,7 @@ snapshots:
     optional: true
 
   bare-fs@2.3.0:
+  bare-fs@2.3.0:
     dependencies:
       bare-events: 2.2.2
       bare-path: 2.1.2
@@ -3393,24 +3433,31 @@ snapshots:
     optional: true
 
   bare-os@2.3.0:
+  bare-os@2.3.0:
     optional: true
 
+  bare-path@2.1.2:
   bare-path@2.1.2:
     dependencies:
       bare-os: 2.3.0
     optional: true
 
   bare-stream@1.0.0:
+  bare-stream@1.0.0:
     dependencies:
       streamx: 2.16.1
     optional: true
 
   base-64@1.0.0: {}
+  base-64@1.0.0: {}
 
+  base64-js@1.5.1: {}
   base64-js@1.5.1: {}
 
   bcp-47-match@2.0.3: {}
+  bcp-47-match@2.0.3: {}
 
+  bcp-47@2.1.0:
   bcp-47@2.1.0:
     dependencies:
       is-alphabetical: 2.0.1
@@ -3418,7 +3465,9 @@ snapshots:
       is-decimal: 2.0.1
 
   binary-extensions@2.3.0: {}
+  binary-extensions@2.3.0: {}
 
+  bl@4.1.0:
   bl@4.1.0:
     dependencies:
       buffer: 5.7.1
@@ -3426,7 +3475,9 @@ snapshots:
       readable-stream: 3.6.2
 
   boolbase@1.0.0: {}
+  boolbase@1.0.0: {}
 
+  boxen@7.1.1:
   boxen@7.1.1:
     dependencies:
       ansi-align: 3.0.1
@@ -3438,6 +3489,7 @@ snapshots:
       widest-line: 4.0.1
       wrap-ansi: 8.1.0
 
+  braces@3.0.2:
   braces@3.0.2:
     dependencies:
       fill-range: 7.0.1
@@ -3454,20 +3506,25 @@ snapshots:
       update-browserslist-db: 1.1.0(browserslist@4.23.3)
 
   buffer@5.7.1:
+  buffer@5.7.1:
     dependencies:
       base64-js: 1.5.1
       ieee754: 1.2.1
 
   camelcase@7.0.1: {}
+  camelcase@7.0.1: {}
 
   caniuse-lite@1.0.30001662: {}
 
+  canvaskit-wasm@0.39.1:
   canvaskit-wasm@0.39.1:
     dependencies:
       '@webgpu/types': 0.1.21
 
   ccount@2.0.1: {}
+  ccount@2.0.1: {}
 
+  chalk@2.4.2:
   chalk@2.4.2:
     dependencies:
       ansi-styles: 3.2.1
@@ -3475,15 +3532,21 @@ snapshots:
       supports-color: 5.5.0
 
   chalk@5.3.0: {}
+  chalk@5.3.0: {}
 
+  character-entities-html4@2.1.0: {}
   character-entities-html4@2.1.0: {}
 
   character-entities-legacy@3.0.0: {}
+  character-entities-legacy@3.0.0: {}
 
+  character-entities@2.0.2: {}
   character-entities@2.0.2: {}
 
   character-reference-invalid@2.0.1: {}
+  character-reference-invalid@2.0.1: {}
 
+  chokidar@3.6.0:
   chokidar@3.6.0:
     dependencies:
       anymatch: 3.1.3
@@ -3497,9 +3560,12 @@ snapshots:
       fsevents: 2.3.3
 
   chownr@1.1.4: {}
+  chownr@1.1.4: {}
 
   ci-info@4.0.0: {}
+  ci-info@4.0.0: {}
 
+  cli-boxes@3.0.0: {}
   cli-boxes@3.0.0: {}
 
   cli-cursor@5.0.0:
@@ -3507,7 +3573,9 @@ snapshots:
       restore-cursor: 5.1.0
 
   cli-spinners@2.9.2: {}
+  cli-spinners@2.9.2: {}
 
+  cliui@8.0.1:
   cliui@8.0.1:
     dependencies:
       string-width: 4.2.3
@@ -3515,26 +3583,34 @@ snapshots:
       wrap-ansi: 7.0.0
 
   clsx@2.1.1: {}
+  clsx@2.1.1: {}
 
   collapse-white-space@2.1.0: {}
+  collapse-white-space@2.1.0: {}
 
+  color-convert@1.9.3:
   color-convert@1.9.3:
     dependencies:
       color-name: 1.1.3
 
   color-convert@2.0.1:
+  color-convert@2.0.1:
     dependencies:
       color-name: 1.1.4
 
   color-name@1.1.3: {}
+  color-name@1.1.3: {}
 
   color-name@1.1.4: {}
+  color-name@1.1.4: {}
 
+  color-string@1.9.1:
   color-string@1.9.1:
     dependencies:
       color-name: 1.1.4
       simple-swizzle: 0.2.2
 
+  color@4.2.3:
   color@4.2.3:
     dependencies:
       color-convert: 2.0.1
@@ -3561,52 +3637,70 @@ snapshots:
       ms: 2.1.3
 
   decode-named-character-reference@1.0.2:
+  decode-named-character-reference@1.0.2:
     dependencies:
       character-entities: 2.0.2
 
+  decompress-response@6.0.0:
   decompress-response@6.0.0:
     dependencies:
       mimic-response: 3.1.0
 
   deep-extend@0.6.0: {}
+  deep-extend@0.6.0: {}
 
+  dequal@2.0.3: {}
   dequal@2.0.3: {}
 
   detect-libc@2.0.3: {}
+  detect-libc@2.0.3: {}
 
+  deterministic-object-hash@2.0.2:
   deterministic-object-hash@2.0.2:
     dependencies:
       base-64: 1.0.0
 
   devalue@5.0.0: {}
+  devalue@5.0.0: {}
 
+  devlop@1.1.0:
   devlop@1.1.0:
     dependencies:
       dequal: 2.0.3
 
   diff@5.2.0: {}
+  diff@5.2.0: {}
 
+  direction@2.0.1: {}
   direction@2.0.1: {}
 
   dlv@1.1.3: {}
+  dlv@1.1.3: {}
 
   dset@3.1.3: {}
+  dset@3.1.3: {}
 
+  eastasianwidth@0.2.0: {}
   eastasianwidth@0.2.0: {}
 
   electron-to-chromium@1.5.25: {}
 
+  emmet@2.4.7:
   emmet@2.4.7:
     dependencies:
       '@emmetio/abbreviation': 2.3.3
       '@emmetio/css-abbreviation': 2.1.8
 
   emoji-regex@10.3.0: {}
+  emoji-regex@10.3.0: {}
 
+  emoji-regex@8.0.0: {}
   emoji-regex@8.0.0: {}
 
   emoji-regex@9.2.2: {}
+  emoji-regex@9.2.2: {}
 
+  end-of-stream@1.4.4:
   end-of-stream@1.4.4:
     dependencies:
       once: 1.4.0
@@ -3654,6 +3748,7 @@ snapshots:
       '@types/estree': 1.0.5
 
   estree-util-build-jsx@3.0.1:
+  estree-util-build-jsx@3.0.1:
     dependencies:
       '@types/estree-jsx': 1.0.5
       devlop: 1.1.0
@@ -3661,13 +3756,16 @@ snapshots:
       estree-walker: 3.0.3
 
   estree-util-is-identifier-name@3.0.0: {}
+  estree-util-is-identifier-name@3.0.0: {}
 
+  estree-util-to-js@2.0.0:
   estree-util-to-js@2.0.0:
     dependencies:
       '@types/estree-jsx': 1.0.5
       astring: 1.8.6
       source-map: 0.7.4
 
+  estree-util-visit@2.0.0:
   estree-util-visit@2.0.0:
     dependencies:
       '@types/estree-jsx': 1.0.5
@@ -3691,13 +3789,17 @@ snapshots:
       '@expressive-code/plugin-text-markers': 0.35.6
 
   extend-shallow@2.0.1:
+  extend-shallow@2.0.1:
     dependencies:
       is-extendable: 0.1.1
 
   extend@3.0.2: {}
+  extend@3.0.2: {}
 
   fast-fifo@1.3.2: {}
+  fast-fifo@1.3.2: {}
 
+  fast-glob@3.3.2:
   fast-glob@3.3.2:
     dependencies:
       '@nodelib/fs.stat': 2.0.5
@@ -3707,9 +3809,11 @@ snapshots:
       micromatch: 4.0.5
 
   fastq@1.17.1:
+  fastq@1.17.1:
     dependencies:
       reusify: 1.0.4
 
+  fill-range@7.0.1:
   fill-range@7.0.1:
     dependencies:
       to-regex-range: 5.0.1
@@ -3726,9 +3830,16 @@ snapshots:
       path-exists: 4.0.0
 
   find-yarn-workspace-root2@1.2.16:
+  find-yarn-workspace-root2@1.2.16:
     dependencies:
       micromatch: 4.0.8
       pkg-dir: 4.2.0
+
+  flattie@1.1.1: {}
+
+  fs-constants@1.0.0: {}
+
+  fsevents@2.3.3:
 
   flattie@1.1.1: {}
 
@@ -3752,9 +3863,12 @@ snapshots:
       is-glob: 4.0.3
 
   globals@11.12.0: {}
+  globals@11.12.0: {}
 
   graceful-fs@4.2.11: {}
+  graceful-fs@4.2.11: {}
 
+  gray-matter@4.0.3:
   gray-matter@4.0.3:
     dependencies:
       js-yaml: 3.14.1
@@ -3762,6 +3876,7 @@ snapshots:
       section-matter: 1.0.0
       strip-bom-string: 1.0.0
 
+  has-flag@3.0.0: {}
   has-flag@3.0.0: {}
 
   hast-util-embedded@3.0.0:
@@ -3800,6 +3915,7 @@ snapshots:
       web-namespaces: 2.0.1
 
   hast-util-has-property@3.0.0:
+  hast-util-has-property@3.0.0:
     dependencies:
       '@types/hast': 3.0.4
 
@@ -3832,6 +3948,7 @@ snapshots:
       hast-util-is-element: 3.0.0
 
   hast-util-raw@9.0.2:
+  hast-util-raw@9.0.2:
     dependencies:
       '@types/hast': 3.0.4
       '@types/unist': 3.0.2
@@ -3847,6 +3964,7 @@ snapshots:
       web-namespaces: 2.0.1
       zwitch: 2.0.4
 
+  hast-util-select@6.0.2:
   hast-util-select@6.0.2:
     dependencies:
       '@types/hast': 3.0.4
@@ -3866,6 +3984,7 @@ snapshots:
       unist-util-visit: 5.0.0
       zwitch: 2.0.4
 
+  hast-util-to-estree@3.1.0:
   hast-util-to-estree@3.1.0:
     dependencies:
       '@types/estree': 1.0.5
@@ -3917,6 +4036,7 @@ snapshots:
       zwitch: 2.0.4
 
   hast-util-to-jsx-runtime@2.3.0:
+  hast-util-to-jsx-runtime@2.3.0:
     dependencies:
       '@types/estree': 1.0.5
       '@types/hast': 3.0.4
@@ -3947,9 +4067,11 @@ snapshots:
       zwitch: 2.0.4
 
   hast-util-to-string@3.0.0:
+  hast-util-to-string@3.0.0:
     dependencies:
       '@types/hast': 3.0.4
 
+  hast-util-to-text@4.0.2:
   hast-util-to-text@4.0.2:
     dependencies:
       '@types/hast': 3.0.4
@@ -3957,6 +4079,7 @@ snapshots:
       hast-util-is-element: 3.0.0
       unist-util-find-after: 5.0.0
 
+  hast-util-whitespace@3.0.0:
   hast-util-whitespace@3.0.0:
     dependencies:
       '@types/hast': 3.0.4
@@ -4009,7 +4132,9 @@ snapshots:
       is-decimal: 2.0.1
 
   is-arrayish@0.3.2: {}
+  is-arrayish@0.3.2: {}
 
+  is-binary-path@2.1.0:
   is-binary-path@2.1.0:
     dependencies:
       binary-extensions: 2.3.0
@@ -4029,17 +4154,23 @@ snapshots:
       is-extglob: 2.1.1
 
   is-hexadecimal@2.0.1: {}
+  is-hexadecimal@2.0.1: {}
 
+  is-inside-container@1.0.0:
   is-inside-container@1.0.0:
     dependencies:
       is-docker: 3.0.0
 
   is-interactive@2.0.0: {}
+  is-interactive@2.0.0: {}
 
+  is-number@7.0.0: {}
   is-number@7.0.0: {}
 
   is-plain-obj@4.1.0: {}
+  is-plain-obj@4.1.0: {}
 
+  is-reference@3.0.2:
   is-reference@3.0.2:
     dependencies:
       '@types/estree': 1.0.5
@@ -4060,8 +4191,23 @@ snapshots:
       esprima: 4.0.1
 
   js-yaml@4.1.0:
+  js-yaml@4.1.0:
     dependencies:
       argparse: 2.0.1
+
+  jsesc@2.5.2: {}
+
+  json5@2.2.3: {}
+
+  jsonc-parser@2.3.1: {}
+
+  kind-of@6.0.3: {}
+
+  kleur@3.0.3: {}
+
+  kleur@4.1.5: {}
+
+  load-yaml-file@0.2.0:
 
   jsesc@2.5.2: {}
 
@@ -4083,20 +4229,25 @@ snapshots:
       strip-bom: 3.0.0
 
   locate-path@5.0.0:
+  locate-path@5.0.0:
     dependencies:
       p-locate: 4.1.0
 
+  log-symbols@6.0.0:
   log-symbols@6.0.0:
     dependencies:
       chalk: 5.3.0
       is-unicode-supported: 1.3.0
 
   longest-streak@3.1.0: {}
+  longest-streak@3.1.0: {}
 
+  lru-cache@5.1.1:
   lru-cache@5.1.1:
     dependencies:
       yallist: 3.1.1
 
+  lru-cache@6.0.0:
   lru-cache@6.0.0:
     dependencies:
       yallist: 4.0.0
@@ -4116,11 +4267,13 @@ snapshots:
   markdown-table@3.0.3: {}
 
   mdast-util-definitions@6.0.0:
+  mdast-util-definitions@6.0.0:
     dependencies:
       '@types/mdast': 4.0.3
       '@types/unist': 3.0.2
       unist-util-visit: 5.0.0
 
+  mdast-util-directive@3.0.0:
   mdast-util-directive@3.0.0:
     dependencies:
       '@types/mdast': 4.0.4
@@ -4135,12 +4288,14 @@ snapshots:
       - supports-color
 
   mdast-util-find-and-replace@3.0.1:
+  mdast-util-find-and-replace@3.0.1:
     dependencies:
       '@types/mdast': 4.0.3
       escape-string-regexp: 5.0.0
       unist-util-is: 6.0.0
       unist-util-visit-parents: 6.0.1
 
+  mdast-util-from-markdown@2.0.0:
   mdast-util-from-markdown@2.0.0:
     dependencies:
       '@types/mdast': 4.0.3
@@ -4159,6 +4314,7 @@ snapshots:
       - supports-color
 
   mdast-util-gfm-autolink-literal@2.0.0:
+  mdast-util-gfm-autolink-literal@2.0.0:
     dependencies:
       '@types/mdast': 4.0.3
       ccount: 2.0.1
@@ -4166,6 +4322,7 @@ snapshots:
       mdast-util-find-and-replace: 3.0.1
       micromark-util-character: 2.1.0
 
+  mdast-util-gfm-footnote@2.0.0:
   mdast-util-gfm-footnote@2.0.0:
     dependencies:
       '@types/mdast': 4.0.3
@@ -4177,6 +4334,7 @@ snapshots:
       - supports-color
 
   mdast-util-gfm-strikethrough@2.0.0:
+  mdast-util-gfm-strikethrough@2.0.0:
     dependencies:
       '@types/mdast': 4.0.3
       mdast-util-from-markdown: 2.0.0
@@ -4184,6 +4342,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  mdast-util-gfm-table@2.0.0:
   mdast-util-gfm-table@2.0.0:
     dependencies:
       '@types/mdast': 4.0.3
@@ -4195,6 +4354,7 @@ snapshots:
       - supports-color
 
   mdast-util-gfm-task-list-item@2.0.0:
+  mdast-util-gfm-task-list-item@2.0.0:
     dependencies:
       '@types/mdast': 4.0.3
       devlop: 1.1.0
@@ -4203,6 +4363,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  mdast-util-gfm@3.0.0:
   mdast-util-gfm@3.0.0:
     dependencies:
       mdast-util-from-markdown: 2.0.0
@@ -4216,6 +4377,7 @@ snapshots:
       - supports-color
 
   mdast-util-mdx-expression@2.0.0:
+  mdast-util-mdx-expression@2.0.0:
     dependencies:
       '@types/estree-jsx': 1.0.5
       '@types/hast': 3.0.4
@@ -4226,6 +4388,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  mdast-util-mdx-jsx@3.1.2:
   mdast-util-mdx-jsx@3.1.2:
     dependencies:
       '@types/estree-jsx': 1.0.5
@@ -4245,6 +4408,7 @@ snapshots:
       - supports-color
 
   mdast-util-mdx@3.0.0:
+  mdast-util-mdx@3.0.0:
     dependencies:
       mdast-util-from-markdown: 2.0.0
       mdast-util-mdx-expression: 2.0.0
@@ -4254,6 +4418,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  mdast-util-mdxjs-esm@2.0.1:
   mdast-util-mdxjs-esm@2.0.1:
     dependencies:
       '@types/estree-jsx': 1.0.5
@@ -4266,10 +4431,12 @@ snapshots:
       - supports-color
 
   mdast-util-phrasing@4.1.0:
+  mdast-util-phrasing@4.1.0:
     dependencies:
       '@types/mdast': 4.0.4
       unist-util-is: 6.0.0
 
+  mdast-util-to-hast@13.1.0:
   mdast-util-to-hast@13.1.0:
     dependencies:
       '@types/hast': 3.0.4
@@ -4283,6 +4450,7 @@ snapshots:
       vfile: 6.0.1
 
   mdast-util-to-markdown@2.1.0:
+  mdast-util-to-markdown@2.1.0:
     dependencies:
       '@types/mdast': 4.0.4
       '@types/unist': 3.0.2
@@ -4293,6 +4461,7 @@ snapshots:
       unist-util-visit: 5.0.0
       zwitch: 2.0.4
 
+  mdast-util-to-string@4.0.0:
   mdast-util-to-string@4.0.0:
     dependencies:
       '@types/mdast': 4.0.4
@@ -4319,6 +4488,7 @@ snapshots:
       micromark-util-types: 2.0.0
 
   micromark-extension-directive@3.0.0:
+  micromark-extension-directive@3.0.0:
     dependencies:
       devlop: 1.1.0
       micromark-factory-space: 2.0.0
@@ -4329,12 +4499,14 @@ snapshots:
       parse-entities: 4.0.1
 
   micromark-extension-gfm-autolink-literal@2.0.0:
+  micromark-extension-gfm-autolink-literal@2.0.0:
     dependencies:
       micromark-util-character: 2.1.0
       micromark-util-sanitize-uri: 2.0.0
       micromark-util-symbol: 2.0.0
       micromark-util-types: 2.0.0
 
+  micromark-extension-gfm-footnote@2.0.0:
   micromark-extension-gfm-footnote@2.0.0:
     dependencies:
       devlop: 1.1.0
@@ -4347,6 +4519,7 @@ snapshots:
       micromark-util-types: 2.0.0
 
   micromark-extension-gfm-strikethrough@2.0.0:
+  micromark-extension-gfm-strikethrough@2.0.0:
     dependencies:
       devlop: 1.1.0
       micromark-util-chunked: 2.0.0
@@ -4356,6 +4529,7 @@ snapshots:
       micromark-util-types: 2.0.0
 
   micromark-extension-gfm-table@2.0.0:
+  micromark-extension-gfm-table@2.0.0:
     dependencies:
       devlop: 1.1.0
       micromark-factory-space: 2.0.0
@@ -4364,9 +4538,11 @@ snapshots:
       micromark-util-types: 2.0.0
 
   micromark-extension-gfm-tagfilter@2.0.0:
+  micromark-extension-gfm-tagfilter@2.0.0:
     dependencies:
       micromark-util-types: 2.0.0
 
+  micromark-extension-gfm-task-list-item@2.0.1:
   micromark-extension-gfm-task-list-item@2.0.1:
     dependencies:
       devlop: 1.1.0
@@ -4375,6 +4551,7 @@ snapshots:
       micromark-util-symbol: 2.0.0
       micromark-util-types: 2.0.0
 
+  micromark-extension-gfm@3.0.0:
   micromark-extension-gfm@3.0.0:
     dependencies:
       micromark-extension-gfm-autolink-literal: 2.0.0
@@ -4387,6 +4564,7 @@ snapshots:
       micromark-util-types: 2.0.0
 
   micromark-extension-mdx-expression@3.0.0:
+  micromark-extension-mdx-expression@3.0.0:
     dependencies:
       '@types/estree': 1.0.5
       devlop: 1.1.0
@@ -4397,6 +4575,7 @@ snapshots:
       micromark-util-symbol: 2.0.0
       micromark-util-types: 2.0.0
 
+  micromark-extension-mdx-jsx@3.0.0:
   micromark-extension-mdx-jsx@3.0.0:
     dependencies:
       '@types/acorn': 4.0.6
@@ -4411,9 +4590,11 @@ snapshots:
       vfile-message: 4.0.2
 
   micromark-extension-mdx-md@2.0.0:
+  micromark-extension-mdx-md@2.0.0:
     dependencies:
       micromark-util-types: 2.0.0
 
+  micromark-extension-mdxjs-esm@3.0.0:
   micromark-extension-mdxjs-esm@3.0.0:
     dependencies:
       '@types/estree': 1.0.5
@@ -4427,6 +4608,7 @@ snapshots:
       vfile-message: 4.0.2
 
   micromark-extension-mdxjs@3.0.0:
+  micromark-extension-mdxjs@3.0.0:
     dependencies:
       acorn: 8.12.1
       acorn-jsx: 5.3.2(acorn@8.12.1)
@@ -4438,11 +4620,13 @@ snapshots:
       micromark-util-types: 2.0.0
 
   micromark-factory-destination@2.0.0:
+  micromark-factory-destination@2.0.0:
     dependencies:
       micromark-util-character: 2.1.0
       micromark-util-symbol: 2.0.0
       micromark-util-types: 2.0.0
 
+  micromark-factory-label@2.0.0:
   micromark-factory-label@2.0.0:
     dependencies:
       devlop: 1.1.0
@@ -4450,6 +4634,7 @@ snapshots:
       micromark-util-symbol: 2.0.0
       micromark-util-types: 2.0.0
 
+  micromark-factory-mdx-expression@2.0.1:
   micromark-factory-mdx-expression@2.0.1:
     dependencies:
       '@types/estree': 1.0.5
@@ -4462,10 +4647,12 @@ snapshots:
       vfile-message: 4.0.2
 
   micromark-factory-space@2.0.0:
+  micromark-factory-space@2.0.0:
     dependencies:
       micromark-util-character: 2.1.0
       micromark-util-types: 2.0.0
 
+  micromark-factory-title@2.0.0:
   micromark-factory-title@2.0.0:
     dependencies:
       micromark-factory-space: 2.0.0
@@ -4474,6 +4661,7 @@ snapshots:
       micromark-util-types: 2.0.0
 
   micromark-factory-whitespace@2.0.0:
+  micromark-factory-whitespace@2.0.0:
     dependencies:
       micromark-factory-space: 2.0.0
       micromark-util-character: 2.1.0
@@ -4481,14 +4669,17 @@ snapshots:
       micromark-util-types: 2.0.0
 
   micromark-util-character@2.1.0:
+  micromark-util-character@2.1.0:
     dependencies:
       micromark-util-symbol: 2.0.0
       micromark-util-types: 2.0.0
 
   micromark-util-chunked@2.0.0:
+  micromark-util-chunked@2.0.0:
     dependencies:
       micromark-util-symbol: 2.0.0
 
+  micromark-util-classify-character@2.0.0:
   micromark-util-classify-character@2.0.0:
     dependencies:
       micromark-util-character: 2.1.0
@@ -4496,14 +4687,17 @@ snapshots:
       micromark-util-types: 2.0.0
 
   micromark-util-combine-extensions@2.0.0:
+  micromark-util-combine-extensions@2.0.0:
     dependencies:
       micromark-util-chunked: 2.0.0
       micromark-util-types: 2.0.0
 
   micromark-util-decode-numeric-character-reference@2.0.1:
+  micromark-util-decode-numeric-character-reference@2.0.1:
     dependencies:
       micromark-util-symbol: 2.0.0
 
+  micromark-util-decode-string@2.0.0:
   micromark-util-decode-string@2.0.0:
     dependencies:
       decode-named-character-reference: 1.0.2
@@ -4512,7 +4706,9 @@ snapshots:
       micromark-util-symbol: 2.0.0
 
   micromark-util-encode@2.0.0: {}
+  micromark-util-encode@2.0.0: {}
 
+  micromark-util-events-to-acorn@2.0.2:
   micromark-util-events-to-acorn@2.0.2:
     dependencies:
       '@types/acorn': 4.0.6
@@ -4525,21 +4721,26 @@ snapshots:
       vfile-message: 4.0.2
 
   micromark-util-html-tag-name@2.0.0: {}
+  micromark-util-html-tag-name@2.0.0: {}
 
+  micromark-util-normalize-identifier@2.0.0:
   micromark-util-normalize-identifier@2.0.0:
     dependencies:
       micromark-util-symbol: 2.0.0
 
   micromark-util-resolve-all@2.0.0:
+  micromark-util-resolve-all@2.0.0:
     dependencies:
       micromark-util-types: 2.0.0
 
+  micromark-util-sanitize-uri@2.0.0:
   micromark-util-sanitize-uri@2.0.0:
     dependencies:
       micromark-util-character: 2.1.0
       micromark-util-encode: 2.0.0
       micromark-util-symbol: 2.0.0
 
+  micromark-util-subtokenize@2.0.1:
   micromark-util-subtokenize@2.0.1:
     dependencies:
       devlop: 1.1.0
@@ -4548,9 +4749,12 @@ snapshots:
       micromark-util-types: 2.0.0
 
   micromark-util-symbol@2.0.0: {}
+  micromark-util-symbol@2.0.0: {}
 
   micromark-util-types@2.0.0: {}
+  micromark-util-types@2.0.0: {}
 
+  micromark@4.0.0:
   micromark@4.0.0:
     dependencies:
       '@types/debug': 4.1.12
@@ -4573,6 +4777,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  micromatch@4.0.5:
   micromatch@4.0.5:
     dependencies:
       braces: 3.0.2
@@ -4610,6 +4815,7 @@ snapshots:
       '@types/nlcst': 2.0.3
 
   node-abi@3.62.0:
+  node-abi@3.62.0:
     dependencies:
       semver: 7.6.0
 
@@ -4625,6 +4831,7 @@ snapshots:
     dependencies:
       boolbase: 1.0.0
 
+  once@1.4.0:
   once@1.4.0:
     dependencies:
       wrappy: 1.0.2
@@ -4650,6 +4857,7 @@ snapshots:
       strip-ansi: 7.1.0
 
   p-limit@2.3.0:
+  p-limit@2.3.0:
     dependencies:
       p-try: 2.2.0
 
@@ -4658,16 +4866,20 @@ snapshots:
       yocto-queue: 1.1.1
 
   p-locate@4.1.0:
+  p-locate@4.1.0:
     dependencies:
       p-limit: 2.3.0
 
+  p-queue@8.0.1:
   p-queue@8.0.1:
     dependencies:
       eventemitter3: 5.0.1
       p-timeout: 6.1.2
 
   p-timeout@6.1.2: {}
+  p-timeout@6.1.2: {}
 
+  p-try@2.2.0: {}
   p-try@2.2.0: {}
 
   pagefind@1.1.0:
@@ -4678,6 +4890,7 @@ snapshots:
       '@pagefind/linux-x64': 1.1.0
       '@pagefind/windows-x64': 1.1.0
 
+  parse-entities@4.0.1:
   parse-entities@4.0.1:
     dependencies:
       '@types/unist': 2.0.10
@@ -4698,6 +4911,7 @@ snapshots:
       unist-util-visit-children: 3.0.0
       vfile: 6.0.3
 
+  parse5@7.1.2:
   parse5@7.1.2:
     dependencies:
       entities: 4.5.0
@@ -4725,15 +4939,18 @@ snapshots:
       find-up: 4.1.0
 
   postcss-nested@6.0.1(postcss@8.4.38):
+  postcss-nested@6.0.1(postcss@8.4.38):
     dependencies:
       postcss: 8.4.38
       postcss-selector-parser: 6.0.16
 
   postcss-selector-parser@6.0.16:
+  postcss-selector-parser@6.0.16:
     dependencies:
       cssesc: 3.0.0
       util-deprecate: 1.0.2
 
+  postcss@8.4.38:
   postcss@8.4.38:
     dependencies:
       nanoid: 3.3.7
@@ -4746,6 +4963,7 @@ snapshots:
       picocolors: 1.1.0
       source-map-js: 1.2.1
 
+  prebuild-install@7.1.2:
   prebuild-install@7.1.2:
     dependencies:
       detect-libc: 2.0.3
@@ -4768,23 +4986,30 @@ snapshots:
       which-pm: 3.0.0
 
   prismjs@1.29.0: {}
+  prismjs@1.29.0: {}
 
+  prompts@2.4.2:
   prompts@2.4.2:
     dependencies:
       kleur: 3.0.3
       sisteransi: 1.0.5
 
   property-information@6.5.0: {}
+  property-information@6.5.0: {}
 
+  pump@3.0.0:
   pump@3.0.0:
     dependencies:
       end-of-stream: 1.4.4
       once: 1.4.0
 
   queue-microtask@1.2.3: {}
+  queue-microtask@1.2.3: {}
 
   queue-tick@1.0.1: {}
+  queue-tick@1.0.1: {}
 
+  rc@1.2.8:
   rc@1.2.8:
     dependencies:
       deep-extend: 0.6.0
@@ -4793,11 +5018,13 @@ snapshots:
       strip-json-comments: 2.0.1
 
   readable-stream@3.6.2:
+  readable-stream@3.6.2:
     dependencies:
       inherits: 2.0.4
       string_decoder: 1.3.0
       util-deprecate: 1.0.2
 
+  readdirp@3.6.0:
   readdirp@3.6.0:
     dependencies:
       picomatch: 2.3.1
@@ -4816,11 +5043,13 @@ snapshots:
       hast-util-format: 1.1.0
 
   rehype-parse@9.0.0:
+  rehype-parse@9.0.0:
     dependencies:
       '@types/hast': 3.0.4
       hast-util-from-html: 2.0.1
       unified: 11.0.4
 
+  rehype-raw@7.0.0:
   rehype-raw@7.0.0:
     dependencies:
       '@types/hast': 3.0.4
@@ -4828,11 +5057,13 @@ snapshots:
       vfile: 6.0.1
 
   rehype-stringify@10.0.0:
+  rehype-stringify@10.0.0:
     dependencies:
       '@types/hast': 3.0.4
       hast-util-to-html: 9.0.1
       unified: 11.0.4
 
+  rehype@13.0.1:
   rehype@13.0.1:
     dependencies:
       '@types/hast': 3.0.4
@@ -4840,6 +5071,7 @@ snapshots:
       rehype-stringify: 10.0.0
       unified: 11.0.4
 
+  remark-directive@3.0.0:
   remark-directive@3.0.0:
     dependencies:
       '@types/mdast': 4.0.4
@@ -4849,6 +5081,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  remark-gfm@4.0.0:
   remark-gfm@4.0.0:
     dependencies:
       '@types/mdast': 4.0.3
@@ -4861,12 +5094,14 @@ snapshots:
       - supports-color
 
   remark-mdx@3.0.1:
+  remark-mdx@3.0.1:
     dependencies:
       mdast-util-mdx: 3.0.0
       micromark-extension-mdxjs: 3.0.0
     transitivePeerDependencies:
       - supports-color
 
+  remark-parse@11.0.0:
   remark-parse@11.0.0:
     dependencies:
       '@types/mdast': 4.0.3
@@ -4876,6 +5111,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  remark-rehype@11.1.0:
   remark-rehype@11.1.0:
     dependencies:
       '@types/hast': 3.0.4
@@ -4892,13 +5128,16 @@ snapshots:
       unist-util-visit: 5.0.0
 
   remark-stringify@11.0.0:
+  remark-stringify@11.0.0:
     dependencies:
       '@types/mdast': 4.0.3
       mdast-util-to-markdown: 2.1.0
       unified: 11.0.4
 
   request-light@0.7.0: {}
+  request-light@0.7.0: {}
 
+  require-directory@2.1.1: {}
   require-directory@2.1.1: {}
 
   restore-cursor@5.1.0:
@@ -4983,22 +5222,28 @@ snapshots:
       queue-microtask: 1.2.3
 
   safe-buffer@5.2.1: {}
+  safe-buffer@5.2.1: {}
 
   sax@1.3.0: {}
+  sax@1.3.0: {}
 
+  section-matter@1.0.0:
   section-matter@1.0.0:
     dependencies:
       extend-shallow: 2.0.1
       kind-of: 6.0.3
 
   semver@6.3.1: {}
+  semver@6.3.1: {}
 
+  semver@7.6.0:
   semver@7.6.0:
     dependencies:
       lru-cache: 6.0.0
 
   semver@7.6.3: {}
 
+  sharp@0.32.6:
   sharp@0.32.6:
     dependencies:
       color: 4.2.3
@@ -5010,6 +5255,7 @@ snapshots:
       tar-fs: 3.0.6
       tunnel-agent: 0.6.0
 
+  sharp@0.33.3:
   sharp@0.33.3:
     dependencies:
       color: 4.2.3
@@ -5057,9 +5303,11 @@ snapshots:
       simple-concat: 1.0.1
 
   simple-swizzle@0.2.2:
+  simple-swizzle@0.2.2:
     dependencies:
       is-arrayish: 0.3.2
 
+  sisteransi@1.0.5: {}
   sisteransi@1.0.5: {}
 
   sitemap@7.1.2:
@@ -5091,11 +5339,13 @@ snapshots:
       bare-events: 2.2.2
 
   string-width@4.2.3:
+  string-width@4.2.3:
     dependencies:
       emoji-regex: 8.0.0
       is-fullwidth-code-point: 3.0.0
       strip-ansi: 6.0.1
 
+  string-width@5.1.2:
   string-width@5.1.2:
     dependencies:
       eastasianwidth: 0.2.0
@@ -5109,18 +5359,22 @@ snapshots:
       strip-ansi: 7.1.0
 
   string_decoder@1.3.0:
+  string_decoder@1.3.0:
     dependencies:
       safe-buffer: 5.2.1
 
+  stringify-entities@4.0.4:
   stringify-entities@4.0.4:
     dependencies:
       character-entities-html4: 2.1.0
       character-entities-legacy: 3.0.0
 
   strip-ansi@6.0.1:
+  strip-ansi@6.0.1:
     dependencies:
       ansi-regex: 5.0.1
 
+  strip-ansi@7.1.0:
   strip-ansi@7.1.0:
     dependencies:
       ansi-regex: 6.0.1
@@ -5136,13 +5390,16 @@ snapshots:
       inline-style-parser: 0.1.1
 
   style-to-object@1.0.6:
+  style-to-object@1.0.6:
     dependencies:
       inline-style-parser: 0.2.3
 
   supports-color@5.5.0:
+  supports-color@5.5.0:
     dependencies:
       has-flag: 3.0.0
 
+  tar-fs@2.1.1:
   tar-fs@2.1.1:
     dependencies:
       chownr: 1.1.4
@@ -5150,6 +5407,7 @@ snapshots:
       pump: 3.0.0
       tar-stream: 2.2.0
 
+  tar-fs@3.0.6:
   tar-fs@3.0.6:
     dependencies:
       pump: 3.0.0
@@ -5159,6 +5417,7 @@ snapshots:
       bare-path: 2.1.2
 
   tar-stream@2.2.0:
+  tar-stream@2.2.0:
     dependencies:
       bl: 4.1.0
       end-of-stream: 1.4.4
@@ -5166,6 +5425,7 @@ snapshots:
       inherits: 2.0.4
       readable-stream: 3.6.2
 
+  tar-stream@3.1.7:
   tar-stream@3.1.7:
     dependencies:
       b4a: 1.6.6
@@ -5189,16 +5449,21 @@ snapshots:
       typescript: 5.4.5
 
   tslib@2.6.2:
+  tslib@2.6.2:
     optional: true
 
+  tunnel-agent@0.6.0:
   tunnel-agent@0.6.0:
     dependencies:
       safe-buffer: 5.2.1
 
   type-fest@2.19.0: {}
+  type-fest@2.19.0: {}
 
   typesafe-path@0.2.2: {}
+  typesafe-path@0.2.2: {}
 
+  typescript-auto-import-cache@0.3.2:
   typescript-auto-import-cache@0.3.2:
     dependencies:
       semver: 7.6.0
@@ -5226,10 +5491,12 @@ snapshots:
       vfile: 6.0.3
 
   unist-util-find-after@5.0.0:
+  unist-util-find-after@5.0.0:
     dependencies:
       '@types/unist': 3.0.2
       unist-util-is: 6.0.0
 
+  unist-util-is@6.0.0:
   unist-util-is@6.0.0:
     dependencies:
       '@types/unist': 3.0.2
@@ -5240,13 +5507,16 @@ snapshots:
       array-iterate: 2.0.1
 
   unist-util-position-from-estree@2.0.0:
+  unist-util-position-from-estree@2.0.0:
     dependencies:
       '@types/unist': 3.0.2
 
   unist-util-position@5.0.0:
+  unist-util-position@5.0.0:
     dependencies:
       '@types/unist': 3.0.2
 
+  unist-util-remove-position@5.0.0:
   unist-util-remove-position@5.0.0:
     dependencies:
       '@types/unist': 3.0.2
@@ -5265,6 +5535,7 @@ snapshots:
       '@types/unist': 3.0.2
       unist-util-is: 6.0.0
 
+  unist-util-visit@5.0.0:
   unist-util-visit@5.0.0:
     dependencies:
       '@types/unist': 3.0.2
@@ -5307,6 +5578,7 @@ snapshots:
       rollup: 4.22.0
     optionalDependencies:
       '@types/node': 17.0.45
+      '@types/node': 17.0.45
       fsevents: 2.3.3
 
   vitefu@1.0.2(vite@5.4.6(@types/node@17.0.45)):
@@ -5314,25 +5586,36 @@ snapshots:
       vite: 5.4.6(@types/node@17.0.45)
 
   volar-service-css@0.0.34(@volar/language-service@2.1.6):
+  volar-service-css@0.0.34(@volar/language-service@2.1.6):
     dependencies:
       vscode-css-languageservice: 6.2.14
       vscode-languageserver-textdocument: 1.0.11
       vscode-uri: 3.0.8
     optionalDependencies:
       '@volar/language-service': 2.1.6
+    optionalDependencies:
+      '@volar/language-service': 2.1.6
 
+  volar-service-emmet@0.0.34(@volar/language-service@2.1.6):
   volar-service-emmet@0.0.34(@volar/language-service@2.1.6):
     dependencies:
       '@vscode/emmet-helper': 2.9.3
       vscode-html-languageservice: 5.2.0
     optionalDependencies:
       '@volar/language-service': 2.1.6
+    optionalDependencies:
+      '@volar/language-service': 2.1.6
 
+  volar-service-html@0.0.34(@volar/language-service@2.1.6):
   volar-service-html@0.0.34(@volar/language-service@2.1.6):
     dependencies:
       vscode-html-languageservice: 5.2.0
       vscode-languageserver-textdocument: 1.0.11
       vscode-uri: 3.0.8
+    optionalDependencies:
+      '@volar/language-service': 2.1.6
+
+  volar-service-prettier@0.0.34(@volar/language-service@2.1.6):
     optionalDependencies:
       '@volar/language-service': 2.1.6
 
@@ -5344,8 +5627,14 @@ snapshots:
 
   volar-service-typescript-twoslash-queries@0.0.34(@volar/language-service@2.1.6):
     optionalDependencies:
+    optionalDependencies:
       '@volar/language-service': 2.1.6
 
+  volar-service-typescript-twoslash-queries@0.0.34(@volar/language-service@2.1.6):
+    optionalDependencies:
+      '@volar/language-service': 2.1.6
+
+  volar-service-typescript@0.0.34(@volar/language-service@2.1.6):
   volar-service-typescript@0.0.34(@volar/language-service@2.1.6):
     dependencies:
       path-browserify: 1.0.1
@@ -5355,7 +5644,10 @@ snapshots:
       vscode-nls: 5.2.0
     optionalDependencies:
       '@volar/language-service': 2.1.6
+    optionalDependencies:
+      '@volar/language-service': 2.1.6
 
+  vscode-css-languageservice@6.2.14:
   vscode-css-languageservice@6.2.14:
     dependencies:
       '@vscode/l10n': 0.0.18
@@ -5364,6 +5656,7 @@ snapshots:
       vscode-uri: 3.0.8
 
   vscode-html-languageservice@5.2.0:
+  vscode-html-languageservice@5.2.0:
     dependencies:
       '@vscode/l10n': 0.0.18
       vscode-languageserver-textdocument: 1.0.11
@@ -5371,28 +5664,38 @@ snapshots:
       vscode-uri: 3.0.8
 
   vscode-jsonrpc@8.2.0: {}
+  vscode-jsonrpc@8.2.0: {}
 
+  vscode-languageserver-protocol@3.17.5:
   vscode-languageserver-protocol@3.17.5:
     dependencies:
       vscode-jsonrpc: 8.2.0
       vscode-languageserver-types: 3.17.5
 
   vscode-languageserver-textdocument@1.0.11: {}
+  vscode-languageserver-textdocument@1.0.11: {}
 
   vscode-languageserver-types@3.17.5: {}
+  vscode-languageserver-types@3.17.5: {}
 
+  vscode-languageserver@9.0.1:
   vscode-languageserver@9.0.1:
     dependencies:
       vscode-languageserver-protocol: 3.17.5
 
   vscode-nls@5.2.0: {}
+  vscode-nls@5.2.0: {}
 
+  vscode-uri@2.1.2: {}
   vscode-uri@2.1.2: {}
 
   vscode-uri@3.0.8: {}
+  vscode-uri@3.0.8: {}
 
   web-namespaces@2.0.1: {}
+  web-namespaces@2.0.1: {}
 
+  which-pm-runs@1.1.0: {}
   which-pm-runs@1.1.0: {}
 
   which-pm@3.0.0:
@@ -5404,11 +5707,13 @@ snapshots:
       string-width: 5.1.2
 
   wrap-ansi@7.0.0:
+  wrap-ansi@7.0.0:
     dependencies:
       ansi-styles: 4.3.0
       string-width: 4.2.3
       strip-ansi: 6.0.1
 
+  wrap-ansi@8.1.0:
   wrap-ansi@8.1.0:
     dependencies:
       ansi-styles: 6.2.1
@@ -5450,4 +5755,5 @@ snapshots:
 
   zod@3.23.8: {}
 
+  zwitch@2.0.4: {}
   zwitch@2.0.4: {}
