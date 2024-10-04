@@ -1,0 +1,111 @@
+---
+title: "Features / Options"
+description: "Features / Options"
+sidebar:
+  label: "Features / Options"
+  order: 3
+---
+import { Badge } from '@astrojs/starlight/components';
+
+
+## clouds
+```properties
+clouds=<fast|fancy|off>
+```
+Sets the clouds option, equivalent to the options in "Video Settings" however this setting overrides the user controlled setting if set.
+
+----------------
+
+
+## moon
+```properties
+moon=<true|false>
+```
+Enables or disables rendering of the moon texture in `gbuffers_skytextured`.
+
+----------------
+
+
+## sun
+```properties
+sun=<true|false>
+```
+Enables or disables rendering of the sun texture in gbuffers_skytextured.
+
+----------------
+
+
+## sky <Badge text="Iris Beta 1.8 Exclusive" variant="note" size="medium" />
+```properties
+sky=<true|false>
+```
+Enables or disables rendering of the vanilla sky in gbuffers_skybasic. This includes the sky disc, horizon, and void, however it does not include [`stars`](/reference/shadersproperties/options#stars)
+
+----------------
+
+
+## stars <Badge text="Iris Beta 1.8 Exclusive" variant="note" size="medium" />
+```properties
+stars=<true|false>
+```
+Enables or disables rendering of the vanilla star geometry in gbuffers_skybasic.
+
+----------------
+
+
+## underwaterOverlay
+```properties
+underwaterOverlay=<true|false>
+```
+Enables or disables the water texture overlay when the player is underwater.
+
+----------------
+
+
+## vignette
+```properties
+vignette=<true|false>
+```
+Enables or disables rendering of the vignette overlay, an effect which darkens the edge of the screen slightly.
+
+----------------
+
+
+## oldHandLight
+```properties
+oldHandLight=<true|false>
+```
+Sets a fallback for older shaders which don't support main and alt hands. If `oldHandLight` is set to `true`, [`heldBlockLightValue`](/reference/uniforms/id#heldblocklightvalue) will take the value of the highest light value. The default value is `true` due to legacy support, so it must be specifically disabled to have independent main and alt hand light values.
+
+----------------
+
+
+## oldLighting
+```properties
+oldLighting=<true|false>
+```
+Enables the "old lighting", which applies a lighting multiplier in the color attribute based on the block's orientation (this is the same as vanilla). This value is set to `false` by default, as most shaders use their own lighting.
+
+----------------
+
+
+## separateAo
+```properties
+separateAo=<true|false>
+```
+Normally a vanilla AO (ambient occlusion) value is stored in the rgb components of the color vertex attribute. Enabling `separateAo` moves this into the alpha channel of the color attribute. `separateAo` is disabled by default.
+
+----------------
+
+
+## supportsColorCorrection <Badge text="Iris Exclusive" variant="tip" size="medium" />
+```properties
+supportsColorCorrection=<true|false>
+```
+Iris 1.6.4 added support for additional color spaces beyond sRGB (DCI_P3, Display P3, REC2020, and Adobe RGB). This does not allow for outputting HDR values, it simply applies a tonemapping operation in the given color space instead of sRGB.
+
+By default, Iris will assume all shaders output sRGB, and if a different color spaces is selected it will convert the sRGB output to that color space for display. If `supportsColorCorrection = true` is in shaders.properties however, this conversion will be left up to the shader. In all scenarios, the chosen colorspace is avaliable through the uniform [`currentColorSpace`](/reference/uniforms/system#currentcolorspace).
+
+----------------
+
+

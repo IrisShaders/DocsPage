@@ -1,0 +1,154 @@
+---
+title: "Shader Settings"
+description: Shaders.properties is a text file placed in the `shaders` folder that allows for configuring many options of a shaderpack.
+sidebar:
+  label: Shader Settings
+  order: 5
+---
+
+
+Iris lets you use [preprocessor directives](https://registry.khronos.org/OpenGL/specs/gl/GLSLangSpec.4.60.html#preprocessor) to define user options. These macros should be defined in the shader files using `#define`. The value of an option can be checked in shader files with `#ifdef`, `#ifndef`, `#if`, etc. The option must be defined in all files which it is used in, and if it is defined in multiple files it must be defined identically in all files. Lastly, add the option name to [`screen`](/reference/shadersproperties/screen) list to add the shader option to the "Shader Pack Settings" screen. [`sliders`](/reference/shadersproperties/sliders) and [`profile`](/reference/shadersproperties/profile) can further be used to control the layout of these options.
+
+#### Boolean Option
+A boolean option can be defined and checked in shader code with like the following:
+```glsl
+#define optionName //description
+//#define optionName //description
+
+#ifdef optionName
+  // code here only if optionName is "on"
+#endif
+
+#ifndef optionName
+  // code here only if optionName is "off"
+#endif
+```
+
+The option will be "on" (defined) by default, however commenting out the #define line will keep the option but make the default value "off" (not defined).
+
+Optionally, a comment after the macro can be used to add a description to the option, shown when hovering over the option in the "Shader Pack Settings" screen.
+
+`#if defined` can be used to check multiple options in one line (for example see below). However for Iris/Optifine to recognize a boolean option, it must be checked at least once using `#ifdef` or `#ifndef`.
+```glsl
+#if defined option1 && defined option2
+  // code here only if option1 and option2 are "on"
+#endif
+```
+
+#### Numerical/Other Option
+Any non-boolean option, such as a float or int, can be defined by specifying a value with the define:
+```glsl
+#define optionName <defaultValue> // [<value1> <value2> ...] description
+
+#if optionName == <intValue>
+#endif
+```
+
+A comment should be placed after the macro, and the possible values for the option should be placed square brackets directly after the comment starts. The values should be separated by **spaces only**. Any text after the values list will be treated as a description for the option, shown when hovering over the option in the "Shader Pack Settings" screen.
+
+These options can be used directly in shader code like a variable, and will be replaced with the option's value before compilation. Additionally, int options **only** can be checked using `#if`.
+
+#### Constants
+Iris/Optifine define numerous constants to control certain settings (see the Constants section). If a value list is added in a comment after the declaration of a numeric const, it can be added to the shaders screen like a shader define option. For example:
+
+```glsl
+const int shadowMapResolution = 2048; // [512 1024 2048 4096]
+```
+
+
+---
+
+## Screen
+The `screen` directive controls which shader options are displayed in the "Shader Pack Settings" screen and how they are displayed. For more info on shader options, see [shaders.properties](/reference/shadersproperties/overview#shader-options)
+
+Options can be added to the "Shader Pack Settings" screen by adding them to the `screen` list as follows:  
+```
+screen = <list_of_options>
+```
+
+`<list_of_options>` can be replaced with a space separated list of any of the following:
+| format      | description                                                                              |
+| ----------- | ---------------------------------------------------------------------------------------- |
+| `OPTION`    | a shader option named OPTION                                                             |
+| `[SCREEN]`  | a link to a sub-screen named SCREEN                                                      |
+| `<profile>` | a button that changes the current [shader profile](/reference/shadersproperties/profile) |
+| `<empty>`   | an empty spot, i.e. a spacer                                                             |
+| `*`         | any remaining shader options not already in a screen                                     |
+
+
+
+#### Sub-Screens
+A sub-screen (a menu within the "Shader Pack Settings" menu) can be created as follows:
+```
+screen = [screen_name] ...
+screen.<screen_name> = <list_of_options>
+```
+
+#### Columns
+By default the shader options will be displayed in two columns, unless there are too many to fit on screen then three columns are used. Alternatively, column counts can be specified per screen/sub-screen as follows:
+```
+screen.columns = <number_of_columns>
+screen.<screen_name>.columns = <number_of_columns>
+```
+
+
+#### Example
+Here's a nice example to hopefully clear things up (*I hope you like ice cream*):
+```properties
+screen = <empty> <profile> <empty> [SHADOWS] [LIGHTING] iScreem uScreem weAllScreen forIceCreen *
+screen.SHADOWS = shadowMapResolution shadowFilter
+screen.LIGHTING = SSAO SSR
+
+screen.columns = 3
+screen.SHADOWS.columns = 2
+```
+
+
+---
+
+## Sliders
+```properties
+sliders = <list_of_options>
+```
+
+The `sliders` directive is a list of non-boolean options which should be made into sliders. For more info on shader options, see [shaders.properties](/reference/shadersproperties/overview#shader-options)
+
+Any options added to the `sliders` list will be displayed as sliders in the "Shader Pack Settings" screen and/or sub-screens. Any options which are not in the `sliders` list are treated as buttons, where clicking the buttons cycles through the option values. Sliders however let you drag a bar to change option values.
+
+The values in the slider are defined by the commented value list where the option is defined. The order of values in the slider is determined **exclusively** by the order in the commented value list. For example if the list is not defined in numerical order the slider values will not be in numerical order.
+
+There should only be one `sliders` list, and options from any sub-screens should be included in that single list (the sliders will still appear in the sub-screen they are defined in using [`screen`](/reference/shadersproperties/screen)).
+
+
+
+
+---
+
+## Profile
+
+The `profile` directive allows defining of profiles, which are preconfigured sets of user options selectable through a `<profile>` button in the "Shader Pack Settings" screen. For more info on shader options, see [shaders.properties](/reference/shadersproperties/overview#shader-options).
+
+
+
+Options can be added to the "Shader Pack Settings" screen by adding them to the `screen` list as follows:  
+```
+profile.<name> = <list_of_options>
+```
+
+`<name>` should be replaced with the name of the profile, and `<list_of_options>` can be replaced with a space separated list of any of the following:
+| format                          | description                                                                      |
+| ------------------------------- | -------------------------------------------------------------------------------- |
+| `OPTION:value` `OPTION=value`   | set the value of `OPTION` to `value`                                             |
+| `OPTION`                        | set boolean option `OPTION` "on"                                                 |
+| `!OPTION`                       | set boolean option `OPTION` "off"                                                |
+| `profile.PROFILE_NAME`          | include all options from profile `PROFILE_NAME`                                  |
+| `!program.PROGRAM_NAME`         | disable program `PROGRAM_NAME`, may include dimension (e.g. `world1/composite5`) |
+
+
+#### Example
+Here's a free example
+```properties
+profile.LOW  = !SSAO ShadowType=1 SSR:false !program.composite2
+profile.MED  =  SSAO ShadowType=2 SSR:false !program.composite2
+profile.HIGH =  SSAO ShadowType=3 SSR:true
+```

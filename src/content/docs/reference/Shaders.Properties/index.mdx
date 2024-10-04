@@ -1,0 +1,69 @@
+---
+title: "Index"
+description: Shaders.properties is a text file placed in the `shaders` folder that allows for configuring many options of a shaderpack.
+sidebar:
+  label: Index
+  order: 1
+---
+import { Badge } from '@astrojs/starlight/components';
+
+## Programs / Ordering
+| Directive                                                                                  | Description | Tag |
+| ------------------------------------------------------------------------------------------ | ----------- | --- |
+| [particles.ordering](/reference/shadersproperties/ordering#particlesordering)              | Controls the order in the pipeline particles will be rendered | <Badge text="Iris Exclusive" variant="tip"/> |
+| [particles.before.deferred](/reference/shadersproperties/ordering#particlesbeforedeferred) | Legacy option for `particles.ordering` |  |
+| [separateEntityDraws](/reference/shadersproperties/ordering#separateentitydraws)           | Controls whether translucent entities/block entities are drawn before or after the deferred pass | <Badge text="Iris Exclusive" variant="tip"/> |
+| [program.enabled](/reference/shadersproperties/ordering#programenabled)                    | Allows programs to be disabled based on shader options |  |
+| [shadow.enabled](/reference/shadersproperties/ordering#shadowenabled)                      | Enables or disables the shadow pass | <Badge text="Iris Exclusive" variant="tip"/> |
+| [shadowBlockEntities](/reference/shadersproperties/ordering#shadowblockentities)           | Sets whether block entities are rendered in the shadow pass |  |
+| [shadowEntities](/reference/shadersproperties/ordering#shadowentities)                     | Sets whether entities are rendered in the shadow pass |  |
+| [shadowTerrain](/reference/shadersproperties/ordering#shadowterrain)                       | Sets whether terrain is rendered in the shadow pass |  |
+| [shadowTranslucent](/reference/shadersproperties/ordering#shadowtranslucent)               | Sets whether translucent terrain is rendered in the shadow pass |  |
+| [shadowPlayer](/reference/shadersproperties/ordering#shadowplayer)                         | Sets whether the player is rendered in the shadow pass | <Badge text="Iris Exclusive" variant="tip"/> |
+| [skipAllRendering](/reference/shadersproperties/ordering#skipallrendering)                 | Enables or disables most gbuffers passes | <Badge text="Iris Exclusive" variant="tip"/> |
+| [voxelizeLightBlocks](/reference/shadersproperties/ordering#voxelizelightblocks)           | Renders light blocks as an invisible quad in the shadow pass so that they can be voxelized | <Badge text="Iris Exclusive" variant="tip"/> |
+| [allowConcurrentCompute](/reference/shadersproperties/ordering#allowconcurrentcompute)     | Enables concurrent compute passes | <Badge text="Iris Exclusive" variant="tip"/> |
+| [indirect.pass](/reference/shadersproperties/ordering#indirectpass)                        | Allows you to dispatch a compute shader with the work group amount specified from a SSBO | <Badge text="Iris Exclusive" variant="tip"/> |
+
+
+## Features / Options
+| Directive                                                                               | Description | Tag |
+| --------------------------------------------------------------------------------------- | ----------- | --- |
+| [clouds](/reference/shadersproperties/options#clouds)                                   | Enables or disables vanilla cloud rendering |  |
+| [moon](/reference/shadersproperties/options#moon)                                       | Enables or disables rendering of the moon texture in `gbuffers_skytextured` |  |
+| [sun](/reference/shadersproperties/options#sun)                                         | Enables or disables rendering of the sun texture in `gbuffers_skytextured` |  |
+| [sky](/reference/shadersproperties/options#sky)                                         | Enables or disables rendering of vanilla sky in `gbuffers_skybasic` | <Badge text="Iris Beta Exclusive" variant="note"/> |
+| [stars](/reference/shadersproperties/options#stars)                                     | Enables or disables rendering of stars in the sky in `gbuffers_skybasic` | <Badge text="Iris Beta Exclusive" variant="note"/> |
+| [underwaterOverlay](/reference/shadersproperties/options#underwateroverlay)             | Enables or disables the water texture overlay when the player is underwater |  |
+| [vignette](/reference/shadersproperties/options#vignette)                               | Enables or disables rendering of the vignette overlay |  |
+| [oldHandLight](/reference/shadersproperties/options#oldhandlight)                       | Sets heldBlockLightValue to use whichever hand's value is higher |  |
+| [oldLighting](/reference/shadersproperties/options#oldlighting)                         | Enables the "old lighting", which applies a lighting multiplier in the color attribute based on the block's orientation |  |
+| [separateAo](/reference/shadersproperties/options#separateao)                           | Controls whether vanilla AO is stored in the RGB or A components of the color vertex attribute |  |
+| [supportsColorCorrection](/reference/shadersproperties/options#supportscolorcorrection) | Allows the shader to perform its own conversion to a different color space | <Badge text="Iris Exclusive" variant="tip"/> |
+
+
+## Rendering
+| Directive                                                                    | Description | Tag |
+| ---------------------------------------------------------------------------- | ----------- | --- |
+| [alphaTest](/reference/shadersproperties/rendering#alphatest)                | Controls the alpha test for cutout programs |  |
+| [blend](/reference/shadersproperties/rendering#blend)                        | Controls the alpha blending for a specific program, optionally per-buffer |  |
+| [scale](/reference/shadersproperties/rendering#scale)                        | Defines a new viewport for a composite style program |  |
+| [flip](/reference/shadersproperties/rendering#flip)                          | Enable or disable buffer flipping for a composite style pass |  |
+| [size.buffer](/reference/shadersproperties/rendering#sizebuffer)             | Sets the resolution of a colortex buffer |  |
+| [backFace](/reference/shadersproperties/rendering#backface)                  | Enables or disables back-face culling for each type of rendering |  |
+| [frustum.culling](/reference/shadersproperties/rendering#frustumculling)     | Enables or disables frustum culling |  |
+| [occlusion.culling](/reference/shadersproperties/rendering#occlusionculling) | Enables or disables occlusion culling, which culls geometry which is behind other opaque geometry | <Badge text="Iris Exclusive" variant="tip"/> |
+| [shadow.culling](/reference/shadersproperties/rendering#shadowculling)       | Controls culling in the shadow pass |  |
+| [rain.depth](/reference/shadersproperties/rendering#raindepth)               | Whether rain and snow should write to the depth buffer |  |
+| [beacon.beam.depth](/reference/shadersproperties/rendering#beaconbeamdepth)  | Sets whether beacon beams write to the depth buffer |  |
+
+
+
+
+| [screen](/reference/shadersproperties/screen)                                       | Controls which shader options are displayed in the "Shader Pack Settings" screen and how they are displayed |  |
+| [sliders](/reference/shadersproperties/sliders)                                     | Controls which shader options should be displayed as sliders |  |
+| [profile](/reference/shadersproperties/profile)                                     | Allows defining of profiles, which are preconfigured sets of user options selectable through a `profile` button in the "Shader Pack Settings" screen |  |
+
+| [custom_uniforms](/reference/shadersproperties/custom_uniforms)                     | Iris lets you define custom uniforms which are evaluated on the CPU and uploaded on program change |  |
+| [lang_file](/reference/shadersproperties/lang_file)                                 | .lang files can be added for any supported languages to add use friendly labels and tooltips to shader options |  |
+| [flags](/reference/shadersproperties/flags)                                         | Feature flags are an Iris system to query the activation state of certain features | <Badge text="Iris Exclusive" variant="tip"/> |
