@@ -27,7 +27,7 @@ These buffers default to the display resolution, although this can be configured
 All buffers default to `RGBA` format (which is `RGBA8` on most systems), but this can be configured as described in the [Texture Formats](/reference/buffers/texture_format) section.
 
 #### Buffer clear
-By default all buffers clear their values after each frame to solid black (all 0s including alpha), except `colortex0` which clears to the [`fogColor`](/reference/uniforms/general/fogcolor) with 1.0 alpha, and `colortex1` which clears to solid white (all 1s including alpha). This clearing behavior can be configured with the [`colortexNClear`](/reference/constants/buffer_clear) directive, and the clear color can be configured with the [`colortexNClearColor`](/reference/constants/buffer_clear_color) directive.
+By default all buffers clear their values after each frame to solid black (all 0s including alpha), except `colortex0` which clears to the [`fogColor`](/reference/uniforms/rendering#fogcolor) with 1.0 alpha, and `colortex1` which clears to solid white (all 1s including alpha). This clearing behavior can be configured with the [`colortexNClear`](/reference/constants/buffer_clear) directive, and the clear color can be configured with the [`colortexNClearColor`](/reference/constants/buffer_clear_color) directive.
 
 #### Ping-Pong buffers
 Each colortex sampler actually contains two buffers, which allows you to read and write to the same buffer in a composite/deferred pass. The buffer flipping behavior can be controlled with the [`flip.<program>.<buffer>`](/reference/shadersproperties/buffer_flip) directive.

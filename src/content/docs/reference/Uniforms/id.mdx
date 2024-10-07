@@ -1,0 +1,102 @@
+---
+title: ID uniforms Uniforms
+description: Uniforms related to the block/entity/item IDs and their light values.
+sidebar:
+  label: ID
+  order: 5
+---
+import { Badge } from '@astrojs/starlight/components';
+
+These uniforms store block, item, and entity IDs in different scenarios, as well as properties related to those. More information on IDs can be found in the [block.properties](/reference/miscellaneous/block_properties), [item.properties](/reference/miscellaneous/item_properties), and [entity.properties](/reference/miscellaneous/entity_properties) pages.
+
+
+## entityId
+```glsl
+uniform int entityId;
+```
+This uniform stores the id (from [`entity.properties`](/reference/miscellaneous/entity_properties)) of the current entity. Value is `0` if no [`entity.properties`](/reference/miscellaneous/entity_properties) is present. Value `65535` if [`entity.properties`](/reference/miscellaneous/entity_properties) is present and the entity is not in the file.
+
+----------------
+
+
+## blockEntityId
+```glsl
+uniform int blockEntityId;
+```
+This uniform stores the id (from [`block.properties`](/reference/miscellaneous/block_properties)) of the current block entity (a tile entity). Value is `0` if no [`block.properties`](/reference/miscellaneous/block_properties) is present. Value is `65535` if [`block.properties`](/reference/miscellaneous/block_properties) is present and the block entity is not in the file.
+
+----------------
+
+
+## currentRenderedItemId <Badge text="Iris Exclusive" variant="tip" size="medium" />
+```glsl
+uniform int currentRenderedItemId;
+```
+Iris allows detecting items and armor during rendering on *anything*.
+
+Using `uniform int currentRenderedItemId;`, you can detect items and armor rendered in the level at the point of render (based on [`item.properties`](/reference/miscellaneous/item_properties) for items and armour, and [`block.properties`](/reference/miscellaneous/block_properties) for block items). This is similar to [`heldItemId`](/reference/uniforms/id#helditemid) and [`heldItemId2`](/reference/uniforms/id#helditemid2), except it applies to the currently rendered item/armor instead of the held item.
+
+There are some new ID's that can be detected alongside items and armor:
+
+`trim_material` to detect armor trims on armor. (For example, `trim_emerald`).
+
+----------------
+
+
+## currentSelectedBlockId <Badge text="Iris Exclusive" variant="tip" size="medium" />
+```glsl
+uniform int currentSelectedBlockId;
+```
+This uniform stores the id (from [`block.properties`](/reference/miscellaneous/block_properties)) of the block selected by the player (with the block outline). Value is `0` if no block is selected, if the selected block is not in [`block.properties`](/reference/miscellaneous/block_properties), or if no [`block.properties`](/reference/miscellaneous/block_properties) is file present.
+
+----------------
+
+
+## currentSelectedBlockPos <Badge text="Iris Exclusive" variant="tip" size="medium" />
+```glsl
+uniform vec3 currentSelectedBlockId;
+```
+This uniform stores the player space position of the center of the block selected by the player (with the block outline). If no block is selected, the values of all components will be `-256.0`.
+
+----------------
+
+
+## heldItemId
+```glsl
+uniform int heldItemId;
+```
+This uniform stores the id (from [`item.properties`](/reference/miscellaneous/item_properties)) of the item currently held in the main hand. Value is 0 if no [`item.properties`](/reference/miscellaneous/item_properties) is present. Value is -1 if [`item.properties`](/reference/miscellaneous/item_properties) is present and the player holds an item not in the file (this includes holding nothing).
+
+----------------
+
+
+## heldItemId2
+```glsl
+uniform int heldItemId2;
+```
+This uniform stores the id (from [`item.properties`](/reference/miscellaneous/item_properties)) of the item currently held in the off hand. Value is 0 if no [`item.properties`](/reference/miscellaneous/item_properties) is present. Value is -1 if [`item.properties`](/reference/miscellaneous/item_properties) is present and the player holds an item not in the file (this includes holding nothing).
+
+----------------
+
+
+## heldBlockLightValue
+```glsl
+uniform int heldBlockLightValue;
+```
+The light strength of the item held in the player's hand. This ranges from `0`-`15` for vanilla blocks, however some modded blocks may have a higher value.
+
+**Note:** if [`oldHandLight`](/reference/shadersproperties/options#oldhandlight) is not set to `false`, `heldBlockLightValue` will take its value from the hand with the highest light value for legacy support.
+
+----------------
+
+
+## heldBlockLightValue2
+```glsl
+uniform int heldBlockLightValue2;
+```
+The light strength of the item held in the player's offhand. This ranges from `0`-`15` for vanilla blocks, however some modded blocks may have a higher value.
+
+
+----------------
+
+
