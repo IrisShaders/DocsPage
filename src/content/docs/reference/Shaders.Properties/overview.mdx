@@ -1,11 +1,29 @@
 ---
-title: "Index"
+title: "Overview"
 description: Shaders.properties is a text file placed in the `shaders` folder that allows for configuring many options of a shaderpack.
 sidebar:
-  label: Index
+  label: Overview
   order: 1
 ---
 import { Badge } from '@astrojs/starlight/components';
+
+The `shaders.properties` is a text file placed in the `shaders` folder that allows for configuring many options of a shaderpack. This file has two main purposes:
+
+1. Configuring internal shader settings
+2. Configuring and displaying user accessible shader options
+
+
+### Internal Shader Settings
+The file can contain any of the properties described in this section, in any order. These properties control aspects of the shader pipeline. For example:
+
+```properties
+iris.features.required = CUSTOM_IMAGES COMPUTE_SHADERS SSBO REVERSED_CULLING 
+separateEntityDraws = true
+shadow.culling = reversed
+image.testImage = testSampler rgba rgba8 float false true 1.0 1.0
+```
+
+Preprocessor directives can be used inside this file based on shader option macros, which are defined automatically. However, you cannot use `#define` or `#include` in `shaders.properties`.
 
 ## Programs / Ordering
 | Directive                                                                                  | Description | Tag |
@@ -58,12 +76,17 @@ import { Badge } from '@astrojs/starlight/components';
 | [beacon.beam.depth](/reference/shadersproperties/rendering#beaconbeamdepth)  | Sets whether beacon beams write to the depth buffer |  |
 
 
+## Shader Pack Settings Screen
+| Directive                                                                              | Description |
+| -------------------------------------------------------------------------------------- | ----------- |
+| [screen](/reference/shadersproperties/shader_settings#configuring-the-settings-screen) | Controls which shader options are displayed in the "Shader Pack Settings" screen and how they are displayed |
+| [sliders](/reference/shadersproperties/shader_settings#sliders)                        | Controls which shader options should be displayed as sliders |
+| [profile](/reference/shadersproperties/shader_settings#profiles)                       | Allows defining of profiles, which are preconfigured sets of user options selectable through a `profile` button in the "Shader Pack Settings" screen |
+| [.lang files](/reference/shadersproperties/shader_settings#lang-files)                   | .lang files can be added for any supported languages to add use friendly labels and tooltips to shader options |
 
 
-| [screen](/reference/shadersproperties/screen)                                       | Controls which shader options are displayed in the "Shader Pack Settings" screen and how they are displayed |  |
-| [sliders](/reference/shadersproperties/sliders)                                     | Controls which shader options should be displayed as sliders |  |
-| [profile](/reference/shadersproperties/profile)                                     | Allows defining of profiles, which are preconfigured sets of user options selectable through a `profile` button in the "Shader Pack Settings" screen |  |
-
+## Miscellaneous
+| Directive                                                                    | Description | Tag |
+| ---------------------------------------------------------------------------- | ----------- | --- |
 | [custom_uniforms](/reference/shadersproperties/custom_uniforms)                     | Iris lets you define custom uniforms which are evaluated on the CPU and uploaded on program change |  |
-| [lang_file](/reference/shadersproperties/lang_file)                                 | .lang files can be added for any supported languages to add use friendly labels and tooltips to shader options |  |
 | [flags](/reference/shadersproperties/flags)                                         | Feature flags are an Iris system to query the activation state of certain features | <Badge text="Iris Exclusive" variant="tip"/> |
