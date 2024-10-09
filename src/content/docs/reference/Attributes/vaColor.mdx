@@ -20,9 +20,9 @@ import { Aside } from '@astrojs/starlight/components';
 
 The vertex color attribute, equivalent to `gl_Color` from the compatibility profile.
 
-The color attribute is often used to apply tints to colored blocks such as leaves, grass, water, etc. It also contains the [vanilla ao](/reference/constants/ambientocclusionlevel) and, if enabled, the [old lighting](/reference/shadersproperties/options#oldlighting).
+The color attribute is often used to apply tints to colored blocks such as leaves, grass, water, etc. It also contains the [vanilla ao](/reference/constants/ambientocclusionlevel) and, if enabled, the [old lighting](/reference/shadersproperties/features#oldlighting).
 
-Enabling [`separateAo`](/reference/shadersproperties/options#separateao) will move the AO from the `rgb` components of `vaColor` to the alpha component, which can be applied later like this:
+Enabling [`separateAo`](/reference/shadersproperties/features#separateao) will move the AO from the `rgb` components of `vaColor` to the alpha component, which can be applied later like this:
 ```glsl
 vec3 color = vaColor.rgb * vaColor.a;
 ```
