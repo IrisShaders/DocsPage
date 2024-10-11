@@ -41,7 +41,7 @@ The following directives are available to control user accessible options:
 ## Internal Shader Settings
 The file can contain any of the properties described in this section, in any order. These properties control aspects of the shader pipeline. For example:
 
-```properties
+```properties title="shaders.properties"
 iris.features.required = CUSTOM_IMAGES COMPUTE_SHADERS SSBO REVERSED_CULLING 
 separateEntityDraws = true
 shadow.culling = reversed
@@ -104,7 +104,10 @@ Below is an index of shaders.properties directives available in Iris. Directives
 
 
 ### Miscellaneous
-| Directive                                                       | Description | Tag |
-| --------------------------------------------------------------- | ----------- | --- |
-| [custom uniforms](/reference/shadersproperties/custom_uniforms) | Iris lets you define custom uniforms which are evaluated on the CPU and uploaded on program change |  |
-| [flags](/reference/shadersproperties/flags)                     | Feature flags are an Iris system to query the activation state of certain features | <Badge text="Iris Exclusive" variant="tip"/> |
+| Directive                                                                                         | Description                                                                           | Tag                                          |
+| ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | -------------------------------------------- |
+| [Feature Flags](/reference/shadersproperties/flags)                                               | An Iris system to query the activation state of certain features                      | <Badge text="Iris Exclusive" variant="tip"/> |
+| [Custom Uniforms](/reference/shadersproperties/custom_uniforms)                                   | Defines custom uniforms which are evaluated on the CPU and uploaded on program change |                                              |
+| [texture.noise](/reference/buffers/noisetex#custom-noise-texture)                                 | Defines custom uniforms which are evaluated on the CPU and uploaded on program change |                                              |
+| [Custom Textures](/reference/buffers/custom_textures)                                             | Binds a texture to a sampler for a specific stage                                     |                                              |
+| [Iris Enhanced Custom Textures](/reference/buffers/custom_textures#iris-enhanced-custom-textures) | Custom texture, but creates a new sampler                                             | <Badge text="Iris Exclusive" variant="tip"/> |

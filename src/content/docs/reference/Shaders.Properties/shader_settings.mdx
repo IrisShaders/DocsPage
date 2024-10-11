@@ -14,7 +14,7 @@ Optifine/Iris use [preprocessor directives](https://registry.khronos.org/OpenGL/
 
 #### Boolean Options
 A boolean option can be defined and checked in shader code with like the following:
-```glsl
+```glsl title="shader code"
 #define optionName //description
 //#define optionName //description
 
@@ -32,7 +32,7 @@ The option will be "on" (defined) by default, however commenting out the #define
 Optionally, a comment after the macro can be used to add a description to the option, shown when hovering over the option in the "Shader Pack Settings" screen.
 
 `#if defined` can be used to check multiple options in one line (for example see below). However for Iris/Optifine to recognize a boolean option, it must be checked at least once using `#ifdef` or `#ifndef`.
-```glsl
+```glsl title="shader code"
 #if defined option1 && defined option2
   // code here only if option1 and option2 are "on"
 #endif
@@ -40,7 +40,7 @@ Optionally, a comment after the macro can be used to add a description to the op
 
 #### Numerical/Other Options
 Any non-boolean option, such as a float or int, can be defined by specifying a value with the define:
-```glsl
+```glsl title="shader code"
 #define optionName <defaultValue> // [<value1> <value2> ...] description
 
 #if optionName == <intValue>
@@ -54,7 +54,7 @@ These options can be used directly in shader code like a variable, and will be r
 #### Constants
 Iris/Optifine define numerous [constants](/reference/constants/overview) to control certain aspects of the shader pipeline. If a value list is added in a comment after the declaration of a numeric const, it can be added to the shaders screen like a shader define option. For example:
 
-```glsl
+```glsl title="shader code"
 const int shadowMapResolution = 2048; // [512 1024 2048 4096]
 ```
 
@@ -66,7 +66,7 @@ By default, the "Shader Pack Settings" screen is automatically populated with al
 
 Alternatively, the `screen` directive can be used to control which shader options are displayed in the "Shader Pack Settings" screen and how they are displayed. Options can be added to the "Shader Pack Settings" screen by adding them to the `screen` direction in the [shaders.properties](/reference/shadersproperties/overview) file as follows:  
 
-```properties
+```properties title="shaders.properties"
 screen = <list_of_options>
 ```
 
@@ -84,7 +84,7 @@ screen = <list_of_options>
 #### Sub-Screens
 A sub-screen (a menu within the "Shader Pack Settings" menu) can be created as follows:
 
-```properties
+```properties title="shaders.properties"
 screen = [screen_name] ...
 screen.<screen_name> = <list_of_options>
 ```
@@ -94,7 +94,7 @@ A button will be created in whichever screen or sub-screen `[screen_name]` is pl
 #### Columns
 By default the shader options will be displayed in two columns, unless there are too many to fit on screen then three columns are used. Alternatively, column counts can be specified per screen/sub-screen as follows:
 
-```properties
+```properties title="shaders.properties"
 screen.columns = <number_of_columns>
 screen.<screen_name>.columns = <number_of_columns>
 ```
@@ -105,7 +105,7 @@ screen.<screen_name>.columns = <number_of_columns>
 ## Sliders
 The `sliders` directive is a list of non-boolean options which are made into sliders in the "Shader Pack Settings" screen. The directive can be added to the [shaders.properties](/reference/shadersproperties/overview) file as follows:
 
-```properties
+```properties title="shaders.properties"
 sliders = <list_of_options>
 ```
 
@@ -124,7 +124,7 @@ There should only be one `sliders` list in [shaders.properties](/reference/shade
 
 The `profile` directive allows defining of profiles, which are pre-configured sets of user options selectable through a `<profile>` button in the "Shader Pack Settings" screen. Profiles can be configured by adding the following directive to the [shaders.properties](/reference/shadersproperties/overview) file:  
 
-```properties
+```properties title="shaders.properties"
 profile.<name> = <list_of_options>
 ```
 
@@ -146,7 +146,7 @@ A button to switch between active profiles can be added to the "Shader Pack Sett
 
 Here's a nice example to hopefully clear things up (*I hope you like ice cream*):
 
-```properties
+```properties title="shaders.properties"
 screen = <empty> <profile> <empty> [SHADOWS] [LIGHTING] iScream uScream weAllScream forIceCream *
 screen.SHADOWS = shadowMapResolution shadowFilter
 screen.LIGHTING = SSAO SSR
@@ -168,14 +168,16 @@ sliders = iScream uScream weAllScream forIceCream
 
 #### Option Labels
 Option labels replace a shader option's name in the shader options screen. They can be specified with `option.<option_name> = <label>` in a lang file. Replace `<option_name>` with the options name as defined in shaders.properties, and `<label>` with the label to be displayed in the shader options screen. For example:
-```properties
+
+```properties title=".lang file"
 option.TAA = Temporal Anti-aliasing
 option.SSBO = Ambient Occlusion
 ```
 
 #### Value Labels
 Value labels replace the display name of a specific value of a non-boolean shader option. They can be specified with `value.<option_name>.<value> = <value_label>` in a lang file. Replace `<option_name>` with the options name as defined in shaders.properties, `<value>` with value to replace, and `<value_label>` with the user-friendly value label to be displayed in the shader options screen. For example:
-```properties
+
+```properties title=".lang file"
 value.Shadow_Type.0=off
 value.Shadow_Type.1=unfiltered
 value.Shadow_Type.2=PCF
@@ -183,19 +185,22 @@ value.Shadow_Type.3=PCSS
 ```
 
 A prefix and suffix can be added to before and after the values of an option with `prefix.<option_name> = <prefix>` and `suffix.<option_name> = <suffix>` in a lang file. Replace `<option_name>` with the options name as defined in shaders.properties, and `<prefix>` or `<suffix>` with the user-friendly value label to be displayed in the shader options screen. For example the following surrounds a value in parenthesis:
-```properties
+
+```properties title=".lang file"
 prefix.Shadow_Type = (
 suffix.Shadow_Type = )
 ```
 
 #### Option Tooltips
 Option tooltips are shown in a tooltip when the user hovers over the shader option. They can be specified with `option.<option_name>.comment = <comment>` in a lang file. Replace `<option_name>` with the options name as defined in shaders.properties, and `<comment>` with the tooltip comment to be displayed in the shader options screen. For example:
-```properties
+
+```properties title=".lang file"
 option.TAA.comment = Smooths jagged edges
 option.SSBO.comment = Adds shadows in the corners of objects
 ```
 
 A tooltip can be added to the profile button with the with `profile.comment = <comment>` in a `.lang` file. Replace `<comment>` with the tooltip comment to be displayed in the shader options screen. For example:
-```properties
+
+```properties title=".lang file"
 profile.comment = Potato - runs on anything. Low - better than potato. Medium - quality/performance balance. High - good quality, expensive. Ultra - for the ballers.
 ```
