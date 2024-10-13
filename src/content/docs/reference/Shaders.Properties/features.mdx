@@ -3,10 +3,12 @@ title: "Features / Options"
 description: "Features / Options"
 sidebar:
   label: "Features / Options"
-  order: 4
+  order: 5
 ---
 import { Badge } from '@astrojs/starlight/components';
+import { Aside } from '@astrojs/starlight/components';
 
+This page lists [shaders.properties](/reference/shadersproperties/overview) directives related to display/HUD options, disabling features of the sky/clouds, and controlling legacy lighting options.
 
 ## clouds
 ```properties
@@ -30,7 +32,7 @@ Enables or disables rendering of the moon texture in `gbuffers_skytextured`.
 ```properties
 sun=<true|false>
 ```
-Enables or disables rendering of the sun texture in gbuffers_skytextured.
+Enables or disables rendering of the sun texture in `gbuffers_skytextured`.
 
 ----------------
 
@@ -39,7 +41,7 @@ Enables or disables rendering of the sun texture in gbuffers_skytextured.
 ```properties
 sky=<true|false>
 ```
-Enables or disables rendering of the vanilla sky in gbuffers_skybasic. This includes the sky disc, horizon, and void, however it does not include [`stars`](/reference/shadersproperties/features#stars)
+Enables or disables rendering of the vanilla sky in `gbuffers_skybasic`. This includes the sky disc, horizon, and void, however it does not include [`stars`](/reference/shadersproperties/features#stars)
 
 ----------------
 
@@ -48,7 +50,7 @@ Enables or disables rendering of the vanilla sky in gbuffers_skybasic. This incl
 ```properties
 stars=<true|false>
 ```
-Enables or disables rendering of the vanilla star geometry in gbuffers_skybasic.
+Enables or disables rendering of the vanilla star geometry in `gbuffers_skybasic`.
 
 ----------------
 
@@ -75,7 +77,9 @@ Enables or disables rendering of the vignette overlay, an effect which darkens t
 ```properties
 oldHandLight=<true|false>
 ```
-Sets a fallback for older shaders which don't support main and alt hands. If `oldHandLight` is set to `true`, [`heldBlockLightValue`](/reference/uniforms/id#heldblocklightvalue) will take the value of the highest light value. The default value is `true` due to legacy support, so it must be specifically disabled to have independent main and alt hand light values.
+Sets a fallback for older shaders which don't support main and alt hands. If `oldHandLight` is set to `true`, [`heldBlockLightValue`](/reference/uniforms/id#heldblocklightvalue) will take the value of the highest light value. The default value is `true` due to legacy support.
+
+<Aside type="caution">Any pack that wishes to use independent main and alt hand light values should set `oldHandLight` to `false`, as the legacy setting is enabled by default.</Aside>
 
 ----------------
 

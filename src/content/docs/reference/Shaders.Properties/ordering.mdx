@@ -3,10 +3,11 @@ title: "Programs / Ordering"
 description: "Programs / Ordering"
 sidebar:
   label: "Programs / Ordering"
-  order: 3
+  order: 4
 ---
 import { Badge } from '@astrojs/starlight/components';
 
+This page lists [shaders.properties](/reference/shadersproperties/overview) directives related to program ordering, enabling/disabling programs, enabling/disabling geometry within programs, and compute passes.
 
 ## particles.ordering <Badge text="Iris Exclusive" variant="tip" size="medium" />
 ```properties
@@ -34,7 +35,7 @@ The legacy version of [`particles.ordering`](/reference/shadersproperties/orderi
 ```properties
 separateEntityDraws=<true|false>
 ```
-If `separateEntityDraws` is true in shaders.properties, translucent entities and block entities will wait to be drawn until after the deferred pass, and then will be drawn in the `gbuffers_entities_translucent` and `gbuffers_block_translucent` programs.
+If `separateEntityDraws` is true in shaders.properties, translucent entities and block entities will wait to be drawn until after the deferred pass, and then will be drawn in the `gbuffers_entities_translucent` and `gbuffers_block_translucent` programs. If those programs are not present they will fall back to `gbuffers_entites` and `gbuffers_block` respectively, but will still be rendered after deferred.
 
 ----------------
 
@@ -56,25 +57,7 @@ Replace:
 ```properties
 shadow.enabled=<true|false>
 ```
-Normally Optifine/Iris will check if the shadow buffers are bound and used to determine when to enable/disable the shadow pass. Iris offers an additional explicit control for enabling/disabling the pass. This can be useful for voxelization which doesn't write to a [shadowtex](/reference/buffers/shadowtex)/[shadowcolor](/reference/buffers/shadowcolor) buffer (for example SSBOs or custom images).
-
-----------------
-
-
-## shadowBlockEntities
-```properties
-shadowBlockEntities=<true|false>
-```
-Sets whether block entities are rendered in the [`shadow pass`](/reference/programs/shadow).
-
-----------------
-
-
-## shadowEntities
-```properties
-shadowEntities=<true|false>
-```
-Sets whether entities are rendered in the [`shadow pass`](/reference/programs/shadow).
+Normally Optifine/Iris will check if the shadow buffers are used by any program to determine when to enable/disable the shadow pass. Iris offers an additional explicit control for enabling/disabling the pass. This can be useful for voxelization which doesn't write to a [shadowtex](/reference/buffers/shadowtex)/[shadowcolor](/reference/buffers/shadowcolor) buffer (for example SSBOs or custom images).
 
 ----------------
 
@@ -97,11 +80,38 @@ Sets whether translucent terrain (e.g. water) is rendered in the [`shadow pass`]
 ----------------
 
 
+## shadowEntities
+```properties
+shadowEntities=<true|false>
+```
+Sets whether entities are rendered in the [`shadow pass`](/reference/programs/shadow).
+
+----------------
+
+
 ## shadowPlayer <Badge text="Iris Exclusive" variant="tip" size="medium" />
 ```properties
 shadowPlayer=<true|false>
 ```
 This value controls if the player should have a shadow rendered. This is forced on if `shadowEntities` (default `true`) is enabled. This also controls shadows of any entities the player is riding.
+
+----------------
+
+
+## shadowBlockEntities
+```properties
+shadowBlockEntities=<true|false>
+```
+Sets whether block entities are rendered in the [`shadow pass`](/reference/programs/shadow).
+
+----------------
+
+
+## shadowLightBlockEntities <Badge text="Iris Exclusive" variant="tip" size="medium" />
+```properties
+shadowLightBlockEntities=<true|false>
+```
+This value sets an override for block entities that emit light. If `shadowBlockEntities` is set to `false`, block entities will not be rendered in the [`shadow pass`](/reference/programs/shadow), however setting `shadowLightBlockEntities` to `true` in this case will render only block entities that emit light.
 
 ----------------
 
@@ -126,6 +136,22 @@ Using `voxelizeLightBlocks` in shaders.properties, you can now voxelize light bl
 This only applies to light blocks ([Minecraft Wiki](https://minecraft.wiki/w/Light_Block)), which are a specific block which is invisible but emits a specific level of light. This does not affect any other blocks or geometry.
 
 Light blocks will be rendered as a single (degenerate) invisible quad with all points centered on the middle of the block. (`at_midBlock` will be 0.) The ID will correspond as normal to the light block, and UV will be 0. `lmcoord.xy` will both be the value of the light made by the light block.
+
+----------------
+
+
+## indirect.pass <Badge text="Iris Exclusive" variant="tip" size="medium" />
+```properties
+indirect.<pass> = <bufferObjectNumber> <offsetInBuffer>
+```
+Allows you to dispatch a compute shader with the work group amount specified from a [SSBO](/reference/buffers/ssbo).
+
+To use this, replace:
+- `<pass>` with the name of the compute shader pass (e.g. `composite`, `deferred1`, `prepare8`)
+- `<bufferObjectNumber>` with the "index" of the SSBO
+- `<offsetInBuffer>` with the offset to the work group count in bytes
+
+The object at offset in the SSBO must be an `uvec3` which stores the number of work groups in each axis. ***If you do not do this, your PC will most likely crash trying to dispatch 2147483647^3 work groups. Don't do that.***
 
 ----------------
 
@@ -191,21 +217,3 @@ There are two ways to mitigate this issue:
 This page is taken from the [Iris ShaderDoc](https://github.com/IrisShaders/ShaderDoc/blob/master/passes/compute.md#concurrency-between-compute-passes) by IMS.
 
 ----------------
-
-
-## indirect.pass <Badge text="Iris Exclusive" variant="tip" size="medium" />
-```properties
-indirect.<pass> = <bufferObjectNumber> <offsetInBuffer>
-```
-Allows you to dispatch a compute shader with the work group amount specified from a [SSBO](/reference/buffers/ssbo).
-
-To use this, replace:
-- `<pass>` with the name of the compute shader pass (e.g. `composite`, `deferred1`, `prepare8`)
-- `<bufferObjectNumber>` with the "index" of the SSBO
-- `<offsetInBuffer>` with the offset to the work group count in bytes
-
-The object at offset in the SSBO must be an `uvec3` which stores the number of work groups in each axis. ***If you do not do this, your PC will most likely crash trying to dispatch 2147483647^3 work groups. Don't do that.***
-
-----------------
-
-

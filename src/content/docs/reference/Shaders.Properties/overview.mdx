@@ -12,13 +12,23 @@ The `shaders.properties` is a text file placed in the `shaders` folder that allo
 1. Configuring and displaying user accessible shader options
 2. Configuring internal shader settings
 
+Any of the directives can be included on its own line in `shaders.properties`. The directives can appear in any order. Below is an example `shaders.properties` file:
+
+```properties title="shaders.properties"
+iris.features.required = CUSTOM_IMAGES COMPUTE_SHADERS SSBO REVERSED_CULLING 
+separateEntityDraws = true
+shadow.culling = reversed
+image.testImage = testSampler rgba rgba8 float false true 1.0 1.0
+
+screen = <empty> <profile> <empty> [SHADOWS] [LIGHTING] iScream uScream weAllScream forIceCream *
+screen.SHADOWS = shadowMapResolution shadowFilter
+screen.LIGHTING = SSAO SSR
+```
 
 ## User Accessible Shader Options
 `shaders.properties` can be used to configure user accessible options, which appear in the "Shader Pack Settings" screen in Iris. More info can be found in the [shader settings page](/reference/shadersproperties/shader_settings).
+The following directives are available to control user accessible options in shaders.properties:
 
-The following directives are available to control user accessible options:
-
-### shaders.properties
 | Directive                                                                              | Description                                                                                                 |
 | -------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
 | [screen](/reference/shadersproperties/shader_settings#configuring-the-settings-screen) | Controls which shader options are displayed in the "Shader Pack Settings" screen and how they are displayed |
@@ -39,18 +49,20 @@ The following directives are available to control user accessible options:
 
 
 ## Internal Shader Settings
-The file can contain any of the properties described in this section, in any order. These properties control aspects of the shader pipeline. For example:
+These directives control aspects of the shader pipeline. For example, they might enable/disable specific programs, change the order particles are rendered, override user clouds settings, etc.
 
-```properties title="shaders.properties"
-iris.features.required = CUSTOM_IMAGES COMPUTE_SHADERS SSBO REVERSED_CULLING 
-separateEntityDraws = true
-shadow.culling = reversed
-image.testImage = testSampler rgba rgba8 float false true 1.0 1.0
-```
-
-Preprocessor directives can be used inside this file based on shader option macros, which are defined automatically. However, you cannot use `#define` or `#include` in `shaders.properties`.
+Preprocessor directives can be used with internal shader settings, using macros based on [shader options](/reference/shadersproperties/shader_settings) defined automatically. However, you cannot use `#define` or `#include` in `shaders.properties`.
 
 Below is an index of shaders.properties directives available in Iris. Directives marked as <Badge text="Iris Exclusive" variant="tip"/> are only available in Iris, and any unmarked uniforms is available in either Optifine or Iris.
+
+### Feature Flags
+Feature flags are an Iris system to query the activation state of certain features. Some features require setting a feature flag to use. Feature flags can also be set as required, meaning the pack will only load if the system / Iris version supports the feature.
+
+| Directive                                                    | Description                                                                           | Tag                                          |
+| ------------------------------------------------------------ | ------------------------------------------------------------------------------------- | -------------------------------------------- |
+| [iris.features.required](/reference/shadersproperties/flags) | Sets the feature flags required to load the shader, enables those feature             | <Badge text="Iris Exclusive" variant="tip"/> |
+| [iris.features.optional](/reference/shadersproperties/flags) | Sets the feature flags optional to load the shader, enables feature if supported      | <Badge text="Iris Exclusive" variant="tip"/> |
+
 
 ### Programs / Ordering
 | Directive                                                                                  | Description                                                                                      | Tag                                          |
@@ -60,15 +72,16 @@ Below is an index of shaders.properties directives available in Iris. Directives
 | [separateEntityDraws](/reference/shadersproperties/ordering#separateentitydraws)           | Controls whether translucent entities/block entities are drawn before or after the deferred pass | <Badge text="Iris Exclusive" variant="tip"/> |
 | [program.enabled](/reference/shadersproperties/ordering#programenabled)                    | Allows programs to be disabled based on shader options                                           |                                              |
 | [shadow.enabled](/reference/shadersproperties/ordering#shadowenabled)                      | Enables or disables the shadow pass                                                              | <Badge text="Iris Exclusive" variant="tip"/> |
-| [shadowBlockEntities](/reference/shadersproperties/ordering#shadowblockentities)           | Sets whether block entities are rendered in the shadow pass                                      |                                              |
-| [shadowEntities](/reference/shadersproperties/ordering#shadowentities)                     | Sets whether entities are rendered in the shadow pass                                            |                                              |
 | [shadowTerrain](/reference/shadersproperties/ordering#shadowterrain)                       | Sets whether terrain is rendered in the shadow pass                                              |                                              |
 | [shadowTranslucent](/reference/shadersproperties/ordering#shadowtranslucent)               | Sets whether translucent terrain is rendered in the shadow pass                                  |                                              |
+| [shadowEntities](/reference/shadersproperties/ordering#shadowentities)                     | Sets whether entities are rendered in the shadow pass                                            |                                              |
 | [shadowPlayer](/reference/shadersproperties/ordering#shadowplayer)                         | Sets whether the player is rendered in the shadow pass                                           | <Badge text="Iris Exclusive" variant="tip"/> |
+| [shadowBlockEntities](/reference/shadersproperties/ordering#shadowblockentities)           | Sets whether block entities are rendered in the shadow pass                                      |                                              |
+| [shadowLightBlockEntities](/reference/shadersproperties/ordering#shadowlightblockentities) | Sets whether block entities that emit light are rendered in the shadow pass                      | <Badge text="Iris Exclusive" variant="tip"/> |
 | [skipAllRendering](/reference/shadersproperties/ordering#skipallrendering)                 | Enables or disables most gbuffers passes                                                         | <Badge text="Iris Exclusive" variant="tip"/> |
 | [voxelizeLightBlocks](/reference/shadersproperties/ordering#voxelizelightblocks)           | Renders light blocks as an invisible quad in the shadow pass so that they can be voxelized       | <Badge text="Iris Exclusive" variant="tip"/> |
-| [allowConcurrentCompute](/reference/shadersproperties/ordering#allowconcurrentcompute)     | Enables concurrent compute passes                                                                | <Badge text="Iris Exclusive" variant="tip"/> |
 | [indirect.pass](/reference/shadersproperties/ordering#indirectpass)                        | Allows you to dispatch a compute shader with the work group amount specified from a SSBO         | <Badge text="Iris Exclusive" variant="tip"/> |
+| [allowConcurrentCompute](/reference/shadersproperties/ordering#allowconcurrentcompute)     | Enables concurrent compute passes                                                                | <Badge text="Iris Exclusive" variant="tip"/> |
 
 
 ### Features / Options
@@ -103,11 +116,22 @@ Below is an index of shaders.properties directives available in Iris. Directives
 | [beacon.beam.depth](/reference/shadersproperties/rendering#beaconbeamdepth)  | Sets whether beacon beams write to the depth buffer                              |                                              |
 
 
-### Miscellaneous
-| Directive                                                                                         | Description                                                                           | Tag                                          |
-| ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | -------------------------------------------- |
-| [Feature Flags](/reference/shadersproperties/flags)                                               | An Iris system to query the activation state of certain features                      | <Badge text="Iris Exclusive" variant="tip"/> |
-| [Custom Uniforms](/reference/shadersproperties/custom_uniforms)                                   | Defines custom uniforms which are evaluated on the CPU and uploaded on program change |                                              |
-| [texture.noise](/reference/buffers/noisetex#custom-noise-texture)                                 | Defines custom uniforms which are evaluated on the CPU and uploaded on program change |                                              |
-| [Custom Textures](/reference/buffers/custom_textures)                                             | Binds a texture to a sampler for a specific stage                                     |                                              |
-| [Iris Enhanced Custom Textures](/reference/buffers/custom_textures#iris-enhanced-custom-textures) | Custom texture, but creates a new sampler                                             | <Badge text="Iris Exclusive" variant="tip"/> |
+### Custom Uniforms
+Custom uniforms can be used to create one-off values on the CPU, rather than having to compute them on the GPU. They are then uploaded to the GPU as uniforms, and are accessible from any shader program.
+
+| Directive                                                | Description                                                                           |
+| -------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| [uniform](/reference/shadersproperties/custom_uniforms)  | Defines a custom uniform which is evaluated on the CPU and uploaded on program change |
+| [variable](/reference/shadersproperties/custom_uniforms) | Defines a variable to be used in a custom uniform                                     |
+
+
+### Textures / Buffers
+These directives allow for setting up custom textures, images, and SSBOs. They are further described in the "Buffers" section (and linked here).
+
+| Directive                                                                         | Description                                                                           | Tag                                          |
+| --------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | -------------------------------------------- |
+| [texture](/reference/buffers/custom_textures)                                     | Creates a Custom texture, which binds an image/texture to an existing sampler         |                                              |
+| [texture.noise](/reference/buffers/noisetex#custom-noise-texture)                 | Loads an image from shader files into `noisetex`                                      |                                              |
+| [customTexture](/reference/buffers/custom_textures#iris-enhanced-custom-textures) | Creates an Enhanced Custom Texture, which binds an image/texture to a new sampler     | <Badge text="Iris Exclusive" variant="tip"/> |
+| [image](/reference/buffers/custom_images)                                         | Creates a custom image with a sampler                                                 | <Badge text="Iris Exclusive" variant="tip"/> |
+| [bufferObject](/reference/buffers/ssbo)                                           | Creates a Shader Storage Buffer Object (SSBO)                                         | <Badge text="Iris Exclusive" variant="tip"/> |
