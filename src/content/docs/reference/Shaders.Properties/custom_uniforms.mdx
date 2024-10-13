@@ -6,32 +6,32 @@ sidebar:
   order: 7
 ---
 
-##### `uniform.<float|int|bool|vec2|vec3|vec4>.<name>=<expression>`
-##### `variable.<float|int|bool|vec2|vec3|vec4>.<name>=<expression>`
-
-#### Location: shaders.properties
-
 Iris lets you define custom uniforms which are evaluated on the CPU and uploaded on program change, rather than in shader code. This reduces the amount of duplicated code or unnecessary texture reads/writes as shaders cannot directly access variables across files.
 
 Two types of values can be created: variables and uniforms. Uniforms are values which are calculated and uploaded to the GPU for shader programs to access. Variables are equivalent to uniforms, but are not uploaded to the GPU (they can be used as intermediate values).
+
+```properties
+uniform.<float|int|bool|vec2|vec3|vec4>.<name>=<expression>
+variable.<float|int|bool|vec2|vec3|vec4>.<name>=<expression>
+```
 
 
 ## Construction
 A uniform/variable can be either a `float`, `int`, `bool`, `vec2`, `vec3`, or `vec4` data type. Although you can access existing matrix uniforms, you cannot create custom matrix uniforms/variables.
 
 Uniforms and variables can be constructed from the following:
-- **Other uniform**s except dynamic uniforms (`entityColor`, `blockEntityId`, `fogMode`, `fogColor`, `chunkOffset`)
+- **Other uniforms** (except dynamic uniforms `entityColor`, `blockEntityId`, `fogMode`, `fogColor`, `chunkOffset`)
 - **Literals** (number/boolean value) and `pi`
-- Operators
+- **Operators**
   - float/int/vector: `+`, `-`, `*`, `/`, `%` (remainder)
   - boolean: `!`, `&&`, `||`
   - any: `>`, `>=`, `<`, `<=`, `==`, `!=`
-- Vector constructors (`vec2(x,y)`, `vec3(x,y,z)`, `vec4(x,y,z,w)`)
-- Functions (see table)
+- **Vector constructors** (`vec2(x,y)`, `vec3(x,y,z)`, `vec4(x,y,z,w)`)
+- **Functions** (see table)
 
 
 ## Element access
-Vector elements can be accessed similar to GLSL (`.xyzw`, `.rgba`, `stpq`, and `.0123`). Swizzling is not supported, so only a single element can be pulled, for example `cameraPosition.y` would return the y component of `cameraPosition`. Only vector uniforms and variables can be accessed this way, intermediate values cannot (e.g. `min(vec2(0.0, 1.0), vec2(1.0, 0.0)).x` is not allowed, instead store the result of the `min` to a variable and reference that with `.x`).
+Vector elements can be accessed similar to GLSL (`.xyzw`, `.rgba`, `stpq`, and `.0123`). Swizzling is not supported, so only a single element can be pulled, for example `cameraPosition.y` would return the y component of `cameraPosition`. Only vector uniforms and variables can be accessed this way, intermediate values cannot (for example `min(vec2(0.0, 1.0), vec2(1.0, 0.0)).x` is not allowed, instead store the result of the `min` to a variable first and pull the x component with `.x`).
 
 Matrix elements (from existing matrix uniforms only) can be accessed with the following syntax: `matrix.<row>.<column>` where `<row>` and `<column>` are replaced with the row/column index (starting at 0). For example `gbufferModelView.0.3` would return the value at the 1st row 4th column of `gbufferModelView`.
 
@@ -85,7 +85,7 @@ Unless otherwise noted, each function can take in a float or int and outputs the
 ## Examples
 Here, take some *yummy* ~~candy~~ examples! What, the white van? Ignore that, you like ~~candy~~ examples don't you?
 
-```
+```properties
 uniform.bool.isOakBiome    = in(biome, BIOME_FOREST, BIOME_DARK_FOREST)
 uniform.bool.isHotBiome    = in(biome_category, CAT_MESA, CAT_SAVANNA, CAT_DESERT)
 
