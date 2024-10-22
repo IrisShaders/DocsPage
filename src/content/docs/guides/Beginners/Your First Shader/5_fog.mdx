@@ -99,14 +99,14 @@ Like we did before, let's define a fog density. I have chosen 5.
 
 We can then update our fog blending to make use of this value.
 ```glsl
-float distance = length(viewPos) / far;
-float fogFactor = exp(-FOG_DENSITY * (1.0 - distance));
+float dist = length(viewPos) / far;
+float fogFactor = exp(-FOG_DENSITY * (1.0 - dist));
 
 color.rgb = mix(color.rgb, fogColor, clamp(fogFactor, 0.0, 1.0));
 ```
 
 :::caution[Warning]
-Note that we clamp the value of `fogFactor` between `0` and `1`. This is because the behaviour of `mix` is undefined if it is outside this range. Since the render distance in blocks is along three axes, blocks can be more than this distance away along the diagonals, so in some cases, `distance` could be more than `1`.
+Note that we clamp the value of `fogFactor` between `0` and `1`. This is because the behaviour of `mix` is undefined if it is outside this range. Since the render distance in blocks is along three axes, blocks can be more than this distance away along the diagonals, so in some cases, `dist` could be more than `1`.
 :::
 
 ![](../../../../../assets/beginner_tutorial/exponentialfog.webp)
