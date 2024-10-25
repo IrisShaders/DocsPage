@@ -29,10 +29,10 @@ Then you could check for this with
 #ifdef IRIS_FEATURE_BLOCK_EMISSION_ATTRIBUTE
 ```
 
-The following is an index of all supported feature flags. Any feature flag marked as "required for use" must be set in `iris.features.required` or `iris.features.optional` in order to use the feature, otherwise Iris will throw an error.
+The following is an index of all supported feature flags. Any feature flag marked as "**Required For Use**" must be set in `iris.features.required` or `iris.features.optional` in order to use the feature, otherwise Iris will throw an error.
 
 | Feature Flag                                   | Required For Use | Description |
-| ---------------------------------------------- | ---------------- | ----------- |
+| ---------------------------------------------- | :--------------: | ----------- |
 | `SEPARATE_HARDWARE_SAMPLERS`                   | ✔️               | Enables [Separate Hardware Shadow Samplers](/reference/buffers/shadowtex#hardware-sampling) |
 | `HIGHER_SHADOWCOLOR`                           | ✔️               | Enables [additional shadowcolor](/reference/buffers/shadowcolor#extended-shadowcolor) buffers |
 | `PER_BUFFER_BLENDING`                          | ❌               | Queries hardware support for per-buffer blending |
