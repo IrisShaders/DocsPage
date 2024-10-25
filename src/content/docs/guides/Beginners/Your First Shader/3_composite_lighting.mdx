@@ -70,8 +70,8 @@ So, to apply our lighting, we would then do something like `color.rgb *= ambient
 
 First, let's define some colors/brightnesses for each term. I chose the following on a whim.
 ```glsl
-const vec3 torchColor = vec3(1.0, 0.5, 0.08);
-const vec3 skyColor = vec3(0.05, 0.15, 0.3);
+const vec3 blocklightColor = vec3(1.0, 0.5, 0.08);
+const vec3 skylightColor = vec3(0.05, 0.15, 0.3);
 const vec3 sunlightColor = vec3(1.0);
 const vec3 ambientColor = vec3(0.1);
 ```
@@ -81,8 +81,8 @@ I have defined these before `main`, they are `const`s which means they are defin
 Let's get these values applied.
 
 ```glsl
-vec3 blocklight = lightmap.r * torchColor;
-vec3 skylight = lightmap.g * skyColor;
+vec3 blocklight = lightmap.r * blocklightColor;
+vec3 skylight = lightmap.g * skylightColor;
 vec3 ambient = ambientColor;
 vec3 sunlight = sunlightColor; // we will fix this in a minute
 
