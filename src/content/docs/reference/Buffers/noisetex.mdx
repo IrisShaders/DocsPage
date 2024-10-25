@@ -9,3 +9,11 @@ sidebar:
 ### `uniform sampler2D noisetex;`
 
 This buffer stores a generated RGB white noise texture. The resolution of this texture can be configured with the [`noiseTextureResolution`](/reference/constants/noisetextureresolution) constant, and defaults to 256x256. The texture is always square, meaning its width and height are equal.
+
+
+## Custom Noise Texture
+Similar to [Custom Textures](/reference/buffers/custom_textures), the `noisetex` texture can be overwritten with an image file from the shader files. The following line can be placed in [shaders.properties](/reference/shadersproperties/overview), where `<path>` is replaced with the file path of the image file relative to the "shaders" folder:
+
+```properties title="shaders.properties"
+texture.noise=<path>
+```

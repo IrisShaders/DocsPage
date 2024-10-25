@@ -56,14 +56,14 @@ As the name suggests, compute only programs only support compute shaders. The on
 ## Compute Shaders
 Compute shaders break the OpenGL fixed pipeline and allow more direct access to graphics hardware. For more information, see the [Khronos Wiki](https://www.khronos.org/opengl/wiki/Compute_Shader).
 
-In Iris, compute shaders can be used in compute only pass, or included in composite-style passes, using the `.csh` file extension. In composite-style passes, compute shaders will always execute first (before the vertex stage if present). Up to 27 compute shaders files can be included in a single pass by appending the `_a` through `_z` suffixes to the filename in addition to a shader file with no suffix. These shaders will execute one after the other in alphabetical order (starting with the no-suffix file if present), unless [`allowConcurrentCompute`](/reference/shadersproperties/allowconcurrentcompute) is used (in which case they will execute potentially simultaneously but will all finish before starting the vertex stage).
+In Iris, compute shaders can be used in compute only pass, or included in composite-style passes, using the `.csh` file extension. In composite-style passes, compute shaders will always execute first (before the vertex stage if present). Up to 27 compute shaders files can be included in a single pass by appending the `_a` through `_z` suffixes to the filename in addition to a shader file with no suffix. These shaders will execute one after the other in alphabetical order (starting with the no-suffix file if present), unless [`allowConcurrentCompute`](/reference/shadersproperties/ordering#allowconcurrentcompute) is used (in which case they will execute potentially simultaneously but will all finish before starting the vertex stage).
 
 Local size is defined as follows: `layout (local_size_x = <size_x>, local_size_y = <size_x>, local_size_y = <size_z>) in;`.
 
 Work group count can be defined one of three ways:
 1. **Fixed size**: a const in shader file [`const ivec3 workGroups`](/reference/constants/workgroups)
 2. **Screen size**: calculate work groups as a multiplier of screen resolution, a const in shader file [`const vec2 workGroupsRender`](/reference/constants/workgroupsrender)
-3. **Indirect**: specify work groups in an SSBO through [`indirect.pass`](/reference/shadersproperties/indirect_pass)
+3. **Indirect**: specify work groups in an SSBO through [`indirect.pass`](/reference/shadersproperties/ordering#indirectpass)
 
 If no work group count is provided, the default value of one work group per pixel will be used (`const vec2 workGroupsRender = vec2(1.0, 1.0);`).
 

@@ -47,7 +47,7 @@ The following programs are added by Iris. These programs pull geometry from thei
 | gbuffers program               | geometry                                                                                                                     | fallback program      |
 |--------------------------------|------------------------------------------------------------------------------------------------------------------------------|-----------------------|
 | gbuffers_particles             | particles                                                                                                                    | gbuffers_textured_lit |
-| gbuffers_particles_translucent | particles that support translucency (requires [`particles.ordering=mixed`](/reference/shadersproperties/particles_ordering)) | gbuffers_particles    |
+| gbuffers_particles_translucent | particles that support translucency (requires [`particles.ordering=mixed`](/reference/shadersproperties/ordering#particlesordering)) | gbuffers_particles    |
 | gbuffers_block_translucent     | translucent block entities                                                                                                   | gbuffers_block        |
 | gbuffers_entities_translucent  | translucent entities                                                                                                         | gbuffers_entities     |
 | gbuffers_terrain_solid         | solid terrain (no cutout or translucency)                                                                                    | gbuffers_terrain      |
@@ -58,7 +58,7 @@ The following programs are added by Iris. These programs pull geometry from thei
 ### Translucent Gbuffers and Deferred
 The general concept behind the [deferred](/reference/programs/deferred) pass is that opaque geometry is rendered before [deferred](/reference/programs/deferred) and translucent geometry is rendered after [deferred](/reference/programs/deferred). The intent is that the [deferred](/reference/programs/deferred) programs can handle deferred rendering for opaque geometry, and translucent geometry can either be forward rendered in gbuffers or deferred rendered separately from opaques in a [composite](/reference/programs/composite) program.
 
-In practice, using the old Optifine programs this was not always the case though. By default,`gbuffers_weather`, `gbuffers_water`, and `gbuffers_hand_water` are the only programs that render after [deferred](/reference/programs/deferred), meaning that translucent entities, block entities, and particles were all rendered before deferred. This is why Iris adds `gbuffers_particles_translucent`, `gbuffers_block_translucent`, and `gbuffers_entities_translucent`, and uses [`particles.ordering`](/reference/shadersproperties/particles_ordering) to handle the order particles are rendered.
+In practice, using the old Optifine programs this was not always the case though. By default,`gbuffers_weather`, `gbuffers_water`, and `gbuffers_hand_water` are the only programs that render after [deferred](/reference/programs/deferred), meaning that translucent entities, block entities, and particles were all rendered before deferred. This is why Iris adds `gbuffers_particles_translucent`, `gbuffers_block_translucent`, and `gbuffers_entities_translucent`, and uses [`particles.ordering`](/reference/shadersproperties/ordering#particlesordering) to handle the order particles are rendered.
 
 
 ### Notes on specific geometry

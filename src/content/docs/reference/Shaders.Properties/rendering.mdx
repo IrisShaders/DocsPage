@@ -1,0 +1,153 @@
+---
+title: "Rendering"
+description: "Rendering"
+sidebar:
+  label: "Rendering"
+  order: 6
+---
+import { Badge } from '@astrojs/starlight/components';
+
+This page lists [shaders.properties](/reference/shadersproperties/overview) rendering options including alpha tests and blending, buffer sizes and flipping, depth writing, culling, and more.
+
+## alphaTest
+```properties
+alphaTest.<program>=<off|func ref>
+```
+This directive is used to control the alpha test for cutout programs. For the compatibility profile the alpha test is applied automatically when using `gl_FragData` or `gl_FragColor`. For the newer syntax, only the reference value is passed through [`alphaTestRef`](/reference/uniforms/rendering#alphatestref) and the function must be implemented by the shader.
+
+Replace:
+- `<program>` with a gbuffers program name, including the dimension folder if relevant (e.g. `world0/composite2`). This does not work with Iris custom dimensions however.
+- `<off|func ref>` with `off` to disable alpha testing, or replace `func` with one of the following functions: `NEVER`, `LESS`, `EQUAL`, `LEQUAL`, `GREATER`, `NOTEQUAL`, `GEQUAL`, `GL_ALWAYS`. Replace `<ref>` with a reference value. The alpha value of the primary output will then be compared to this reference value using the function defined in `func`, and if it does not pass the value will be discarded (not written to the output buffer).
+
+----------------
+
+
+## blend
+```properties
+blend.<program>=<off|src dst srcA dstA>
+```
+Controls the alpha blending for a specific gbuffers program, and optionally per-buffer.
+
+Replace:
+- `<program>` with a gbuffers program
+
+Setting the value to `off` will disable alpha blending, otherwise the blending parameters are specified:
+- `src` is the source color multiplier
+- `dst` is the destination color multiplier
+- `srcA` is the source alpha multiplier
+- `dstA` is the destination alpha multiplier
+
+Each of the parameters should be filled with one of the following: `ZERO`, `ONE`, `SRC_COLOR`, `ONE_MINUS_SRC_COLOR`, `DST_COLOR`, `ONE_MINUS_DST_COLOR`, `SRC_ALPHA`, `ONE_MINUS_SRC_ALPHA`, `DST_ALPHA`, `ONE_MINUS_DST_ALPHA`, `SRC_ALPHA_SATURATE`.
+
+The default alpha blending parameters for transparent geometry are: `SRC_ALPHA`, `ONE_MINUS_SRC_ALPHA`, `ONE`, `ONE_MINUS_SRC_ALPHA` respectively.
+
+More info on alpha blending can be found at the [Khronos Wiki](https://www.khronos.org/opengl/wiki/Blending)
+
+
+### Per-Buffer Blending
+```properties
+blend.<program>.<buffer>=<off|src dst srcA dstA>
+```
+
+By specifying a buffer name (e.g. colortex5) in `<buffer>` you can apply the blending to a specific buffer only. Any buffers that aren't specified will use the program's blending attributes (see above).
+
+----------------
+
+
+## scale
+```properties
+scale.<program>=<scale|scale offsetX ofsetY>
+```
+Defines a new viewport for a composite style program. This does not affect the resolution of the output buffer, it only impacts the vertex position attribute, therefore only changing the portion of the texture which is rendered to. The same effect can be achieved by manually modifying the position in the vertex stage, this directive simply offers a different interface for changing the viewport.
+
+Replace:
+- `<program>` with a composite style program (composite, deferred, prepare, etc.)
+- `<scale>` with a scaling factor from `0.0` to `1.0` which affects both axes
+- optionally `<offsetX>` and `<offsetY>` with the horizontal offset in each direction from `0.0` to `1.0`
+
+----------------
+
+
+## flip
+```properties
+flip.<program>.<bufferName>=<true|false>
+```
+For each color attachment sampler, there is actually two buffers, the "main" and "alt" buffers. [`gbuffers`](/reference/programs/gbuffers) and [`shadow`](/reference/programs/shadow) programs read from the "main" buffer and write to the "main" buffer, which means that reading to and writing from the same buffer will cause artifacting. [`begin`](/reference/programs/begin), [`shadowcomp`](/reference/programs/shadow_comp), [`prepare`](/reference/programs/prepare), [`deferred`](/reference/programs/deferred), and [`composite`](/reference/programs/composite) passes however read from the "main" buffer and write to the "alt" buffer, allowing them to read and write to the same buffer, and after that program the "main" and "alt" buffers are swapped so data written by the current program is read by the next program.
+
+This behavior can be controlled with the `flip.<program>.<bufferName>` directive. Replace `<program>` with the program name (i.e. `composite2`), `<bufferName>` with the sampler name (i.e. `colortex5`), setting the value to `false` will disable the buffer flip that would happen before the start of that program. The default behavior is for buffer flipping to be enabled for all programs.
+
+----------------
+
+
+## size.buffer
+```properties
+size.buffer.<bufferName>=<width> <height>
+```
+The resolution of [colortex](/reference/buffers/colortex) buffers can be configured with this directive in `shaders.properties`. Replace `<bufferName>` with the name of the buffer (e.g. `colortex5`), then replace `<width>` and `<height>` with the resolution of the buffer. If the passed dimensions are integer, that will define the resolution of the buffer in pixels. If the dimensions are floating point, it will define the resolution of the buffer relative to the screen resolution. For example, `size.buffer.colortex5=0.75 0.25` will make `colortex5` three quarters the width and one quarter the height of the Minecraft window.
+
+Any buffer whose size is changed cannot be rendered to by a [`gbuffers`](/reference/programs/gbuffers) pass, meaning it can only be rendered to through a [`begin`](/reference/programs/begin), [`prepare`](/reference/programs/prepare), [`deferred`](/reference/programs/deferred), or [`composite`](/reference/programs/composite) program. Additionally, any individual program can only render to buffers with identical sizes. This exception does not apply to image bindings or compute programs.
+
+----------------
+
+
+## backFace
+```properties
+backFace.solid=<true|false>
+backFace.cutout=<true|false>
+backFace.cutoutMipped=<true|false>
+backFace.translucent=<true|false>
+```
+Enables or disables back-face culling for each type of rendering. This culls geometry which is facing away from the camera, improving performance. Back-face culling is enabled by default.
+
+----------------
+
+
+## frustum.culling
+```properties
+frustum.culling=<true|false>
+```
+Enables or disables frustum culling, which culls geometry which is outside the view frustum (i.e. off screen). Frustum culling is enabled by default.
+
+----------------
+
+
+## occlusion.culling <Badge text="Iris Exclusive" variant="tip" size="medium" />
+```properties
+occlusion.culling=<true|false>
+```
+Disables occlusion culling, which culls geometry which is behind other opaque geometry. Only applies to the main pass ([gbuffers](/reference/programs/gbuffers)).
+
+Notably this affects whether caves are rendered when above ground, and whether the surface is rendered when deep in a cave. Disabling this may help reduce light leaking in caves by covering the top of the shadow map with the surface. However this also renders dramatically more terrain which can hurt performance.
+
+----------------
+
+
+## shadow.culling
+```properties
+shadow.culling=<true|false|reversed>
+```
+Controls culling in the [`shadow`](/reference/programs/shadow) pass. Enabling it will prevent geometry which would not cast a shadow through the view frustum from rendering. Disabling it will prevent any geometry within the shadow distance from being culled.
+
+Iris adds an additional option, `reversed`, which disables culling within a specific radius of the player as defined in [`voxelDistance`](/reference/constants/voxeldistance), while retaining culling outside of that distance. It is also recommended (but not required) to use the feature flag [`REVERSED_CULLING`](/reference/shadersproperties/flags) to avoid compatibility issues with older Iris versions.
+
+----------------
+
+
+## rain.depth
+```properties
+rain.depth=<true|false>
+```
+Sets whether rain/snow write to the [depth buffer](/reference/buffers/depthtex). If `true`, weather will be treated like translucent geometry and only write to `depthtex0`. This setting is `false` by default.
+
+----------------
+
+
+## beacon.beam.depth
+```properties
+beacon.beam.depth=<true|false>
+```
+Sets whether beacon beams write to the [depth buffer](/reference/buffers/depthtex). If `true`, the inner beacon beam will be treated like opaque geometry and only write toall depthtex buffers. This only applies to the opaque inner geometry of the beacon beam and not the outer translucent geometry. This setting is `false` by default.
+
+----------------
+
+
