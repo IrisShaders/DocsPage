@@ -1,0 +1,156 @@
+---
+title: Camera and Player Model Uniforms
+description: Uniforms related to the camera and player model.
+sidebar:
+  label: Camera/Player
+  order: 2
+---
+import { Badge } from '@astrojs/starlight/components';
+
+These uniforms store information about the camera and player model, including camera/player position, first person camera settings, and lighting values at the camera, and more.
+
+
+## cameraPosition
+```glsl
+uniform vec3 cameraPosition;
+```
+This uniform stores the position of the camera in world space.
+
+This is similar to the in game coordinates, except for precision reasons the value is wrapped after a large number of blocks. In modern Iris, the value will reset every `30000` blocks when walking, or if the player has teleported more than `1000` blocks. Optifine resets every `1000024` blocks.
+
+For more information on spaces, visit this [how to article](/how_to/spaces) on the different spaces.
+
+----------------
+
+
+## eyeAltitude
+```glsl
+uniform float eyeAltitude;
+```
+This uniform stores the float value of the altitude of the player, stored in blocks. This is equivalent to [`cameraPosition.y`](/reference/uniforms/camera#cameraposition). This value matches the one displayed on the `f3` screen. For more information visit the [Minecraft Wiki](https://minecraft.wiki/w/Altitude) article on altitude.
+
+----------------
+
+
+## cameraPositionFract <Badge text="Iris Exclusive" variant="tip" size="medium" />
+```glsl
+uniform vec3 cameraPositionFract;
+```
+This uniform stores the fractional component (`0` to `1`) of the position of the player camera. This value is intended to be used with [`cameraPositionInt`](/reference/uniforms/camera#camerapositionint) to determine the exact player camera position without precision errors.
+
+----------------
+
+
+## cameraPositionInt <Badge text="Iris Exclusive" variant="tip" size="medium" />
+```glsl
+uniform ivec3 cameraPositionInt;
+```
+This uniform stores the integer component (truncated value) of the position of the player camera. Unlike [`cameraPosition`](/reference/uniforms/camera#cameraposition), this value is not shifted.
+
+----------------
+
+
+## previousCameraPosition
+```glsl
+uniform vec3 previousCameraPosition;
+```
+This value is the [`cameraPosition`](/reference/uniforms/camera#cameraposition) uniform value from the previous frame.
+
+----------------
+
+
+## previousCameraPositionFract <Badge text="Iris Exclusive" variant="tip" size="medium" />
+```glsl
+uniform vec3 previousCameraPositionFract;
+```
+This value is the [`cameraPositionFract`](/reference/uniforms/camera#camerapositionfract) uniform value from the previous frame.
+
+----------------
+
+
+## previousCameraPositionInt <Badge text="Iris Exclusive" variant="tip" size="medium" />
+```glsl
+uniform ivec3 previousCameraPositionInt;
+```
+This value is the [`cameraPositionInt`](/reference/uniforms/camera#camerapositionint) uniform value from the previous frame.
+
+----------------
+
+
+## eyePosition <Badge text="Iris Exclusive" variant="tip" size="medium" />
+```glsl
+uniform vec3 eyePosition;
+```
+This value stores the world space position of the player's head model. When in first person view, this is equivalent to [`cameraPosition`](/reference/uniforms/camera#cameraposition). However in third person mode the two will differ as the camera and player's head are now in different locations.
+
+----------------
+
+
+## relativeEyePosition <Badge text="Iris Exclusive" variant="tip" size="medium" />
+```glsl
+uniform vec3 relativeEyePosition;
+```
+This value stores the world space offset from the player model's head position to the camera's position(ie [`cameraPosition`](/reference/uniforms/camera#cameraposition)`-`[`eyePosition`](/reference/uniforms/camera#eyeposition)).
+
+----------------
+
+
+## playerBodyVector <Badge text="Iris Exclusive" variant="tip" size="medium" />
+```glsl
+uniform vec3 playerBodyVector;
+```
+This value is intended to store the world aligned direction the player model's body is facing, although this behavior is currently broken and reads the same value as [`playerLookVector`](/reference/uniforms/camera#playerlookvector).
+
+----------------
+
+
+## playerLookVector <Badge text="Iris Exclusive" variant="tip" size="medium" />
+```glsl
+uniform vec3 playerLookVector;
+```
+This value stores the world aligned direction the player model's head is facing. This facing direction is not affected by animations such as swimming, making this value equivalent to the direction the camera is facing in first person and rear third person views, and the reverse of the camera direction in front third person view.
+
+----------------
+
+
+## upPosition
+```glsl
+uniform vec3 upPosition;
+```
+This uniform stores the vector pointing upwards (in the world) in [view space](/how_to/spaces). This value can also be pulled from [`gbufferModelView[1].xyz`](/reference/uniforms/matrices#gbuffermodelview). The length of this adds up to 100 (`normalizedValue * 100`).
+
+----------------
+
+
+## eyeBrightness
+```glsl
+uniform ivec2 eyeBrightness;
+```
+The lightmap value at the player's location. The `x` component stores the block light and the `y` component stores the sky light. The value is stored in the range [0-240].
+
+----------------
+
+
+## eyeBrightnessSmooth
+```glsl
+uniform ivec2 eyeBrightnessSmooth;
+```
+This uniform stores the value of [`eyeBrightness`](/reference/uniforms/camera#eyebrightness), smoothed over time. The speed of the smoothing can be controlled with [`eyeBrightnessHalflife`](/reference/constants/eyebrightnesshalflife).
+
+----------------
+
+
+## centerDepthSmooth
+```glsl
+uniform float centerDepthSmooth;
+```
+This uniform stores the value in the depth buffer `depthtex0` at the center of the screen, smoothed over time. The speed of the smoothing can be controlled with [`centerDepthHalflife`](/reference/constants/centerdepthhalflife).
+
+----------------
+
+
+## firstPersonCamera
+```glsl
+uniform bool firstPersonCamera;
+```
+This value is `true` when the player is in the first person camera view and `false` in any third person camera view.
