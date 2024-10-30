@@ -24,7 +24,7 @@ Additionally, you can read and write to the first 6 colortex buffer in Optifine 
 These buffers default to the display resolution, although this can be configured with the [`size.buffer`](/reference/shadersproperties/rendering#sizebuffer) define in shaders.properties. However, changing the buffer size will prevent any [`gbuffer`](/reference/programs/gbuffers) program from writing to the texture.
 
 #### Buffer format/precision
-All buffers default to `RGBA` format (which is `RGBA8` on most systems), but this can be configured as described in the [Texture Formats](/reference/buffers/texture_format) section.
+All buffers default to `RGBA` format (which is `RGBA8` on most systems), but this can be configured as described in the [Texture Formats](/reference/buffers/image_format) section.
 
 #### Buffer clear
 By default all buffers clear their values after each frame to solid black (all 0s including alpha), except `colortex0` which clears to the [`fogColor`](/reference/uniforms/rendering#fogcolor) with 1.0 alpha, and `colortex1` which clears to solid white (all 1s including alpha). This clearing behavior can be configured with the [`colortexNClear`](/reference/constants/buffer_clear) directive, and the clear color can be configured with the [`colortexNClearColor`](/reference/constants/buffer_clear_color) directive.
