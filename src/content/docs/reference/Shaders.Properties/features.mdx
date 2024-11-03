@@ -112,4 +112,12 @@ By default, Iris will assume all shaders output sRGB, and if a different color s
 
 ----------------
 
+## weather <Badge text="Iris Exclusive" variant="tip" size="medium" />
+```properties
+weather=<weatherGeometryEnabled> <splashParticlesEnabled>
+```
+Enables or disables weather (rain & snow) geometry and rain splash particles. Both components are `true` by default.
 
+This directive requires an Iris version supporting [`CAN_DISABLE_WEATHER`](/reference/shadersproperties/flags), and is recommended to be used with that feature flag specified.
+
+----------------
