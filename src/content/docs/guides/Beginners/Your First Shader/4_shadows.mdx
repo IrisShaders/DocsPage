@@ -53,7 +53,7 @@ void main() {
 ```
 
 :::caution[Warning]
-Notice that there is no `DRAWBUFFERS` declaration in the fragment shader. This is because the buffers you write to from the shadow pass are predetermined, and you cannot write to `colortex` buffers from it. By writing to location 0, we are writing to `shadowcolor0`. By default we can write to `shadowcolor0` and `shadowcolor1`.
+Notice that there is no `RENDERTARGETS` declaration in the fragment shader. This is because the buffers you write to from the shadow pass are predetermined, and you cannot write to `colortex` buffers from it. By writing to location 0, we are writing to `shadowcolor0`. By default we can write to `shadowcolor0` and `shadowcolor1`.
 :::
 
 This is actually all we need to get Iris rendering a shadow map. Let's now go back to our `composite` pass.

@@ -147,14 +147,27 @@ if (color.a < 0.1) { // alpha test
 - Finally, if the color's alpha (transparency) is less than 0.1, we `discard`, which tells the shader program to return and not write anything. This potentially saves us some texture writes.
 
 ## Writing Extra Data
-So, since we are going to do lighting in `composite`, we need to send the normal and the lightmap data to it. We do this by storing it in a texture. Let's append our `DRAWBUFFERS` so we can write to more textures, and bind some variables to these other two textures.
+So, since we are going to do lighting in `composite`, we need to send the normal and the lightmap data to it. We do this by storing it in a texture. Let's append our `RENDERTARGETS` so we can write to more textures, and bind some variables to these other two textures.
 
 ```glsl
-/* DRAWBUFFERS:012 */
+/* RENDERTARGETS: 0,1,2 */
 layout(location = 0) out vec4 color;
 layout(location = 1) out vec4 lightmapData;
 layout(location = 2) out vec4 encodedNormal;
 ```
+
+:::caution[Warning]
+It is important to note that `location = 0` is not because we are writing to `colortex0`, but because the first element in the `RENDERTARGETS` directive is at index 0. For example, if we had `/* RENDERTARGETS: 5,3 */`, then we would have
+```glsl
+layout(location = 0) out vec4 someData; // writes to colortex5
+layout(location = 1) out vec4 someMoreData; // writes to colortex3
+```
+:::
+
+
+:::note[Note]
+Iris implements by default something known as 'buffer flipping'. This means that the texture you write to is not actually the same one you read from. This is because different instances of the shader might run at different times and if multiple of them try to access the same pixel, the output could be different depending on which one gets to it first. For more information, see [the docs](/reference/shadersproperties/rendering#flip)
+:::
 
 Finally, in main, let's write this data to the textures, so we can access it in `composite`.
 

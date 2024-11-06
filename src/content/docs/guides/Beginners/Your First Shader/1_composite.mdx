@@ -122,29 +122,16 @@ in vec2 texcoord
 This is where we recieve the `texcoord` passed `out` in the vertex shader. This tells us what pixel to sample from `colortex0`.
 
 ```glsl
-/* DRAWBUFFERS:0 */
+/* RENDERTARGETS: 0 */
 ```
 
-This is a comment that the Iris patcher reads. It tells the shader to write back to `colortex0`. For more info, see [the docs](/reference/constants/drawbuffers/).
+This is a comment that the Iris patcher reads. It tells the shader to write back to `colortex0`. For more info, see [the docs](/reference/constants/rendertargets).
 
 ```glsl
 layout(location = 0) out vec4 color;
 ```
 
 This declares a variable `color` which at the end of the shader will be written to `colortex0`.
-
-:::caution[Warning]
-It is important to note that `location = 0` is not because we are writing to `colortex0`, but because the first element in the `DRAWBUFFERS` directive is at index 0. For example, if we had `/* DRAWBUFFERS:53 */`, then we would have
-```glsl
-layout(location = 0) out vec4 someData; // writes to colortex5
-layout(location = 1) out vec4 someMoreData; // writes to colortex3
-```
-:::
-
-
-:::note[Note]
-Iris implements by default something known as 'buffer flipping'. This means that the texture you write to is not actually the same one you read from. This is because different instances of the shader might run at different times and if multiple of them try to access the same pixel, the output could be different depending on which one gets to it first. For more information, see [the docs](/reference/shadersproperties/rendering#flip)
-:::
 
 ```glsl
 color = texture(colortex0, texcoord);
