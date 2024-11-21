@@ -108,7 +108,7 @@ Remember how by default, Minecraft uses a texture with colors for each light lev
 Next, you'll notice that we are writing to `colortex0`. This is generally where most shaders store the main image, with supplementary info in the other buffers. For example, you could store the light levels in `colortex1`, and use them for lighting in `composite`. In fact, we are going to do exactly that.
 
 :::note[Info]
-You might be wondering why you'd do lighting in a fullscreen pass, when you could just do it here and now and save writing to a buffer. This is known as *forward rendering*, and while simpler, there are a few downsides. Doing our lighting requires everything rendered by gbuffers to be lit. As our lighting code gets more complicated, this can add significant overhead.
+You might be wondering why you'd do lighting in a fullscreen pass, when you could just do it here and now and save writing to a buffer. This is known as *forward rendering*, and while simpler, there are a few downsides. Doing our lighting requires everything rendered by gbuffers to be lit. As our lighting code gets more complicated, this can add significant overhead. Instead, we will be doing *deferred rendering*, where the lighting calculations are run once all geometry has been rendered, ensuring that only things which are visible onscreen get the expensive lighting calculations.
 :::
 
 ## Normals
