@@ -1,12 +1,16 @@
 ---
-title: Final
-description: Final Program
+title: final
+description: Runs after all other shader programs.
 sidebar:
-  label: Final
-  order: 9
-  badge:
-    text: Unfinished
-    variant: caution
+  label: final
+  order: 10
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+**Required stages**: vertex (.vsh), fragment (.fsh)  
+**Optional Stages**: geometry (.gsh), compute (.csh)  
+**Output Buffers**: backbuffer (screen output)  
+**Valid suffixes**: N/A
+
+-------------------------------------------------
+
+A composite pass that runs at the very end of the pipeline and outputs to the backbuffer (which gets written to the screen) rather than a [colortex](/reference/buffers/colortex) buffer. Like other composite programs, it renders a single fullscreen quad over the resolution of the backbuffer. Notably, the output resolution will always be the resolution of the Minecraft window, regardless of the resolution of any other buffers or scaling factors.

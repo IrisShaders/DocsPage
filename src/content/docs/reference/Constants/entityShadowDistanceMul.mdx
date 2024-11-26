@@ -1,0 +1,16 @@
+---
+title: entityShadowDistanceMul
+description: Controls the bounds for entity shadows to be rendered.
+sidebar:
+  label: entityShadowDistanceMul
+  order: 3
+  badge:
+    text: Iris Only
+    variant: tip
+---
+
+### `const float entityShadowDistanceMul = 1.0;`
+
+#### Location: composite, deferred, final, prepare
+
+This value controls the bounds for entity shadows to be rendered. By default, it is the value set for terrain. Any floating point number that is not 1 is multiplied by the terrain distance to get the final shadow distance multiplier.

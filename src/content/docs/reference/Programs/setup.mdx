@@ -1,12 +1,17 @@
 ---
-title: Setup
-description: Setup Program
+title: setup
+description: A compute only pass which runs when the shader is loaded or the screen is resized.
 sidebar:
-  label: Setup
-  order: 1
+  label: setup
+  order: 2
   badge:
-    text: Unfinished
-    variant: caution
+    text: Iris Only
+    variant: tip
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+**Required stages**: compute (.csh)  
+**Valid suffixes**: N/A, 1-99
+
+-------------------------------------------------
+
+An Iris exclusive compute pass. It is run during the pack load or when the screen size changes. Unlike other shader passes, setup only supports compute shaders.

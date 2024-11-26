@@ -1,0 +1,102 @@
+---
+title: Custom Uniforms
+description: Iris lets you define custom uniforms which are evaluated on the CPU and uploaded on program change.
+sidebar:
+  label: Custom Uniforms
+  order: 7
+---
+
+Iris lets you define custom uniforms which are evaluated on the CPU and uploaded on program change, rather than in shader code. This reduces the amount of duplicated code or unnecessary texture reads/writes as shaders cannot directly access variables across files.
+
+Two types of values can be created: variables and uniforms. Uniforms are values which are calculated and uploaded to the GPU for shader programs to access. Variables are equivalent to uniforms, but are not uploaded to the GPU (they can be used as intermediate values).
+
+```properties
+uniform.<float|int|bool|vec2|vec3|vec4>.<name>=<expression>
+variable.<float|int|bool|vec2|vec3|vec4>.<name>=<expression>
+```
+
+
+## Construction
+A uniform/variable can be either a `float`, `int`, `bool`, `vec2`, `vec3`, or `vec4` data type. Although you can access existing matrix uniforms, you cannot create custom matrix uniforms/variables.
+
+Uniforms and variables can be constructed from the following:
+- **Other uniforms** (except dynamic uniforms `entityColor`, `blockEntityId`, `fogMode`, `fogColor`, `chunkOffset`)
+- **Literals** (number/boolean value) and `pi`
+- **Operators**
+  - float/int/vector: `+`, `-`, `*`, `/`, `%` (remainder)
+  - boolean: `!`, `&&`, `||`
+  - any: `>`, `>=`, `<`, `<=`, `==`, `!=`
+- **Vector constructors** (`vec2(x,y)`, `vec3(x,y,z)`, `vec4(x,y,z,w)`)
+- **Functions** (see table)
+
+
+## Element access
+Vector elements can be accessed similar to GLSL (`.xyzw`, `.rgba`, `stpq`, and `.0123`). Swizzling is not supported, so only a single element can be pulled, for example `cameraPosition.y` would return the y component of `cameraPosition`. Only vector uniforms and variables can be accessed this way, intermediate values cannot (for example `min(vec2(0.0, 1.0), vec2(1.0, 0.0)).x` is not allowed, instead store the result of the `min` to a variable first and pull the x component with `.x`).
+
+Matrix elements (from existing matrix uniforms only) can be accessed with the following syntax: `matrix.<row>.<column>` where `<row>` and `<column>` are replaced with the row/column index (starting at 0). For example `gbufferModelView.0.3` would return the value at the 1st row 4th column of `gbufferModelView`.
+
+## Functions
+The following functions are available to use in custom uniforms/variables.
+
+| Function                                          | Description                                                                                            |
+| ------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| `torad(deg)` / `radians(deg)`                     | Degrees to radians                                                                                     |
+| `todeg(rad)` / `degrees(rad)`                     | Radians to degrees                                                                                     |
+| `sin(x)`                                          | Sine                                                                                                   |
+| `cos(x)`                                          | Cosine                                                                                                 |
+| `tan(x)`                                          | Tangent                                                                                                |
+| `asin(x)`                                         | Inverse sine                                                                                           |
+| `acos(x)`                                         | Inverse cosine                                                                                         |
+| `atan(x)`                                         | Inverse tangent                                                                                        |
+| `atan(y, x)` / `atan2(y, x)`                      | Inverse tangent with 2 parameters                                                                      |
+| `exp(x)`                                          | Exponential (e^x)                                                                                      |
+| `pow(x, y)`                                       | Power exponential (x^y)                                                                                |
+| `exp2(x)`                                         | Power of 2 exponential (2^x)                                                                           |
+| `exp10(x)`                                        | Power of 10 exponential (10^x)                                                                         |
+| `log(x)`                                          | Natural logarithm (ln)                                                                                 |
+| `log(base, value)`                                | Arbitrary base logarithm (log base)                                                                    |
+| `log2(x)`                                         | Base 2 logarithm (log base 2)                                                                          |
+| `log10(x)`                                        | Base 10 logarithm (log base 10)                                                                        |
+| `sqrt(x)`                                         | Square root                                                                                            |
+| `abs(x)`                                          | Absolute value                                                                                         |
+| `sign(x)` / `signum(x)`                           | Sign of `x` (either `-1`, `0`, or `1`)                                                                 |
+| `floor(x)`                                        | Floor (nearest integer \<= `x`)                                                                        |
+| `ceil(x)`                                         | Ceil (nearest integer \>= `x`)                                                                         |
+| `frac(x)`                                         | Fractional component (after decimal point)                                                             |
+| `min(x, y)`                                       | Minimum value                                                                                          |
+| `max(x, y)`                                       | Maximum value                                                                                          |
+| `clamp(x, min, max)`                              | Clamp `x` between `min` and `max`                                                                      |
+| `mix(x, y, a)`                                    | Linear interpolation between `x` and `y` by `a`                                                        |
+| `edge(k, x)`                                      | `0` if `x < k`, otherwise `1` (equivalent to GLSL `step`)                                              |
+| `fmod(x, y)`                                      | Floor modulus (`x - y * floor(x/y)`)                                                                   |
+| `random()`                                        | Random float between `0` (inclusive) and `1` (exclusive) generated each frame                          |
+| `random(min, max)`                                | Random float between `min` (inclusive) and `max` (exclusive) generated each frame                      |
+| `randomInt()`                                     | Random integer between `-2147483648` and `2147483647` generated each frame                             |
+| `randomInt(min, max)`                             | Random integer between `min` and `max-1` generated each frame                                          |
+| `if(cond, val, [cond2, val2, ...], val_else)`     | Returns the first `val` whose boolean `cond` is true, otherwise return `val_else`                      |
+| `smooth([id], val, [fadeUpTime, [fadeDownTime]])` | Smooths `val` over time, fade times are halflife in ticks (default 1 tick), `id` is optional unique ID |
+| `between(a, min, max)`                            | `true` if `a` is between `min` and `max` inclusive, otherwise `false`                                  |
+| `equals(a, b, epsilon)`                           | `true` if `abs(a-b) <= epsilon`, `false` otherwise                                                     |
+| `in(x, val1, val2, ...)`                          | `true` if `x` equals any val, `false` otherwise                                                        |
+
+Unless otherwise noted, each function can take in a float or int and outputs the same type. In addition, the following functions can work with vector inputs/output: `abs`, `floor`, `ceil`, `min`, `max`, `clamp`, `smooth`.
+
+
+## Examples
+Here, take some *yummy* ~~candy~~ examples! What, the white van? Ignore that, you like ~~candy~~ examples don't you?
+
+```properties
+uniform.bool.isOakBiome    = in(biome, BIOME_FOREST, BIOME_DARK_FOREST)
+uniform.bool.isHotBiome    = in(biome_category, CAT_MESA, CAT_SAVANNA, CAT_DESERT)
+
+uniform.float.sprintFactor = smooth(if(is_sprinting, 1.0, 0.0), 2, 0.25)
+
+uniform.float.sunHeight    = sin(2.0*pi * sunAngle)
+
+variable.float.waterColorR = if(in(biome, BIOME_SWAMP), 0.38,  in(biome, BIOME_LUKEWARM_OCEAN, BIOME_DEEP_LUKEWARM_OCEAN), 0.271, in(biome, BIOME_WARM_OCEAN), 0.263, in(biome, BIOME_COLD_OCEAN, BIOME_DEEP_COLD_OCEAN, BIOME_SNOWY_TAIGA, BIOME_SNOWY_BEACH), 0.239, in(biome, BIOME_FROZEN_RIVER, BIOME_FROZEN_OCEAN, BIOME_DEEP_FROZEN_OCEAN), 0.224, in(biome, BIOME_MEADOW), 0.055, in(biome, BIOME_MANGROVE_SWAMP), 0.227, 0.247)
+variable.float.waterColorG = if(in(biome, BIOME_SWAMP), 0.482, in(biome, BIOME_LUKEWARM_OCEAN, BIOME_DEEP_LUKEWARM_OCEAN), 0.678, in(biome, BIOME_WARM_OCEAN), 0.835, in(biome, BIOME_COLD_OCEAN, BIOME_DEEP_COLD_OCEAN, BIOME_SNOWY_TAIGA, BIOME_SNOWY_BEACH), 0.341, in(biome, BIOME_FROZEN_RIVER, BIOME_FROZEN_OCEAN, BIOME_DEEP_FROZEN_OCEAN), 0.22,  in(biome, BIOME_MEADOW), 0.306, in(biome, BIOME_MANGROVE_SWAMP), 0.478, 0.463)
+variable.float.waterColorB = if(in(biome, BIOME_SWAMP), 0.392, in(biome, BIOME_LUKEWARM_OCEAN, BIOME_DEEP_LUKEWARM_OCEAN), 0.949, in(biome, BIOME_WARM_OCEAN), 0.933, in(biome, BIOME_COLD_OCEAN, BIOME_DEEP_COLD_OCEAN, BIOME_SNOWY_TAIGA, BIOME_SNOWY_BEACH), 0.839, in(biome, BIOME_FROZEN_RIVER, BIOME_FROZEN_OCEAN, BIOME_DEEP_FROZEN_OCEAN), 0.788, in(biome, BIOME_MEADOW), 0.812, in(biome, BIOME_MANGROVE_SWAMP), 0.416, 0.894)
+uniform.vec3.waterColor    = vec3(waterColorR, waterColorG, waterColorB)
+```
+
+See I told you it was *yummy*.

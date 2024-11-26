@@ -1,0 +1,15 @@
+---
+title: shadowMapFov
+description: Sets the FOV for the shadow pass.
+sidebar:
+  label: shadowMapFov
+  order: 3
+---
+
+### `const float shadowMapFov = 90.0;`
+
+#### Location: any glsl file
+
+Sets the FOV (field of view) for the shadow pass.
+
+By default the shadow map uses orthographic rendering, which produces directional shadows which don't appear to come from a single point but instead a direction. Setting the FOV value however will change the rendering to a projection similar to the primary scene camera. This can be used to produce projected scene-like rendering similar to the [gbuffers](/reference/programs/gbuffers) programs, but from the [shadow pass](/reference/programs/shadow).

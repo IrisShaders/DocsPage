@@ -1,0 +1,38 @@
+---
+title: Shadow Mipmaps
+description: Whether Iris should generate a mipmap chain for a shadowtex buffer.
+sidebar:
+  label: Shadow Mipmaps
+  order: 3
+---
+
+# Shadowtex
+
+##### `const bool generateShadowMipmap = true;`
+##### `const bool shadowtexMipmap = true;`
+##### `const bool shadowtex0Mipmap = true;`
+##### `const bool shadowtex1Mipmap = true;`
+
+#### Location: any glsl file
+
+These directives tells Iris to generate a mipmap chain for a [shadowtex](/reference/buffers/shadowtex) buffer. This directive only needs to be defined once in the shader pack, and can be defined in (mostly) any shader file. The mipmap will be generated after the [`shadow`](/reference/programs/shadow) pass but before [`shadowcomp`](/reference/programs/shadow_comp).
+
+`generateShadowMipmap` will generate mipmaps for both `shadowtex0` and `shadowtex1`, whereas `shadowtexMipmap` will generate mipmaps for only `shadowtex0`.
+
+
+# ShadowColor
+
+##### `const bool generateShadowColorMipmap = true;`
+##### `const bool shadowcolor0Mipmap = true;`
+##### `const bool shadowColor0Mipmap = true;`
+##### `const bool shadowcolor1Mipmap = true;`
+##### `const bool shadowColor1Mipmap = true;`
+
+#### Location: any glsl file
+
+These directives tells Iris to generate a mipmap chain for a [shadowcolor](/reference/buffers/shadowcolor) buffer. This directive only needs to be defined once in the shader pack, and can be defined in (mostly) any shader file. The mipmap will be generated after the [`shadow`](/reference/programs/shadow) pass but before [`shadowcomp`](/reference/programs/shadow_comp).
+
+`generateShadowColorMipmap` will generate mipmaps for both `shadowcolor0` and `shadowcolor1`.
+
+### ***WARNING:***
+this feature is currently bugged in Iris, no mipmaps for shadowcolor buffers will be generated, however mipmaps for shadowtex buffers work fine.

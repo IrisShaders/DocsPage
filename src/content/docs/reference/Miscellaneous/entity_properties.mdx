@@ -1,0 +1,28 @@
+---
+title: entity.properties
+description: Allows the shader to assign IDs to entities.
+sidebar:
+  label: entity.properties
+  order: 1
+---
+
+The `entity.properties` file lets you assign IDs to specific entities by their Minecraft ID. These IDs can be read through [`entityId`](/reference/uniforms/id#entityid) in [gbuffers](/reference/programs/gbuffers) and [shadow](/reference/programs/shadow) shaders. The `entity.properties` file should be placed in the `shaders` folder.
+
+Entities can be assigned to an ID in this file, with the following syntax:
+```
+entity.<ID> = [<namespace>:]<entity_id>
+
+# for example
+entity.1 = minecraft:skeleton minecraft:sheep
+```
+
+The optional namespace allows support for modded entities. Multiple entities can be assigned to a single ID, however a single entity can only be assigned to a single ID. IDs are stored internally as 16-bit unsigned integers, and can store values between `0` and `65535`.
+
+### Hardcoded IDs
+The following entity IDs do not exist in Minecraft but are hardcoded by Iris:
+- `minecraft:name_tag`: Name tag text above entities.
+- `minecraft:entity_shadow`: The circular shadow under an entity when there is no shadow map.
+- `minecraft:entity_flame`: The flame when an entity is on fire.
+- `minecraft:zombie_villager_converting`: A zombie villager undergoing conversion.
+- `minecraft:player_cape`: Player cape (without elytra).
+- `minecraft:elytra_with_cape`: Player cape (with elytra).

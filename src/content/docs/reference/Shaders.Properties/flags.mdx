@@ -1,0 +1,46 @@
+---
+title: Feature Flags
+description: Feature flags are an Iris system to query the activation state of certain features.
+sidebar:
+  label: Feature Flags
+  order: 3
+  badge:
+    text: Iris Only
+    variant: tip
+---
+
+Feature flags are an Iris system to query the activation state of certain features. To activate them there are two directives that can be placed in `shaders.properties`: `iris.features.required` and `iris.features.optional`. `iris.features.required` will throw an error if your device or version of Iris does not support the feature. `iris.features.optional` will create a define that can be used to test the availability of such a feature.
+
+<br>
+To use the flags add the following to your `shaders.properties`:
+```properties
+iris.features.required=SEPARATE_HARDWARE_SAMPLERS COMPUTE_SHADERS
+iris.features.optional=BLOCK_EMISSION_ATTRIBUTE ENTITY_TRANSLUCENT SSBO
+```
+
+</br>
+
+The define an optional feature flag creates is in the format `IRIS_FEATURE_<feature>`. For example, if you had:
+```properties
+iris.features.optional=BLOCK_EMISSION_ATTRIBUTE
+```
+Then you could check for this with
+```glsl
+#ifdef IRIS_FEATURE_BLOCK_EMISSION_ATTRIBUTE
+```
+
+The following is an index of all supported feature flags. Any feature flag marked as "**Required For Use**" must be set in `iris.features.required` or `iris.features.optional` in order to use the feature, otherwise Iris will throw an error.
+
+| Feature Flag                                   | Required For Use | Description                                                                                                  |
+| ---------------------------------------------- | :--------------: | ------------------------------------------------------------------------------------------------------------ |
+| `BLOCK_EMISSION_ATTRIBUTE`                     | ❌                | Queries support for the [block emission attribute](/reference/attributes/at_midblock) (`at_midBlock.w`)      |
+| `CAN_DISABLE_WEATHER`                          | ❌                | Queries support for the [`weather`](/reference/shadersproperties/features#weather) directive                 |
+| `COMPUTE_SHADERS`                              | ❌                | Queries support for compute shaders                                                                          |
+| `CUSTOM_IMAGES`                                | ✔️                | Enables [custom images](/reference/buffers/custom_images)                                                    |
+| `ENTITY_TRANSLUCENT`                           | ❌                | Queries support for [`gbuffers_entities_translucent`](/reference/programs/gbuffers#iris-additional-programs) |
+| `HIGHER_SHADOWCOLOR`                           | ✔️                | Enables [additional shadowcolor](/reference/buffers/shadowcolor#extended-shadowcolor) buffers                |
+| `PER_BUFFER_BLENDING`                          | ❌                | Queries hardware support for per-buffer blending                                                             |
+| `REVERSED_CULLING`                             | ❌                | Queries support for [Reverse Shadow Culling](/reference/constants/voxeldistance)                             |
+| `SEPARATE_HARDWARE_SAMPLERS`                   | ✔️                | Enables [Separate Hardware Shadow Samplers](/reference/buffers/shadowtex#hardware-sampling)                  |
+| `SSBO`                                         | ✔️                | Enables [SSBOs](/reference/buffers/ssbo)                                                                     |
+| `TESSELATION_SHADERS` / `TESSELLATION_SHADERS` | ✔️                | Enables tesselation shaders                                                                                  |

@@ -1,0 +1,71 @@
+---
+title: block.properties
+description: Allows the shader to assign IDs to blocks and block entities.
+sidebar:
+  label: block.properties
+  order: 1
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+The `block.properties` file (located in the `shaders` folder) lets you assign IDs to specific blocks/block entities by their Minecraft ID. These IDs can be read through [`mc_Entity`](/reference/attributes/mc_entity) and [`blockEntityId`](/reference/uniforms/id#blockentityid) respectively in [gbuffers](/reference/programs/gbuffers) and [shadow](/reference/programs/shadow) shaders. The `block.properties` file should be placed in the `shaders` folder.
+
+Blocks and block entities can be assigned to an ID in this file, with the following syntax:
+```properties title="block.properties"
+block.<ID> = [<namespace>:]<block_id>[:<property1>=<value1>,...[:<property2>=<value1>,...]]
+
+# for example
+block.5 = stone minecraft:oak_trapdoor:open=true
+block.6 = minecraft:oak_door:facing=north,south:hinge=right
+```
+
+The optional namespace allows support for modded blocks/block entities. Multiple blocks/block entities can be assigned to a single ID, however a single block/block entity can only be assigned to a single ID. Since Iris 1.3, IDs are stored internally as 16-bit signed integers, and can store values between `-32768` and `32767`. Prior to Iris 1.3 they were unsigned 16-bit, while Optifine has always used signed 16-bit.
+
+### Block Properties
+Block property values can optionally be specified with the `<property>=<value>` NBT format. They can be used to specify specific states for some blocks, for example redstone which is on/off, orientation for slabs/stairs, etc. For more info on block properties, see the [Minecraft Wiki](https://minecraft.wiki/w/Block_states).
+
+Multiple values for a property can be selected by listing them separated by commas (for example `minecraft:oak_door:facing=north,south`). This assigns the block ID to blocks whose property is either value.
+
+Multiple properties can also be selected for by appending `:<property>=<value>` (for example `minecraft:oak_door:facing=north:hinge=right`). This assigns the block ID only to blocks which match both properties.
+
+The two can also be combined, for example `minecraft:oak_door:facing=north,south:hinge=right` selects oak doors that are facing north or south, and that have hinges on their right side.
+
+
+## Data Pack Tags
+
+Iris 1.7 adds support for data pack tags, which allow assigning groups of block based on attributes of the block. For more info on tags, see the [Minecraft Wiki](https://minecraft.wiki/w/Tag#Java_Edition_2).
+
+To specify a tag, use the following syntax `%<tag>` instead of the old block ID syntax. Use the [`IRIS_TAG_SUPPORT`](/reference/macros/iris_tag_support) macro in block.properties to detect if the current version of Iris supports tags:
+```properties title="block.properties"  
+#ifdef IRIS_TAG_SUPPORT
+  block.<ID> = %[<namespace>:]<tag>
+#endif
+
+# for example
+#ifdef IRIS_TAG_SUPPORT
+  block.9 = %minecraft:leaves %logs
+#endif
+```
+
+## Render Layers
+
+Using render layers, you can change which [gbuffers program](/reference/programs/gbuffers) specific blocks render in. For example, this would allow a normally translucent block to be rendered as cutout or solid. This is accomplished by changing the program the block is rendered to according to the following table:
+
+| layer                     | program                   |
+| ------------------------- | ------------------------- |
+| `solid`                   | `gbuffers_terrain_solid`  |
+| `cutout` / `cutout_mipped`| `gbuffers_terrain_cutout` |
+| `translucent`             | `gbuffers_water`          |
+
+> Note: there is no difference between `cutout` and `cutout_mipped` in Iris.
+
+The following lines can be placed in `block.properties` to change the render layer of any list of `<blocks>` (defined in the same was as blockIDs):
+
+```properties title="block.properties"
+layer.solid=<blocks>
+layer.cutout=<blocks>
+layer.cutout_mipped=<blocks>
+layer.translucent=<blocks>
+```
+
+<Aside type="caution">The render layer does not affect in-game culling, so making opaque geometry translucent might introduce holes in the world.</Aside>

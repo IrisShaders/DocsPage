@@ -1,12 +1,65 @@
 ---
-title: Gbuffer
-description: Gbuffer Programs
+title: Gbuffers
+description: Where all the world geometry is rendered, including terrain, entities, block entities, particles, and more.
 sidebar:
-  label: Gbuffer
-  order: 6
-  badge:
-    text: Unfinished
-    variant: caution
+  label: gbuffers
+  order: 7
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+**Required stages**: vertex (.vsh), fragment (.fsh)  
+**Optional stages**: geometry (.gsh), tessellation (.tcs, .tes)  
+**Output Buffers**: [colortex](/reference/buffers/colortex), [depthtex](/reference/buffers/depthtex)  
+**Valid suffixes**: *N/A*
+
+-------------------------------------------------
+
+Gbuffers programs are where all the world geometry is rendered, including terrain, entities, block entities, particles, and more.
+
+There are many buffers programs where different types of geometry are rendered. There are also fallbacks, so if a specific gbuffers file is not present the geometry that would render in that programs falls back to another program in the shader. Here's a table which shows each program, it's fallback, and the geometry it's responsible for (this list is not in order):
+
+| gbuffers program          | geometry                                            | fallback program      |
+|---------------------------|-----------------------------------------------------|-----------------------|
+| gbuffers_basic            | leash, debug chunk border overlay                         | N/A                   |
+| gbuffers_line             | block outline, fishing line                         | gbuffers_basic        |
+| gbuffers_textured         | world border, particles that don't support lighting | gbuffers_basic        |
+| gbuffers_textured_lit     | particles that support lighting (most particles)    | gbuffers_textured     |
+| gbuffers_skybasic         | sky color/horizon, stars, void                      | gbuffers_basic        |
+| gbuffers_skytextured      | sun and moon textures                               | gbuffers_textured     |
+| gbuffers_clouds           | vanilla clouds                                      | gbuffers_textured     |
+| gbuffers_terrain          | static blocks                                       | gbuffers_textured_lit |
+| gbuffers_damagedblock     | block breaking texture                              | gbuffers_terrain      |
+| gbuffers_block            | block entities, sign text                           | gbuffers_terrain      |
+| gbuffers_beaconbeam       | beacon beam                                         | gbuffers_textured     |
+| gbuffers_entities         | entities, nametag text                              | gbuffers_textured_lit |
+| gbuffers_armor_glint      | enchantment effect on items/armor                   | gbuffers_textured     |
+| gbuffers_spidereyes       | spider/enderman/dragon eyes                         | gbuffers_textured     |
+| gbuffers_hand             | player hand and handheld objects                    | gbuffers_textured_lit |
+| gbuffers_weather          | falling rain/snow, doesn't include particles        | gbuffers_textured_lit |
+| gbuffers_water            | translucent terrain (including water)               | gbuffers_terrain      |
+| gbuffers_hand_water       | translucent handheld objects                        | gbuffers_hand         |
+
+> ***Note:*** In Optifine `gbuffers_entities_glowing` renders entities that have the spectral effect (but does not impact the outline itself). This shader file is not recognized in Iris.
+
+
+### Iris Additional Programs
+The following programs are added by Iris. These programs pull geometry from their fallback, and provide more specificity to the geometry rendered. They also serve to separate translucent geometry that would otherwise render in the same program as opaque geometry, which should be used with [`ENTITY_TRANSLUCENT`](/reference/shadersproperties/flags).
+
+| gbuffers program               | geometry                                                                                                                     | fallback program      |
+|--------------------------------|------------------------------------------------------------------------------------------------------------------------------|-----------------------|
+| gbuffers_particles             | particles                                                                                                                    | gbuffers_textured_lit |
+| gbuffers_particles_translucent | particles that support translucency (requires [`particles.ordering=mixed`](/reference/shadersproperties/ordering#particlesordering)) | gbuffers_particles    |
+| gbuffers_block_translucent     | translucent block entities                                                                                                   | gbuffers_block        |
+| gbuffers_entities_translucent  | translucent entities                                                                                                         | gbuffers_entities     |
+| gbuffers_terrain_solid         | solid terrain (no cutout or translucency)                                                                                    | gbuffers_terrain      |
+| gbuffers_terrain_cutout        | cutout terrain (no solid or translucency)                                                                                    | gbuffers_terrain      |
+| gbuffers_lightning             | lightning, ender dragon death beams                                                                                          | gbuffers_entities     |
+
+
+### Translucent Gbuffers and Deferred
+The general concept behind the [deferred](/reference/programs/deferred) pass is that opaque geometry is rendered before [deferred](/reference/programs/deferred) and translucent geometry is rendered after [deferred](/reference/programs/deferred). The intent is that the [deferred](/reference/programs/deferred) programs can handle deferred rendering for opaque geometry, and translucent geometry can either be forward rendered in gbuffers or deferred rendered separately from opaques in a [composite](/reference/programs/composite) program.
+
+In practice, using the old Optifine programs this was not always the case though. By default,`gbuffers_weather`, `gbuffers_water`, and `gbuffers_hand_water` are the only programs that render after [deferred](/reference/programs/deferred), meaning that translucent entities, block entities, and particles were all rendered before deferred. This is why Iris adds `gbuffers_particles_translucent`, `gbuffers_block_translucent`, and `gbuffers_entities_translucent`, and uses [`particles.ordering`](/reference/shadersproperties/ordering#particlesordering) to handle the order particles are rendered.
+
+
+### Notes on specific geometry
+- the ender dragon death beans write their color in `gbuffers_lightning`, however the depth is written in `gbuffers_basic`

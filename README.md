@@ -60,7 +60,7 @@ For uniform references please look at `alphaTestRef` for formatting. The aside f
 
 ### PR's and Commits
 
-PR's May take a while to be added, as they need to be fully verified, and someone needs to add them when there on. 
+PR's May take a while to be added, as they need to be fully verified, and someone needs to add them when they're on. 
 
 #### PR/Commit Format (Please Use it in both your commits on your branch and any pr's, makes our lives easy)
 (type): (area): description
@@ -84,4 +84,5 @@ Translations are not yet supported, but once the english version is complete we 
 ## Contributors
 - [Iris Docs](https://github.com/IrisShaders/ShaderDoc/tree/master) - Most of the early documentation
 - WhyFencePost / WhyFenceCode - The page and a lot of the data transfer
-- NinjaMike - Many uniforms including Iris exclusive uniforms
+- NinjaMike - Many uniforms including Iris exclusive uniforms, constants, shaders.properties, programs
+- jbritain - Some uniforms, other miscellaneous things

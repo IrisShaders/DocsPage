@@ -7,44 +7,31 @@ lastUpdated: false
 prev: false
 next: false
 hero:
-  title: Welcome the to Iris Docs
+  title: Welcome to the Iris Documentation
   tagline: Get started building shaders!
   image:
     file: ../../assets/iris.webp
   actions:
     - text: Get Started
-      link: /guides/beginners/start/
+      link: /guides/beginners/your-first-shader/0_intro/
       icon: right-arrow
       variant: primary
-    - text: Read the docs
+    - text: Reference
       link: /reference/overview/
       icon: external
 ---
 
 import { Card, CardGrid } from '@astrojs/starlight/components';
 
-<div class="bg-img"></div>
+import BannerImage from '../../components/BannerImage.astro'
 
-## Get Started
+<BannerImage />
 
 <CardGrid stagger>
-	<Card title="Chat On Discord" icon="discord">
+	<Card title="Chat With Us" icon="discord">
 		Join the [Iris Discord](https://discord.com/invite/jQJnav2jPu).
 	</Card>
 	<Card title="Add new content" icon="add-document">
-		Help us improve this site on our [github](https://github.com/IrisShaders/DocsPage/). 
-	</Card>
-	<Card title="Chat with us" icon="email">
-		Chat with us at <span style="color:#7ce0e0">`@Documentation Developer`</span> on the discord .
+		Help us improve this site on [GitHub](https://github.com/IrisShaders/DocsPage/). 
 	</Card>
 </CardGrid>
-
-## Contributors
-
-A big thanks to the many people below who make this site work. This would not be the same without you.
-
-- WhyFencePost: Project lead, page design, data transfer
-- NinjaMike: Many uniforms including Iris exclusive uniforms
-- IMS: Setting up the page, general support of the site and also the URL
-- Kixys: Main banner image
-- JoshTheB: Added a number of uniforms

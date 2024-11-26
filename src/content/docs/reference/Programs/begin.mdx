@@ -1,12 +1,20 @@
 ---
-title: Begin
-description: Begin Program
+title: begin
+description: Runs before the shadow pass.
 sidebar:
-  label: Begin
-  order: 2
+  label: begin
+  order: 3
   badge:
-    text: Unfinished
-    variant: caution
+    text: Iris Only
+    variant: tip
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+**Required Stages**: vertex (.vsh), fragment (.fsh)  
+**Optional Stages**: geometry (.gsh), compute (.csh)  
+**Output Buffers**: [colortex](/reference/buffers/colortex)  
+**Valid Suffixes**: N/A, 1-99
+
+-------------------------------------------------
+
+
+An Iris exclusive composite pass that runs before the [shadow pass](/reference/programs/shadow). It's intended to be used for setting up any data that is needed for the [shadow pass](/reference/programs/shadow). Like other composite programs, it renders a single fullscreen quad over the resolution of the buffer(s) it writes to.
