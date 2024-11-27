@@ -94,7 +94,7 @@ This uniform stores the player's mood value. This value increments when the play
 uniform float constantMood;
 ```
 
-Equivalent to [`playerMood`](/reference/uniforms/status#playermood) except when it reaches the value `1.0` it stays at that value instead of resetting to `0.0`.
+Equivalent to [`playerMood`](/reference/uniforms/status#playermood) except when it does not reset after hitting `1.0`, remaining at that value until the player leaves a cave or otherwise causes the mood value to decrease.
 
 ----------------
 
