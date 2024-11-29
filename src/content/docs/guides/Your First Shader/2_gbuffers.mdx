@@ -65,7 +65,7 @@ This now gets us the correct light level. You will notice now that if you reload
 ### `glcolor`
 Some blocks, like grass, have a tint based on their biome, provided in the form of `gl_Color`. If you look in the files for the grass block texture, it is actually grey. To demonstrate this, let's set `glcolor` to `vec4(1.0)`. Since the color is multiplied by glcolor in the fragment shader, and multiplying by 1 does nothing, this will remove the tint.
 
-![](../../../../../assets/beginner_tutorial/notint.webp)
+![](../../../../assets/beginner_tutorial/notint.webp)
 
 Let's undo that, since having color is quite nice.
 
@@ -99,7 +99,7 @@ With those values being passed through, let's move onto the fragment shader (`gb
 ### `gtexture`
 This is the texture atlas we mentioned earlier. It contains the textures of all the blocks onscreen, and `texcoord` tells us where in the atlas the current fragment texture is.
 
-![](../../../../../assets/beginner_tutorial/textureatlas.webp)
+![](../../../../assets/beginner_tutorial/textureatlas.webp)
 This is an example of what the texture atlas looks like, however it can vary.
 
 ### `lightmap`
@@ -125,7 +125,7 @@ To do this, we can just add a new line at the end of `main`:
 ```glsl
 color.rgb = normal;
 ```
-![](../../../../../assets/beginner_tutorial/normals.webp)
+![](../../../../assets/beginner_tutorial/normals.webp)
 You can see that faces that face upwards are green. Colors are stored in the `rgba` format and vectors/coordinates in the `xyzw` format. Since both of these are stored in the same `vec4` format, this means that the `r` component represents the `x` component, and so on. Since `g` represents `y`, this means that if the face is green, then the normal must only have a value in the `y` component, and hence is facing upwards.
 
 You'll notice some faces are black, this is where the normals are negative - you cannot have a negative color!
