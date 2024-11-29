@@ -9,6 +9,7 @@ export default defineConfig({
 			components: {
 				// Relative path to the custom component.
 				Head: './src/components/Head.astro',
+				Sidebar: './src/components/SideBar.astro',
 			},
 			title: 'Iris Docs',
 			logo: {
