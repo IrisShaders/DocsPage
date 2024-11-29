@@ -37,6 +37,10 @@ export default defineConfig({
 					label: 'How To',
 					autogenerate: { directory: 'how_to', collapsed: true},
 				},
+				{
+					label: 'Current',
+					autogenerate: { directory: 'current' },
+				},
 			],
 			plugins: [starlightImageZoom()]
 		}),
