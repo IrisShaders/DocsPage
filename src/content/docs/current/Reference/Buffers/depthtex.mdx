@@ -15,7 +15,7 @@ There are three samplers for accessing the depth buffer.
 - `depthtex1` excludes transparent geometry
 - `depthtex2` excludes transparent and heldheld geometry
 
-These buffers are written to by [`gbuffers`](/reference/programs/gbuffers) programs, and store the screenspace z coordinate at each pixel. These buffers only store information in a single channel, the red component. The depth buffer precision is hardware/driver dependent, however most hardware uses either 24-bit or 32-bit precision. The depth buffers are the same resolution as the Minecraft window and this cannot be changed.
+These buffers are written to by [`gbuffers`](/current/reference/programs/gbuffers) programs, and store the screenspace z coordinate at each pixel. These buffers only store information in a single channel, the red component. The depth buffer precision is hardware/driver dependent, however most hardware uses either 24-bit or 32-bit precision. The depth buffers are the same resolution as the Minecraft window and this cannot be changed.
 
 ### Legacy Alias
 `depthtex0` can be accessed through the legacy alias `gdepthtex`.

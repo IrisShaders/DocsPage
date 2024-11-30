@@ -59,9 +59,9 @@ It's good practice to try to minimise duplicate code as much as possible. To org
 
 ## The Fog is Coming
 
-What we want is for something which is nearly out of render distance to have lots of fog, and something which is close to the player not to have any fog at all. To do this, we can divide the distance from the player by a uniform `float`, [`far`](/reference/uniforms/rendering#far). The name of this variable is misleading, as what it gives us is the player's render distance, in blocks.
+What we want is for something which is nearly out of render distance to have lots of fog, and something which is close to the player not to have any fog at all. To do this, we can divide the distance from the player by a uniform `float`, [`far`](/current/reference/uniforms/rendering#far). The name of this variable is misleading, as what it gives us is the player's render distance, in blocks.
 
-Of course, we also need to have a fog color to blend with, and for this, we'll use another uniform, a `vec3` [`fogColor`](/reference/uniforms/rendering#fogcolor).
+Of course, we also need to have a fog color to blend with, and for this, we'll use another uniform, a `vec3` [`fogColor`](/current/reference/uniforms/rendering#fogcolor).
 
 We can then simply do
 
@@ -73,7 +73,7 @@ color.rgb = mix(color.rgb, fogColor, length(viewPos)/far);
 This works because we are still using the vanilla sky. If you go on to add a custom sky, you will likely want to choose your own fog color.
 :::
 
-![](../../../../assets/beginner_tutorial/linearfog.webp)
+![](../../../../../assets/beginner_tutorial/linearfog.webp)
 
 And our terrain now nicely blends into the horizon.
 
@@ -87,7 +87,7 @@ This use of an exponential function for the falloff is based on a real physical 
 
 We can visualise this by plotting `f` against `distance` on a graph.
 
-![](../../../../assets/beginner_tutorial/foggraph.webp)
+![](../../../../../assets/beginner_tutorial/foggraph.webp)
 
 As you can see, the function curves nicely to make the fog seem further away.
 
@@ -109,6 +109,6 @@ color.rgb = mix(color.rgb, fogColor, clamp(fogFactor, 0.0, 1.0));
 Note that we clamp the value of `fogFactor` between `0` and `1`. This is because the behaviour of `mix` is undefined if it is outside this range. Since the render distance in blocks is along three axes, blocks can be more than this distance away along the diagonals, so in some cases, `dist` could be more than `1`.
 :::
 
-![](../../../../assets/beginner_tutorial/exponentialfog.webp)
+![](../../../../../assets/beginner_tutorial/exponentialfog.webp)
 
 And now our fog feels a lot more natural!

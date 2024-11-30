@@ -8,9 +8,9 @@ sidebar:
 
 import { Aside } from '@astrojs/starlight/components';
 
-Color attachments such as [colortex](/reference/buffers/colortex) and [shadowcolor](/reference/buffers/shadowcolor) buffers, as well as custom [images](/reference/buffers/custom_images/) and [textures](/reference/buffers/custom_textures/), store values in different formats with varying bit depth and layout.
+Color attachments such as [colortex](/current/reference/buffers/colortex) and [shadowcolor](/current/reference/buffers/shadowcolor) buffers, as well as custom [images](/current/reference/buffers/custom_images/) and [textures](/current/reference/buffers/custom_textures/), store values in different formats with varying bit depth and layout.
 
-The default format for color attachments is `RGBA` (which equates to `RGBA8` on most systems). However, a shader pack can specify the format using the [\<bufferName\>Format](/reference/constants/buffer_format) directive.
+The default format for color attachments is `RGBA` (which equates to `RGBA8` on most systems). However, a shader pack can specify the format using the [\<bufferName\>Format](/current/reference/constants/buffer_format) directive.
 
 The available image formats and their meanings are described below.
 
@@ -136,7 +136,7 @@ Signed integral buffers store signed integers, just like the tin says. These are
 
 ## Additional Pixel Types
 
-The shader loader supports some additional pixel types, not directly associated with specific image formats, that can be used when loading [raw custom textures](https://shaders.properties/reference/buffers/custom_textures/#texturestagebuffername--path-type-internalformat-dimensions-pixelformat-pixeltype). See the [OpenGL Wiki](https://www.khronos.org/opengl/wiki/Pixel_Transfer#Pixel_type) for more information about these.
+The shader loader supports some additional pixel types, not directly associated with specific image formats, that can be used when loading [raw custom textures](https://shaders.properties/current/reference/buffers/custom_textures/#texturestagebuffername--path-type-internalformat-dimensions-pixelformat-pixeltype). See the [OpenGL Wiki](https://www.khronos.org/opengl/wiki/Pixel_Transfer#Pixel_type) for more information about these.
 
 | Pixel Type                 |
 | -------------------------- |

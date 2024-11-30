@@ -8,7 +8,7 @@ sidebar:
 import { Badge } from '@astrojs/starlight/components';
 import { Aside } from '@astrojs/starlight/components';
 
-This page lists [shaders.properties](/reference/shadersproperties/overview) directives related to display/HUD options, disabling features of the sky/clouds, and controlling legacy lighting options.
+This page lists [shaders.properties](/current/reference/shadersproperties/overview) directives related to display/HUD options, disabling features of the sky/clouds, and controlling legacy lighting options.
 
 ## clouds
 ```properties
@@ -41,7 +41,7 @@ Enables or disables rendering of the sun texture in `gbuffers_skytextured`.
 ```properties
 sky=<true|false>
 ```
-Enables or disables rendering of the vanilla sky in `gbuffers_skybasic`. This includes the sky disc, horizon, and void, however it does not include [`stars`](/reference/shadersproperties/features#stars)
+Enables or disables rendering of the vanilla sky in `gbuffers_skybasic`. This includes the sky disc, horizon, and void, however it does not include [`stars`](/current/reference/shadersproperties/features#stars)
 
 ----------------
 
@@ -77,7 +77,7 @@ Enables or disables rendering of the vignette overlay, an effect which darkens t
 ```properties
 oldHandLight=<true|false>
 ```
-Sets a fallback for older shaders which don't support main and alt hands. If `oldHandLight` is set to `true`, [`heldBlockLightValue`](/reference/uniforms/id#heldblocklightvalue) will take the value of the highest light value. The default value is `true` due to legacy support.
+Sets a fallback for older shaders which don't support main and alt hands. If `oldHandLight` is set to `true`, [`heldBlockLightValue`](/current/reference/uniforms/id#heldblocklightvalue) will take the value of the highest light value. The default value is `true` due to legacy support.
 
 <Aside type="caution">Any pack that wishes to use independent main and alt hand light values should set `oldHandLight` to `false`, as the legacy setting is enabled by default.</Aside>
 
@@ -108,7 +108,7 @@ supportsColorCorrection=<true|false>
 ```
 Iris 1.6.4 added support for additional color spaces beyond sRGB (DCI_P3, Display P3, REC2020, and Adobe RGB). This does not allow for outputting HDR values, it simply applies a tonemapping operation in the given color space instead of sRGB.
 
-By default, Iris will assume all shaders output sRGB, and if a different color spaces is selected it will convert the sRGB output to that color space for display. If `supportsColorCorrection = true` is in shaders.properties however, this conversion will be left up to the shader. In all scenarios, the chosen colorspace is avaliable through the uniform [`currentColorSpace`](/reference/uniforms/system#currentcolorspace).
+By default, Iris will assume all shaders output sRGB, and if a different color spaces is selected it will convert the sRGB output to that color space for display. If `supportsColorCorrection = true` is in shaders.properties however, this conversion will be left up to the shader. In all scenarios, the chosen colorspace is avaliable through the uniform [`currentColorSpace`](/current/reference/uniforms/system#currentcolorspace).
 
 ----------------
 
@@ -118,6 +118,6 @@ weather=<weatherGeometryEnabled> <splashParticlesEnabled>
 ```
 Enables or disables weather (rain & snow) geometry and rain splash particles. Both components are `true` by default.
 
-This directive requires an Iris version supporting [`CAN_DISABLE_WEATHER`](/reference/shadersproperties/flags), and is recommended to be used with that feature flag specified.
+This directive requires an Iris version supporting [`CAN_DISABLE_WEATHER`](/current/reference/shadersproperties/flags), and is recommended to be used with that feature flag specified.
 
 ----------------

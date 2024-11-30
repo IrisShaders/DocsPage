@@ -15,7 +15,7 @@ sidebar:
 
 #### Location: any glsl file
 
-These directives tells Iris to generate a mipmap chain for a [shadowtex](/reference/buffers/shadowtex) buffer. This directive only needs to be defined once in the shader pack, and can be defined in (mostly) any shader file. The mipmap will be generated after the [`shadow`](/reference/programs/shadow) pass but before [`shadowcomp`](/reference/programs/shadow_comp).
+These directives tells Iris to generate a mipmap chain for a [shadowtex](/current/reference/buffers/shadowtex) buffer. This directive only needs to be defined once in the shader pack, and can be defined in (mostly) any shader file. The mipmap will be generated after the [`shadow`](/current/reference/programs/shadow) pass but before [`shadowcomp`](/current/reference/programs/shadow_comp).
 
 `generateShadowMipmap` will generate mipmaps for both `shadowtex0` and `shadowtex1`, whereas `shadowtexMipmap` will generate mipmaps for only `shadowtex0`.
 
@@ -30,7 +30,7 @@ These directives tells Iris to generate a mipmap chain for a [shadowtex](/refere
 
 #### Location: any glsl file
 
-These directives tells Iris to generate a mipmap chain for a [shadowcolor](/reference/buffers/shadowcolor) buffer. This directive only needs to be defined once in the shader pack, and can be defined in (mostly) any shader file. The mipmap will be generated after the [`shadow`](/reference/programs/shadow) pass but before [`shadowcomp`](/reference/programs/shadow_comp).
+These directives tells Iris to generate a mipmap chain for a [shadowcolor](/current/reference/buffers/shadowcolor) buffer. This directive only needs to be defined once in the shader pack, and can be defined in (mostly) any shader file. The mipmap will be generated after the [`shadow`](/current/reference/programs/shadow) pass but before [`shadowcomp`](/current/reference/programs/shadow_comp).
 
 `generateShadowColorMipmap` will generate mipmaps for both `shadowcolor0` and `shadowcolor1`.
 

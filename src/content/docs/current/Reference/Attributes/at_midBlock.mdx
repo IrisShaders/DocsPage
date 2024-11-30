@@ -17,6 +17,6 @@ The first three components store the world/player space offset from the vertex's
 vec3 centerPosition = position + at_midBlock.xyz/64.0;
 ```
 
-In Iris 1.7 and newer, `at_midBlock.w` stores the light level of the current block (without the influence of nearby light sources, range `0` to `15`). This can be used to tell if a block is emissive. It's recommended to use this together with [`BLOCK_EMISSION_ATTRIBUTE`](/reference/shadersproperties/flags).
+In Iris 1.7 and newer, `at_midBlock.w` stores the light level of the current block (without the influence of nearby light sources, range `0` to `15`). This can be used to tell if a block is emissive. It's recommended to use this together with [`BLOCK_EMISSION_ATTRIBUTE`](/current/reference/shadersproperties/flags).
 
 This attribute (both the mid block offset and the emission value) are only available for terrain.

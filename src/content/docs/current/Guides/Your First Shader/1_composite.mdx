@@ -78,7 +78,7 @@ The `main` function is the code that is run when the shader is invoked, just lik
 gl_Position = ftransform();
 ```
 
-This transforms the position of the vertex from model space to clip space. The `ftransform` function is actually deprecated but Iris patches it to the relevant modern code. For more information, see the howto on [coordinate spaces](/how_to/coordinate_spaces).
+This transforms the position of the vertex from model space to clip space. The `ftransform` function is actually deprecated but Iris patches it to the relevant modern code. For more information, see the howto on [coordinate spaces](/current/how-to/coordinate_spaces).
 
 ```glsl
 texcoord = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;
@@ -113,7 +113,7 @@ Let's analyse this as well a bit.
 uniform sampler2D colortex0
 ```
 
-This allows the shader to read from `colortex0`. Iris provides you with a number of `colortex` buffers you can read and write to. Each buffer is a texture with the same resolution as your screen. For more information on the `colortex` buffers, see the [docs](/reference/buffers/colortex/). `colortex0` usually contains the main scene, and we can use the other 15 for whatever we want.
+This allows the shader to read from `colortex0`. Iris provides you with a number of `colortex` buffers you can read and write to. Each buffer is a texture with the same resolution as your screen. For more information on the `colortex` buffers, see the [docs](/current/reference/buffers/colortex/). `colortex0` usually contains the main scene, and we can use the other 15 for whatever we want.
 
 ```glsl
 in vec2 texcoord
@@ -125,7 +125,7 @@ This is where we recieve the `texcoord` passed `out` in the vertex shader. This 
 /* RENDERTARGETS: 0 */
 ```
 
-This is a comment that the Iris patcher reads. It tells the shader to write back to `colortex0`. For more info, see [the docs](/reference/constants/rendertargets).
+This is a comment that the Iris patcher reads. It tells the shader to write back to `colortex0`. For more info, see [the docs](/current/reference/constants/rendertargets).
 
 ```glsl
 layout(location = 0) out vec4 color;
@@ -155,7 +155,7 @@ color.rgb = vec3(dot(color.rgb, vec3(1.0/3.0)));
 
 Your screen should now look like this!
 
-![](../../../../assets/beginner_tutorial/monochrome.webp)
+![](../../../../../assets/beginner_tutorial/monochrome.webp)
 
 :::tip[Next steps]
 See if you can make the screen red, or green. Using `texcoord`, can you make one half green and the other half red?
