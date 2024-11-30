@@ -9,6 +9,7 @@ export default defineConfig({
 			components: {
 				// Relative path to the custom component.
 				Head: './src/components/Head.astro',
+				Sidebar: './src/components/Sidebar.astro',
 			},
 			title: 'Iris Docs',
 			logo: {
@@ -25,6 +26,10 @@ export default defineConfig({
 				baseUrl: 'https://github.com/IrisShaders/DocsPage/edit/main/',
 			},
 			sidebar: [
+				{
+					label: 'Current',
+					autogenerate: { directory: 'current' },
+				},
 				{
 					label: 'Guides',
 					autogenerate: { directory: 'guides', collapsed: true},
