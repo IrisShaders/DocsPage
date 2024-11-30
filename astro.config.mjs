@@ -1,6 +1,7 @@
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
-import starlightImageZoom from 'starlight-image-zoom'
+import starlightImageZoom from 'starlight-image-zoom';
+import starlightUtils from "@lorenzo_lewis/starlight-utils";
 
 export default defineConfig({
 	site: 'https://shaders.properties',
@@ -9,7 +10,6 @@ export default defineConfig({
 			components: {
 				// Relative path to the custom component.
 				Head: './src/components/Head.astro',
-				Sidebar: './src/components/Sidebar.astro',
 			},
 			title: 'Iris Docs',
 			logo: {
@@ -30,20 +30,15 @@ export default defineConfig({
 					label: 'Current',
 					autogenerate: { directory: 'current' },
 				},
-				{
-					label: 'Guides',
-					autogenerate: { directory: 'guides', collapsed: true},
-				},
-				{
-					label: 'Reference',
-					autogenerate: { directory: 'reference', collapsed: true},
-				},
-				{
-					label: 'How To',
-					autogenerate: { directory: 'how_to', collapsed: true},
-				},
 			],
-			plugins: [starlightImageZoom()]
+			plugins: [
+				starlightImageZoom(),
+				starlightUtils({
+					multiSidebar: {
+						switcherStyle: "horizontalList",
+					},
+				}),
+			]
 		}),
 	],
 });
