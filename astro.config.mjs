@@ -28,7 +28,7 @@ export default defineConfig({
 			sidebar: [
 				{
 					label: 'Current',
-					autogenerate: { directory: 'current' },
+					autogenerate: { directory: 'current', collapsed: true },
 				},
 			],
 			plugins: [
