@@ -1,0 +1,29 @@
+---
+title: item.properties
+description: Allows the shader to assign IDs to items.
+sidebar:
+  label: item.properties
+  order: 1
+---
+
+The `item.properties` file lets you assign IDs to specific items and armor by their Minecraft ID. The file should be placed in the `shaders` folder.
+
+Items (including block items) and armor (including armor trim) can be assigned to an ID in this file, with the following syntax:
+```
+item.<ID> = [<namespace>:]<item_id|armor_id>
+
+# for example
+item.2 = minecraft:diamond_sword minecraft:stone
+item.3 = minecraft:iron_helmet minecraft:trim_lapis
+```
+
+The optional namespace allows support for modded items. Multiple items can be assigned to a single ID, however a single item can only be assigned to a single ID. IDs are stored internally as 16-bit unsigned integers, and can store values between `0` and `65535`.
+
+Armor trim can be assigned with `trim_<material>`, for example `trim_emerald`.
+
+
+### Reading IDs
+
+The ID can be read in two different ways for different contexts.
+- [`heldItemId`](/current/reference/uniforms/id#helditemid)/[`heldItemId2`](/current/reference/uniforms/id#helditemid2) for the currently held item, accessible anywhere.
+- [`currentRenderedItemId`](/current/reference/uniforms/id#currentrendereditemid) for the currently rendering item/armor/trim (including item frames, armor stands, players, etc), accessible in [gbuffers](/current/reference/programs/gbuffers) and [shadow](/current/reference/programs/shadow) shaders.

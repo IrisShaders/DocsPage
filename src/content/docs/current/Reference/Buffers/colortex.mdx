@@ -1,0 +1,49 @@
+---
+title: ColorTex
+description: Color attachments which can be written to by the fragment stage of begin, prepare, gbuffers, deferred, and composite programs.
+sidebar:
+  label: ColorTex
+  order: 1
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+### `uniform sampler2D colortexN;`
+### `layout (<format>) uniform image2D colorimgN;`
+
+There are 16 color attachements available through the `colortex0` through `colortex15` samplers. These samplers can be read from any program, and can be written to from the fragment stage of any [`begin`](/current/reference/programs/begin), [`prepare`](/current/reference/programs/prepare), [`gbuffers`](/current/reference/programs/gbuffers), [`deferred`](/current/reference/programs/deferred), or [`composite`](/current/reference/programs/composite) program. 
+
+*Note*: The `final.fsh` program appears to write to `colortex0`, however it actually writes to a display buffer with the resolution of the Minecraft window and `RGBA` format (usually equates to `RGBA8`) regardless of the size or format of `colortex0`. If `colortex0` is set to non-clearing, any output written by `final.fsh` will not impact `colortex0`.
+
+#### Writing to ColorTex buffers
+Any [`begin`](/current/reference/programs/begin), [`prepare`](/current/reference/programs/prepare), [`gbuffers`](/current/reference/programs/gbuffers), [`deferred`](/current/reference/programs/deferred), or [`composite`](/current/reference/programs/composite) program can write to a colortex buffer, the buffers to write to can be selected with the [`RENDERTARGETS`](/current/reference/constants/rendertargets) or [`DRAWBUFFERS`](/current/reference/constants/drawbuffers) directive.
+
+Additionally, you can read and write to the first 6 colortex buffer in Optifine or any colortex buffer in Iris using `colorimgN` where `N` is replaced with the colortex index. This is the only way to write to colortex buffers from compute shaders, but also works in any program. For more information on image load/store, see the [Khronos Wiki](https://www.khronos.org/opengl/wiki/Image_Load_Store).
+
+#### Buffer size
+These buffers default to the display resolution, although this can be configured with the [`size.buffer`](/current/reference/shadersproperties/rendering#sizebuffer) define in shaders.properties. However, changing the buffer size will prevent any [`gbuffer`](/current/reference/programs/gbuffers) program from writing to the texture.
+
+#### Buffer format/precision
+All buffers default to `RGBA` format (which is `RGBA8` on most systems), but this can be configured as described in the [Texture Formats](/current/reference/buffers/image_format) section.
+
+#### Buffer clear
+By default all buffers clear their values after each frame to solid black (all 0s including alpha), except `colortex0` which clears to the [`fogColor`](/current/reference/uniforms/rendering#fogcolor) with 1.0 alpha, and `colortex1` which clears to solid white (all 1s including alpha). This clearing behavior can be configured with the [`colortexNClear`](/current/reference/constants/buffer_clear) directive, and the clear color can be configured with the [`colortexNClearColor`](/current/reference/constants/buffer_clear_color) directive.
+
+#### Ping-Pong buffers
+Each colortex sampler actually contains two buffers, which allows you to read and write to the same buffer in a composite/deferred pass. The buffer flipping behavior can be controlled with the [`flip.<program>.<buffer>`](/current/reference/shadersproperties/rendering#flip) directive.
+
+#### Legacy Aliases
+The first 8 colortex buffers have legacy aliases, although their names are often confusing and their use is not recommended. Except as noted below, either name can be used interchangably. The names are as follows:
+
+| colortex name | legacy name |
+| ------------- | ----------- |
+| colortex0     | gcolor      |
+| colortex1     | gdepth      |
+| colortex2     | gnormal     |
+| colortex3     | composite   |
+| colortex4     | gaux1       |
+| colortex5     | gaux2       |
+| colortex6     | gaux3       |
+| colortex7     | gaux4       |
+
+*Note: if `gdepth` is defined anywhere in the shader and the texture format for `colortex1`/`gdepth` is `RGBA` (or not specifically set by the shader), Iris will upgrade the format to `RGBA32F`. This represents legacy behavior, where `gdepth` was used to store depth values.*

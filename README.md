@@ -30,7 +30,7 @@ pnpm dev
 
 Images can be added to `src/assets/` and embedded in Markdown with a relative link.
 
-Content belongs in either `/guides`, `/reference`, `/how_to` within docs, and in its relative subcategory.
+Content belongs in either `/current/guides`, `/current/reference`, `/current/how-to` within docs, and in its relative subcategory.
 Unfinished/Unfinished docs are marked with the `Unfinished` tag in the warning style.
 
 ### How to write:
@@ -54,7 +54,7 @@ A guide should leave the reader feeling comfortable with the topic, and it shoul
 A how to is a singular short article that walks a user through a small problem in their way (EX transforming shadows to screen space or tonemapping). A how to is made to walk a user through a short section of code and does not need to lead from one outcome to another. It is made to increase/create the understanding on a small section of code, and is rarely open ended. The how to should be written similar to [how to guides on Diataxis](https://diataxis.fr/how-to-guides/).
 
 ### Reference:
-A reference is a docs page. It give objective information on a subject, without moving towards individual use cases. These are often short pages, which are written to provide information about syntax surrounding a line or two of code. These need to be written in a succinct way so that the user can quickly find information. Best practices are located at [references in Diataxis](https://diataxis.fr/reference/)
+A reference is a docs page. It give objective information on a subject, without moving towards individual use cases. These are often short pages, which are written to provide information about syntax surrounding a line or two of code. These need to be written in a succinct way so that the user can quickly find information. Best practices are located at [references in Diataxis](https://diataxis.fr/current/reference/)
 
 For uniform references please look at `alphaTestRef` for formatting. The aside found there can be used for any version specific stuff.
 

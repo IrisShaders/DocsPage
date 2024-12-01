@@ -1,0 +1,244 @@
+---
+title: Player Status Uniforms
+description: Uniforms related to player status, settings, and status effects.
+sidebar:
+  label: Player Status
+  order: 3
+---
+import { Badge } from '@astrojs/starlight/components';
+
+These uniforms store information about the status of the player in the world, including gamemode, potion/status effects, current health/hunger/etc, user options related to the player, and more.
+
+
+## isEyeInWater
+```glsl
+uniform int isEyeInWater;
+```
+This uniform outputs the current substance that the camera is in. Possible values are:
+
+| value | state         |
+| ----- | ------------- |
+| `0`   | none/other    |
+| `1`   | water         |
+| `2`   | lava          |
+| `3`   | powdered snow |
+
+----------------
+
+
+## isSpectator <Badge text="Iris Exclusive" variant="tip" size="medium" />
+```glsl
+uniform bool isSpectator;
+```
+This value is `true` when the player is in spectator mode and false otherwise.
+
+----------------
+
+
+## isRightHanded <Badge text="Iris Exclusive" variant="tip" size="medium" />
+```glsl
+uniform bool isRightHanded;
+```
+This boolean uniform is `true` when the player is using the right hand (default) as the main hand and `false` when the left hand is set as the main hand through the Minecraft settings.
+
+----------------
+
+
+## blindness
+```glsl
+uniform float blindness;
+```
+This value stores the blindness effect as a multiplier. It ranges from `0` to `1` where `0` is no blindness and `1` is full blindness. The uniform is only between `0` and `1` during transitions between having or not having blindness. More information on the blindness effect can be found at the [Minecraft Wiki](https://minecraft.wiki/w/Blindness).
+
+----------------
+
+
+## darknessFactor
+```glsl
+uniform float darknessFactor;
+```
+This uniform stores the strength of the darkness effect. The value is `0.0` when the effect is not present, `1.0` when the effect is active, and is interpolated between those values during transitions.
+
+----------------
+
+
+## darknessLightFactor
+```glsl
+uniform float darknessLightFactor;
+```
+The darkness status effect creates a pulsating dimming effect in the game lighting. This uniform stores the current strength of the dimming effect. The value is `0.0` is the minimum dimming, `1.0` when the effect is the maximum dimming, and is interpolated between those values during transitions.
+
+----------------
+
+
+## nightVision
+```glsl
+uniform float nightVision;
+```
+This value stores the night vision effect as a multiplier. It ranges from `0` to `1` where `0` is no night vision and `1` is full night vision. The uniform is only between `0` and `1` during transitions between having or not having night vision. More information on the blindness effect can be found at the [Minecraft Wiki](https://minecraft.wiki/w/Night_Vision).
+
+----------------
+
+
+## playerMood
+```glsl
+uniform float playerMood;
+```
+This uniform stores the player's mood value. This value increments when the player is in a cave (or any structure with low block and sky light). The value ranges between `0.0` and `1.0` and resets to `0.0` after it increments to `1.0`. More information on mood can be found at the [Minecraft Wiki](https://minecraft.wiki/w/Ambience#Cave_ambience).
+
+----------------
+
+
+## constantMood <Badge text="Iris Exclusive" variant="tip" size="medium" />
+```glsl
+uniform float constantMood;
+```
+
+Equivalent to [`playerMood`](/current/reference/uniforms/status#playermood) except when it does not reset after hitting `1.0`, remaining at that value until the player leaves a cave or otherwise causes the mood value to decrease.
+
+----------------
+
+
+## currentPlayerAir <Badge text="Iris Exclusive" variant="tip" size="medium" />
+```
+uniform float currentPlayerAir;
+```
+This value stores the relative player air when underwater ranging from `0` to `1`. That means when the player is at full air, this value is `1`, and when they are out of air (e.g. drowning) the value is `0`. The value is `-1` in creative and spectator modes. To absolute air of the player, multiply this value by the uniform [`maxPlayerAir`](/current/reference/uniforms/status#maxplayerair).
+
+----------------
+
+
+## maxPlayerAir <Badge text="Iris Exclusive" variant="tip" size="medium" />
+```glsl
+uniform float maxPlayerAir;
+```
+This value stores the maximum player air when underwater. This is the internal value used by Minecraft, not the number of bubbles in the user interface. This value is `-1` in creative and spectator modes. In a default survival world this value is `300`.
+
+----------------
+
+
+## currentPlayerArmor <Badge text="Iris Exclusive" variant="tip" size="medium" />
+```glsl
+uniform float currentPlayerArmor;
+```
+This value stores the relative player armor value ranging from `0` to `1`. That means when the player wearing armor that completely fills the armor bar this value is `1`, and when they are not wearing any armor the value is `0`. The value is `-1` in creative and spectator modes. To absolute armor value of the player, multiply this value by the uniform [`maxPlayerArmor`](/current/reference/uniforms/status#maxplayerarmor).
+
+----------------
+
+
+## maxPlayerArmor <Badge text="Iris Exclusive" variant="tip" size="medium" />
+```glsl
+uniform float maxPlayerArmor;
+```
+This value stores the maximum player armor value. This is the internal value used by Minecraft, not the number of armor icons in the user interface. In a default world this value is `50` unless changed by mods. Modes without hunger (such as creative and spectator modes) will still indicate the same maximum armor value.
+
+----------------
+
+
+## currentPlayerHealth <Badge text="Iris Exclusive" variant="tip" size="medium" />
+```glsl
+uniform float currentPlayerHealth;
+```
+This value stores the relative player health ranging from `0` to `1`. That means when the player is at full health, this value is `1`, and when they die this values reaches `0`. The value is `-1` in creative and spectator modes. To absolute health of the player, multiply this value by the uniform [`maxPlayerHealth`](/current/reference/uniforms/status#maxplayerhealth).
+
+----------------
+
+
+## maxPlayerHealth <Badge text="Iris Exclusive" variant="tip" size="medium" />
+```glsl
+uniform float maxPlayerHealth;
+```
+This value stores the maximum player health value, which is twice the number of maximum hearts (one value for each half-heart). The value is `-1` in creative and spectator modes. In a default survival world this value is `20` unless changed by mods or effects like [Health Boost](https://minecraft.wiki/w/Health_Boost), in which case the maximum value can be up to `1024`. This value is not affected by the [Absorption](https://minecraft.wiki/w/Absorption) effect, such as with golden apples.
+
+----------------
+
+
+## currentPlayerHunger <Badge text="Iris Exclusive" variant="tip" size="medium" />
+```glsl
+uniform float currentPlayerHunger;
+```
+This value stores the relative player hunger ranging from `0` to `1`. That means when the player is at full hunger, this value is `1`, and when they are at empty hunger the value is `0`. The value is `-1` in creative and spectator modes. To absolute hunger of the player, multiply this value by the uniform [`maxPlayerHunger`](/current/reference/uniforms/status#maxplayerhunger).
+
+----------------
+
+
+## maxPlayerHunger <Badge text="Iris Exclusive" variant="tip" size="medium" />
+```glsl
+uniform float maxPlayerHunger;
+```
+This value stores the maximum player hunger value, which is twice the number of hunger icons in the user interface (one value for each half-hunger icon). In a default survival world this value is `20` unless changed by mods. Modes without hunger (such as creative and spectator modes) will still indicate the same maximum hunger value.
+
+----------------
+
+
+## is_burning <Badge text="Optifine Custom Uniforms / Iris" variant="note" size="medium" />
+```glsl
+uniform bool is_burning;
+```
+This value is `true` when the player is on fire and `false` otherwise.
+
+In Optifine, this value is only available to [custom uniforms](/current/reference/shadersproperties/custom_uniforms), in Iris it is also accessible as a normal uniform.
+
+----------------
+
+
+## is_hurt <Badge text="Optifine Custom Uniforms / Iris" variant="note" size="medium" />
+```glsl
+uniform bool is_hurt;
+```
+This value is `true` when the player is being hurt and for a brief second afterwards and `false` otherwise.
+
+In Optifine, this value is only available to [custom uniforms](/current/reference/shadersproperties/custom_uniforms), in Iris it is also accessible as a normal uniform.
+
+----------------
+
+
+## is_invisible <Badge text="Optifine Custom Uniforms / Iris" variant="note" size="medium" />
+```glsl
+uniform bool is_invisible;
+```
+This value is `true` when the player is invisible (either by being in spectator mode or by using invisibility potions), `false` otherwise.
+
+In Optifine, this value is only available to [custom uniforms](/current/reference/shadersproperties/custom_uniforms), in Iris it is also accessible as a normal uniform.
+
+----------------
+
+
+## is_on_ground <Badge text="Optifine Custom Uniforms / Iris" variant="note" size="medium" />
+```glsl
+uniform bool is_on_ground;
+```
+This value is `true` any time the player is touching the ground and not flying, and `false` otherwise (such as when flying, falling, swimming and not touching the bottom, etc).
+
+In Optifine, this value is only available to [custom uniforms](/current/reference/shadersproperties/custom_uniforms), in Iris it is also accessible as a normal uniform.
+
+----------------
+
+
+## is_sneaking <Badge text="Optifine Custom Uniforms / Iris" variant="note" size="medium" />
+```glsl
+uniform bool is_sneaking;
+```
+This value is `true` when the player is sneaking and `false` otherwise.
+
+In Optifine, this value is only available to [custom uniforms](/current/reference/shadersproperties/custom_uniforms), in Iris it is also accessible as a normal uniform.
+
+----------------
+
+
+## is_sprinting <Badge text="Optifine Custom Uniforms / Iris" variant="note" size="medium" />
+```glsl
+uniform bool is_sprinting;
+```
+This value is `true` when the player is sprinting and `false` otherwise.
+
+In Optifine, this value is only available to [custom uniforms](/current/reference/shadersproperties/custom_uniforms), in Iris it is also accessible as a normal uniform.
+
+----------------
+
+
+## hideGUI
+```glsl
+uniform bool hideGUI;
+```
+This value stores whether or not the gui is hidden. This value is `false` when the GUI visible and `true` when the GUI hidden (e.g. by pressing f1).

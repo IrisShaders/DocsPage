@@ -1,0 +1,22 @@
+---
+title: IRIS_TAG_SUPPORT
+description: Whether the version of iris supports tags for block IDs in block.properties.
+sidebar:
+  label: IRIS_TAG_SUPPORT
+  order: 1
+  badge:
+    text: Iris Only
+    variant: tip
+---
+
+### `IRIS_TAG_SUPPORT`
+
+This macro is defined if the version of Iris supports tags for defining block IDs in [`block.properties`](/current/reference/miscellaneous/block_properties).
+
+Prior to Iris 1.8 the lines in [`block.properties`](/current/reference/miscellaneous/block_properties) took priority based on the order in the file. For Iris 1.8 and later, individual entires always take priority over tags, regardless of their order. For Iris versions with this change, `IRIS_TAG_SUPPORT` is defined as `2` and can be checked in [`block.properties`](/current/reference/miscellaneous/block_properties) like so:
+
+```glsl
+#if IRIS_TAG_SUPPORT >= 2
+  ...
+#endif
+```

@@ -1,0 +1,20 @@
+---
+title: begin
+description: Runs before the shadow pass.
+sidebar:
+  label: begin
+  order: 3
+  badge:
+    text: Iris Only
+    variant: tip
+---
+
+**Required Stages**: vertex (.vsh), fragment (.fsh)  
+**Optional Stages**: geometry (.gsh), compute (.csh)  
+**Output Buffers**: [colortex](/current/reference/buffers/colortex)  
+**Valid Suffixes**: N/A, 1-99
+
+-------------------------------------------------
+
+
+An Iris exclusive composite pass that runs before the [shadow pass](/current/reference/programs/shadow). It's intended to be used for setting up any data that is needed for the [shadow pass](/current/reference/programs/shadow). Like other composite programs, it renders a single fullscreen quad over the resolution of the buffer(s) it writes to.
