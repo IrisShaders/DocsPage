@@ -1,0 +1,123 @@
+---
+title: World and Weather Uniforms
+description: Uniforms related to the world status and weather.
+sidebar:
+  label: World/Weather
+  order: 6
+---
+import { Badge } from '@astrojs/starlight/components';
+
+These uniforms store information about the world, including world time and day, sun/moon, and weather related values.
+
+
+## sunPosition
+```glsl
+uniform vec3 sunPosition;
+```
+This value stores the position of the sun in view space. The length of this value is always `100`, as it represents a position not a direction. This value can be converted to screen space directly to get the screen space position of the sun.
+
+----------------
+
+
+## moonPosition
+```glsl
+uniform vec3 moonPosition;
+```
+This value stores the position of the moon in view space. The length of this value is always `100`, as it represents a position and not a direction. This value can be converted to screen space directly to get the screen space position of the moon.
+
+----------------
+
+
+## shadowLightPosition
+```glsl
+uniform vec3 shadowLightPosition;
+```
+This value stores the position of the highest celestial body in view space. In the overworld, during the day `shadowLightPosition` is equivalent to [`sunPosition`](/current/reference/uniforms/world#sunposition) and during the night is equivalent to [`moonPosition`](/current/reference/uniforms/world#moonposition). This matches direction used for the shadow pass. The length of this value is always `100`, as it represents a position not a direction. This value can be converted to screen space directly to get the screen space position of the celestial body.
+
+----------------
+
+
+## sunAngle
+```glsl
+uniform float sunAngle;
+```
+This value represents the angle of the sun within the complete day-night cycle. The value ranges from `0` to `1`, where `0` is sunrise, `0.25` is noon, `0.5` is sunset, `0.75` is midnight, etc.
+
+----------------
+
+
+## shadowAngle
+```glsl
+uniform float shadowAngle;
+```
+This value is similar to [`sunAngle`](/current/reference/uniforms/world#sunangle), except it takes its value from the highest celestial body. During the day, the value is equivalent to [`sunAngle`](/current/reference/uniforms/world#sunangle), and during the night it ranges from `0.0` for sunset, `0.25` for midnight, and approaches `0.5` as sunrise approaches. Therefore, the value of `shadowAngle` ranges between `0.0` and `0.5`.
+
+----------------
+
+
+## moonPhase
+```glsl
+uniform int moonPhase;
+```
+This value represents the current moon phase, with `0` being full moon, `1` being waning gibbous, `2` being three quarters, `3` being waning crescent, `4` being new moon, `5` being waxing crescent, `6` being first quarter, and `7` being waxing gibbous.
+
+----------------
+
+
+## rainStrength
+```glsl
+uniform float rainStrength;
+```
+This uniform outputs the current strength of rain and is non-zero when there is currently a rain storm (e.g. weather set rain). The value ranges between `0` to `1` where `0` means no rain and `1` means rain storm, the value is interpolated between those values during transitions in weather.
+
+See also - [`wetness`](/current/reference/uniforms/world#wetness)
+
+----------------
+
+
+## wetness
+```glsl
+uniform float wetness;
+```
+This uniform is equivalent to [`rainStrength`](/current/reference/uniforms/world#rainstrength), except the transition time is controlled with [`wetnessHalfLife`](/current/reference/constants/wetnesshalflife). The default transition time is also significantly slower.
+
+----------------
+
+
+## thunderStrength <Badge text="Iris Exclusive" variant="tip" size="medium" />
+```glsl
+uniform float thunderStrength;
+```
+This value is equivalent to [`rainStrength`](/current/reference/uniforms/world#rainstrength) but is only non-zero when there is currently a thunder storm (e.g. `weather set thunder`). The value ranges between `0` to `1` where `0` means no thunder and `1` means thunder storm, the value is interpolated between those values during transitions in weather.
+
+----------------
+
+
+## lightningBoltPosition <Badge text="Iris Exclusive" variant="tip" size="medium" />
+```glsl
+uniform vec4 lightningBoltPosition;
+```
+This value reads the player space position of a lightning bolt currently being rendered. If there are none, `vec4(0.0)` is returned. If there is at least one, w is set to `1`. If there are multiple, a random one is chosen.
+
+----------------
+
+
+## worldTime
+```glsl
+uniform int worldTime;
+```
+This value stores the world time within the current day. This value is equivalent to the command `time query daytime`, and can range between `0` and `23999` and resets after each day.
+
+Since the night and day are slightly different lengths, the actual sunrise is at time `23215` and sunset at time `12785` (the times when the sun and moon are exactly equidistant at the horizon).
+
+----------------
+
+
+## worldDay
+```glsl
+uniform int worldDay;
+```
+This value stores the world day, which is the amount of in-game days that have passed since the beginning of the world. This is equivalent to the command `time query day` and the value shown in the f3 menu. This value is reset by any `time set` command.
+
+
+----------------

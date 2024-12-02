@@ -1,6 +1,7 @@
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
-import starlightImageZoom from 'starlight-image-zoom'
+import starlightImageZoom from 'starlight-image-zoom';
+import starlightUtils from "@lorenzo_lewis/starlight-utils";
 
 export default defineConfig({
 	site: 'https://shaders.properties',
@@ -26,19 +27,18 @@ export default defineConfig({
 			},
 			sidebar: [
 				{
-					label: 'Guides',
-					autogenerate: { directory: 'guides', collapsed: true},
-				},
-				{
-					label: 'Reference',
-					autogenerate: { directory: 'reference', collapsed: true},
-				},
-				{
-					label: 'How To',
-					autogenerate: { directory: 'how_to', collapsed: true},
+					label: '',
+					autogenerate: { directory: 'current', collapsed: true },
 				},
 			],
-			plugins: [starlightImageZoom()]
+			plugins: [
+				starlightImageZoom(),
+				starlightUtils({
+					multiSidebar: {
+						switcherStyle: "horizontalList",
+					},
+				}),
+			]
 		}),
 	],
 });

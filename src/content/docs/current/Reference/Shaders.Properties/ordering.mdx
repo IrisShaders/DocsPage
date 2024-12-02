@@ -1,0 +1,219 @@
+---
+title: "Programs / Ordering"
+description: "Programs / Ordering"
+sidebar:
+  label: "Programs / Ordering"
+  order: 4
+---
+import { Badge } from '@astrojs/starlight/components';
+
+This page lists [shaders.properties](/current/reference/shadersproperties/overview) directives related to program ordering, enabling/disabling programs, enabling/disabling geometry within programs, and compute passes.
+
+## particles.ordering <Badge text="Iris Exclusive" variant="tip" size="medium" />
+```properties
+particles.ordering=<mixed|after|before>
+```
+This controls how particles will be rendered. There are 3 possible options for this value.
+
+- `mixed`: Opaque particles are rendered before the [deferred](/current/reference/programs/deferred) pass, and translucent particles are rendered after. This is the default if no [deferred](/current/reference/programs/deferred) passes are present.
+- `after`: All particles are rendered after the [deferred](/current/reference/programs/deferred) pass. This is the default if there are any [deferred](/current/reference/programs/deferred) passes.
+- `before`: All particles are rendered before the [deferred](/current/reference/programs/deferred) pass.
+
+----------------
+
+
+## particles.before.deferred
+```properties
+particles.before.deferred=<true|false>
+```
+The legacy version of [`particles.ordering`](/current/reference/shadersproperties/ordering#particlesordering) which is supported by Optifine. If set to `true` all particles will be rendered before the deferred pass, otherwise particles will be rendered after the deferred pass. This ordering is overwritten by [`particles.ordering`](/current/reference/shadersproperties/ordering#particlesordering) by Iris if both are present.
+
+----------------
+
+
+## separateEntityDraws <Badge text="Iris Exclusive" variant="tip" size="medium" />
+```properties
+separateEntityDraws=<true|false>
+```
+If `separateEntityDraws` is true in shaders.properties, translucent entities and block entities will wait to be drawn until after the deferred pass, and then will be drawn in the `gbuffers_entities_translucent` and `gbuffers_block_translucent` programs. If those programs are not present they will fall back to `gbuffers_entites` and `gbuffers_block` respectively, but will still be rendered after deferred.
+
+----------------
+
+
+## program.enabled
+```properties
+program.<program>.enabled=<bool_expression>
+```
+This directive can be used to disable a program based on shader options.
+
+Replace:
+- `<program>` with the program name, including the dimension folder if relevant (e.g. `world0/composite2`).
+- `<bool_expression>` with a boolean expression containing shader options. For example, `program.deferred.enabled=!BLOOM && (SSR || PARALLAX)`. `true` or `false` can also be used to outright enable/disable a program.
+
+----------------
+
+
+## shadow.enabled <Badge text="Iris Exclusive" variant="tip" size="medium" />
+```properties
+shadow.enabled=<true|false>
+```
+Normally Optifine/Iris will check if the shadow buffers are used by any program to determine when to enable/disable the shadow pass. Iris offers an additional explicit control for enabling/disabling the pass. This can be useful for voxelization which doesn't write to a [shadowtex](/current/reference/buffers/shadowtex)/[shadowcolor](/current/reference/buffers/shadowcolor) buffer (for example SSBOs or custom images).
+
+----------------
+
+
+## shadowTerrain
+```properties
+shadowTerrain=<true|false>
+```
+Sets whether solid/cutout terrain is rendered in the [`shadow pass`](/current/reference/programs/shadow).
+
+----------------
+
+
+## shadowTranslucent
+```properties
+shadowTranslucent=<true|false>
+```
+Sets whether translucent terrain (e.g. water) is rendered in the [`shadow pass`](/current/reference/programs/shadow).
+
+----------------
+
+
+## shadowEntities
+```properties
+shadowEntities=<true|false>
+```
+Sets whether entities are rendered in the [`shadow pass`](/current/reference/programs/shadow).
+
+----------------
+
+
+## shadowPlayer <Badge text="Iris Exclusive" variant="tip" size="medium" />
+```properties
+shadowPlayer=<true|false>
+```
+This value controls if the player should have a shadow rendered. This is forced on if `shadowEntities` (default `true`) is enabled. This also controls shadows of any entities the player is riding.
+
+----------------
+
+
+## shadowBlockEntities
+```properties
+shadowBlockEntities=<true|false>
+```
+Sets whether block entities are rendered in the [`shadow pass`](/current/reference/programs/shadow).
+
+----------------
+
+
+## shadowLightBlockEntities <Badge text="Iris Exclusive" variant="tip" size="medium" />
+```properties
+shadowLightBlockEntities=<true|false>
+```
+This value sets an override for block entities that emit light. If `shadowBlockEntities` is set to `false`, block entities will not be rendered in the [`shadow pass`](/current/reference/programs/shadow), however setting `shadowLightBlockEntities` to `true` in this case will render only block entities that emit light.
+
+----------------
+
+
+## skipAllRendering <Badge text="Iris Exclusive" variant="tip" size="medium" />
+```properties
+skipAllRendering=<true|false>
+```
+Disables most of the [gbuffers](/current/reference/programs/gbuffers) pass, including terrain, entities, and block entities. Does not disable post processing shaders or shadows.
+
+This option is intended for path tracing packs which do not utilize the [gbuffers](/current/reference/programs/gbuffers) pass and wish to avoid that geometry being sent to the screen.
+
+----------------
+
+
+## voxelizeLightBlocks <Badge text="Iris Exclusive" variant="tip" size="medium" />
+```properties
+voxelizeLightBlocks=<true|false>
+```
+Using `voxelizeLightBlocks` in shaders.properties, you can now voxelize light blocks in the shadow or main pass.
+
+This only applies to light blocks ([Minecraft Wiki](https://minecraft.wiki/w/Light_Block)), which are a specific block which is invisible but emits a specific level of light. This does not affect any other blocks or geometry.
+
+Light blocks will be rendered as a single (degenerate) invisible quad with all points centered on the middle of the block. (`at_midBlock` will be 0.) The ID will correspond as normal to the light block, and UV will be 0. `lmcoord.xy` will both be the value of the light made by the light block.
+
+----------------
+
+
+## indirect.pass <Badge text="Iris Exclusive" variant="tip" size="medium" />
+```properties
+indirect.<pass> = <bufferObjectNumber> <offsetInBuffer>
+```
+Allows you to dispatch a compute shader with the work group amount specified from a [SSBO](/current/reference/buffers/ssbo).
+
+To use this, replace:
+- `<pass>` with the name of the compute shader pass (e.g. `composite`, `deferred1`, `prepare8`)
+- `<bufferObjectNumber>` with the "index" of the SSBO
+- `<offsetInBuffer>` with the offset to the work group count in bytes
+
+The object at offset in the SSBO must be an `uvec3` which stores the number of work groups in each axis. ***If you do not do this, your PC will most likely crash trying to dispatch 2147483647^3 work groups. Don't do that.***
+
+----------------
+
+
+## allowConcurrentCompute <Badge text="Iris Exclusive" variant="tip" size="medium" />
+```properties
+allowConcurrentCompute=<true|false>
+```
+Enables concurrent compute passes. See below for details.
+
+
+### Concurrency between compute passes
+
+In OptiFine, concurrency between compute passes **is not possible**. A `glMemoryBarrier(GL_TEXTURE_FETCH_BARRIER_BIT | GL_SHADER_IMAGE_ACCESS_BARRIER_BIT)` command is executed before and after every compute shader, preventing different compute passes from ever executing in parallel. However, it means that all `texture()` and `imageLoad()`/`imageStore()` commands are guaranteed to return the results of all previous compute or composite passes, even for multiple compute shaders attached to the same composite program.
+
+NOTE: Notably, the `GL_SHADER_STORAGE_BARRIER_BIT` and `GL_FRAMEBUFFER_BARRIER_BIT` flags are omitted in this call. While omitting `GL_SHADER_STORAGE_BARRIER_BIT` is valid as no release version of Iris or OptiFine supports shader storage buffer objects in any context, it is unclear whether it is valid to omit `GL_FRAMEBUFFER_BARRIER_BIT`. TODO: More investigation is needed here.
+
+This is also the behavior in Iris when `allowConcurrentCompute` is set to `false`, which is the default.
+
+#### Enabling allowConcurrentCompute
+
+If `allowConcurrentCompute` is set to `true` in `shaders.properties`, a different concurrency model is enabled for compute shaders, allowing enhanced flexibility for shader developers. **This is an Iris-exclusive feature.**
+
+For a given composite pass, a `glMemoryBarrier(GL_TEXTURE_FETCH_BARRIER_BIT | GL_SHADER_IMAGE_ACCESS_BARRIER_BIT)` command is issued **after the last compute pass for that composite pass**. As a result, no matter if a composite pass has a single corresponding compute pass or 27 corresponding compute passes, only one memory barrier is issued while executing that composite pass.
+
+This ensures that all `texture()` calls and all `imageLoad()` / `imageStore()` calls receive up-to-date values following the execution of all compute passes for a given composite pass, as opposed to out-of-date or undefined values.
+
+There are two important corollaries of this changed memory barrier behavior:
+
+##### The Sequential Dispatch Corollary
+
+A compute shader belonging to composite pass A is always executed before a compute shader belonging to composite pass B, if composite pass B is executed after composite pass A.
+
+Sequential dispatch between two given compute passes is required if one of the given compute passes is dependent on the output of a the other given compute pass.
+
+It is possible to define a compute pass without the corresponding composite pass being defined. As a result, it is possible to have both `composite.csh` and `composite1.csh` be defined without either `composite.fsh`/`composite.vsh` or `composite1.fsh`/`composite1.vsh` being defined. This allows exploiting the sequential dispatch corollary without being restricted by the number of composite passes that the shader pack is utilizing, or the structuring of those composite passes relative to the compute passes.
+
+
+##### The Parallel Dispatch Corollary
+
+A compute shader belonging to a given composite pass MAY be executed at the same time as another compute pass belonging to the same composite pass.
+
+Parallel dispatch can lead to significantly increased performance because it allows the GPU to execute multiple compute shaders at the same time.
+
+However, care must be taken with parallel dispatch because you are **bypassing the conventional safety guarantees of composite passes**.
+
+As a result, if two parallel compute passes attempt to access the same image without using atomic operations, inconsistent behavior MAY result. This is highly dependent on drivers, FPS, operating system, hardware, and all sorts of other factors.
+
+There are two ways to mitigate this issue:
+
+1. Elminate resource sharing: Ensure that no resources are used at the same time by two compute passes.
+2. Atomic-only resource sharing: Only utilize atomic operations to access a shared resource.
+
+
+### Further reading
+
+- An in-depth pair of blog posts touching on using advanced concurrency techniques in compute shaders specifically in the context of Minecraft path-tracing shaders has been published by BruceKnowsHow:
+    - [Good and Bad Conditional Branching in GPU Shaders](https://lavish-waitress-2da.notion.site/Good-and-Bad-Conditional-Branching-in-GPU-Shaders-17cca16e30be4e38baef9c9166ac4c24)
+    - [Branchless Multi-Bounce Path-Tracing with a Ray-Buffer](https://lavish-waitress-2da.notion.site/Branchless-Multi-Bounce-Path-Tracing-with-a-Ray-Buffer-c9cd87ff41bd455b8dd8d629011167b0)
+
+
+##### Credit
+This page is taken from the [Iris ShaderDoc](https://github.com/IrisShaders/ShaderDoc/blob/master/passes/compute.md#concurrency-between-compute-passes) by IMS.
+
+----------------

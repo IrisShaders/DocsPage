@@ -1,0 +1,196 @@
+---
+title: Rendering Uniforms
+description: Uniforms related to rendering.
+sidebar:
+  label: Rendering
+  order: 8
+---
+import { Aside } from '@astrojs/starlight/components';
+
+These uniforms store information related to rendering, such as near/far planes, chunk offsets, fog parameters, and more.
+
+
+## near
+```glsl
+uniform float near;
+```
+The near clipping plane distance. Unless changed by a mod, this is equal to `0.05`.
+
+----------------
+
+
+## far
+```glsl
+uniform float far;
+```
+The current render distance in blocks. Despite the name, this is not the far clipping plane distance, in fact that value is roughly four times `far`.
+
+
+----------------
+
+
+## alphaTestRef
+```glsl
+uniform float alphaTestRef;
+```
+This value stores the alpha value that Iris recommends you discard pixels bellow. This value is commonly `0.1`, but can change in certain cases (therefore it is recommended to use the uniform over a hardcoded value). The value is also affected by the [`alphaTest`](/current/reference/shadersproperties/rendering#alphatest) directive. It is normally used like this:
+```glsl
+if (albedoOut.a < alphaTestRef) discard;
+```
+
+<Aside type="note">This uniform is designed to work with the modern syntax for fragment shader outputs (`out`). When Using the legacy syntax (`gl_FragData`) this uniform is not necessary as the alpha test will be performed automatically.</Aside>
+
+----------------
+
+
+## chunkOffset
+```glsl
+uniform vec3 chunkOffset;
+```
+The chunk offset in model space for the currently rendering chunk of terrain. Used in combination with [`vaPosition`](/current/reference/attributes/vaposition) to get the model space position as follows:
+
+```glsl
+vec3 model_pos = vaPosition + chunkOffset;
+```
+
+The value of `chunkOffset` is all 0s when not rendering terrain, or when using the compatibility profile.
+
+----------------
+
+
+## entityColor
+```glsl
+uniform vec4 entityColor;
+```
+The entity tint color. The `rgb` components store the color, and the `a` component stores the blend factor. The entity color should be applied as follows:
+
+```glsl
+color.rgb = mix(color.rgb, entityColor.rgb, entityColor.a);
+```
+
+----------------
+
+
+## blendFunc
+```glsl
+uniform ivec4 blendFunc;
+```
+The alpha blending function multipliers for the current program, as described in [`blend.<program>`](/current/reference/shadersproperties/rendering#blend). The components of the vector store the following:
+
+- `x`: source RGB
+- `y`: destination RGB
+- `z`: source Alpha
+- `w`: destination Alpha
+
+The value stored in each component is one of the following hardcoded integer values (see [LWJGL docs](https://javadoc.lwjgl.org/constant-values.html#org.lwjgl.opengl.GL11.GL_SRC_COLOR)):
+
+| Blend Value             | Integer Value |
+|-------------------------|---------------|
+| `GL_ZERO`               | 0             |
+| `GL_ONE`                | 1             |
+| `GL_SRC_COLOR`          | 768           |
+| `GL_ONE_MINUS_SRC_COLOR`| 769           |
+| `GL_SRC_ALPHA`          | 770           |
+| `GL_ONE_MINUS_SRC_ALPHA`| 771           |
+| `GL_DST_ALPHA`          | 772           |
+| `GL_ONE_MINUS_DST_ALPHA`| 773           |
+| `GL_DST_COLOR`          | 774           |
+| `GL_ONE_MINUS_DST_COLOR`| 775           |
+| `GL_SRC_ALPHA_SATURATE` | 776           |
+
+----------------
+
+
+## atlasSize
+```glsl
+uniform ivec2 atlasSize;
+```
+This value stores the size of the texture atlas. It only stores a value when the texture atlas is bound, and will return `0` when not.
+
+----------------
+
+
+## renderStage
+```glsl
+uniform int renderStage;
+```
+This uniform stores the "render stage" of the current geometry. This can be used to identify what type of geometry is being rendered in more detail than the [gbuffer program](/current/reference/programs/gbuffers) it's running in. The uniform value is intended to be compared to one of the [render stage preprocessor macros](/current/reference/macros/render_stages) which are defined by Iris.
+
+----------------
+
+
+## fogColor
+```glsl
+uniform vec3 fogColor;
+```
+The horizon fog color used by the vanilla game for sky rendering and fog. It can be dependent on biome, time of day, and viewing angle.
+
+----------------
+
+
+## skyColor
+```glsl
+uniform vec3 skyColor;
+```
+The upper sky color used by the vanilla game for sky rendering. It can be dependent on biome, time of day, but not viewing angle.
+
+----------------
+
+
+## fogDensity
+```glsl
+uniform float fogDensity;
+```
+This uniform stores the relative fog density used for vanilla fog, based on the current biome, weather, water/lava/packed snow, etc. The value ranges from `0.0` (lowest density) to `1.0` (highest density).
+
+
+----------------
+
+
+## fogStart
+```glsl
+uniform float fogStart;
+```
+This uniform stores the starting distance in blocks used for vanilla fog, based on the current biome, weather, water/lava/packed snow, etc.
+
+
+----------------
+
+
+## fogEnd
+```glsl
+uniform float fogEnd;
+```
+This uniform stores the ending distance in blocks used for vanilla fog, based on the current biome, weather, water/lava/packed snow, etc.
+
+
+----------------
+
+
+## fogMode
+```glsl
+uniform int fogMode;
+```
+This uniform stores the fog type used for vanilla fog, based on the current biome, weather, water/lava/packed snow, etc. This is the function used to determine the strength of fog based on distance.
+
+The value stored in each component is one of the following hardcoded integer values (see [LWJGL docs](https://javadoc.lwjgl.org/constant-values.html#org.lwjgl.opengl.GL11.GL_EXP)):
+
+- `GL_EXP`: 2048
+- `GL_EXP2` : 2049
+- `GL_LINEAR`: 9729
+
+----------------
+
+
+## fogShape
+```glsl
+uniform int fogShape;
+```
+This uniform encodes the fog shape used for vanilla fog, based on the current biome, weather, water/lava/packed snow, caves, etc. The following values are possible:
+
+- `0`: sphere
+- `1`: cylinder
+
+----------------
+
+

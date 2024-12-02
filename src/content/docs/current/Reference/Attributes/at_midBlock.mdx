@@ -1,0 +1,22 @@
+---
+title: at_midBlock
+description: The player space offset of the vertex's position from the centre of the block in 1/64th units, and optionally the light level emitted by the block.
+sidebar:
+  label: at_midBlock
+  order: 2
+---
+
+### `in vec4 at_midBlock;`
+
+**Valid Programs**: terrain (*gbuffers_terrain*, *gbuffers_water*, *shadow*)
+
+---
+
+The first three components store the world/player space offset from the vertex's position to the center of the block in 1/64th block units. For example, the center position would be calculated like this:
+```glsl
+vec3 centerPosition = position + at_midBlock.xyz/64.0;
+```
+
+In Iris 1.7 and newer, `at_midBlock.w` stores the light level of the current block (without the influence of nearby light sources, range `0` to `15`). This can be used to tell if a block is emissive. It's recommended to use this together with [`BLOCK_EMISSION_ATTRIBUTE`](/current/reference/shadersproperties/flags).
+
+This attribute (both the mid block offset and the emission value) are only available for terrain.

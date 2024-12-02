@@ -1,0 +1,16 @@
+---
+title: composite
+description: Runs after all gbuffers programs.
+sidebar:
+  label: composite
+  order: 9
+---
+
+**Required stages**: vertex (.vsh), fragment (.fsh)  
+**Optional stages**: geometry (.gsh), compute (.csh)  
+**Output Buffers**: [colortex](/current/reference/buffers/colortex)  
+**Valid suffixes**: N/A, 1-99
+
+-------------------------------------------------
+
+A composite pass which runs after all [gbuffers](/current/reference/programs/gbuffers) programs. Like other composite programs, it renders a single fullscreen quad over the resolution of the buffer(s) it writes to.
