@@ -156,7 +156,7 @@ const int shadowMapResolution = 2048;
 
 This makes things a little bit sharper, but they still don't look great.
 
-![](../../../../assets/beginner_tutorial/sharpershadows.webp)
+![](../../../../../assets/beginner_tutorial/sharpershadows.webp)
 
 The easy solution here would be to just increase the shadow map resolution to some very big number like 8192 (it is convention to use a power of two for your shadow map size), but this will start taking up an awful lot of video memory, causing a performance impact. Instead, we can make use of something known as 'shadow distortion'. The idea is that since stuff that is closer to us is what we can see most clearly, we want to dedicate more of the shadow map resolution to this stuff, and less of it to things that are further away.
 
