@@ -58,7 +58,7 @@ Compute shaders break the OpenGL fixed pipeline and allow more direct access to 
 
 In Iris, compute shaders can be used in compute only pass, or included in composite-style passes, using the `.csh` file extension. In composite-style passes, compute shaders will always execute first (before the vertex stage if present). Up to 27 compute shaders files can be included in a single pass by appending the `_a` through `_z` suffixes to the filename in addition to a shader file with no suffix. These shaders will execute one after the other in alphabetical order (starting with the no-suffix file if present), unless [`allowConcurrentCompute`](/current/reference/shadersproperties/ordering#allowconcurrentcompute) is used (in which case they will execute potentially simultaneously but will all finish before starting the vertex stage).
 
-Local size is defined as follows: `layout (local_size_x = <size_x>, local_size_y = <size_x>, local_size_y = <size_z>) in;`.
+Local size is defined as follows: `layout (local_size_x = <size_x>, local_size_y = <size_x>, local_size_z = <size_z>) in;`.
 
 Work group count can be defined one of three ways:
 1. **Fixed size**: a const in shader file [`const ivec3 workGroups`](/current/reference/constants/workgroups)
