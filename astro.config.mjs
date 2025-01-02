@@ -33,6 +33,7 @@ export default defineConfig({
 				{
 					label: 'Aperture',
 					autogenerate: { directory: 'aperture', collapsed: true },
+					badge: "New",
 				},
 			],
 			plugins: [
