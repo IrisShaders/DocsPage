@@ -27,7 +27,7 @@ export default defineConfig({
 			},
 			sidebar: [
 				{
-					label: '',
+					label: 'Iris',
 					autogenerate: { directory: 'current', collapsed: true },
 				},
 				{

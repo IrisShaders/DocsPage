@@ -1,8 +1,61 @@
 ---
 title: Aperture
 description: Documentation for the upcoming Aperture pipeline
-tableOfContents: false
+tableOfContents: true
 sidebar:
   label: Overview
   order: 0
 ---
+
+:::caution[Warning]
+**Aperture is still in early development and not for public use.** Things can and will change, and parts of this section may be incomplete or outright incorrect.
+:::
+
+Aperture is a new pipeline for Iris, set to be released with Iris 2.0.
+- It uses pipeline code written by shader developers in TypeScript, allowing for fully customizable packs.
+- It has a mod API that allows for mods to apply custom vertex formats, vertex transformations, and (basic) fragment warping without interfering with shader developers.
+- It has no limits on the number of textures, buffers, or programs you can have, how complex they can be, or how they are running.
+- It has a new shadow mapping system based on cascaded shadow maps, allowing shadow maps that reach far beyond what Optifine packs can without distortion.
+- Packs written on Aperture use a modern version of OpenGL that can be translated to other API's in the future.
+
+This serves as temporary documentation whilst Aperture is being developed.
+
+## Uniforms
+
+### Matrices
+Instead of `gbufferModelView` and `gbufferProjection` there is `playerModelView` and `playerProjection`. To access the previous frame versions, prefix `last` (maintaining camelCase). To access the inverse, suffix `Inverse`.
+
+The shadow matrices have not been renamed.
+
+### Uniforms which have not changed
+- `isEyeInWater`
+- `eyeBrightness`
+- `shadowLightPosition`
+- `sunPosition`
+- `moonPosition`
+- `moonPhase`
+- `frameTime`
+- `worldTime`
+- `frameCounter`
+- `skyColor`
+- `fogColor`
+- `fogStart`
+- `fogEnd`
+- `rainStrength`
+
+
+### Uniforms which have changed
+- `cameraPosition` is now `cameraPos`. `previousCameraPosition` is likewise `lastCameraPos`.
+- `far` is now `renderDistance`
+- `frameTimeCounter` is now `timeCounter`
+- `hideGUI` is now `guiHidden`
+- `viewWidth` and `viewHeight` have been replaced with `screenSize`
+
+
+### New Uniforms
+- `dayProgression`, a `float` ranging from `0.0` to `1.0` to indicate the progression through the daylight cycle.
+- `farPlane`, the actual far plane
+- `nearPlane`
+- `shadowProjectionSize`
+
+Anything not mentioned is probably not available yet.
