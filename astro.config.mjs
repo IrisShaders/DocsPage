@@ -30,6 +30,11 @@ export default defineConfig({
 					label: '',
 					autogenerate: { directory: 'current', collapsed: true },
 				},
+				{
+					label: 'Aperture',
+					autogenerate: { directory: 'aperture', collapsed: true },
+					badge: "Beta",
+				},
 			],
 			plugins: [
 				starlightImageZoom(),
