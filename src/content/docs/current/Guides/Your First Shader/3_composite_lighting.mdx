@@ -14,22 +14,22 @@ In this section we will implement basic diffuse shading in the composite pass.
 
 ## Gamma Correction
 
-Our eyes don't percieve light linearly, but rather on a generally logarithmic scale. For example, the color that appears halfway between black and white actually only emits 22% of the photons that white does. Because of this, computer images - such as Minecraft's textures - are stored in the sRGB color space. Approximately, the color value stored on the computer is the actual value of photons emitted raised to the power of 1/2.2, which is known as gamma correcting. When it comes for your monitor to display these colors to the screen, it raises the values to the power of 2.2 - the inverse of the gamma correction - to emit the correct amount of photons.
+Our eyes don't percieve light linearly, but rather on a generally logarithmic scale. For example, the color that appears to your eyes as halfway between black and white actually only emits 22% of the photons that white does. Because of this, computer images - such as Minecraft's textures - are stored in the sRGB color space. Approximately, the color value stored on the computer is the actual value of photons emitted raised to the power of 1/2.2, which is known as gamma correcting. When it comes for your monitor to display these colors to the screen, it raises the values to the power of 2.2 - the inverse of the gamma correction - to emit the correct amount of photons.
 
-This means that a color value of 0.5 stored on a computer does looks like halfway between white and black. However, when working with lighting effects, we want the actual value of photons and not the human perception of the color. To achieve this, we can ourselves apply inverse gamma correction by raising the colors to the power of 2.2 before applying lighting effects.
+This means that a color value of 0.5 stored on a computer does looks like halfway between white and black. However, when working with lighting effects, we want the actual value of photons and not the human perception of the color. To achieve this, we can ourselves apply inverse gamma correction by raising the colors to the power of 2.2 before applying lighting effects. At the end of `gbuffers_terrain.fsh`, add:
 
 ```glsl
 color.rgb = pow(color.rgb, vec3(2.2));
 ```
 
-This converts our color to the linear color space. However, since monitors expect colors to be in the sRGB color space, we must reapply gamma correction before the color is outputted to the screen.
+This converts our color to the linear color space. However, since monitors expect colors to be in the sRGB color space, we must reapply gamma correction before the color is outputted to the screen. Create copies of your `composite.fsh` and `composite.vsh` files and rename them to `final.fsh` and `final.vsh`. The final pass is functionally identical to the composite passes but it always runs after the last composite pass. At the top of the `main` function:
 
 ```glsl
 color.rgb = pow(color.rgb, vec3(1.0 / 2.2));
 ```
 
 :::note[Note]
-Because `colortex` buffers are designed to hold gamma corrected colors, if you write linear color you will lose some precision. This can either be solved by [increasing the precision of the buffer itself](http://shaders.properties/current/reference/buffers/image_format/), or by converting back to gamma space every time before writing to a `colortex`.
+Because `colortex` buffers are designed to hold gamma corrected colors, if you write linear color to them you will lose some precision. This can either be solved by [increasing the precision of the buffer itself](http://shaders.properties/current/reference/buffers/image_format/), or by converting back to gamma space every time before writing to a `colortex`.
 :::
 
 ## Decoding Data
