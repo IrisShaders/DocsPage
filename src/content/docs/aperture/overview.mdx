@@ -20,6 +20,81 @@ Aperture is a new pipeline for Iris, set to be released with Iris 2.0.
 
 This serves as temporary documentation whilst Aperture is being developed.
 
+## `pack.ts`
+`pack.ts` is where the shaderpack is configured. All textures and programs are registered from here. When instantiating objects like textures and programs, options for them can be configured using builder syntax. For example, to set the format of a texture, I would call `.format(<FORMAT>)` on it. Once an object is built, the `.build()` function must be called. For example:
+
+```ts
+let sceneTex = new Texture("sceneTex")
+  .format(Format.RGB16F)
+  .clear(true)
+  .build();
+```
+
+To see a list of builder functions that can be called on an object (and what can be passed to them), you can go to the type definition in `iris.d.ts`.
+
+### Registering Textures
+Textures are registered in the `setupShader` function. They are instantiated by creating a new `Texture` object, or alternatively: 
+- `rawTexture` (which reads from a binary file)
+- `arrayTexture` (required for the shadow map)
+- `PNGTexture` (guess what this does)
+
+### Registering Programs
+Shader programs are registered in the `setupShader` function with the `registerShader` function, which takes in one of the following
+
+- `ObjectShader` ('gbuffers' style)
+- `Composite` (fullscreen pass)
+- `Compute`
+
+`ObjectShader`s take a `programUsage`, these are predefined for you, for example `TERRAIN_SOLID`.
+
+To add a vertex and fragment shader to your shader object, you can call `.vertex(<PATH_TO_VERTEX>)` and `.fragment(<PATH_TO_FRAGMENT>)`.
+
+To choose which buffers the fragment shader writes to, use `.target(<index>, <texture>)` - `index` is the index in your `layout(location = <index>)` definition. This essentially replaces `RENDERTARGETS`.
+
+
+:::caution[Warning]
+You **must** register a combination pass, this is like `final` and writes the final color to the screen. This is done with `setCombinationPass()` which takes a `CombinationPass` object which itself takes the path to the fragment shader which handles this. Your combination program should provide an `out vec4 fragColor`, taking an `in vec2 uv`. This pass cannot write to any other buffers.
+:::
+
+
+## Writing Shader Programs
+
+### Vertex Shaders
+Vertex shaders should define two functions:
+
+#### `void iris_emitVertex(inout VertexData data)`
+Set `data.clipPos` as you would `gl_Position`. Usually this can just be `iris_projectionMatrix * iris_modelViewMatrix * data.modelPos`
+
+:::note[Info]
+`iris_projectionMatrix` and `iris_modelViewMatrix` are patched to make sense for the relevant usage, in the same way `gl_ModelViewMatrix` is in Optifine.
+:::
+
+#### `void iris_sendParameters(VertexData data)`
+This is where you can write to your `out` declarations.
+
+Both of these functions make use of the `VertexData` struct.
+
+```glsl
+struct VertexData {
+	vec4 modelPos; // model space position you are given
+	vec4 clipPos; // clip space position you must set
+	vec2 uv; // texture coordinate in the atlas
+	vec2 light; // lightmap texture coordinate - x is blocklight, y is skylight
+	vec4 color; // vertex color, equivalent to gl_Color
+	vec3 normal; // model space normal
+	vec4 tangent; // model space tangent
+	vec4 overlayColor; // stuff like the red damage flash, equivalent to entityColor
+	vec3 midBlock; // equivalent to at_midBlock
+	uint blockId; // hooray
+	uint textureId; // ???
+	float ao; // vanilla ambient occlusion
+};
+```
+
+### Fragment Shaders
+
+Fragment shaders are a lot simpler, you just define `void iris_emitFragment()` instead of `void main()`.
+
 ## Uniforms
 
 ### Matrices
@@ -58,4 +133,4 @@ The shadow matrices have not been renamed.
 - `nearPlane`
 - `shadowProjectionSize`
 
-Anything not mentioned is probably not available yet.
+Any uniforms not mentioned are probably not available yet.
