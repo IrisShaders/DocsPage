@@ -27,7 +27,7 @@ export default defineConfig({
 			},
 			sidebar: [
 				{
-					label: 'Current',
+					label: '',
 					autogenerate: { directory: 'current', collapsed: true },
 				},
 				{
