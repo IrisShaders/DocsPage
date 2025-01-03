@@ -13,22 +13,24 @@ This tutorial is still being developed. Some statements may be incorrect, and th
 In this section we will implement basic diffuse shading in the composite pass.
 
 ## Gamma Correction
-Before we start doing any lighting, it's important to make sure we are in the correct color space. For more information on why we need to do this, see the relevant [LearnOpenGL article](https://learnopengl.com/Advanced-Lighting/Gamma-Correction).
 
-Anyway, let's go back to our `gbuffers_terrain.fsh`. In order to apply gamma correction, we raise our color to the power of 2.2. So, at the end of the pass:
+Our eyes don't percieve light linearly, but rather on a generally logarithmic scale. For example, the color that appears halfway between black and white actually only emits 22% of the photons that white does. Because of this, computer images - such as Minecraft's textures - are stored in the sRGB color space. Approximately, the color value stored on the computer is the actual value of photons emitted raised to the power of 1/2.2, which is known as gamma correcting. When it comes for your monitor to display these colors to the screen, it raises the values to the power of 2.2 - the inverse of the gamma correction - to emit the correct amount of photons.
+
+This means that a color value of 0.5 stored on a computer does looks like halfway between white and black. However, when working with lighting effects, we want the actual value of photons and not the human perception of the color. To achieve this, we can ourselves apply inverse gamma correction by raising the colors to the power of 2.2 before applying lighting effects.
 
 ```glsl
 color.rgb = pow(color.rgb, vec3(2.2));
 ```
 
-You'll notice this makes our colors look horrible. This is because we need to apply inverse gamma correction afterwards. Let's make a new shader pass called `final`. Create copies of your `composite.fsh` and `composite.vsh` files and rename them to `final.fsh` and `final.vsh`. The `final` pass is functionally identical to the `composite` passes but it always runs after the last composite pass.
+This converts our color to the linear color space. However, since monitors expect colors to be in the sRGB color space, we must reapply gamma correction before the color is outputted to the screen.
 
-Then, in your new `final.fsh`:
 ```glsl
-color.rgb = pow(color.rgb, vec3(1.0/2.2));
+color.rgb = pow(color.rgb, vec3(1.0 / 2.2));
 ```
 
-Voila! Your colors are back to normal.
+:::note[Note]
+Because `colortex` buffers are designed to hold gamma corrected colors, if you write linear color you will lose some precision. This can either be solved by [increasing the precision of the buffer itself](http://shaders.properties/current/reference/buffers/image_format/), or by converting back to gamma space every time before writing to a `colortex`.
+:::
 
 ## Decoding Data
 Returning to `composite.fsh`, let's read back in the lightmap and normal data we stored in `colortex1` and `colortex2` in the previous tutorial. First, we need to be able to sample the textures.
