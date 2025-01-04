@@ -34,8 +34,8 @@ To see a list of builder functions that can be called on an object (and what can
 
 ### Registering Textures
 Textures are registered in the `setupShader` function. They are instantiated by creating a new `Texture` object, or alternatively: 
-- `rawTexture` (which reads from a binary file)
-- `arrayTexture` (required for the shadow map)
+- `RawTexture` (which reads from a binary file)
+- `ArrayTexture` (required for the shadow map)
 - `PNGTexture` (guess what this does)
 
 ### Registering Programs
@@ -97,10 +97,14 @@ Fragment shaders are a lot simpler, you just define `void iris_emitFragment()` i
 
 ## Uniforms
 
+:::caution[Warning]
+Apart from samplers, uniforms are not declared within your shader. Instead, add them as arguments to the `registerUniforms()` function, called before `finalizeUniforms()` in `setupShader()`.
+:::
+
 ### Matrices
 Instead of `gbufferModelView` and `gbufferProjection` there is `playerModelView` and `playerProjection`. To access the previous frame versions, prefix `last` (maintaining camelCase). To access the inverse, suffix `Inverse`.
 
-The shadow matrices have not been renamed.
+The shadow matrices have not been renamed, although currently `shadowModelViewInverse` does not exist for some reason.
 
 ### Uniforms which have not changed
 - `isEyeInWater`
@@ -119,18 +123,56 @@ The shadow matrices have not been renamed.
 - `rainStrength`
 
 
-### Uniforms which have changed
+### Uniforms Which Have Changed
 - `cameraPosition` is now `cameraPos`. `previousCameraPosition` is likewise `lastCameraPos`.
 - `far` is now `renderDistance`
+- `near` is now `nearPlane`
+- `sunAngle` is now `dayProgression`
 - `frameTimeCounter` is now `timeCounter`
 - `hideGUI` is now `guiHidden`
 - `viewWidth` and `viewHeight` have been replaced with `screenSize`
 
-
 ### New Uniforms
-- `dayProgression`, a `float` ranging from `0.0` to `1.0` to indicate the progression through the daylight cycle.
 - `farPlane`, the actual far plane
-- `nearPlane`
 - `shadowProjectionSize`
 
 Any uniforms not mentioned are probably not available yet.
+
+## Shadows
+Iris makes use of cascaded shadow maps, which means everything is a lot more complicated.
+
+### Setting Up the Shadow Pass
+You do not need to declare the shadow map, as it is automatically defined. If you want any `shadowcolor` style buffers, declare them as an `ArrayTexture`.
+
+### Sampling the Shadow Map
+Aperture defines two shadow maps.
+- `shadowMap` (equivalent to `shadowtex0`)
+- `solidShadowMap` (equivalent to `shadowtex1`)
+
+Both of these should be defined as `sampler2DArray`s. To sample them, you pass the cascade as the `z` component of your coordinate, i.e:
+
+```glsl
+float shadow = step(shadowScreenPos.z, texture(shadowMap, vec3(shadowScreenPos.xy, cascade)));
+```
+
+Cascade 0 is the smallest, containing only a small area around the player, and cascade 3 is the largest.
+
+Bear in mind that `shadowProjection` is also an array, because each cascade has a different projection. As such, to sample the shadow map, you must loop through each projection until your position is inside the frustum.
+
+```glsl
+int cascade;
+for(cascade = 0; cascade < 4; cascade++){
+	shadowClipPos = shadowProjection[cascade] * shadowViewPos;
+
+	if(clamp(shadowClipPos.xy, vec2(-1.0), vec2(1.0)) == shadowClipPos.xy) break;
+}
+```
+
+### Hardware Filtering
+If you want hardware filtering, you can instead use a `sampler2DArrayShadow`. Due to reasons known only to the developers over at Khronos, the cascade is still the `z` component of the coordinate you pass in, so it becomes
+
+```glsl
+float shadow = texture(shadowMap, vec4(shadowScreenPos.xy, cascade, shadowScreenPos.z));
+```
+
+![](../../../assets/aperture/sampler2darrayshadow.webp)
