@@ -57,9 +57,11 @@ You **must** register a combination pass, this is like `final` and writes the fi
 :::
 
 
-## Writing Shader Programs
+## Object Shaders
 
-### Vertex Shaders
+Object shaders require special handling to allow for mod support
+
+### Vertex
 Vertex shaders should define two functions:
 
 #### `void iris_emitVertex(inout VertexData data)`
@@ -91,9 +93,29 @@ struct VertexData {
 };
 ```
 
-### Fragment Shaders
+### Fragment
 
 Fragment shaders are a lot simpler, you just define `void iris_emitFragment()` instead of `void main()`.
+
+## Composite Shaders
+
+### Vertex
+
+Since Aperture uses the core profile, `ftransform()` is not patched. Instead, the position of the vertex and the UV must be manually calculated as follows.
+
+```glsl
+#version 450 core
+
+out vec2 uv;
+
+void main() {
+    vec2 position = vec2(gl_VertexID % 2, gl_VertexID / 2) * 4.0 - 1.0;
+
+    uv = (position + 1.0) * 0.5;
+
+    gl_Position = vec4(position, 0.0, 1.0);
+}
+```
 
 ## Uniforms
 
