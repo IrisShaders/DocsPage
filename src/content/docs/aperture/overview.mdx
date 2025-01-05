@@ -47,6 +47,8 @@ Shader programs are registered in the `setupShader` function with the `registerS
 
 `ObjectShader`s take a `programUsage`, these are predefined for you, for example `TERRAIN_SOLID`.
 
+`Composite` and `Compute` shaders require a `Stage` argument passed to `registerShader` before the shader object itself. This defines when the shader runs - for example `Stage.POST_RENDER` is equivalent to a `composite` pass in the Optifine format.
+
 To add a vertex and fragment shader to your shader object, you can call `.vertex(<PATH_TO_VERTEX>)` and `.fragment(<PATH_TO_FRAGMENT>)`.
 
 To choose which buffers the fragment shader writes to, use `.target(<index>, <texture>)` - `index` is the index in your `layout(location = <index>)` definition. This essentially replaces `RENDERTARGETS`.
@@ -116,6 +118,10 @@ void main() {
     gl_Position = vec4(position, 0.0, 1.0);
 }
 ```
+
+## Buffers
+
+The depth textures are `depthTex` and `solidDepthTex`, replacing `depthtex0` and `depthtex1`. Note that `depthTex` is not available before translucents are rendered, so make sure to use `solidDepthTex` in this case.
 
 ## Uniforms
 
