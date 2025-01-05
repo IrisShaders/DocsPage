@@ -342,7 +342,7 @@ First, we should define how many samples we are going to take, and how far we sh
 #define SHADOW_SOFTNESS 1
 ```
 :::note[Note]
-`#define` is another preprocessor directive, except instead of replacing itself with the contents of a file, it replaces all uses of it with the value. For example, if we `#define THING 2.0`, then `float something = thing;` will compile to `float something = 2.0`.
+`#define` is another preprocessor directive, except instead of replacing itself with the contents of a file, it replaces all uses of it with the value. For example, if we `#define THING 2.0`, then `float something = THING;` will compile to `float something = 2.0`.
 :::
 
 Let's define another function `getSoftShadow` in `composite.fsh`. This function will call `getShadow` so it must be placed after it.

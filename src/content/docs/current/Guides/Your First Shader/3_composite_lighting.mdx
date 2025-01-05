@@ -16,7 +16,7 @@ In this section we will implement basic diffuse shading in the composite pass.
 
 Our eyes don't percieve light linearly, but rather on a generally logarithmic scale. For example, the color that appears to your eyes as halfway between black and white actually only emits 22% of the photons that white does. Because of this, computer images - such as Minecraft's textures - are stored in the sRGB color space. Approximately, the color value stored on the computer is the actual value of photons emitted raised to the power of 1/2.2, which is known as gamma correcting. When it comes for your monitor to display these colors to the screen, it raises the values to the power of 2.2 - the inverse of the gamma correction - to emit the correct amount of photons.
 
-This means that a color value of 0.5 stored on a computer does looks like halfway between white and black. However, when working with lighting effects, we want the actual value of photons and not the human perception of the color. To achieve this, we can ourselves apply inverse gamma correction by raising the colors to the power of 2.2 before applying lighting effects. At the end of `gbuffers_terrain.fsh`, add:
+This means that a color value of 0.5 stored on a computer does look halfway between white and black. However, when working with lighting effects, we want the actual value of photons and not the human perception of the color. To achieve this, we can ourselves apply inverse gamma correction by raising the colors to the power of 2.2 before applying lighting effects. At the end of `gbuffers_terrain.fsh`, add:
 
 ```glsl
 color.rgb = pow(color.rgb, vec3(2.2));
@@ -124,14 +124,14 @@ With that change, your lighting should seem a bit more realistic.
 
 ![](../../../../../assets/beginner_tutorial/lighting2.webp)
 
-## Fixing the sky
+## Fixing the Sky
 At this point, it may appear as if your Minecraft world is currently undergoing an apocalypse. This is because we are also applying lighting to the sky, despite the fact we do not have normal or lightmap data for it. So, how do we tell if a pixel is the sky or not? Well, we have access to something called the depth buffer, which tells you how far away a pixel is. If the pixel is at the maximum view distance, the depth buffer will store 1.0.
 
 To access the depth buffer, we use `uniform sampler2D depthtex0`. In between the code which reads the color from `colortex0` and the code which applies lighting, we can check if the pixel is the sky, and if it is, we can `return` from the `main` function.
 
 ```glsl
 float depth = texture(depthtex0, texcoord).r;
-if(depth == 1.0){
+if (depth == 1.0) {
 	return;
 }
 ```
