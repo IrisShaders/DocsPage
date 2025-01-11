@@ -35,9 +35,9 @@ In Iris, it is also useful to enable debug mode. You can do this by pressing <kb
 
 ## OpenGL and GLSL
 
-Minecraft is built using OpenGL, a high-level graphics API. OpenGL itself is not a piece of software; rather, it merely describes a specification for creating computer graphics that hardware developers are responsible for implementing. OpenGL uses GLSL (OpenGL Shading Language), which is the language Minecraft shader packs are coded in. GLSL is syntactically similar to C but introduces many extra features specifically designed for working with graphics.
+Minecraft is built using OpenGL, a high-level graphics API. OpenGL itself is not a piece of software; rather, it merely describes a specification for creating computer graphics that hardware developers are responsible for implementing. OpenGL uses GLSL (OpenGL Shading Language), which is the language Minecraft shaderpacks are developed in. GLSL is syntactically similar to C but introduces many extra features specifically designed for working with graphics.
 
-Old versions of Minecraft used an ancient version of OpenGL - OpenGL 2.0. Most older shader packs, for this reason, were written using GLSL version 120. However, since Minecraft 1.17, Minecraft was updated to use OpenGL 3.2, which targets version 150. However, shader loader mods like Iris and Optifine allow the use of any version of OpenGL/GLSL the user's hardware supports. Since OpenGL 3.3 requires 'DX10 Class' hardware, any computer released in the last decade should support it, so this is what we will be using. OpenGL 3.3 uses GLSL version 330.
+Old versions of Minecraft used an ancient version of OpenGL - OpenGL 2.0. Most older shader packs, for this reason, were written using GLSL version 120. In version 1.17, Minecraft was updated to use OpenGL 3.2, which targets version 150. However, shader loader mods like Iris and Optifine allow the use of any version of OpenGL/GLSL the user's hardware supports. Since OpenGL 3.3 requires 'DX10 Class' hardware, any computer released in the last decade should support it, so this is what we will be using. OpenGL 3.3 uses GLSL version 330.
 
 For the next part it is important to note that since most of the game's development was done on OpenGL 2.0, the rendering pipeline the game uses does not take advantage of modern hardware features.
 
