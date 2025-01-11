@@ -78,7 +78,7 @@ The `main` function is invoked when the shader program runs, just like in C.
 gl_Position = ftransform();
 ```
 
-This transforms the position of the vertex from model space to clip space. The `ftransform` function is actually deprecated but Iris patches it to the relevant modern code. For more information, see the Iris docs on [coordinate spaces](/current/how-to/coordinate_spaces).
+This transforms the position of the vertex from model space to clip space. The `ftransform` function is actually deprecated, but Iris patches it to the relevant modern code. For more information, see the docs on [coordinate spaces](/current/how-to/coordinate_spaces).
 
 ```glsl
 texcoord = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;
