@@ -14,7 +14,7 @@ In this section we will implement basic diffuse shading in the composite pass. A
 
 ## Gamma Correction
 
-Our eyes don't percieve light linearly, but rather on a generally logarithmic scale. For example, the color that appears to your eyes as halfway between black and white actually only emits 22% of the photons that white does. Because of this, computer images (such as Minecraft's textures) are stored in the *sRGB color space*, which dedicates more precision to brighter colors. Approximately, the color value stored on the computer is the actual value of photons emitted raised to the power of 1/2.2, which is known as gamma correcting. When it comes for your monitor to display these colors to the screen, it raises the values to the power of 2.2 - the inverse of the gamma correction - to emit the correct amount of photons.
+Our eyes don't percieve light linearly, but rather on a generally logarithmic scale. For example, the color that appears to your eyes as halfway between black and white actually only emits 21.7% of the photons that white does. Because of this, computer images (such as Minecraft's textures) are stored in the **sRGB color space**, which dedicates more precision to brighter colors. Approximately, the color value stored on the computer is the actual value of photons emitted raised to the power of 1/2.2, which is known as **gamma correction**. When it comes for your monitor to display these colors to the screen, it raises the values to the power of 2.2 - the inverse of the gamma correction - to emit the correct amount of photons.
 
 This means that a color value of 0.5 stored on a computer does look halfway between white and black. However, when working with lighting effects, we want the actual value of photons and not the human perception of the color. To achieve this, we can ourselves apply inverse gamma correction by raising the colors to the power of 2.2 before applying lighting effects. Just after we sample `colortex0` in `composite.fsh`, let's apply the following:
 
@@ -22,26 +22,22 @@ This means that a color value of 0.5 stored on a computer does look halfway betw
 color.rgb = pow(color.rgb, vec3(2.2));
 ```
 
-This converts our color to the linear color space. However, since monitors expect colors to be in the sRGB color space, we must reapply gamma correction before the color is outputted to the screen. To do this, let's make a `final` pass by creating two new files - `final.vsh` and `final.fsh`. Both of these can be identical to our `composite` pass as it stands right now, except we will instead do.
+This converts our color to the linear color space. However, since monitors expect colors to be in the sRGB color space, we must reapply gamma correction before the color is outputted to the screen. To do this, let's make a `final` pass by creating two new files - `final.vsh` and `final.fsh`. Both of these can be identical to our `composite` pass as it stands right now, except we will instead do:
 
 ```glsl
 color.rgb = pow(color.rgb, vec3(1.0 / 2.2));
 ```
 
-Because `colortex` buffers are designed to hold gamma corrected colors, if you write linear color to them you will lose some precision. Historically, the solution to this was to convert back to gamma space before writing to the buffer, but with modern hardware, we can simply set the buffer to store higher precision values. To do this, we can add the following code.
+Because `colortex` buffers are designed to hold gamma corrected colors, you will lose some possible color values if you write linear color to them. We can solve this by simply increasing the precision of the buffer  with the following code.
 
 ```glsl
 /*
-const int colortex0Format = RGB16F;
+const int colortex0Format = RGBA16;
 */
 ```
 
-:::note[Note]
-We have set the format of `colortex0` to `RGB16F`. This means we are storing R, G, and B values, as we don't care about the alpha channel for the color of the overall scene. The `16` indicates we are using 16 bits of precision, instead of the default 8. With 8 bits of precision we can only store 256 different values per channel (2^8 = 256), but with 16 bits we can store a whopping 65536! The `F` indicates that the buffer is floating point, which means that values can be higher than 1.0. This makes no difference within the scope of the tutorial, but is useful for effects like bloom. This is known as 'HDR rendering', although it is important to note that we are *not outputting HDR colors to the screen*, as Minecraft does not support this.
-:::
-
 :::caution[Warning]
-Observe that the declaration for the format is in a *multi-line comment*. This is because this code does not actually need to make it onto the GPU. Instead, Iris reads it, and knows to set the format of the buffer as we defined it.
+Observe that the declaration for the format is in a *multi-line comment*. This is because this code does not actually need to make it onto the GPU. Instead, Iris reads it, and knows to set the format of the buffer as we defined it. That means we can place this code anywhere in the shaderpack.
 
 The following is *not valid!* The declaration must be on its own line.
 
@@ -50,8 +46,10 @@ The following is *not valid!* The declaration must be on its own line.
 ```
 :::
 
-:::note[Note]
-It's not too much of an issue where this code is actually placed in your shaderpack. A common approach for code cleanliness is to have a file included everywhere in your shader specifying this. This is explained later in the tutorial, but putting it in `composite.fsh` for the moment will suffice.
+By default, `colortex` buffers are RGBA8, meaning they store 8-bit integers which can encode a maximum of 256 color values. By increasing the precision to 16-bit, our buffer can now encode 65535 color values!
+
+:::tip[VRAM Costs]
+Just like your CPU, GPUs have a limited amount of RAM, know as Video RAM (VRAM). Increasing the precision of your buffers also increases their VRAM cost. While modern GPUs have more than enough VRAM to support one higher-precision buffer, it still remains best practice to fix the precision issue by instead converting your linear colors back to sRGB any time before writing them to an RGBA8 buffer. If your buffers are already higher precision, you only need to convert back to sRGB directly before outputting to the screen. Saving VRAM can become very important as you start to code more complex projects, but for the sake of simplicity, this tutorial will instead merely increase the precision.
 :::
 
 For more information on gamma correction, check out the [LearnOpenGL article](https://learnopengl.com/Advanced-Lighting/Gamma-Correction).
