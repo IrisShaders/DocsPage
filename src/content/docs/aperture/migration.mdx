@@ -1,9 +1,9 @@
 ---
-title: Aperture
-description: Documentation for the upcoming Aperture pipeline
+title: Aperture Temporary Migration Guide
+description: Temporary documentation for the upcoming Aperture pipeline
 tableOfContents: true
 sidebar:
-  label: Overview
+  label: Temporary Migration Guide
   order: 0
 ---
 
@@ -197,7 +197,7 @@ for(cascade = 0; cascade < 4; cascade++){
 ```
 
 ### Hardware Filtering
-If you want hardware filtering, you can instead use a `sampler2DArrayShadow`. Due to reasons known only to the developers over at Khronos, the cascade is still the `z` component of the coordinate you pass in, so it becomes
+If you want hardware filtering, you can instead use a `sampler2DArrayShadow` and suffix `filtered` to the sampler names (i.e `shadowMapFiltered`. Due to reasons known only to the developers over at Khronos, the cascade is still the `z` component of the coordinate you pass in, so it becomes
 
 ```glsl
 float shadow = texture(shadowMap, vec4(shadowScreenPos.xy, cascade, shadowScreenPos.z));
