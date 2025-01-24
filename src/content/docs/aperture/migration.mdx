@@ -146,7 +146,7 @@ float shadow = step(shadowScreenPos.z, texture(shadowMap, vec3(shadowScreenPos.x
 
 Cascade 0 is the smallest, containing only a small area around the player, and cascade 3 is the largest.
 
-Bear in mind that `shadowProjection` is also an array, because each cascade has a different projection. As such, to sample the shadow map, you must loop through each projection until your position is inside the frustum.
+Bear in mind that the shadow projection is also an array, because each cascade has a different projection. As such, to sample the shadow map, you must loop through each projection until your position is inside the frustum.
 
 ```glsl
 int cascade;
