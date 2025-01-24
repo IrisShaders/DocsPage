@@ -125,46 +125,7 @@ The depth textures are `mainDepthTex` and `solidDepthTex`, replacing `depthtex0`
 
 ## Uniforms
 
-:::caution[Warning]
-Apart from samplers, uniforms are not declared within your shader. Instead, add them as arguments to the `registerUniforms()` function, called before `finalizeUniforms()` in `setupShader()`.
-:::
-
-### Matrices
-Instead of `gbufferModelView` and `gbufferProjection` there is `playerModelView` and `playerProjection`. To access the previous frame versions, prefix `last` (maintaining camelCase). To access the inverse, suffix `Inverse`.
-
-The shadow matrices have not been renamed, although currently `shadowModelViewInverse` does not exist for some reason.
-
-### Uniforms which have not changed
-- `isEyeInWater`
-- `eyeBrightness`
-- `shadowLightPosition`
-- `sunPosition`
-- `moonPosition`
-- `moonPhase`
-- `frameTime`
-- `worldTime`
-- `frameCounter`
-- `skyColor`
-- `fogColor`
-- `fogStart`
-- `fogEnd`
-- `rainStrength`
-
-
-### Uniforms Which Have Changed
-- `cameraPosition` is now `cameraPos`. `previousCameraPosition` is likewise `lastCameraPos`.
-- `far` is now `renderDistance`
-- `near` is now `nearPlane`
-- `sunAngle` is now `dayProgression`
-- `frameTimeCounter` is now `timeCounter`
-- `hideGUI` is now `guiHidden`
-- `viewWidth` and `viewHeight` have been replaced with `screenSize`
-
-### New Uniforms
-- `farPlane`, the actual far plane
-- `shadowProjectionSize`
-
-Any uniforms not mentioned are probably not available yet.
+A list of available uniforms is printed to the console on Iris startup in the form of the structs they are stored in. As an example of how to access these values, `cameraPosition` is now the `pos` member of the `CameraData` struct, and to access it, we would use `ap.camera.pos`. The same pattern can be applied to any struct. 
 
 ## Shadows
 Iris makes use of cascaded shadow maps, which means everything is a lot more complicated.
@@ -204,3 +165,25 @@ float shadow = texture(shadowMap, vec4(shadowScreenPos.xy, cascade, shadowScreen
 ```
 
 ![](../../../assets/aperture/sampler2darrayshadow.webp)
+
+# Block IDs
+The `VertexData` object passed to `iris_sendParameters` has a `blockId` attribute. The following functions can be used on the ID:
+
+```
+vec4 iris_getLightColor
+uint iris_getMetadata // Raw bitmask, only use if nothing else is enough
+bool iris_isFullBlock
+bool iris_hasFluid
+int iris_getEmission
+```
+
+The metadata comes in the form of an 18 bit uint with the following structure
+
+```
+0-5:   IS_SIDE_SOLID (6 bits) // DOWN, UP, NORTH, SOUTH, WEST, EAST
+6-9:   EMISSION (4 bits)
+10-13: LIGHT_BLOCK (4 bits)
+14-16: DIRECTION (3 bits)
+17:    IS_LOWER (1 bit)
+18:    IS_FLUID (1 bit)
+```
