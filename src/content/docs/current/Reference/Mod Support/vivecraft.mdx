@@ -1,0 +1,76 @@
+---
+title: Vivecraft
+description: How to add special Vivecraft integration.
+sidebar:
+  order: 1
+---
+
+[Vivecraft](https://modrinth.com/mod/vivecraft) is a mod which allows to play Minecraft in VR. Vivecraft provides a few macros and uniforms to inform shaders about the current render state.  
+Data mentioned here is managed by Vivecraft itself, so if any issues are encountered with it please report them on their [issue tracker](https://github.com/Vivecraft/VivecraftMod/issues)
+
+## Definitions/Properties
+### Checking for Vivecraft
+
+All programs and properties have the `VIVECRAFT` define set if the Vivecraft mod is loaded. This also applies when VR is not used.
+
+### Renderpasses
+
+The uniform [`vivecraftRenderpass`](#vivecraftrenderpass) stores the renderpass of the currently rendered view. This can be used to apply special effects per renderpass. The following renderpasses are defined by Vivecraft as preprocessor macros:
+
+| define                   | Description                                                      |
+| ------------------------ | ---------------------------------------------------------------- |
+| VIVECRAFT_PASS_LEFT      | renders the left eye perspective                                 |
+| VIVECRAFT_PASS_RIGHT     | renders the right eye perspective                                |
+| VIVECRAFT_PASS_CENTER    | renders the first person slow mirror                             |
+| VIVECRAFT_PASS_THIRD     | renders the third person slow mirror                             |
+| VIVECRAFT_PASS_GUI       | draws the Minecraft gui/hud (not actually usable by shaders)     |
+| VIVECRAFT_PASS_SCOPER    | renders the main hand spyglass perspective                       |
+| VIVECRAFT_PASS_SCOPEL    | renders the offhand spyglass perspective                         |
+| VIVECRAFT_PASS_CAMERA    | renders the screenshot camera perspective                        |
+| VIVECRAFT_PASS_MIRROR    | shows the mirror on the desktop (not actually usable by shaders) |
+| VIVECRAFT_PASS_VANILLA   | renders the vanilla perspective, set when VR is not used         |
+
+## Uniforms
+
+### vivecraftIsVR
+
+#### Declaration
+
+```glsl
+uniform bool vivecraftIsVR;
+```
+
+This uniform specifies if the player is currently in VR.
+
+### vivecraftRenderpass
+
+#### Declaration
+
+```glsl
+uniform int vivecraftRenderpass;
+```
+
+This uniform specifies the current renderpass that Vivecraft is rendering. The uniform value is intended to be compared to one of the [renderpass preprocessor macros](#renderpasses) which are defined by Vivecraft.
+
+### Hand Positions
+
+#### Declaration
+
+```glsl
+uniform vec3 vivecraftRelativeMainHandPos;
+uniform vec3 vivecraftRelativeOffHandPos;
+```
+
+These store the world space offsets from the player's hand position to the camera's position. (ie [`cameraPosition`](/current/reference/uniforms/camera#cameraposition)` - handPosition`)
+
+### Hand Orientations
+
+#### Declaration
+
+```glsl
+uniform mat4 vivecraftRelativeMainHandRot;
+uniform mat4 vivecraftRelativeOffHandRot;
+```
+
+These matrices contain the player hand orientations in world space. This is a 3x3 rotation matrix in a mat4, it can be safely cast to a `mat3`.
+
