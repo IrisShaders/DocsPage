@@ -14,7 +14,7 @@ In this section we will implement basic diffuse shading in the composite pass. A
 
 ## Gamma Correction
 
-Our eyes don't percieve light linearly, but rather on a generally logarithmic scale. For example, the color that appears to your eyes as halfway between black and white actually only emits 21.7% of the photons that white does. Because of this, computer images (such as Minecraft's textures) are stored in the **sRGB color space**, which dedicates more precision to brighter colors. Approximately, the color value stored on the computer is the actual value of photons emitted raised to the power of 1/2.2, which is known as **gamma correction**. When it comes for your monitor to display these colors to the screen, it raises the values to the power of 2.2 - the inverse of the gamma correction - to emit the correct amount of photons.
+Our eyes don't percieve light linearly, but rather on a generally logarithmic scale. For example, the color that appears to your eyes as halfway between black and white actually only emits roughly 25% of the photons that white does. Because of this, computer images (such as Minecraft's textures) are stored in the **sRGB color space**, which dedicates more precision to darker colors. Approximately, the color value stored on the computer is the actual value of photons emitted raised to the power of 1/2.2, which is known as **gamma correction**. When it comes for your monitor to display these colors to the screen, it raises the values to the power of 2.2 - the inverse of the gamma correction - to emit the correct amount of photons.
 
 This means that a color value of 0.5 stored on a computer does look halfway between white and black. However, when working with lighting effects, we want the actual value of photons and not the human perception of the color. To achieve this, we can ourselves apply inverse gamma correction by raising the colors to the power of 2.2 before applying lighting effects. Just after we sample `colortex0` in `composite.fsh`, let's apply the following:
 
@@ -46,10 +46,10 @@ The following is *not valid!* The declaration must be on its own line.
 ```
 :::
 
-By default, `colortex` buffers are RGBA8, meaning they store 8-bit integers which can encode a maximum of 256 color values. By increasing the precision to 16-bit, our buffer can now encode 65535 color values!
+By default, `colortex` buffers are RGBA8, meaning they store 4 channels of 8-bit integers which can each encode 256 values, for a total of 16,777,216 colors and 256 alpha values. By increasing the precision to 16-bit, each channel can now encode 65535 color values -- over 280 trillion colors in total!
 
 :::tip[VRAM Costs]
-Just like your CPU, GPUs have a limited amount of RAM, know as Video RAM (VRAM). Increasing the precision of your buffers also increases their VRAM cost. While modern GPUs have more than enough VRAM to support one higher-precision buffer, it still remains best practice to fix the precision issue by instead converting your linear colors back to sRGB any time before writing them to an RGBA8 buffer. If your buffers are already higher precision, you only need to convert back to sRGB directly before outputting to the screen. Saving VRAM can become very important as you start to code more complex projects, but for the sake of simplicity, this tutorial will instead merely increase the precision.
+Just like your CPU, GPUs have a limited amount of RAM, know as Video RAM (VRAM). Increasing the precision of your buffers also increases their VRAM cost. While modern GPUs have more than enough VRAM to support one higher-precision buffer, it still remains best practice to fix the precision issue by using the default RGBA8 buffer and converting your colors back to sRGB any time before writing them to the buffer. Saving VRAM can become very important as you start to code more complex projects, but for the sake of simplicity, this tutorial will instead merely increase the precision.
 :::
 
 For more information on gamma correction, check out the [LearnOpenGL article](https://learnopengl.com/Advanced-Lighting/Gamma-Correction).
