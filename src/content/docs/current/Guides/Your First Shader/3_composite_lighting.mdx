@@ -49,7 +49,7 @@ The following is *not valid!* The declaration must be on its own line.
 By default, `colortex` buffers are RGBA8, meaning they store 4 channels of 8-bit integers which can each encode 256 values, for a total of 16,777,216 colors and 256 alpha values. By increasing the precision to 16-bit, each channel can now encode 65535 color values -- over 280 trillion colors in total!
 
 :::tip[VRAM Costs]
-Just like your CPU, GPUs have a limited amount of RAM, know as Video RAM (VRAM). Increasing the precision of your buffers also increases their VRAM cost. While modern GPUs have more than enough VRAM to support one higher-precision buffer, it still remains best practice to fix the precision issue by using the default RGBA8 buffer and converting your colors back to sRGB any time before writing them to the buffer. Saving VRAM can become very important as you start to code more complex projects, but for the sake of simplicity, this tutorial will instead merely increase the precision.
+Just like your CPU, GPUs have a limited amount of RAM, know as Video RAM (VRAM). Increasing the precision of your buffers also increases their VRAM cost. While modern GPUs have more than enough VRAM to support one higher-precision buffer, it still remains best practice to fix the precision issue by using the default RGBA8 and converting your colors back to sRGB any time before writing them to the buffer. Saving VRAM can become very important as you start to code more complex projects, but for the sake of simplicity, this tutorial will instead merely increase the precision.
 :::
 
 For more information on gamma correction, check out the [LearnOpenGL article](https://learnopengl.com/Advanced-Lighting/Gamma-Correction).
