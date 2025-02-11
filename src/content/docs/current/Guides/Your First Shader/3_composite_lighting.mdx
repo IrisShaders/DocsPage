@@ -16,7 +16,7 @@ In this section we will implement basic diffuse shading in the composite pass. A
 
 Our eyes don't percieve light linearly, but rather on a generally logarithmic scale. For example, the color that appears to your eyes as halfway between black and white actually only emits roughly 25% of the photons that white does. Because of this, computer images (such as Minecraft's textures) are stored in the **sRGB color space**, which dedicates more precision to darker colors. Approximately, the color value stored on the computer is raised to the power of 1/2.2, which is known as **gamma correction**. When it comes for your monitor to display these colors to the screen, it raises the values back to the power of 2.2 - the inverse of the gamma correction - to emit the correct amount of photons.
 
-This means that a color value of 0.5 stored on a computer does look halfway between white and black. However, when working with lighting effects, we want the actual value of photons and not the human perception of the color. To achieve this, we can ourselves apply inverse gamma correction by raising the colors to the power of 2.2 before applying lighting effects. Just after we sample `colortex0` in `composite.fsh`, let's apply the following:
+When working with lighting effects, we want the actual brightness and not the human perception of the color. To achieve this, we can ourselves apply inverse gamma correction by raising the colors to the power of 2.2 before applying lighting effects. Just after we sample `colortex0` in `composite.fsh`, let's apply the following:
 
 ```glsl
 color.rgb = pow(color.rgb, vec3(2.2));
