@@ -90,7 +90,7 @@ This gives us the 'texture coordinate' of the current vertex. This is more commo
 In the previous line of code, you might have noticed some weird syntax: `.xy`. This is an operation unique to shading languages known as *swizzling*. You can read more about swizzling [here](https://www.khronos.org/opengl/wiki/Data_Type_(GLSL)#Swizzling).
 :::
 
-Let's open `composite.fsh`. This is the *fragment shader*, meaning it runs for every pixel on the screen.
+Let's open `composite.fsh`. This is the *fragment shader*, and since `composite` is a *full screen pass*, it runs for every pixel on the screen.
 
 Right now the code looks like this
 
