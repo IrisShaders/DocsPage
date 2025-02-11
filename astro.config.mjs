@@ -2,9 +2,14 @@ import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 import starlightImageZoom from 'starlight-image-zoom';
 import starlightUtils from "@lorenzo_lewis/starlight-utils";
+import { rehypeHeadingIds } from '@astrojs/markdown-remark'
+import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 
 export default defineConfig({
 	site: 'https://shaders.properties',
+	markdown: {
+		rehypePlugins: [rehypeHeadingIds, rehypeAutolinkHeadings],
+	},
 	integrations: [
 		starlight({
 			components: {
@@ -45,5 +50,5 @@ export default defineConfig({
 				}),
 			]
 		}),
-	],
+	]
 });
