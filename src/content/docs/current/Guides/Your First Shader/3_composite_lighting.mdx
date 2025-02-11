@@ -28,7 +28,7 @@ This converts our color to the linear color space. However, since monitors expec
 color.rgb = pow(color.rgb, vec3(1.0 / 2.2));
 ```
 
-Because `colortex` buffers are designed to hold gamma corrected colors, you will lose some possible color values if you write linear color to them. We can solve this by simply increasing the precision of the buffer  with the following code.
+Because `colortex` buffers are designed to hold gamma corrected colors, you will lose some possible color values if you write linear color to them. We can solve this by simply increasing the precision of the buffer with the following code.
 
 ```glsl
 /*
@@ -39,7 +39,7 @@ const int colortex0Format = RGB16;
 :::caution[Warning]
 Observe that the declaration for the format is in a *multi-line comment*. This is because this code does not actually need to make it onto the GPU. Instead, Iris reads it, and knows to set the format of the buffer as we defined it. That means we can place this code anywhere in the shaderpack.
 
-The following is *not valid!* The declaration must be on its own line.
+The following is *not* valid! The declaration must be on its own line.
 
 ```glsl
 // const int colortex0Format = RGB16;
@@ -49,7 +49,7 @@ The following is *not valid!* The declaration must be on its own line.
 By default, `colortex` buffers are RGBA8, meaning they store 4 channels of 8-bit integers which can each encode 256 values, for a total of 16,777,216 colors and 256 alpha values. By increasing the precision to 16-bit, each channel can now encode 65535 color values -- over 280 trillion colors in total!
 
 :::tip[VRAM Costs]
-Just like your CPU, GPUs have access to a limited amount of memory, know as Video RAM (VRAM). Increasing the precision of your buffers also increases their VRAM cost. While modern GPUs have more than enough VRAM to support one higher-precision buffer, it is always important to consider how much precision you actually need. In this case, it would be more memory efficient to stick to using RGBA8 and convert colors to and from sRGB whenever writing them to the buffer, however for the purposes of this tutorial, a precision increase is simpler.
+Just like your CPU, GPUs have access to a limited amount of memory, know as Video RAM (VRAM). Increasing the precision of your buffers also increases their VRAM cost. While modern GPUs have more than enough VRAM to support one higher-precision buffer, it is always important to consider how much precision you actually need. While this tutorial will increase the precision for simplicity, it would be more memory efficient to stick to using RGBA8 and convert colors to and from sRGB whenever writing them to the buffer.
 :::
 
 For more information on gamma correction, check out the [LearnOpenGL article](https://learnopengl.com/Advanced-Lighting/Gamma-Correction).
@@ -87,9 +87,9 @@ Yep, that looks pretty *normal*. You'll notice that the sky is black here. This 
 ## Lighting
 To apply lighting to our color, we want to multiply it by the color of the light hitting it. Of course, with multiple light sources, there are multiple types of light hitting it. For our shader, we will have the following types of light
 - Ambient (some constant factor, so you can see in caves)
-- Skylight (blue in the day, uses the lightmap). This is our *indirect lighting*.
+- Skylight (blue in the day, uses the lightmap). This is our **indirect lighting**.
 - Blocklight (some warm color that matches torches, uses the lightmap)
-- Sun/Moonlight (yellow for the sun, white for the moon). This is our *direct lighting*.
+- Sun/Moonlight (yellow for the sun, white for the moon). This is our **direct lighting**.
 
 So, to apply our lighting, we would then do something like `color.rgb *= ambient + skylight + blocklight + sunlight`.
 
@@ -122,7 +122,7 @@ Now, what about that sunlight? Well, if something is facing directly towards the
 
 Now, the first thing we need to know is where the sun (or moon) is. We can do this with `uniform vec3 shadowLightPosition`. In the daytime this returns the sun's position, in the night, this returns the moon's position.
 
-Now, to get a vector pointing towards this, we can *normalize it*. This maintains the direction but ensures the magnitude is 1. However, this vector is in view space, and our normal is in world space. To transform our normal to world space, we once again use `uniform mat4 gbufferModelViewInverse`.
+Now, to get a vector pointing towards this, we can **normalize** it. This maintains the direction but ensures the magnitude is 1. However, this vector is in view space, and our normal is in world space. To transform our normal to world space, we once again use `uniform mat4 gbufferModelViewInverse`.
 
 :::note[Note]
 We store the normal in world space because by default, `colortex` buffers are 8 bit. This means that each axis can only have 256 possible values. Since in view space, normals are relative to the orientation of the camera, the normal will change as the camera rotates, and with this limited number of combinations, any lighting we do based on the normal may appear to flicker as the camera rotates. Storing the normal in world space ensures that the normal is the same at any viewing angle.

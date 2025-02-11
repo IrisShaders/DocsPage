@@ -51,7 +51,7 @@ void main() {
 You will notice that this time, there are three `out` variables. Let's go over each one.
 
 ### `texcoord`
-In the previous tutorial, we had a variable called `texcoord`, which gave us the texture coordinate onscreen of the given fragment. In the gbuffers, the texture coordinate instead represents the coordinate in the *texture atlas*. The texture atlas contains the textures of every block. We will cover this in the next section.
+In the previous tutorial, we had a variable called `texcoord`, which gave us the texture coordinate onscreen of the given fragment. In the gbuffers, the texture coordinate instead represents the coordinate in the **texture atlas**. The texture atlas contains the textures of every block. We will cover this in the next section.
 
 ### `lmcoord`
 
@@ -71,16 +71,16 @@ Some blocks, like grass, have a tint based on their biome, provided in the form 
 Let's undo that, since having color is quite nice.
 
 ### Normals
-Before we move onto the fragment shader, there's one more value we'll want to use later - the *normal*. This is a 3 dimensional vector representing the direction the current vertex is facing in. Let's add a new `out` declaration for the normal.
+Before we move onto the fragment shader, there's one more value we'll want to use later - the **normal**. This is a 3 dimensional vector representing the direction the current vertex is facing in. Let's add a new `out` declaration for the normal.
 
 ```glsl
 out vec3 normal;
 ```
 
-So how do we get this normal? Well, OpenGL provides it to us with `gl_Normal`. This is in *model space*, though, and for simplicity, we want it in *player space*. This means that the direction is relative to the orientation and position of the player, instead of the model (i.e the chunk being rendered). In `main`, let's add some code for that. The justification for transforming to player space will be explained later on.
+So how do we get this normal? Well, OpenGL provides it to us with `gl_Normal`. This is in **model space**, though for simplicity, we want it in **player space**. This means that the direction is relative to the orientation and position of the player, instead of the model (i.e the chunk being rendered). In `main`, let's add some code for that. The justification for transforming to player space will be explained later on.
 
 :::note[Note]
-Player space and world space may be referred to interchangeably for normals. *Player space* has all positions relative to the player, aligned along the world's x, y, and z axes. World space instead has positions relative to (0,0,0) in the world. Because the orientation of both coordinate spaces is the same, normals (and other direction vectors) are identical between world space and player space.
+Player space and world space may be referred to interchangeably for normals. Player space has all positions relative to the player, aligned along the world's x, y, and z axes. World space instead has positions relative to (0,0,0) in the world. Because the orientation of both coordinate spaces is the same, normals (and other direction vectors) are identical between world space and player space.
 :::
 
 ```glsl
@@ -109,7 +109,7 @@ Remember how by default, Minecraft uses a texture with colors for each light lev
 Next, you'll notice that we are writing to `colortex0`. This is generally where most shaders store the main image, with supplementary info in the other buffers. For example, you could store the light levels in `colortex1`, and use them for lighting in `composite`. In fact, we are going to do exactly that.
 
 :::note[Note]
-You might be wondering why you'd do lighting in a fullscreen pass, when you could just do it here and now and save writing to a buffer. This is known as *forward rendering*, and while simpler, there are a few downsides. Doing our lighting requires everything rendered by gbuffers to be lit. As our lighting code gets more complicated, this can add significant overhead. Instead, we will be doing *deferred rendering*, where the lighting calculations are run once all geometry has been rendered, ensuring that only things which are visible onscreen get the expensive lighting calculations.
+You might be wondering why you'd do lighting in a fullscreen pass, when you could just do it here and now and save writing to a buffer. This is known as **forward rendering**, and while simpler, there are a few downsides. Doing our lighting requires everything rendered by gbuffers to be lit. As our lighting code gets more complicated, this can add significant overhead. Instead, we will be doing **deferred rendering**, where the lighting calculations are run once all geometry has been rendered, ensuring that only things which are visible onscreen get the expensive lighting calculations.
 :::
 
 ## Normals
@@ -146,7 +146,7 @@ if (color.a < 0.1) { // alpha test
 ```
 
 - The first step multiplies the color by `glcolor` to get the biome tint.
-- The second step multiplies the color by Minecraft's defualt lighting color. **You should remove this, as we are going to do our own lighting.**
+- The second step multiplies the color by Minecraft's defualt lighting color. You should remove this, as we are going to do our own lighting.
 - Finally, if the color's alpha (transparency) is less than 0.1, we `discard`, which tells the shader program to return and not write anything. This potentially saves us some texture writes.
 
 ## Writing Extra Data
