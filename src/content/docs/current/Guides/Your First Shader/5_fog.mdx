@@ -66,11 +66,15 @@ Of course, we also need to have a fog color to blend with, and for this, we'll u
 We can then simply do
 
 ```glsl
-color.rgb = mix(color.rgb, fogColor, length(viewPos)/far);
+color.rgb = mix(color.rgb, pow(fogColor, vec3(2.2)), length(viewPos)/far);
 ```
 
 :::note[Note]
 This works because we are still using the vanilla sky. If you go on to add a custom sky, you will likely want to choose your own fog color.
+:::
+
+:::note[Note]
+We raise the fog color to the power of 2.2 to account for the gamma correction applied to the sky. Any colours we sample should be converted to linear space before we use them.
 :::
 
 ![](../../../../../assets/beginner_tutorial/linearfog.webp)
