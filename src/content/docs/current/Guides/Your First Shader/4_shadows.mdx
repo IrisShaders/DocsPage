@@ -351,7 +351,7 @@ This is a pretty big function that's simply provided here. You should make sure 
 
 ```glsl
 vec3 getSoftShadow(vec4 shadowClipPos){
-	const float range = SHADOW_SOFTNESS / 2; // how far away from the original position we take our samples from
+	const float range = SHADOW_SOFTNESS / 2.0; // how far away from the original position we take our samples from
 	const float increment = range / SHADOW_QUALITY; // distance between each sample
 
 	vec3 shadowAccum = vec3(0.0); // sum of all shadow samples
