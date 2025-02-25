@@ -3,34 +3,36 @@ title: Render Stages
 description: A list of possible render stages.
 sidebar:
   label: Render Stages
-  order: 1
+  order: 2
 ---
 
 The uniform [`renderStage`](/current/reference/uniforms/rendering#renderstage) stores the "render stage" of the current geometry. This can be used to identify what type of geometry is being rendered in more detail than the [gbuffer program](/current/reference/programs/gbuffers) it's running in. The following render stages are defined by Iris as preprocessor macros:
 
-| define                                | Description                                                                                                                               |
-| ------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| MC_RENDER_STAGE_NONE                  | Undefined (should not occur normally)                                                                                                     |
-| MC_RENDER_STAGE_SKY                   | The upper portion of the sky not including stars or textures like the sun/moon                                                            |
-| MC_RENDER_STAGE_SUNSET                | The lower portion of the sky used to generate the sunset effect, does not include textures like the sun/moon                              |
-| MC_RENDER_STAGE_CUSTOM_SKY            | Custom sky texture from resource pack, such as from Optifine or FabricSkyBoxes                                                            |
-| MC_RENDER_STAGE_SUN                   | Sun texture in the sky                                                                                                                    |
-| MC_RENDER_STAGE_MOON                  | Moon texture in the sky                                                                                                                   |
-| MC_RENDER_STAGE_STARS                 | Vanilla star geometry in the sky                                                                                                          |
-| MC_RENDER_STAGE_VOID                  | Void sky, which renders below the player when they are below bedrock                                                                      |
-| MC_RENDER_STAGE_TERRAIN_SOLID         | Solid terrain geometry (terrain with no cuttouts or transparent)                                                                          |
-| MC_RENDER_STAGE_TERRAIN_CUTOUT_MIPPED | Intended for cutout geometry with mipmaps, instead these are flagged as `MC_RENDER_STAGE_TERRAIN_SOLID` ***Currently unused by Iris***    |
-| MC_RENDER_STAGE_TERRAIN_CUTOUT        | Intended for cutout geometry without mipmaps, instead these are flagged as `MC_RENDER_STAGE_TERRAIN_SOLID` ***Currently unused by Iris*** |
-| MC_RENDER_STAGE_ENTITIES              | Entity geometry including nametag text                                                                                                    |
-| MC_RENDER_STAGE_BLOCK_ENTITIES        | Block entity geometry                                                                                                                     |
-| MC_RENDER_STAGE_DESTROY               | Intended to be used for the block cracks texture, ***Currently unused by Iris***                                                          |
-| MC_RENDER_STAGE_OUTLINE               | Player block selection outline, does not include any other lines (such as fishing lines and leads)                                        |
-| MC_RENDER_STAGE_DEBUG                 | Intended to be used for debug view lines, ***Currently unused by Iris***                                                                  |
-| MC_RENDER_STAGE_HAND_SOLID            | Solid or cutout geometry for held items/blocks                                                                                            |
-| MC_RENDER_STAGE_TERRAIN_TRANSLUCENT   | Transparent terrain (such as water and stained glass)                                                                                     |
-| MC_RENDER_STAGE_TRIPWIRE              | Indented to be used for the tripwire string texture, ***Currently unused by Iris***                                                       |
-| MC_RENDER_STAGE_PARTICLES             | All particle geometry                                                                                                                     |
-| MC_RENDER_STAGE_CLOUDS                | Vanilla cloud geometry                                                                                                                    |
-| MC_RENDER_STAGE_RAIN_SNOW             | Rain and snow geometry (not including particle effects)                                                                                   |
-| MC_RENDER_STAGE_WORLD_BORDER          | World border geometry                                                                                                                     |
-| MC_RENDER_STAGE_HAND_TRANSLUCENT      | Transparent geometry for held items/blocks                                                                                                |
+| define                                    | Description                                                                                                    |
+| ----------------------------------------- | ---------------------------------------------------------------------------------------------------------------|
+| `MC_RENDER_STAGE_NONE`                    | Undefined (should not occur normally)                                                                          |
+| `MC_RENDER_STAGE_SKY`                     | The upper portion of the sky not <br/>including stars or textures like the sun/moon                                 |
+| `MC_RENDER_STAGE_SUNSET`                  | The lower portion of  the sky used to <br/>generate the sunset effect, does not include <br/>textures like the sun/moon   |
+| `MC_RENDER_STAGE_CUSTOM_SKY`              | Custom sky texture from resource pack,<br/> such as from OptiFine or FabricSkyBoxes                                 |
+| `MC_RENDER_STAGE_SUN`                     | Sun texture in the sky                                                                                         |
+| `MC_RENDER_STAGE_MOON`                    | Moon texture in the sky                                                                                        |
+| `MC_RENDER_STAGE_STARS`                   | Vanilla star geometry in the sky                                                                               |
+| `MC_RENDER_STAGE_VOID`                    | Void sky, which renders below the player<br/> when they are below bedrock                                           |
+| `MC_RENDER_STAGE_TERRAIN_SOLID`           | Solid terrain geometry (terrain with no <br/>cutouts or transparent)                                               |
+| `MC_RENDER_STAGE_TERRAIN_CUTOUT_MIPPED`*  | Intended for cutout geometry with mipmaps, <br/> instead these are flagged as `MC_RENDER_STAGE_TERRAIN_SOLID`        |
+| `MC_RENDER_STAGE_TERRAIN_CUTOUT`*         | Intended for cutout geometry without mipmaps, <br/> instead these are flagged as `MC_RENDER_STAGE_TERRAIN_SOLID`     |
+| `MC_RENDER_STAGE_ENTITIES`                | Entity geometry including nametag text                                                                         |
+| `MC_RENDER_STAGE_BLOCK_ENTITIES`          | Block entity geometry                                                                                          |
+| `MC_RENDER_STAGE_DESTROY`*                | Intended to be used for the block cracks texture                                                               |
+| `MC_RENDER_STAGE_OUTLINE`                 | Player block selection outline, does not include <br/>any other lines (such as fishing lines and leads)             |
+| `MC_RENDER_STAGE_DEBUG`*                  | Intended to be used for debug view lines                                                                       |
+| `MC_RENDER_STAGE_HAND_SOLID`              | Solid or cutout geometry for held items/blocks                                                                 |
+| `MC_RENDER_STAGE_TERRAIN_TRANSLUCENT`     | Transparent terrain (such as water and stained glass)                                                          |
+| `MC_RENDER_STAGE_TRIPWIRE`*               | Indented to be used for the tripwire string texture                                                            |
+| `MC_RENDER_STAGE_PARTICLES`               | All particle geometry                                                                                          |
+| `MC_RENDER_STAGE_CLOUDS`                  | Vanilla cloud geometry                                                                                         |
+| `MC_RENDER_STAGE_RAIN_SNOW`               | Rain and snow geometry (not including particle effects)                                                        |
+| `MC_RENDER_STAGE_WORLD_BORDER`            | World border geometry                                                                                          |
+| `MC_RENDER_STAGE_HAND_TRANSLUCENT`        | Transparent geometry for held items/blocks                                                                     |
+
+<sup>*Currently unused by Iris.</sup>

@@ -79,7 +79,9 @@ oldHandLight=<true|false>
 ```
 Sets a fallback for older shaders which don't support main and alt hands. If `oldHandLight` is set to `true`, [`heldBlockLightValue`](/current/reference/uniforms/id#heldblocklightvalue) will take the value of the highest light value. The default value is `true` due to legacy support.
 
-<Aside type="caution">Any pack that wishes to use independent main and alt hand light values should set `oldHandLight` to `false`, as the legacy setting is enabled by default.</Aside>
+:::note
+Any pack that wishes to use independent main and alt hand light values should set `oldHandLight` to `false`, as the legacy setting is enabled by default.
+:::
 
 ----------------
 
@@ -97,7 +99,7 @@ Enables the "old lighting", which applies a lighting multiplier in the color att
 ```properties
 separateAo=<true|false>
 ```
-Normally a vanilla AO (ambient occlusion) value is stored in the rgb components of the color vertex attribute. Enabling `separateAo` moves this into the alpha channel of the color attribute. `separateAo` is disabled by default.
+Normally, a vanilla ambient occlusion (AO) value is stored in the `rgb` components of the [vertex color attribute](/current/reference/attributes/overview). Enabling `separateAo` moves this into the `a` channel of the color attribute. `separateAo` is disabled by default.
 
 ----------------
 

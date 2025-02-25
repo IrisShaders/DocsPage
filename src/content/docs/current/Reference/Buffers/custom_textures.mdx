@@ -3,42 +3,44 @@ title: Custom Textures
 description: Allows a custom texture to be bound to an existing sampler (such as a colortex).
 sidebar:
   label: Custom Textures
-  order: 2
+  order: 3
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
 
-Iris/Optifine allows binding a texture to an existing sampler (such as a [colortex](/current/reference/buffers/colortex) sampler). This allows the shader to access images/data included with the shader pack, textures from the resource pack / game files, atlas textures, and more. The following directive can be put in the [shaders.properties](/current/reference/shadersproperties/overview) file to set up a custom texture:
+Iris/OptiFine allows binding a texture to an existing sampler (such as a [colortex](/current/reference/buffers/colortex) sampler). This allows the shader to access images/data included with the shader pack, textures from the resource pack / game files, atlas textures, and more. The following directive can be put in the [shaders.properties](/current/reference/shadersproperties/overview) file to set up a custom texture:
 
 ```properties title="shaders.properties"
 texture.<stage>.<bufferName> = <path>
 ```
 
-### Texture Types
-Optifine/Iris support four different texture types, which are specified in the `<path>` parameter.
+### Texture types
+OptiFine/Iris support four different texture types, which are specified in the `<path>` parameter.
 
-#### Images from Shader Files
-Image files can be loaded from the shader pack files by replacing `<path>` with the file path to the image relative to the `shaders` folder. For example `texture.composite.colortex5 = textures/perlin.png` would load `perlin.png` from the `shaders/textures` folder. Iris supports only `.png` image format, whereas Optifine supports `.png` and `.jpg` formats.
+#### Images from shader files
+Image files can be loaded from the shader pack files by replacing `<path>` with the file path to the image relative to the `shaders` folder. For example `texture.composite.colortex5 = textures/perlin.png` would load `perlin.png` from the `shaders/textures` folder. Iris supports only `.png` image format, whereas OptiFine supports `.png` and `.jpg` formats.
 
-#### Textures from Game Files / Resource Packs
+#### Textures from game files / resource packs
 Textures can also be loaded from the resource pack by replacing `<path>` with `minecraft:` followed by the path in the resource pack (or vanilla files) of the texture. For example, `texture.deferred.colortex7 = minecraft:textures/block/dirt.png` will load the dirt texture from the resource pack or vanilla assets.
 
-#### Atlas and Dynamic Textures
+#### Atlas and dynamic textures
 Atlas textures (such as the block atlas) can be loaded by passing their file path, starting with `minecraft:textures/atlas/`. For example, `texture.composite.colortex9 = minecraft:textures/atlas/blocks.png` loads the block atlas into `colortex9`. A list of available texture atlases can be found in the [Minecraft Wiki](https://minecraft.wiki/w/Texture_atlas#Navigation) under "Procedurally-generated" in the Navigation table.
 
 Additionally, the lightmap dynamic texture can be loaded using either `minecraft:dynamic/lightmap_1` or `minecraft:dynamic/light_map_1`. This texture is equivalent to the `lightmap` sampler used in [gbuffers](/current/reference/programs/gbuffers). For example `texture.prepare.colortex2 = minecraft:dynamic/lightmap_1` loads the lightmap into `colortex2`. 
 
-#### Raw Textures
+#### Raw textures
 Raw textures can be loaded from the shader files, similarly to image files. However raw textures are uncompressed binary files, where the bytes represent the values in the texture directly. Raw files can also encode 3D textures, and the texture format can be directly controlled (images are always loaded as RGBA8). To use a raw texture, add the following parameters to the custom texture directive:
 
 ```properties  title="shaders.properties" ins="<type> <internalFormat> <dimensions> <pixelFormat> <pixelType>"
 texture.<stage>.<bufferName> = <path> <type> <internalFormat> <dimensions> <pixelFormat> <pixelType>
 ```
-- Replaec `<type>` with one of the following: `TEXTURE_1D`, `TEXTURE_2D`, `TEXTURE_3D`, or `TEXTURE_RECTANGLE`.
-- Replace `<internalFormat>` with the [texture format](/current/reference/buffers/image_format).
-- Replace `<dimensions>` with the fixed size dimensions of the texture (the number of components depends on the type).
-- Replace `<pixelFormat>` with the pixel format described in the "Pixel Formats" section of the [texture format section](/current/reference/buffers/image_format).
-- Replace `<pixelType>` with the pixel type described in the "Pixel Types" section of the [texture format section](/current/reference/buffers/image_format).
+
+Replace:
+- `<type>` with one of the following: `TEXTURE_1D`, `TEXTURE_2D`, `TEXTURE_3D`, or `TEXTURE_RECTANGLE`.
+- `<internalFormat>` with the [texture format](/current/reference/buffers/image_format).
+- `<dimensions>` with the fixed size dimensions of the texture (the number of components depends on the type).
+- `<pixelFormat>` with the pixel format described in the "Pixel Formats" section of the [texture format section](/current/reference/buffers/image_format).
+- `<pixelType>` with the pixel type described in the "Pixel Types" section of the [texture format section](/current/reference/buffers/image_format).
 
 
 ### PBR textures
@@ -46,14 +48,14 @@ For any resource pack or atlas texture, the normal or specular versions of the t
 
 
 ### Stage binding
-The Optifine spec for custom textures overwrites the binding of an existing sampler with the new texture. This means the texture originally in the sampler is no longer accessible. Iris adds [Iris Enhanced Custom Textures](#iris-enhanced-custom-textures) which creates a new sampler, thus avoiding this issue.
+The OptiFine specification for custom textures overwrites the binding of an existing sampler with the new texture. This means the texture originally in the sampler is no longer accessible. Iris adds the [`customTexture` directive](#customtexture-directive) which creates a new sampler, thus avoiding this issue.
 
-When using the Optifine spec, replace `<stage>` with the stage of programs which the texture will be bound in. During that stage, the sampler specified with `<bufferName>` will sample the custom texture rather than it original texture. The following options are available for `<stage>`:
+When using the OptiFine specification, replace `<stage>` with the stage of programs which the texture will be bound in. During that stage, the sampler specified with `<bufferName>` will sample the custom texture rather than its original texture. The following options are available for `<stage>`:
 
-| name         | description                                                                                    |
+| Name         | Description                                                                                    |
 |--------------|----------------------------------------------------------------------------------------------- |
-| `setup`      | [`setup`](/current/reference/prorgams/setup) programs, exclusive to Iris                               |
-| `begin`      | [`begin`](/current/reference/programs/begin) programs, exclusive to Iris                               |
+| `setup`      | [`setup`](/current/reference/prorgams/setup) programs <Badge text="Iris Exclusive" variant="tip" size="small" />                             |
+| `begin`      | [`begin`](/current/reference/programs/begin) programs <Badge text="Iris Exclusive" variant="tip" size="small" />                              |
 | `shadowcomp` | [`shadowcomp`](/current/reference/programs/shadow_comp) programs                                       |
 | `prepare`    | [`prepare`](/current/reference/programs/prepare) programs                                              |
 | `gbuffers`   | [`gbuffers`](/current/reference/programs/gbuffers) and [`shadow`](/current/reference/programs/shadow) programs |
@@ -61,8 +63,8 @@ When using the Optifine spec, replace `<stage>` with the stage of programs which
 | `composite`  | [`composite`](/current/reference/programs/composite) and [`final`](/current/reference/programs/final) programs |
 
 
-## Iris Enhanced Custom Textures
-Iris adds support for the `customTexture` directive, which allows the shader dev to use a different sampler instead of overriding an existing sampler. This allows creation of a sampler of (mostly) any name, which replaces `<name>` in the directive and is used in the shader code. Otherwise the syntax of the enhanced custom textures are identical to standard custom textures.
+## `customTexture` directive <Badge text="Iris Exclusive" variant="tip" size="medium" />
+Iris adds support for the `customTexture` directive, which allows a custom texture to be accessed via a different sampler instead of overriding an existing sampler. This allows creation of a sampler of (mostly) any name, which replaces `<name>` in the directive and is used in the shader code. Otherwise, the syntax of the enhanced custom textures are identical to standard custom textures.
 
 ```properties title="shaders.properties"
 customTexture.<name> = <path>
@@ -88,8 +90,12 @@ Hardware bilinear filtering and wrapping/clamping behavior can be controlled wit
 }
 ```
 
-- `blur` controls texture filtering, `true` is bilinear, `false` is nearest neighbor
-- `clamp` controls edge behavior, `true` clamps at the edges, `false` wraps at the edges
+- `blur` controls texture filtering
+    - `true` is bilinear
+    - `false` is nearest neighbor
+- `clamp` controls edge behavior
+    - `true` clamps at the edges
+    - `false` wraps at the edges
 
 By default, image files will use nearest neighbor and wrapping, and raw textures will use bilinear filtering and clamping. Shader provided mcmeta files cannot be used for resource pack / atlas textures.
 

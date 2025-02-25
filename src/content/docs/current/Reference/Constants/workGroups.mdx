@@ -3,7 +3,7 @@ title: workGroups
 description: Used to define a fixed number of work groups in a compute shader.
 sidebar:
   label: workGroups
-  order: 3
+  order: 4
   badge:
     text: Iris Only
     variant: tip
@@ -11,6 +11,8 @@ sidebar:
 
 #### `const ivec3 workGroups = ivec3(<groups_x>, <groups_y>, <groups_z>);`
 
-#### Location: any compute shader
+**Location**: `*.csh`
 
-Used to define a fixed number of work groups in a compute shader. Replace `<groups_x>`, `<groups_y>`, and `<groups_z>` with the number of work groups in each dimension. For more info, see the [Compute Shader](/current/reference/programs/overview#compute-shaders) section.
+---
+
+Used to define a fixed number of work groups in a compute shader. Replace `<groups_x>`, `<groups_y>`, and `<groups_z>` with the number of work groups in each dimension. For more info, see the [compute shader](/current/reference/programs/overview#compute-shaders) section.

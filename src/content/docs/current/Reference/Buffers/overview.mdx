@@ -1,0 +1,20 @@
+---
+title: "Overview: buffers"
+description: Buffers are 
+sidebar:
+  label: Overview
+  order: 1
+---
+
+**Buffers** are dedicated memory used to temporarily store color data, depth information, and other rendering details. They are most commonly used in shader programming to hold **textures**, but can also be used for [shader storage buffer objects](/current/reference/buffers/ssbo). Buffers are accessed through sampling a `sampler2D` uniform.
+
+| Sampler                                                | [Format](/current/reference/buffers/image)         | Size                    | 
+| ------------------------------------------------------ | -------------- | ----------------------- |
+| [`colortexN`](/current/reference/buffers/colortex)     | `RGBA`*        | display resolution*     |
+| [`depthtexN`](/current/reference/buffers/colortex)     | `R24` / `R32`† | display resolution      |
+| [`noisetex`](/current/reference/buffers/colortex)      | `RGB8`*        | 256 x 256*              |
+| [`shadowColorN`](/current/reference/buffers/colortex)  | `RGBA`*        | shadow map resolution*  |
+
+<sup>*Configurable in [shaders.properties](current/reference/shadersproperties/overview)</sup><br/>
+
+<sup>†Dependent on drivers</sup>

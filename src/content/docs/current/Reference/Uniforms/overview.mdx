@@ -1,5 +1,5 @@
 ---
-title: "Overview: Uniforms"
+title: "Overview: uniforms"
 description: Uniforms are variables which store values that are the same for all invocations of a particular shader.
 sidebar:
   label: Overview
@@ -7,13 +7,13 @@ sidebar:
 ---
 import { Badge } from '@astrojs/starlight/components';
 
-Uniforms are values sent from the CPU, and as such they cannot change from one shader invocation to the next within a render call. Most uniforms provided by Iris are constant across the entire frame, some values change between different geometry (such as [`renderstage`](/current/reference/uniforms/rendering#renderstage)).
+**Uniforms** are values sent from the CPU, and as such they cannot change from one shader invocation to the next within a render call. Most uniforms provided by Iris are constant across the entire frame, some values change between different geometry (such as [`renderstage`](/current/reference/uniforms/rendering#renderstage)).
 
-Below is an index of all Uniforms available in Iris. Uniforms marked as <Badge text="Iris Exclusive" variant="tip"/> are only available in Iris, and uniforms marked as <Badge text="Optifine CU / Iris" variant="note"/> are available in Optifine only through [custom uniforms](/current/reference/shadersproperties/custom_uniforms) but are available anywhere in Iris. Any unmarked uniforms is available in either Optifine or Iris.
+Below is an index of all uniforms available in Iris. Uniforms marked as <Badge text="Iris Exclusive" variant="tip"/> are only available in Iris, and uniforms marked as <Badge text="OptiFine CU / Iris" variant="note"/> are available in OptiFine only through [custom uniforms](/current/reference/shadersproperties/custom_uniforms) but are available anywhere in Iris. Any unmarked uniforms is available in either OptiFine or Iris.
 
 
 ## Camera/Player
-| Uniform                                                                               | Type  | Value Range  | Description                                                        | Tag                                          |
+| Uniform                                                                               | Type  | Value range  | Description                                                        | Tag                                          |
 | ------------------------------------------------------------------------------------- | ----- | ------------ | ------------------------------------------------------------------ | -------------------------------------------- |
 | [cameraPosition](/current/reference/uniforms/camera#cameraposition)                           | vec3  |              | Position of the camera in world space                              |                                              |
 | [eyeAltitude](/current/reference/uniforms/camera#eyealtitude)                                 | float |              | Y coordinate of the player in blocks                               |                                              |
@@ -33,7 +33,7 @@ Below is an index of all Uniforms available in Iris. Uniforms marked as <Badge t
 | [firstPersonCamera](/current/reference/uniforms/camera#firstpersoncamera)                     | bool  | true / false | Whether the player camera is in first person mode                  | <Badge text="Iris Exclusive" variant="tip"/> |
 
 ## Player Status
-| Uniform                                                               | Type  | Value Range   | Description                                                    | Tag                                               |
+| Uniform                                                               | Type  | Value range   | Description                                                    | Tag                                               |
 | --------------------------------------------------------------------- | ----- | ------------- | -------------------------------------------------------------- | ------------------------------------------------- |
 | [isEyeInWater](/current/reference/uniforms/status#iseyeinwater)               | int   | 0, 1, 2, 3    | Fluid that the camera is currently in                          |                                                   |
 | [isSpectator](/current/reference/uniforms/status#isspectator)                 | bool  | true / false  | Whether the player is currently in spectator mode              | <Badge text="Iris Exclusive" variant="tip"/>      |
@@ -52,16 +52,16 @@ Below is an index of all Uniforms available in Iris. Uniforms marked as <Badge t
 | [maxPlayerHealth](/current/reference/uniforms/status#maxplayerhealth)         | float | -1, [0, 1024] | Maximum player health value                                    | <Badge text="Iris Exclusive" variant="tip"/>      |
 | [currentPlayerHunger](/current/reference/uniforms/status#currentplayerhunger) | float | -1, [0,1]     | Normalized hunger level of player                              | <Badge text="Iris Exclusive" variant="tip"/>      |
 | [maxPlayerHunger](/current/reference/uniforms/status#maxplayerhunger)         | float | 20            | Maximum player hunger value                                    | <Badge text="Iris Exclusive" variant="tip"/>      |
-| [is_burning](/current/reference/uniforms/status#is_burning)                   | bool  | true / false  | Whether the player is currently on fire                        | <Badge text="Optifine CU / Iris" variant="note"/> |
-| [is_hurt](/current/reference/uniforms/status#is_hurt)                         | bool  | true / false  | Whether the player is currently taking damage                  | <Badge text="Optifine CU / Iris" variant="note"/> |
-| [is_invisible](/current/reference/uniforms/status#is_invisible)               | bool  | true / false  | Whether the player is invisible                                | <Badge text="Optifine CU / Iris" variant="note"/> |
-| [is_on_ground](/current/reference/uniforms/status#is_on_ground)               | bool  | true / false  | Whether the player is currently touching the ground            | <Badge text="Optifine CU / Iris" variant="note"/> |
-| [is_sneaking](/current/reference/uniforms/status#is_sneaking)                 | bool  | true / false  | Whether the player is currently sneaking                       | <Badge text="Optifine CU / Iris" variant="note"/> |
-| [is_sprinting](/current/reference/uniforms/status#is_sprinting)               | bool  | true / false  | Whether the player is currently sprinting                      | <Badge text="Optifine CU / Iris" variant="note"/> |
+| [is_burning](/current/reference/uniforms/status#is_burning)                   | bool  | true / false  | Whether the player is currently on fire                        | <Badge text="OptiFine CU / Iris" variant="note"/> |
+| [is_hurt](/current/reference/uniforms/status#is_hurt)                         | bool  | true / false  | Whether the player is currently taking damage                  | <Badge text="OptiFine CU / Iris" variant="note"/> |
+| [is_invisible](/current/reference/uniforms/status#is_invisible)               | bool  | true / false  | Whether the player is invisible                                | <Badge text="OptiFine CU / Iris" variant="note"/> |
+| [is_on_ground](/current/reference/uniforms/status#is_on_ground)               | bool  | true / false  | Whether the player is currently touching the ground            | <Badge text="OptiFine CU / Iris" variant="note"/> |
+| [is_sneaking](/current/reference/uniforms/status#is_sneaking)                 | bool  | true / false  | Whether the player is currently sneaking                       | <Badge text="OptiFine CU / Iris" variant="note"/> |
+| [is_sprinting](/current/reference/uniforms/status#is_sprinting)               | bool  | true / false  | Whether the player is currently sprinting                      | <Badge text="OptiFine CU / Iris" variant="note"/> |
 | [hideGUI](/current/reference/uniforms/status#hidegui)                         | bool  | true / false  | Whether the player's GUI is hidden                             |                                                   |
 
 ## Screen/System
-| Uniform                                                           | Type  | Value Range   | Description                                                    | Tag                                          |
+| Uniform                                                           | Type  | Value range   | Description                                                    | Tag                                          |
 | ----------------------------------------------------------------- | ----- | ------------- | -------------------------------------------------------------- | -------------------------------------------- |
 | [viewHeight](/current/reference/uniforms/system#viewheight)               | float | [1,∞)         | Height of the game window in pixels                            |                                              |
 | [viewWidth](/current/reference/uniforms/system#viewwidth)                 | float | [1,∞)         | Width of the game window in pixels                             |                                              |
@@ -76,7 +76,7 @@ Below is an index of all Uniforms available in Iris. Uniforms marked as <Badge t
 | [currentYearTime](/current/reference/uniforms/system#currentyeartime)     | ivec2 |               | Time since beginning of the year and until the end of the year | <Badge text="Iris Exclusive" variant="tip"/> |
 
 ## ID
-| Uniform                                                                   | Type  | Value Range     | Description                                                             | Tag                                          |
+| Uniform                                                                   | Type  | Value range     | Description                                                             | Tag                                          |
 | ------------------------------------------------------------------------- | ----- | --------------- | ----------------------------------------------------------------------- | -------------------------------------------- |
 | [entityId](/current/reference/uniforms/id#entityid)                               | int   | [0, 65535]      | ID of the currently rendering entity (gbuffers_entities)                |                                              |
 | [blockEntityId](/current/reference/uniforms/id#blockentityid)                     | int   | [-32768, 32767] | ID of the currently rendering block entity (gbuffers_block)             |                                              |
@@ -89,7 +89,7 @@ Below is an index of all Uniforms available in Iris. Uniforms marked as <Badge t
 | [heldBlockLightValue2](/current/reference/uniforms/id#heldblocklightvalue2)       | int   | [0,15]          | Light value of the item held in the player's offhand                    |                                              |
 
 ## World/Weather
-| Uniform                                                                  | Type  | Value Range | Description                                                   | Tag                                          |
+| Uniform                                                                  | Type  | Value range | Description                                                   | Tag                                          |
 | ------------------------------------------------------------------------ | ----- | ----------- | ------------------------------------------------------------- | -------------------------------------------- |
 | [sunPosition](/current/reference/uniforms/world#sunposition)                     | vec3  | [0,100]     | Position of the sun in view space, length of 100              |                                              |
 | [moonPosition](/current/reference/uniforms/world#moonposition)                   | vec3  | [0,100]     | Position of the moon in view space, length of 100             |                                              |
@@ -105,13 +105,13 @@ Below is an index of all Uniforms available in Iris. Uniforms marked as <Badge t
 | [worldDay](/current/reference/uniforms/world#worldday)                           | int   | [0 - )      | Number of in-game days passed                                 |                                              |
 
 ## Biome/Dimension
-| Uniform                                                              | Type  | Value Range   | Description                                                         | Tag                                               |
+| Uniform                                                              | Type  | Value range   | Description                                                         | Tag                                               |
 | -------------------------------------------------------------------- | ----- | ------------- | ------------------------------------------------------------------- | ------------------------------------------------- |
-| [biome](/current/reference/uniforms/biome#biome)                             | int   |               | Biome currently occupied by the player                              | <Badge text="Optifine CU / Iris" variant="note"/> |
-| [biome_category](/current/reference/uniforms/biome#biome_category)           | int   |               | Category of the biome currently occupied by the player              | <Badge text="Optifine CU / Iris" variant="note"/> |
-| [biome_precipitation](/current/reference/uniforms/biome#biome_precipitation) | int   | 0, 1, 2       | Type of precipitation in the current biome                          | <Badge text="Optifine CU / Iris" variant="note"/> |
-| [rainfall](/current/reference/uniforms/biome#rainfall)                       | float | [0,1]         | Rainfall property of the current biome                              | <Badge text="Optifine CU / Iris" variant="note"/> |
-| [temperature](/current/reference/uniforms/biome#temperature)                 | float |               | Temperature property of the current biome                           | <Badge text="Optifine CU / Iris" variant="note"/> |
+| [biome](/current/reference/uniforms/biome#biome)                             | int   |               | Biome currently occupied by the player                              | <Badge text="OptiFine CU / Iris" variant="note"/> |
+| [biome_category](/current/reference/uniforms/biome#biome_category)           | int   |               | Category of the biome currently occupied by the player              | <Badge text="OptiFine CU / Iris" variant="note"/> |
+| [biome_precipitation](/current/reference/uniforms/biome#biome_precipitation) | int   | 0, 1, 2       | Type of precipitation in the current biome                          | <Badge text="OptiFine CU / Iris" variant="note"/> |
+| [rainfall](/current/reference/uniforms/biome#rainfall)                       | float | [0,1]         | Rainfall property of the current biome                              | <Badge text="OptiFine CU / Iris" variant="note"/> |
+| [temperature](/current/reference/uniforms/biome#temperature)                 | float |               | Temperature property of the current biome                           | <Badge text="OptiFine CU / Iris" variant="note"/> |
 | [ambientLight](/current/reference/uniforms/biome#ambientlight)               | float | [0,1]         | Ambient light property of the current dimension                     | <Badge text="Iris Exclusive" variant="tip"/>      |
 | [bedrockLevel](/current/reference/uniforms/biome#bedrocklevel)               | int   | [-2032, 2016] | Y coordinate of the bedrock floor in the current dimension          | <Badge text="Iris Exclusive" variant="tip"/>      |
 | [cloudHeight](/current/reference/uniforms/biome#cloudheight)                 | float |               | Y coordinate of the vanilla cloud plane                             | <Badge text="Iris Exclusive" variant="tip"/>      |
@@ -121,7 +121,7 @@ Below is an index of all Uniforms available in Iris. Uniforms marked as <Badge t
 | [logicalHeightLimit](/current/reference/uniforms/biome#logicalheightlimit)   | int   |               | Logical height of the current dimension                             | <Badge text="Iris Exclusive" variant="tip"/>      |
 
 ## Rendering
-| Uniform                                                    | Type  | Value Range      | Description                                                       | Tag |
+| Uniform                                                    | Type  | Value range      | Description                                                       | Tag |
 | ---------------------------------------------------------- | ----- | ---------------- | ----------------------------------------------------------------- | --- |
 | [near](/current/reference/uniforms/rendering#near)                 | float | 0.05             | Near clipping plane distance                                      |     |
 | [far](/current/reference/uniforms/rendering#far)                   | float | (0, - )          | Current render distance in blocks                                 |     |
@@ -140,7 +140,7 @@ Below is an index of all Uniforms available in Iris. Uniforms marked as <Badge t
 | [fogShape](/current/reference/uniforms/rendering#fogshape)         | int   | 0,1              | Fog shape used for vanilla fog                                    |     |
 
 ## Matrices
-| Uniform                                                                             | Type  | Value Range | Description                                                            | Tag |
+| Uniform                                                                             | Type  | Value range | Description                                                            | Tag |
 | ----------------------------------------------------------------------------------- | ----- | ----------- | ---------------------------------------------------------------------- | --- |
 | [gbufferModelView](/current/reference/uniforms/matrices#gbuffermodelview)                   | mat4  |             | Player space to view space in general                                  |     |
 | [gbufferModelViewInverse](/current/reference/uniforms/matrices#gbuffermodelviewinverse)     | mat4  |             | Converts from view space to player space in general                    |     |

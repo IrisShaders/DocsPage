@@ -117,7 +117,7 @@ vec4 clip_pos = projectionMatrix * view_pos;
 
 gl_Position = clip_pos;
 ```
-Equivalent to `gl_ModelViewMatrix` in the compatibility profile and older GLSL versions.
+Equivalent to `gl_ModelViewMatrix` in the `compatibility` profile and older GLSL versions.
 ```glsl
 vec3 model_pos = gl_Vertex.xyz;
 vec4 view_pos = gl_ModelViewMatrix * vec4(model_pos, 1.0);
@@ -150,7 +150,7 @@ vec4 clip_pos = projectionMatrix * view_pos;
 
 gl_Position = clip_pos;
 ```
-Equivalent to `gl_ProjectionMatrix` in the compatibility profile and older GLSL versions.
+Equivalent to `gl_ProjectionMatrix` in the `compatibility` profile and older GLSL versions.
 ```glsl
 vec3 model_pos = gl_Vertex.xyz;
 vec4 view_pos = gl_ModelViewMatrix * vec4(model_pos, 1.0);
@@ -176,7 +176,7 @@ Equal to [`inverse(projectionMatrix)`](/current/reference/uniforms/matrices#proj
 uniform mat3 normalMatrix;
 ```
 Matrix to transform a model space normal vector to view space.
-Equivalent to [`mat3(transpose(modelViewMatrixInverse))`](/current/reference/uniforms/matrices#modelviewmatrixinverse), or `gl_NormalMatrix` in the compatibility profile and older GLSL versions.
+Equivalent to [`mat3(transpose(modelViewMatrixInverse))`](/current/reference/uniforms/matrices#modelviewmatrixinverse), or `gl_NormalMatrix` in the `compatibility` profile and older GLSL versions.
 
 ```glsl
 vec3 normal = normalMatrix * vaNormal;
@@ -196,7 +196,7 @@ Transforms texture coordinates. Mainly used in [`gbuffers_armor_glint`](/current
 ```glsl
 vec2 coord = (textureMatrix * vec4(vaUV0, 0.0, 1.0)).xy;
 ```
-Equivalent to `gl_TextureMatrix[0]` in the compatibility profile and older GLSL versions.
+Equivalent to `gl_TextureMatrix[0]` in the `compatibility` profile and older GLSL versions.
 ```glsl
 vec2 coord = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;
 ```

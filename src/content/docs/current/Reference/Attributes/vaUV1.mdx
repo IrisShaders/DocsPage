@@ -8,13 +8,14 @@ sidebar:
     text: 1.17+
     variant: danger
 ---
-import { Aside } from '@astrojs/starlight/components';
 
-<Aside type="danger">This attribute only works with the "core profile" in Minecraft `1.17` and newer. It is recommended to use the "compatibility profile" with Iris for better support. </Aside>
+:::danger
+This attribute only works with the `core` profile in Minecraft 1.17 and newer. It is recommended to use the `compatibility` profile with Iris for better support.
+:::
 
 ### `in ivec2 vaUV1;`
 
-**Valid Programs**: all gbuffers/shadow
+**Valid Programs**: `gbuffers_*.vsh`, `shadow.vsh`
 
 ---
 

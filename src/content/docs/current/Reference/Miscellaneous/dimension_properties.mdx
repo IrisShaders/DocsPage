@@ -9,14 +9,11 @@ sidebar:
     variant: tip
 ---
 
-The `dimension.properties` file (located in the `shaders` folder) controls which shader files are loaded based on the dimension the player is in.
+import { Badge } from '@astrojs/starlight/components';
 
-## The Legacy Way: worldN
-Optifine defines a standard for dimensions based on the legacy dimension number. Within the `shaders` folder, shaders in `world0` are loaded in the overworld (or modded dimensions), `world-1` in the nether, and `world1` in the end. If any `worldN` folder are present, then shaders will **only** be loaded from `worldN` folders (no shaders will be loaded from the base `shaders` folder).
+The `dimension.properties` file (located in the `shaders` folder) controls which shader files are loaded based on the dimension the player is in. The syntax is as follows:
 
-## The Iris Way: dimension.properties
-Iris adds the `dimension.properties` file, which defines which folder is used for each dimension. The syntax is like this:
-```
+```properties title=dimension.properties
 dimension.<folder_name> = [<namespace>:]<dimension_name> ...
 
 # for example
@@ -30,3 +27,7 @@ Replace:
 - `<dimension_name>` with the dimension ID as defined in Minecraft. `*` can also be used as a wildcard (any dimensions not already defined).
 
 Any dimensions which are not specified (if a wildcard `*` is not used) will use the shader files located directly in the `shaders` folder.
+
+## worldN <Badge text="Legacy" variant="danger" size="medium" />
+
+OptiFine defines a standard for dimensions based on the legacy dimension number. Within the `shaders` folder, shaders in `world0` are loaded in the Overworld (or modded dimensions), `world-1` in the Nether, and `world1` in the End. If any `worldN` folders are present, then shaders will *only* be loaded from `worldN` folders (no shaders will be loaded from the base `shaders` folder).

@@ -8,17 +8,18 @@ sidebar:
     text: 1.17+
     variant: danger
 ---
-import { Aside } from '@astrojs/starlight/components';
 
-<Aside type="danger">This attribute only works with the "core profile" in Minecraft `1.17` and newer. It is recommended to use the "compatibility profile" with Iris for better support. </Aside>
+:::danger
+This attribute only works with the `core` profile in Minecraft 1.17 and newer. It is recommended to use the `compatibility` profile with Iris for better support.
+:::
 
 ### `in ivec2 vaUV2;`
 
-**Valid Programs**: all gbuffers/shadow
+**Valid Programs**: `gbuffers_*.vsh`, `shadow.vsh`
 
 ---
 
-The light value attribute, equivalent to `gl_MultiTexCoord1` or `gl_MultiTexCoord2` from the compatibility profile.
+The light value attribute, equivalent to `gl_MultiTexCoord1` or `gl_MultiTexCoord2` from the `compatibility` profile.
 
 `vaUV2` stores the block light level in the `x` component, and the sky light level in the `y` component. However, the exact range of the values is indeterminate (though it is currently `0-240`). Therefore, it is recommended to use the following matrix (or `gl_TextureMatrix[1]` in the compatibility profile).
 ```glsl

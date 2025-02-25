@@ -10,7 +10,7 @@ tableOfContents:
 ---
 
 
-Optifine/Iris use [preprocessor directives](https://registry.khronos.org/OpenGL/specs/gl/GLSLangSpec.4.60.html#preprocessor) to define user options that appear in the "Shader Pack Settings" screen. These options should be defined as macros in the shader files using `#define`. The value of an option can be checked in shader files with `#ifdef`, `#ifndef`, `#if`, etc. The option macro must be defined in all files which it is used in, and if it is defined in multiple files it must be defined identically in all files.
+OptiFine/Iris use [preprocessor directives](https://registry.khronos.org/OpenGL/specs/gl/GLSLangSpec.4.60.html#preprocessor) to define user options that appear in the "Shader Pack Settings" screen. These options should be defined as macros in the shader files using `#define`. The value of an option can be checked in shader files with `#ifdef`, `#ifndef`, `#if`, etc. The option macro must be defined in all files which it is used in, and if it is defined in multiple files it must be defined identically in all files.
 
 #### Boolean Options
 A boolean option can be defined and checked in shader code with like the following:
@@ -31,7 +31,7 @@ The option will be "on" (defined) by default, however commenting out the #define
 
 Optionally, a comment after the macro can be used to add a description to the option, shown when hovering over the option in the "Shader Pack Settings" screen.
 
-`#if defined` can be used to check multiple options in one line (for example see below). However for Iris/Optifine to recognize a boolean option, it must be checked at least once using `#ifdef` or `#ifndef`.
+`#if defined` can be used to check multiple options in one line (for example see below). However for Iris/OptiFine to recognize a boolean option, it must be checked at least once using `#ifdef` or `#ifndef`.
 ```glsl title="shader code"
 #if defined option1 && defined option2
   // code here only if option1 and option2 are "on"
@@ -52,7 +52,7 @@ A comment should be placed after the macro, and the possible values for the opti
 These options can be used directly in shader code like a variable, and will be replaced with the option's value before compilation. Additionally, int options **only** can be checked using `#if`.
 
 #### Constants
-Iris/Optifine define numerous [constants](/current/reference/constants/overview) to control certain aspects of the shader pipeline. If a value list is added in a comment after the declaration of a numeric const, it can be added to the shaders screen like a shader define option. For example:
+Iris/OptiFine define numerous [constants](/current/reference/constants/overview) to control certain aspects of the shader pipeline. If a value list is added in a comment after the declaration of a numeric const, it can be added to the shaders screen like a shader define option. For example:
 
 ```glsl title="shader code"
 const int shadowMapResolution = 2048; // [512 1024 2048 4096]
@@ -71,7 +71,7 @@ screen = <list_of_options>
 ```
 
 `<list_of_options>` can be replaced with a space separated list of any of the following:
-| format      | description                                                                                              |
+| Format      | Description                                                                                              |
 | ----------- | -------------------------------------------------------------------------------------------------------- |
 | `OPTION`    | a shader option named "OPTION"                                                                           |
 | `[SCREEN]`  | a link to a sub-screen named "SCREEN"                                                                    |
@@ -129,7 +129,7 @@ profile.<name> = <list_of_options>
 ```
 
 `<name>` should be replaced with the name of the profile, and `<list_of_options>` can be replaced with a space separated list of any of the following:
-| format                          | description                                                                      |
+| Format                          | Description                                                                      |
 | ------------------------------- | -------------------------------------------------------------------------------- |
 | `OPTION:value` `OPTION=value`   | set the value of `OPTION` to `value`                                             |
 | `OPTION`                        | set boolean option `OPTION` "on"                                                 |

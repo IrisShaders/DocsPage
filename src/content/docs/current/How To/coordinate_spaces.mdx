@@ -18,7 +18,7 @@ This page is designed to be read in tandem with this cheatsheet, which shows eve
 ## Spaces
 
 ### Model Space
-In Iris (and Optifine), *model space* is whatever coordinate space the vertex position attribute is sent in. The exact coordinate space varies based on the specific geometry, and has the potential to vary across different Minecraft versions. As a result, it is always recommended to treat *model space* like an unknown space and convert to view space with the `gl_ModelViewMatrix`/[`modelViewMatrix`](/current/reference/uniforms/matrices#modelviewmatrix). *Model space* is also sometimes known as '*local space*'.
+In Iris (and OptiFine), *model space* is whatever coordinate space the vertex position attribute is sent in. The exact coordinate space varies based on the specific geometry, and has the potential to vary across different Minecraft versions. As a result, it is always recommended to treat *model space* like an unknown space and convert to view space with the `gl_ModelViewMatrix`/[`modelViewMatrix`](/current/reference/uniforms/matrices#modelviewmatrix). *Model space* is also sometimes known as '*local space*'.
 
 
 If using the core profile (and as such using [`vaPosition`](/current/reference/attributes/vaposition) instead of `gl_Vertex`), the *model space* position for terrain should be offset with [`chunkOffset`](/current/reference/uniforms/rendering#chunkoffset). The conversion sheet assumes this has already been done. Here's an example of what that should look like:

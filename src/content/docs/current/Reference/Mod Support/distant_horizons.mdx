@@ -12,10 +12,13 @@ sidebar:
 Terrain gets the program `dh_terrain`. This runs before normal terrain.
 
 ### Water
-Water gets the program `dh_water`.  This runs **before** normal water.
+Water gets the program `dh_water`.  This runs before normal water.
 
 ### Shadow
-Shadow pass gets the program `dh_shadow`. This runs before shadow terrain and shadow water respectively. **The shadow pass retains the normal textures and projection.**
+Shadow pass gets the program `dh_shadow`. This runs before shadow terrain and shadow water respectively. 
+:::note
+The shadow pass retains the normal textures and projection.
+:::
 
 ## Attributes
 The following attributes are supported in DH programs:
@@ -56,8 +59,6 @@ There are two depth textures attached to Distant Horizons;
 
 ### dhNearPlane
 
-#### Declaration
-
 ```glsl
 uniform float dhNearPlane;
 ```
@@ -65,8 +66,6 @@ uniform float dhNearPlane;
 This uniform specifies the near plane of DH's projection. **This does not apply to the shadow pass.**
 
 ### dhFarPlane
-
-#### Declaration
 
 ```glsl
 uniform float dhFarPlane;
@@ -76,8 +75,6 @@ This uniform specifies the far plane of DH's projection. **This is not the rende
 
 ### dhRenderDistance
 
-#### Declaration
-
 ```glsl
 uniform int dhRenderDistance;
 ```
@@ -85,8 +82,6 @@ uniform int dhRenderDistance;
 This uniform specifies the render distance currently set in DH.
 
 ### dhProjection and variants
-
-#### Declaration
 
 ```glsl
 uniform mat4 dhProjection;
@@ -96,7 +91,7 @@ uniform mat4 dhPreviousProjection;
 
 This is the projection matrix for the non-shadow pass of Distant Horizons. This includes a different near and far plane, see the uniforms above.
 
-# Block IDs
+## Block IDs
 
 **Normal block IDs (`mc_Entity`) are not supported.**
 
