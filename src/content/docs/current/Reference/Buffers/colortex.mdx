@@ -13,10 +13,6 @@ import { Badge } from '@astrojs/starlight/components';
 
 There are 16 color attachments available through the `colortex0` through `colortex15` samplers. These samplers can be read from any program, and can be written to from the fragment stage of any [`begin`](/current/reference/programs/begin), [`prepare`](/current/reference/programs/prepare), [`gbuffers`](/current/reference/programs/gbuffers), [`deferred`](/current/reference/programs/deferred), or [`composite`](/current/reference/programs/composite) program. 
 
-:::caution[Warning]
-macOS only provides 8 color attachments, as opposed to the standard 16. For more information, see the [macOS](/current/reference/miscellaneous/macos) page.
-:::
-
 #### Writing
 Any [`begin`](/current/reference/programs/begin), [`prepare`](/current/reference/programs/prepare), [`gbuffers`](/current/reference/programs/gbuffers), [`deferred`](/current/reference/programs/deferred), or [`composite`](/current/reference/programs/composite) program can write to a colortex buffer, the buffers to write to can be selected with the [`RENDERTARGETS`](/current/reference/constants/rendertargets) or [`DRAWBUFFERS`](/current/reference/constants/drawbuffers) directive.
 
