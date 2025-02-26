@@ -1,0 +1,55 @@
+---
+title: Texture Atlases
+description: Buffers containing textures used to render geometry.
+sidebar:
+  label: Texture Atlases
+  order: 1
+---
+
+The coordinates used to sample the texture atlases in a gbuffers pass are obtained in the vertex shader using the following code:
+
+```glsl title="Compatibility Profile"
+coord = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;
+```
+```glsl title="Core Profile"
+coord = (textureMatrix * vec4(vaUV0, 0.0, 1.0)).xy;
+```
+
+For more information, see [`vaUV0`](http://localhost:4321/current/reference/attributes/vauv0/).
+
+Texture atlases are *not bound* in non-gbuffers passes. To access them in other passes, [custom textures](/current/reference/buffers/custom_textures/#texture-types) can be used.
+
+### `uniform sampler2D gtexture`
+`gtexture` is the main texture atlas, used to obtain the albedo color of any geometry rendered in a gbuffers pass. It is usually multiplied by the result of [`gl_Color`](/current/reference/attributes/overview/)/[`vaColor`](/current/reference/attributes/vacolor/) (passed through from the vertex shader) to obtain the final color value. 
+
+:::caution[Warning]
+In some packs, you may find the atlas referenced with `tex` or `texture`. This is undefined behavior, and assumes that any undefined samplers will point to the atlas. It is strongly recommended you do not do this.
+:::
+
+### `uniform sampler2D normals`
+`normals` is the normal map atlas. If the resource pack does not have a texture suffixed with `_n` for the current geometry, or there is no resource pack loaded, then the value returned will be as follows.
+
+| Component | Value (0-255) |
+|-----------|---------------|
+| `r`       | 127           |
+| `g`       | 127           |
+| `b`       | 255           |
+| `a`       | 255           |
+
+*Note that the values returned when sampling the texture are in the 0-1 range.*
+
+For information on how to use these values, see [PBR Standards](/current/how-to/pbr_standards/).
+
+### `uniform sampler2D specular`
+`specular` is the specular map atlas. If the resource pack does not have a texture suffixed with `_s` for the current geometry, or there is no resource pack loaded, then the value returned will be as follows.
+
+| Component | Value (0-255) |
+|-----------|---------------|
+| `r`       | 0             |
+| `g`       | 0             |
+| `b`       | 0             |
+| `a`       | 0             |
+
+*Note that the values returned when sampling the texture are in the 0-1 range.*
+
+For information on how to use these values, see [PBR Standards](/current/how-to/pbr_standards/).
