@@ -3,16 +3,35 @@ title: NoiseTex
 description: Stores a generated RGB white noise texture.
 sidebar:
   label: NoiseTex
-  order: 1
+  order: 2
 ---
 
 ### `uniform sampler2D noisetex;`
 
-This buffer stores a generated RGB white noise texture. The resolution of this texture can be configured with the [`noiseTextureResolution`](/current/reference/constants/noisetextureresolution) constant, and defaults to 256x256. The texture is always square, meaning its width and height are equal.
+This buffer stores a generated RGB white noise texture. The texture is always square, meaning its width and height are equal.
 
+#### Writing
 
-## Custom Noise Texture
-Similar to [Custom Textures](/current/reference/buffers/custom_textures), the `noisetex` texture can be overwritten with an image file from the shader files. The following line can be placed in [shaders.properties](/current/reference/shadersproperties/overview), where `<path>` is replaced with the file path of the image file relative to the "shaders" folder:
+This buffer cannot be written to. It can, however, be replaced with a [custom noise texture](#custom-noise-texture) from an image file or raw buffer data.
+
+#### Size
+
+The resolution of this texture defaults to 256x256. This can be configured with the [`noiseTextureResolution`](/current/reference/constants/noisetextureresolution) constant.
+
+#### Format / precision
+
+This buffer uses the `RGB8` format. This cannot be configured.
+
+#### Clearing
+
+This buffer clears to random white noise data, or (if overwritten) the custom texture.
+
+#### Flipping
+
+This buffer does not flip.
+
+## Custom noise texture
+Similar to [custom textures](/current/reference/buffers/custom_textures), the `noisetex` texture can be overwritten with an image file from the shader files. The following line can be placed in [shaders.properties](/current/reference/shadersproperties/overview), where `<path>` is replaced with the file path of the image file relative to the `shaders` folder:
 
 ```properties title="shaders.properties"
 texture.noise=<path>

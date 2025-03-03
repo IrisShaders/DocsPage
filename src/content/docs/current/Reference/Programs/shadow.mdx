@@ -6,10 +6,10 @@ sidebar:
   order: 4
 ---
 
-**Required stages**: vertex (.vsh), fragment (.fsh)  
-**Optional stages**: geometry (.gsh), tessellation (.tcs, .tes)  
-**Output Buffers**: [shadowcolor](/current/reference/buffers/shadowcolor), [shadowtex](/current/reference/buffers/shadowtex)  
-**Valid suffixes**: *N/A*
+**Required stages**: vertex, fragment  
+**Optional stages**: geometry, tessellation  
+**Output buffers**: [shadowcolor](/current/reference/buffers/shadowcolor), [shadowtex](/current/reference/buffers/shadowtex)  
+**Valid suffixes**: no suffix
 
 -------------------------------------------------
 
@@ -21,7 +21,7 @@ This program is similar to the [gbuffers](/current/reference/programs/gbuffers),
 ## Additional Shadow Programs (Iris 1.8+)
 Iris 1.8 adds 5 additional shadow programs. These programs allow rendering of specific geometry with different shader code, similar to [gbuffers](/current/reference/programs/gbuffers). If any of these programs are not present, the geometry will be rendered in the base `shadow` program, and if that program is not present a default shader will be used.
 
-| Shadow Program    | Geometry that it renders |
+| Shadow program    | Geometry that it renders |
 | ----------------- | ------------------------ |
 | `shadow_solid`    | solid terrain            |
 | `shadow_cutout`   | cutout terrain           |

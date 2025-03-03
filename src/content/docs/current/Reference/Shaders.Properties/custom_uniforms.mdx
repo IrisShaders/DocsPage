@@ -10,9 +10,9 @@ Iris lets you define custom uniforms which are evaluated on the CPU and uploaded
 
 Two types of values can be created: variables and uniforms. Uniforms are values which are calculated and uploaded to the GPU for shader programs to access. Variables are equivalent to uniforms, but are not uploaded to the GPU (they can be used as intermediate values).
 
-```properties
-uniform.<float|int|bool|vec2|vec3|vec4>.<name>=<expression>
-variable.<float|int|bool|vec2|vec3|vec4>.<name>=<expression>
+```properties title="shaders.properties"
+uniform.<float|int|bool|vec2|vec3|vec4>.<name> = <expression>
+variable.<float|int|bool|vec2|vec3|vec4>.<name> = <expression>
 ```
 
 
@@ -72,11 +72,11 @@ The following functions are available to use in custom uniforms/variables.
 | `random()`                                        | Random float between `0` (inclusive) and `1` (exclusive) generated each frame                          |
 | `random(min, max)`                                | Random float between `min` (inclusive) and `max` (exclusive) generated each frame                      |
 | `randomInt()`                                     | Random integer between `-2147483648` and `2147483647` generated each frame                             |
-| `randomInt(min, max)`                             | Random integer between `min` and `max-1` generated each frame                                          |
+| `randomInt(min, max)`                             | Random integer between `min` and `max  -1` generated each frame                                          |
 | `if(cond, val, [cond2, val2, ...], val_else)`     | Returns the first `val` whose boolean `cond` is true, otherwise return `val_else`                      |
 | `smooth([id], val, [fadeUpTime, [fadeDownTime]])` | Smooths `val` over time, fade times are halflife in ticks (default 1 tick), `id` is optional unique ID |
 | `between(a, min, max)`                            | `true` if `a` is between `min` and `max` inclusive, otherwise `false`                                  |
-| `equals(a, b, epsilon)`                           | `true` if `abs(a-b) <= epsilon`, `false` otherwise                                                     |
+| `equals(a, b, epsilon)`                           | `true` if `abs(a - b) <= epsilon`, `false` otherwise                                                     |
 | `in(x, val1, val2, ...)`                          | `true` if `x` equals any val, `false` otherwise                                                        |
 
 Unless otherwise noted, each function can take in a float or int and outputs the same type. In addition, the following functions can work with vector inputs/output: `abs`, `floor`, `ceil`, `min`, `max`, `clamp`, `smooth`.

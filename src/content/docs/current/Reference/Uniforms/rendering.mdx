@@ -23,7 +23,7 @@ The near clipping plane distance. Unless changed by a mod, this is equal to `0.0
 ```glsl
 uniform float far;
 ```
-The current render distance in blocks. Despite the name, this is not the far clipping plane distance, in fact that value is roughly four times `far`.
+The current render distance, in blocks. Despite the name, this is not the far clipping plane distance, which is roughly `far * 4.0`.
 
 
 ----------------
@@ -33,12 +33,14 @@ The current render distance in blocks. Despite the name, this is not the far cli
 ```glsl
 uniform float alphaTestRef;
 ```
-This value stores the alpha value that Iris recommends you discard pixels bellow. This value is commonly `0.1`, but can change in certain cases (therefore it is recommended to use the uniform over a hardcoded value). The value is also affected by the [`alphaTest`](/current/reference/shadersproperties/rendering#alphatest) directive. It is normally used like this:
+This value stores the alpha value that Iris recommends you discard pixels below. This value is commonly `0.1`, but can change in certain cases. Therefore, it is recommended to use the uniform over a hardcoded value. The value is also affected by the [`alphaTest`](/current/reference/shadersproperties/rendering#alphatest) directive. It is normally used like this:
 ```glsl
 if (albedoOut.a < alphaTestRef) discard;
 ```
 
-<Aside type="note">This uniform is designed to work with the modern syntax for fragment shader outputs (`out`). When Using the legacy syntax (`gl_FragData`) this uniform is not necessary as the alpha test will be performed automatically.</Aside>
+:::note
+This uniform is designed to work with the modern syntax for fragment shader outputs (`out`). When using the legacy syntax (`gl_FragData`) this uniform is not necessary as the alpha test is performed automatically. However, this can be disabled using the [`alphaTest`](/current/reference/shadersproperties/rendering#alphatest) directive.
+:::
 
 ----------------
 
@@ -53,7 +55,7 @@ The chunk offset in model space for the currently rendering chunk of terrain. Us
 vec3 model_pos = vaPosition + chunkOffset;
 ```
 
-The value of `chunkOffset` is all 0s when not rendering terrain, or when using the compatibility profile.
+The value of `chunkOffset` is all 0s when not rendering terrain, or when using the `compatibility` profile.
 
 ----------------
 

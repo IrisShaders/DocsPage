@@ -11,7 +11,7 @@
 
 If you've found a vulnerability, we would like to know so we can fix it before it is released publicly. Do not open a GitHub issue for a found vulnerability.
 
-Please join [The Iris Discord](https://discord.gg/jQJnav2jPu) and dm one of the docs developers. Send the details:
+Please join [The Iris Discord](https://discord.gg/jQJnav2jPu) and DM one of the docs developers. Send the details:
 
 - where the vulnerability can be observed
 - a brief description of the vulnerability

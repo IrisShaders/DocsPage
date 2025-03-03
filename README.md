@@ -37,23 +37,45 @@ Unfinished/Unfinished docs are marked with the `Unfinished` tag in the warning s
 
 Write in your own way, and try to use existing pages or ask before adding new ones. For how to write content, follow the guides on [https://diataxis.fr/](https://diataxis.fr/).
 
-### Dictionary:
+### Style Guide
 
-- Please use full terms, no shortening. EX no `complementary -> comp`.
-- Refer to shader packs as `pack` and/ or `packs`.
-- If referring to worlds (`world0` and the like), use this syntax: Overworld(`world0`)
+- Use proper capitalization. Common mistakes include:
+    - `Optifine` (should be `OptiFine`)
+    - `glsl` (should be `GLSL`)
+- Use the correct text stylization:
+    - Backticks (\`) should be used for any term used exactly in code (ex: `uniform`) 
+        - For colortex buffers, only use backticks if the number is included (ex: `colortex5`)
+        - For gbuffers, just kinda vibe it, I don't have a definitive rule here
+    - Bold (\*\*) should be used for any term not used in code (ex: **attributes**)
+    - Italics (\*) may be used for emphasis
+- Use full terms, no shortening. (ex: no `complementary -> comp`.)
+- Something specific to a specific type of shader (vertex, fragment, etc) should include the file extension (ex: `gbuffers_water.fsh`)
+- Use wildcard notation (`*`) to indicate multiple files (ex: `gbuffers_*.fsh` refers to all fragment shaders in a`gbuffers` program)
+- Something valid for all shader types should omit an extension (ex: `final`)
+- Refer to shader packs as `shader pack(s)`.
+- Refer to texture/resource packs as `resource pack(s)`
+- Use `rgba` for swizzling only when explicitly related to color channels, otherwise use `xyzw`
 - Make headings as succinct as possible to help the reader quickly find the content they need
 - Use simple present tense for verbs
 
-### Guides:
-Guides walk the user through completing a task (EX creating their first shader). A guide should lead from one outcome to another, and is a multi lesson system of teaching (defined by their folder with multiple pages). They are to be written in a style similar to [tutorials on Diataxis](https://diataxis.fr/tutorials/). Guides are open ended.
+#### File Structure
+- Use `/` to denote folders (as opposed to `\`, which is used on Windows)
+- Add a closing `/` to indicate folders, omit to indicate files
+- The root directory is assumed to be the Minecraft folder. Ex:
+    - `/patched_shaders/`
+    - `/mods/1.21.4/iris-1.7.1+mc1.21.jar`
+- For a local directory, omit the starting `/`. Ex:
+    - `shaders/final.fsh`
+
+### Guides
+Guides walk the user through completing a task (e.g. creating their first shader). A guide should lead from one outcome to another, and is a multi lesson system of teaching (defined by their folder with multiple pages). They are to be written in a style similar to [tutorials on Diataxis](https://diataxis.fr/tutorials/). Guides are open ended.
 
 A guide should leave the reader feeling comfortable with the topic, and it should leave them in a way that they are able to experiment by themselves.
 
-### How To:
-A how to is a singular short article that walks a user through a small problem in their way (EX transforming shadows to screen space or tonemapping). A how to is made to walk a user through a short section of code and does not need to lead from one outcome to another. It is made to increase/create the understanding on a small section of code, and is rarely open ended. The how to should be written similar to [how to guides on Diataxis](https://diataxis.fr/how-to-guides/).
+### How To
+A how to is a singular short article that walks a user through a small problem in their way (e.g. transforming shadows to screen space or tonemapping). A how to is made to walk a user through a short section of code and does not need to lead from one outcome to another. It is made to increase/create the understanding on a small section of code, and is rarely open ended. The how to should be written similar to [how to guides on Diataxis](https://diataxis.fr/how-to-guides/).
 
-### Reference:
+### Reference
 A reference is a docs page. It give objective information on a subject, without moving towards individual use cases. These are often short pages, which are written to provide information about syntax surrounding a line or two of code. These need to be written in a succinct way so that the user can quickly find information. Best practices are located at [references in Diataxis](https://diataxis.fr/current/reference/)
 
 For uniform references please look at `alphaTestRef` for formatting. The aside found there can be used for any version specific stuff.
@@ -86,3 +108,4 @@ Translations are not yet supported, but once the english version is complete we 
 - WhyFencePost / WhyFenceCode - The page and a lot of the data transfer
 - NinjaMike - Many uniforms including Iris exclusive uniforms, constants, shaders.properties, programs
 - jbritain - Some uniforms, other miscellaneous things
+- kloppi417 - editor

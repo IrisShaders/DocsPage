@@ -13,7 +13,7 @@ This page lists [shaders.properties](/current/reference/shadersproperties/overvi
 ```properties
 alphaTest.<program>=<off|func ref>
 ```
-This directive is used to control the alpha test for cutout programs. For the compatibility profile the alpha test is applied automatically when using `gl_FragData` or `gl_FragColor`. For the newer syntax, only the reference value is passed through [`alphaTestRef`](/current/reference/uniforms/rendering#alphatestref) and the function must be implemented by the shader.
+This directive is used to control the alpha test for cutout programs. For the `compatibility` profile the alpha test is applied automatically when using `gl_FragData` or `gl_FragColor`. For the newer syntax, only the reference value is passed through [`alphaTestRef`](/current/reference/uniforms/rendering#alphatestref) and the function must be implemented by the shader.
 
 Replace:
 - `<program>` with a gbuffers program name, including the dimension folder if relevant (e.g. `world0/composite2`). This does not work with Iris custom dimensions however.
@@ -26,10 +26,15 @@ Replace:
 ```properties
 blend.<program>=<off|src dst srcA dstA>
 ```
+```properties
+blend.<program>.<buffer>=<off|src dst srcA dstA>
+```
+
 Controls the alpha blending for a specific gbuffers program, and optionally per-buffer.
 
 Replace:
 - `<program>` with a gbuffers program
+- optionally `buffer` with a specific buffer (e.g. colortex5). Any buffers that aren't specified will use the program's blending attributes
 
 Setting the value to `off` will disable alpha blending, otherwise the blending parameters are specified:
 - `src` is the source color multiplier
@@ -42,14 +47,6 @@ Each of the parameters should be filled with one of the following: `ZERO`, `ONE`
 The default alpha blending parameters for transparent geometry are: `SRC_ALPHA`, `ONE_MINUS_SRC_ALPHA`, `ONE`, `ONE_MINUS_SRC_ALPHA` respectively.
 
 More info on alpha blending can be found at the [Khronos Wiki](https://www.khronos.org/opengl/wiki/Blending)
-
-
-### Per-Buffer Blending
-```properties
-blend.<program>.<buffer>=<off|src dst srcA dstA>
-```
-
-By specifying a buffer name (e.g. colortex5) in `<buffer>` you can apply the blending to a specific buffer only. Any buffers that aren't specified will use the program's blending attributes (see above).
 
 ----------------
 

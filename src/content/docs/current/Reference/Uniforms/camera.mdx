@@ -2,7 +2,7 @@
 title: Camera and Player Model Uniforms
 description: Uniforms related to the camera and player model.
 sidebar:
-  label: Camera/Player
+  label: Camera / Player
   order: 2
 ---
 import { Badge } from '@astrojs/starlight/components';
@@ -16,7 +16,7 @@ uniform vec3 cameraPosition;
 ```
 This uniform stores the position of the camera in world space.
 
-This is similar to the in game coordinates, except for precision reasons the value is wrapped after a large number of blocks. In modern Iris, the value will reset every `30000` blocks when walking, or if the player has teleported more than `1000` blocks. Optifine resets every `1000024` blocks.
+This is similar to the in game coordinates, except for precision reasons the value is wrapped after a large number of blocks. In modern Iris, the value will reset every `30000` blocks when walking, or if the player has teleported more than `1000` blocks. OptiFine resets every `1000024` blocks.
 
 For more information on spaces, visit this [how to article](/current/how-to/spaces) on the different spaces.
 
@@ -90,7 +90,7 @@ This value stores the world space position of the player's head model. When in f
 ```glsl
 uniform vec3 relativeEyePosition;
 ```
-This value stores the world space offset from the player model's head position to the camera's position(ie [`cameraPosition`](/current/reference/uniforms/camera#cameraposition)`-`[`eyePosition`](/current/reference/uniforms/camera#eyeposition)).
+This value stores the world space offset from the player model's head position to the camera's position (i.e. [`cameraPosition`](/current/reference/uniforms/camera#cameraposition)`-`[`eyePosition`](/current/reference/uniforms/camera#eyeposition)).
 
 ----------------
 

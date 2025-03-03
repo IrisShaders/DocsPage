@@ -8,17 +8,18 @@ sidebar:
     text: 1.17+
     variant: danger
 ---
-import { Aside } from '@astrojs/starlight/components';
 
-<Aside type="danger">This attribute only works with the "core profile" in Minecraft `1.17` and newer. It is recommended to use the "compatibility profile" with Iris for better support. </Aside>
+:::danger
+This attribute only works with the `core` profile in Minecraft 1.17 and newer. It is recommended to use the `compatibility` profile with Iris for better support.
+:::
 
 ### `in vec3 vaNormal;`
 
-**Valid Programs**: all gbuffers/shadow
+**Valid Programs**: `gbuffers_*.vsh`, `shadow.vsh`
 
 ---
 
-The vertex normal vector attribute, equivalent to `gl_Normal` from the compatibility profile.
+The vertex normal vector attribute, equivalent to `gl_Normal` from the `compatibility` profile.
 
 The normal vector from `vaNormal` is in model space (which varies for different geometry). It can be converted to view space using [`normalMatrix`](/current/reference/uniforms/matrices#normalmatrix) (or `gl_NormalMatrix` in the compatibility profile).
 ```glsl

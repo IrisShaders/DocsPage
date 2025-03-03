@@ -4,11 +4,16 @@ description: The legacy version of RENDERTARGETS. Controls which buffers a fragm
 sidebar:
   label: DRAWBUFFERS
   order: 2
+  badge:
+    text: Legacy
+    variant: danger
 ---
 
 ### `/* DRAWBUFFERS:XYZ */`
 
-#### Location: any fragment stage (.fsh) of any program
+**Location**: `*.fsh`
+
+---
 
 The legacy version of the [`RENDERTARGETS`](/current/reference/constants/rendertargets) directive. This directive can only reference indicies 0 through 9, so `colortex10` through `colortex15` cannot be bound with this directive. Because of this, it is recommended to use [`RENDERTARGETS`](/current/reference/constants/rendertargets) directive instead as that can access all available buffers.
 

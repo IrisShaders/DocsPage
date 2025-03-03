@@ -5,8 +5,7 @@ sidebar:
   order: 1
 ---
 
-[Vivecraft](https://modrinth.com/mod/vivecraft) is a mod which allows Minecraft to be played in VR. Vivecraft provides a few macros and uniforms to inform shaders about the current render state.  
-Data mentioned here is managed by Vivecraft itself, so if any issues are encountered with it please report them on their [issue tracker](https://github.com/Vivecraft/VivecraftMod/issues)
+[Vivecraft](https://modrinth.com/mod/vivecraft) is a mod which allows Minecraft to be played in VR. Vivecraft provides a few macros and uniforms to inform shaders about the current render state. Data mentioned here is managed by Vivecraft itself, so if you encounter an issue, please report them on their [issue tracker](https://github.com/Vivecraft/VivecraftMod/issues).
 
 ## Definitions/Properties
 ### Checking for Vivecraft
@@ -34,8 +33,6 @@ The uniform [`vivecraftRenderpass`](#vivecraftrenderpass) stores the renderpass 
 
 ### vivecraftIsVR
 
-#### Declaration
-
 ```glsl
 uniform bool vivecraftIsVR;
 ```
@@ -43,8 +40,6 @@ uniform bool vivecraftIsVR;
 This uniform specifies if the player is currently in VR.
 
 ### vivecraftRenderpass
-
-#### Declaration
 
 ```glsl
 uniform int vivecraftRenderpass;
@@ -54,8 +49,6 @@ This uniform specifies the current renderpass that Vivecraft is rendering. The u
 
 ### Hand Positions
 
-#### Declaration
-
 ```glsl
 uniform vec3 vivecraftRelativeMainHandPos;
 uniform vec3 vivecraftRelativeOffHandPos;
@@ -64,8 +57,6 @@ uniform vec3 vivecraftRelativeOffHandPos;
 These store the world space offsets from the player's hand position to the camera's position. (ie [`cameraPosition`](/current/reference/uniforms/camera#cameraposition)` - handPosition`)
 
 ### Hand Orientations
-
-#### Declaration
 
 ```glsl
 uniform mat4 vivecraftRelativeMainHandRot;
