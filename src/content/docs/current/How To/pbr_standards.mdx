@@ -9,13 +9,11 @@ Texture packs can optionally provide extra data to Iris through the use of norma
 
 ## Access
 
-Normal map textures have the same name as the texture they should be attached to, with the `_n` suffix. For example, for a block of cobblestone, the texture is called `cobblestone.png`, and the normal map for cobblestone would be `cobblestone_n.png`. Likewise, specular maps have the suffix `_s`, meaning for cobblestone it would be `cobblestone_s.png`.
+Normal and specular map textures are provided by the resource pack. Normal maps have the same name as the texture they should be attached to, with the `_n` suffix. For example, for a block of cobblestone, the texture is called `cobblestone.png`, and the normal map for cobblestone would be `cobblestone_n.png`. Likewise, specular maps have the suffix `_s`, meaning for cobblestone it would be `cobblestone_s.png`.
 
 These textures are provided in the form of two additional texture atlases.
-- `uniform sampler2D normals`
-- `uniform sampler2D specular`
-
-These texture atlases should be sampled in the same way that `gtexture` is sampled.
+- [`uniform sampler2D normals`](current/reference/buffers/atlases/#uniform-sampler2d-normals)
+- [`uniform sampler2D specular`](current/reference/buffers/atlases/#uniform-sampler2d-specular)
 
 ## Formats
 There are two standard formats used for encoding PBR data in the normal and specular maps - oldPBR (also known as seusPBR) and labPBR.
@@ -40,22 +38,22 @@ A texture pack can optionally declare that it is LabPBR compliant (and the versi
 
 
 If labPBR is declared at all, the following preprocessor define will be declared
-```
-// texture.properties
+```properties
+# texture.properties
 format=lab-pbr
 ```
-```
+```glsl
 // this will be defined
 MC_TEXTURE_FORMAT_LAB_PBR
 ```
 
 Additionally, if a version is specified, a further define will be declared. **For example, with version 1.3:**
-```
-// texture.properties
+```properties
+# texture.properties
 format=lab-pbr/1.3
 ```
-```
-// this will be defined
+```glsl
+// these will be defined
 MC_TEXTURE_FORMAT_LAB_PBR
 MC_TEXTURE_FORMAT_LAB_PBR_1_3
 ```
