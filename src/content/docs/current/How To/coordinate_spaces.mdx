@@ -39,7 +39,7 @@ The `x` and `y` components of view space line up with screen space (negative is 
 To get a position which is relative to the actual player model in third person, you can use [`relativeEyePosition`](/current/reference/uniforms/camera#relativeeyeposition).
 
 #### Feet and Eye Player Space
-The names of these spaces are misleading, as "**feet player space**" is not in any way related to the player's feet. The difference between the two is that in *f*eet player space**, the origin remains locked to the player's head position, whereas in **eye player space**, effects like view bobbing are accounted for, meaning that the origin is locked to the camera. This is why the two can be interchanged with the addition and subtraction of [`gbufferModelViewInverse[3]`](/current/reference/uniforms/matrices#gbuffermodelviewinverse) - this fourth component of the matrix accounts for the translation from the player's head to the camera.
+The names of these spaces are misleading, as "**feet player space**" is not in any way related to the player's feet. The difference between the two is that in **feet player space**, the origin remains locked to the player's head position, whereas in **eye player space**, effects like view bobbing are accounted for, meaning that the origin is locked to the camera. This is why the two can be interchanged with the addition and subtraction of [`gbufferModelViewInverse[3]`](/current/reference/uniforms/matrices#gbuffermodelviewinverse) - this fourth component of the matrix accounts for the translation from the player's head to the camera.
 
 It is also worth noting that in third person mode, view bobbing is disabled, and as such, eye and feet player space are *usually* identical.
 
