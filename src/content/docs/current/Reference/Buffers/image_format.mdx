@@ -28,7 +28,7 @@ Unsigned normalized buffers support values from 0.0 to 1.0 (inclusive).
 | `RGBA8`      | 4×8        | `RGBA`       | `UNSIGNED_BYTE`               | ✔️     |                                                                                                                      |
 | `RGB10_A2`   | 10/10/10/2 | `RGBA`       | `UNSIGNED_INT_2_10_10_10_REV` | ✔️     |                                                                                                                      |
 | `RGBA4`*     | 4×4        | `RGBA`       | `UNSIGNED_SHORT_4_4_4_4_REV`  | ❌     | OpenGL 4.2+                                                                                                          |
-| `GL_RGB5_A1` | 5/5/5/1    | `RGBA`       | `UNSIGNED_SHORT_1_5_5_5_REV`  | ❌     | OpenGL 4.2+                                                                                                          |
+| `RGB5_A1`    | 5/5/5/1    | `RGBA`       | `UNSIGNED_SHORT_1_5_5_5_REV`  | ❌     | OpenGL 4.2+                                                                                                          |
 | `RGB16`      | 3×16       | `RGB`        | `UNSIGNED_SHORT`              | ❌     |                                                                                                                      |
 | `RGB8`       | 3×8        | `RGB`        | `UNSIGNED_BYTE`               | ❌     |                                                                                                                      |
 | `RGB565`*    | 5/6/5      | `RGB`        | `UNSIGNED_SHORT_5_6_5_REV`    | ❌     | OpenGL 4.1+ or [ARB_ES2_compatibility](https://registry.khronos.org/OpenGL/extensions/ARB/ARB_ES2_compatibility.txt) |
@@ -71,7 +71,7 @@ Detailed explanation: [OpenGL Wiki - Small Float Formats](https://www.khronos.or
 | `RGB32F`         | 3×32                                                                       | `RGB`        | `FLOAT`                          | ❌     |
 | `RGB16F`         | 3×16                                                                       | `RGB`        | `HALF_FLOAT`                     | ❌     |
 | `R11F_G11F_B10F` | 11/11/10                                                                   | `RGB`        | `UNSIGNED_INT_10F_11F_11F_REV`*  | ✔️     |
-| `RGB9_E5`        | [Special](https://www.khronos.org/opengl/wiki/Small_Float_Formats#RGB9_E5) | `RGB`        | `5_9_9_9_REV`*                   | ❌     |
+| `RGB9_E5`        | [Special](https://www.khronos.org/opengl/wiki/Small_Float_Formats#RGB9_E5) | `RGB`        | `UNSIGNED_INT_5_9_9_9_REV`*      | ❌     |
 | `RG32F`          | 2×32                                                                       | `RG`         | `FLOAT`                          | ✔️     |
 | `RG16F`          | 2×16                                                                       | `RG`         | `HALF_FLOAT`                     | ✔️     |
 | `R32F`           | 1×32                                                                       | `RED`        | `FLOAT`                          | ✔️     |
