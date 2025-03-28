@@ -83,7 +83,6 @@ Unless otherwise noted, each function can take in a float or int and outputs the
 
 
 ## Examples
-Here, take some *yummy* ~~candy~~ examples! What, the white van? Ignore that, you like ~~candy~~ examples don't you?
 
 ```properties
 uniform.bool.isOakBiome    = in(biome, BIOME_FOREST, BIOME_DARK_FOREST)
@@ -98,5 +97,3 @@ variable.float.waterColorG = if(in(biome, BIOME_SWAMP), 0.482, in(biome, BIOME_L
 variable.float.waterColorB = if(in(biome, BIOME_SWAMP), 0.392, in(biome, BIOME_LUKEWARM_OCEAN, BIOME_DEEP_LUKEWARM_OCEAN), 0.949, in(biome, BIOME_WARM_OCEAN), 0.933, in(biome, BIOME_COLD_OCEAN, BIOME_DEEP_COLD_OCEAN, BIOME_SNOWY_TAIGA, BIOME_SNOWY_BEACH), 0.839, in(biome, BIOME_FROZEN_RIVER, BIOME_FROZEN_OCEAN, BIOME_DEEP_FROZEN_OCEAN), 0.788, in(biome, BIOME_MEADOW), 0.812, in(biome, BIOME_MANGROVE_SWAMP), 0.416, 0.894)
 uniform.vec3.waterColor    = vec3(waterColorR, waterColorG, waterColorB)
 ```
-
-See I told you it was *yummy*.
