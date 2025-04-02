@@ -23,7 +23,7 @@ Texture atlases are *not bound* in non-gbuffers passes. To access them in other 
 `gtexture` is the main texture atlas, used to obtain the albedo color of any geometry rendered in a gbuffers pass. It is usually multiplied by the result of [`gl_Color`](/current/reference/attributes/overview/)/[`vaColor`](/current/reference/attributes/vacolor/) (passed through from the vertex shader) to obtain the final color value. 
 
 :::caution[Warning]
-In some packs, you may find the atlas referenced with `tex`. This is undefined behavior, and assumes that any undefined samplers will point to the atlas. It is strongly recommended you do not do this. 
+Some shaderpacks may use other aliases such as `tex`, as samplers using texture names that do not exist will simply bind to the atlas. *This is undefined behavior and should not be relied upon.*
 
 `texture` is a valid alias in `#version 120`, however in any newer version of GLSL this is a reserved keyword and should not be used.
 :::
@@ -38,7 +38,7 @@ In some packs, you may find the atlas referenced with `tex`. This is undefined b
 | `b`       | 255           |
 | `a`       | 255           |
 
-*Note that the values returned when sampling the texture are in the 0-1 range.*
+*Note that the values returned when sampling the texture are in the 0-1 range, whereas they are displayed here in the 0-255 range.*
 
 For information on how to use these values, see [PBR Standards](/current/how-to/pbr_standards/).
 
