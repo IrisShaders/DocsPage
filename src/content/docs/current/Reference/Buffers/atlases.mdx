@@ -3,7 +3,7 @@ title: Texture Atlases
 description: Buffers containing textures used to render geometry.
 sidebar:
   label: Texture Atlases
-  order: 1
+  order: 2
 ---
 
 The coordinates used to sample the texture atlases in a gbuffers pass are obtained in the vertex shader using the following code:
@@ -15,7 +15,7 @@ coord = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;
 coord = (textureMatrix * vec4(vaUV0, 0.0, 1.0)).xy;
 ```
 
-For more information, see [`vaUV0`](http://localhost:4321/current/reference/attributes/vauv0/).
+For more information, see [`vaUV0`](/current/reference/attributes/vauv0/).
 
 Texture atlases are *not bound* in non-gbuffers passes. To access them in other passes, [custom textures](/current/reference/buffers/custom_textures/#texture-types) can be used.
 
