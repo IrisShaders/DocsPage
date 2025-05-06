@@ -13,7 +13,7 @@ import { Badge } from '@astrojs/starlight/components';
 There are three samplers for accessing the depth buffer.
 - `depthtex0` includes all geometry
 - `depthtex1` excludes transparent geometry
-- `depthtex2` excludes transparent and heldheld geometry
+- `depthtex2` excludes transparent and hand geometry
 
 These buffers can be read from any program, but will contain garbage data until the respective `gbuffers` shader has executed. For example, `depthtex1` will first contain meaningful data in the [`deferred`](/current/reference/programs/deferred) stage.
 
