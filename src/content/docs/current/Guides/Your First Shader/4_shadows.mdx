@@ -126,7 +126,7 @@ float shadow = step(shadowScreenPos.z, texture(shadowtex0, shadowScreenPos.xy).r
 We can then replace our multiplication by `lightmap.g` with one by `shadow`.
 
 ```glsl
-vec3 sunlight = sunlightColor * dot(normal, worldLightVector) * shadow;
+vec3 sunlight = sunlightColor * clamp(dot(worldLightVector, normal), 0.0, 1.0) * shadow;
 ```
 
 You should now see something like this:
