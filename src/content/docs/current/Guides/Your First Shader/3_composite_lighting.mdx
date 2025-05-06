@@ -117,6 +117,10 @@ color.rgb *= blocklight + skylight + ambient + sunlight;
 Things should look something like this:
 ![](../../../../../assets/beginner_tutorial/lighting1.webp)
 
+:::note[Note]
+Don't worry if your sky isn't the same color. We'll fix that later!
+:::
+
 ## Sunlight
 Now, what about that sunlight? Well, if something is facing directly towards the sun, then we want it to be fully sunlit. On the other hand, if something is facing away from the sun, we want there to be no sunlight. So, we need a function that returns 1.0 if two vectors are facing in the same direction, and 0.0 if they are facing away from each other. Happily, we can use a dot product for this.
 
