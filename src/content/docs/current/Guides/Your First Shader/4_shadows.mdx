@@ -414,7 +414,7 @@ While the image clearly repeats, we now have unique values per pixel for the noi
 
 ```glsl
 vec3 getSoftShadow(vec4 shadowClipPos){
-	const float range = SHADOW_SOFTNESS / 2; // how far away from the original position we take our samples from
+	const float range = SHADOW_SOFTNESS / 2.0; // how far away from the original position we take our samples from
 	const float increment = range / SHADOW_QUALITY; // distance between each sample
 
 	float noise = getNoise(texcoord).r;
