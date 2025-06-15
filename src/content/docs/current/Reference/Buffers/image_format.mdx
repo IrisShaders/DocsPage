@@ -79,7 +79,7 @@ Detailed explanation: [OpenGL Wiki - Small Float Formats](https://www.khronos.or
 
 <sup>*Requires Iris 1.8+</sup>
 
-The `RGB9_E5` format uses a 5-bit exponent for all three terms (R, G, and B), where each component has a 9 bit mantissa. This allows for significantly more precision than `R11F_G11F_B10F`, which only has 6 to 5 bits of precision per component. However, `R11F_G11F_B10F` has individual exponents for each component.
+The `RGB9_E5` format uses a 5-bit exponent for all three terms (R, G, and B), where each component has a 9 bit mantissa. This allows for significantly more precision than `R11F_G11F_B10F`, which only has 6 to 5 bits of precision per component. However, `R11F_G11F_B10F` has individual exponents for each component. In both cases, there is no sign bit, so these formats cannot store negative values.
 
 ## Integral
 
